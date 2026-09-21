@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { loadCatalog } from '../src/lib/catalog';
+import { loadPublishedCatalog as loadCatalog } from '../src/lib/published-routes';
 import { githubRepo, npmPackage, readSnapshot, registryRepo, weeklyTrend, type NpmStats, type StatsSnapshot } from '../src/lib/stats';
 
 const statsFile = new URL('../src/data/stats.json', import.meta.url);

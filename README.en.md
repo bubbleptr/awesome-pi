@@ -69,7 +69,7 @@ pi list
 
 Web search and content fetching packages that give Pi access to internet information.
 
-- 🔥 [pi-web-access](https://github.com/nicobailon/pi-web-access) - Web search, URL fetching, GitHub cloning, PDF extraction, and YouTube video understanding. Zero config, intelligent fallback chain. `pi install npm:pi-web-access`
+- 🔥 [pi-web-access](https://github.com/nicobailon/pi-web-access) - Web search, URL fetching, PDF extraction and YouTube analysis. Keyless search defaults to Exa MCP with configured fallbacks; DuckDuckGo is explicit-only. `pi install npm:pi-web-access`
 - 🔥 [@juicesharp/rpiv-web-tools](https://github.com/juicesharp/rpiv-mono) - Pluggable web search (Brave, Tavily, Serper, Exa, Jina, Firecrawl, SearXNG, Ollama). `pi install npm:@juicesharp/rpiv-web-tools`
 - 🔥 [@ollama/pi-web-search](https://pi.dev/packages/@ollama/pi-web-search) - Ollama web search and fetch API integration. `pi install npm:@ollama/pi-web-search`
 - [pi-smart-fetch](https://github.com/Thinkscape/agent-smart-fetch) - Desktop browser TLS emulation, batch fetching, multi-format output (markdown/html/text/json). `pi install npm:pi-smart-fetch`
@@ -83,7 +83,7 @@ Web search and content fetching packages that give Pi access to internet informa
 
 MCP (Model Context Protocol) adapter packages for connecting to external tool ecosystems.
 
-- 🔥 [pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) - MCP adapter that replaces hundreds of MCP tool definitions with ~200 token proxy tools. Supports lazy startup, metadata caching, and direct connect tools. `pi install npm:pi-mcp-adapter`
+- 🔥 [pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) - On-demand MCP discovery and calls, lazy startup, metadata caching and optional direct tools. The author estimates ~200 tokens for the proxy definition, excluding discovery and call content. `pi install npm:pi-mcp-adapter`
 
 > MCP ecosystem integration: [Bright Data Web MCP](https://github.com/earendil-works/pi/discussions/76), [Scrapeless MCP](https://github.com/earendil-works/pi/discussions/74), and any MCP-compatible server.
 
@@ -94,7 +94,7 @@ MCP (Model Context Protocol) adapter packages for connecting to external tool ec
 Subagent packages for task delegation, parallel execution, and multi-agent orchestration.
 
 - 🔥 [pi-subagents](https://github.com/nicobailon/pi-subagents) - Community subagent extension maintained by Nico Bailon (nicobailon), with chain, parallel execution, and TUI clarification. `pi install npm:pi-subagents`
-- 🔥 [@tintinweb/pi-subagents](https://github.com/tintinweb/pi-subagents) - Claude Code-style subagents with parallel background agents, real-time widgets, and Git worktree isolation. `pi install npm:@tintinweb/pi-subagents`
+- 🔥 [@tintinweb/pi-subagents](https://github.com/tintinweb/pi-subagents) - Claude Code-style subagents using host SDK sessions, with parallel background tasks, live widgets and optional Git worktree isolation. `pi install npm:@tintinweb/pi-subagents`
 - 🔥 [@gotgenes/pi-subagents](https://pi.dev/packages/@gotgenes/pi-subagents) - Friendly fork of tintinweb's subagents. `pi install npm:@gotgenes/pi-subagents`
 - [@narumitw/pi-subagents](https://github.com/narumiruna/pi-extensions) - Subagents with single/parallel/chain execution modes. `pi install npm:@narumitw/pi-subagents`
 - [pi-interactive-subagents](https://github.com/HazAT/pi-interactive-subagents) - Async interactive subagents, fully non-blocking with multiplexer support. `pi install git:github.com/HazAT/pi-interactive-subagents`
@@ -126,6 +126,7 @@ Terminal UI enhancement packages for better interactive experience.
 
 Security and permission control packages.
 
+- [pi-warden](https://github.com/DevMortimer/pi-warden) - Tool-call and project-rule supervision with TypeSafe Jev or OpenRouter, plus offline pattern checks. Requires Node 22.19+; model judgments are not a sandbox. `pi install npm:pi-warden`
 - 🔥 [@gotgenes/pi-permission-system](https://github.com/gotgenes/pi-packages) - Three-tier permission states (allow/deny/ask), lifecycle hook integration, subagent permission forwarding, audit logs. `pi install npm:@gotgenes/pi-permission-system`
 - [@aliou/pi-guardrails](https://github.com/aliou/pi-guardrails) - Safety guardrail suite: file protection policies, path access control outside the workspace, confirmation/blocking of risky shell commands, with guided onboarding. `pi install npm:@aliou/pi-guardrails`
 - [pi-sandbox](https://github.com/carderne/pi-sandbox) - OS-level bash sandbox (Anthropic sandbox-runtime) plus file allow/deny, with interactive approval on intercept. `pi install npm:pi-sandbox`
@@ -143,6 +144,7 @@ Security and permission control packages.
 
 Development tools and code intelligence packages.
 
+- [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) - Single-agent Jev search ranking, pre-edit checks, and task-baseline diff review. Requires Pi 0.85+, Node 20+, and TYPESAFE_API_KEY. Clone the repository and run its install.sh first; replace the path below with that checkout. `pi install /absolute/path/to/pi-jev-code`
 - 🔥 [pi-lens](https://github.com/apmantza/pi-lens) - Real-time code feedback — LSP, linters, formatters, type checking, structural analysis. `pi install npm:pi-lens`
 - 🔥 [@nitra/cursor](https://pi.dev/packages/@nitra/cursor) - CLI to download Cursor rules into local repositories. `pi install npm:@nitra/cursor`
 - 🔥 [@narumitw/pi-lsp](https://github.com/narumiruna/pi-extensions) - Configurable LSP diagnostics and source fixes, routed by file extension. `pi install npm:@narumitw/pi-lsp`
@@ -172,6 +174,7 @@ Persistent memory packages for retaining information across sessions.
 
 Context management packages for optimizing token usage.
 
+- [pi-fast-jev-compaction](https://github.com/QuentinDanblon/pi-fast-jev-compaction) - Jev scores old tool calls/results for per-request pruning while preserving session history. Requires a TypeSafe key; install this Git repository because the same-name npm package belongs to another author. `pi install git:github.com/QuentinDanblon/pi-fast-jev-compaction`
 - 🔥 [context-mode](https://pi.dev/packages/context-mode) - MCP plugin that saves 98% of context window with sandboxed code execution and FTS5 knowledge base. `pi install npm:context-mode`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - Summarizes completed tool call batches and prunes raw output from LLM context. 5 pruning modes. `pi install npm:pi-context-prune`
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Real-time graphical display of provider prefix cache hits and misses. `pi install npm:pi-cache-graph`
@@ -268,6 +271,7 @@ Communication and collaboration packages.
 
 Other utility packages.
 
+- [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) - Routes prompts across authenticated Pi models using Jev task judgments, budget policy, and cache-aware switching. Requires a TypeSafe key; budget caps change routing rather than stop spending. `pi install npm:pi-jev-model-router`
 - 🔥 [@juicesharp/rpiv-ask-user-question](https://github.com/juicesharp/rpiv-mono) - Interactive ask_user tool with searchable split-pane selection UI, multi-select, and free input. `pi install npm:@juicesharp/rpiv-ask-user-question`
 - 🔥 [pi-markdown-preview](https://pi.dev/packages/pi-markdown-preview) - Renders markdown + LaTeX previews with terminal, browser, and PDF output. `pi install npm:pi-markdown-preview`
 - 🔥 [pi-studio](https://pi.dev/packages/pi-studio) - Dual-pane browser workspace with prompt/response editing, annotations, and live preview. `pi install npm:pi-studio`

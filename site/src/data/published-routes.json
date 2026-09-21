@@ -1,0 +1,86 @@
+{
+  "packages": {
+    "pi-web-access": {
+      "status": "active",
+      "slug": "pi-web-access",
+      "canonicalName": "pi-web-access",
+      "archive": {
+        "name": "pi-web-access",
+        "url": "https://github.com/nicobailon/pi-web-access",
+        "install": "pi install npm:pi-web-access",
+        "kind": "packages",
+        "categories": [
+          "web-access-search"
+        ],
+        "descriptions": {
+          "en": [
+            "Web search, URL fetching, PDF extraction and YouTube analysis. Keyless search defaults to Exa MCP with configured fallbacks; DuckDuckGo is explicit-only."
+          ],
+          "zh": [
+            "Web 搜索、URL 获取、PDF 提取与 YouTube 理解；默认免 Key 搜索使用 Exa MCP，按配置降级，DuckDuckGo 需显式选择。"
+          ]
+        }
+      }
+    },
+    "tintinweb-pi-subagents": {
+      "status": "active",
+      "slug": "tintinweb-pi-subagents",
+      "canonicalName": "@tintinweb/pi-subagents",
+      "archive": {
+        "name": "@tintinweb/pi-subagents",
+        "url": "https://github.com/tintinweb/pi-subagents",
+        "install": "pi install npm:@tintinweb/pi-subagents",
+        "kind": "packages",
+        "categories": [
+          "subagents"
+        ],
+        "descriptions": {
+          "en": [
+            "Claude Code-style subagents using host SDK sessions, with parallel background tasks, live widgets and optional Git worktree isolation."
+          ],
+          "zh": [
+            "Claude Code 风格子代理，在宿主 SDK 会话中运行，支持并行后台任务、实时 widget 和可选 Git worktree 隔离。"
+          ]
+        }
+      }
+    },
+    "pi-mcp-adapter": {
+      "status": "active",
+      "slug": "pi-mcp-adapter",
+      "canonicalName": "pi-mcp-adapter",
+      "archive": {
+        "name": "pi-mcp-adapter",
+        "url": "https://github.com/nicobailon/pi-mcp-adapter",
+        "install": "pi install npm:pi-mcp-adapter",
+        "kind": "packages",
+        "categories": [
+          "mcp-adapter"
+        ],
+        "descriptions": {
+          "en": [
+            "On-demand MCP discovery and calls, lazy startup, metadata caching and optional direct tools. The author estimates ~200 tokens for the proxy definition, excluding discovery and call content."
+          ],
+          "zh": [
+            "按需发现与调用 MCP 工具，支持惰性启动、元数据缓存和可选直接工具。作者估计代理定义约 200 Token，不含发现结果及调用内容。"
+          ]
+        }
+      }
+    }
+  },
+  "categories": {
+    "subagents": {
+      "status": "active",
+      "slug": "subagents"
+    },
+    "web-access-search": {
+      "status": "active",
+      "slug": "web-access-search"
+    }
+  },
+  "topics": {
+    "jev": {
+      "status": "active",
+      "slug": "jev"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+---
+import EditorialPage from '../../components/EditorialPage.astro';
+import { getPublishedSlugs } from '../../lib/published-routes';
+
+export function getStaticPaths() {
+  return getPublishedSlugs('topics').map(slug => ({ params: { slug } }));
+}
+const { slug } = Astro.params;
+---
+<EditorialPage kind="topics" slug={slug} locale="en" />

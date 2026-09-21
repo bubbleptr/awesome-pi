@@ -1,0 +1,200 @@
+{
+  "slug": "subagents",
+  "title": {
+    "en": "Pi Subagents: Sessions, Parallel Work & Worktrees",
+    "zh": "Pi 子代理选型：会话、并行任务与 Worktree"
+  },
+  "description": {
+    "en": "Compare Pi subagent execution, optional Git worktrees, context isolation, concurrency and token costs with source-verified examples.",
+    "zh": "对比 Pi 子代理执行机制、可选 Git worktree、上下文隔离、并发限制与 Token 开销，附源码核验与示例。"
+  },
+  "intro": {
+    "en": [
+      "Pi exposes read, write, edit and bash by default. Subagent orchestration is added by extensions, which schedule child sessions and return their results to the parent.",
+      "Choose along three separate axes: where the child runs, what context it receives, and which files it may edit. A separate session does not automatically provide a separate working directory."
+    ],
+    "zh": [
+      "Pi 默认提供 read、write、edit、bash 四个工具。子代理编排通过扩展补充，由扩展调度子会话并将结果交回父会话。",
+      "选型时分别判断：子任务在哪个进程执行、继承哪些上下文、修改哪份文件。独立会话不会自动拥有独立工作目录。"
+    ]
+  },
+  "sections": [
+    {
+      "id": "execution",
+      "title": {
+        "en": "Compare execution models",
+        "zh": "先区分执行方式"
+      },
+      "paragraphs": {
+        "en": [
+          "The current pi-subagents runs foreground children inside the parent SDK process and background children in a detached runner. @tintinweb/pi-subagents runs ordinary foreground and background agents inside the host SDK process; only its scripted workflow interpreter uses a worker thread.",
+          "Both packages now support optional worktrees. The useful distinction is lifecycle and handoff: Nico’s managed workflow worktrees capture patches and manifests; Tintin preserves completed changes on local branches. Neither merges those changes just because a child completed."
+        ],
+        "zh": [
+          "当前 pi-subagents 的前台子任务在父进程中执行 SDK 会话，后台任务使用独立 runner。@tintinweb/pi-subagents 的普通前台和后台任务都在宿主进程中运行 SDK 会话，脚本工作流解释器另用 worker 线程。",
+          "两个包目前都支持可选 worktree。更有用的区别是生命周期与交接：Nico 的托管工作流 worktree 记录补丁及交接清单；Tintin 将完成后的修改保存在本地分支。子任务完成都不等于修改已合并。"
+        ]
+      }
+    },
+    {
+      "id": "choose",
+      "title": {
+        "en": "Choose for the work",
+        "zh": "按任务选择"
+      },
+      "paragraphs": {
+        "en": [
+          "For parallel reading or independent reviews, separate sessions in the same checkout avoid worktree setup and let reviewers see your uncommitted diff. For concurrent writers, assign disjoint files or explicitly request worktrees.",
+          "Choose Tintin when you want Agent/get_subagent_result, live widgets and steerable background agents. Choose Nico when you want its worker/reviewer profiles, chains, scripted workflows and detached background artifacts. Test the installed version in your own TUI or SDK host before relying on UI behavior."
+        ],
+        "zh": [
+          "并行阅读或独立审查可共用工作目录，避免 worktree 创建开销，也能看见未提交 diff。多个代理同时写代码时，应分配互不重叠的文件，或明确要求 worktree。",
+          "需要 Agent/get_subagent_result、实时组件和可中途引导的后台代理时可选 Tintin；需要 worker/reviewer 角色、链式任务、脚本工作流与独立后台产物时可选 Nico。依赖界面行为前，应在自己的 TUI 或 SDK 宿主中验证已安装版本。"
+        ]
+      }
+    },
+    {
+      "id": "cost",
+      "title": {
+        "en": "Token cost and context isolation",
+        "zh": "Token 成本与上下文隔离"
+      },
+      "paragraphs": {
+        "en": [
+          "Estimate total usage as parent input/output + every child’s input/output + result summaries. N parallel children can pay for N copies of the same supplied context. Process separation and worktrees do not reduce token prices.",
+          "Prefer a focused task and minimal context for a scout; fork history only when the child needs the discussion. Restrict tools, choose an appropriate model and cap concurrency. Compare reported child token/cache usage on the same task; no cross-package token benchmark was run for this guide."
+        ],
+        "zh": [
+          "估算总用量时，要相加父会话输入输出、每个子任务的输入输出及结果汇总。N 个并行子任务可能支付 N 份相同上下文。进程或 worktree 隔离本身不会降低 Token 单价。",
+          "探查任务尽量提供明确问题和少量上下文，只有确实需要历史讨论时才分叉对话。限制工具、选择合适模型并设并发上限。用同一任务比较子代理报告的 Token 与缓存用量；本指南未做跨包 Token 基准测试。"
+        ]
+      }
+    },
+    {
+      "id": "first-run",
+      "title": {
+        "en": "Verify a first delegation",
+        "zh": "验证第一次委派"
+      },
+      "paragraphs": {
+        "en": [
+          "After installing one chosen package, restart Pi and first delegate a read-only inventory of the repository. Confirm that the parent receives a result, the child uses the expected model and the working tree stays unchanged.",
+          "For Tintin, the following Agent call requests background reading without a worktree. Open /agents to inspect the session. Only add isolation: \"worktree\" for a task that needs a separate committed checkout."
+        ],
+        "zh": [
+          "安装选中的一个包后重启 Pi，先委派只读的仓库清点任务。确认父会话收到结果、子代理使用预期模型，并检查工作区没有变化。",
+          "下面的 Tintin Agent 调用要求后台阅读，不创建 worktree。可打开 /agents 检查子会话；确实需要独立的已提交工作区时，再添加 isolation: \"worktree\"。"
+        ]
+      },
+      "code": "Agent({\n  subagent_type: \"Explore\",\n  prompt: \"List the test commands and their source files. Do not edit files.\",\n  description: \"Find test commands\",\n  run_in_background: true\n})"
+    }
+  ],
+  "resources": [
+    {
+      "name": "@tintinweb/pi-subagents",
+      "summary": {
+        "en": "SDK child sessions with background queuing, live TUI visibility and optional Git worktrees.",
+        "zh": "通过 SDK 子会话提供后台队列、实时 TUI 状态与可选 Git worktree。"
+      },
+      "mechanism": {
+        "en": "Ordinary agents call createAgentSession in the host process. Background work returns an ID and sends a completion notification; worktree isolation changes the child working directory. Workflow scripts run in a worker thread.",
+        "zh": "普通代理在宿主进程内调用 createAgentSession。后台任务先返回 ID，完成后通知父会话；worktree 隔离改变子代理工作目录。工作流脚本运行在线程 worker 中。"
+      },
+      "prerequisites": {
+        "en": "Pi ≥ 0.84.0 and an authenticated model. Only worktree mode requires Git, a repository and at least one commit; ordinary child sessions can run outside Git repositories.",
+        "zh": "需要 Pi ≥ 0.84.0 及已授权模型。只有 worktree 模式需要 Git、仓库和至少一个提交，普通子会话可在非 Git 目录运行。"
+      },
+      "limitations": {
+        "en": "Background concurrency defaults to 10; excess work queues. Foreground capacity is separate and defaults to unlimited (0). Worktrees start from committed history and cannot see staged or uncommitted parent changes. Filesystem separation is not an OS sandbox.",
+        "zh": "后台并发默认 10，超出后排队；前台并发独立计算，默认 0 表示不限。Worktree 从已提交历史创建，看不到父目录的暂存或未提交修改。工作目录隔离不是操作系统沙箱。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.19.0 · e955e29c51b7a6cce37e1108cd2d6c57a77e151c",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Agent execution",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/agent-runner.ts"
+          },
+          {
+            "label": "Concurrency and lifecycle",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/agent-manager.ts"
+          },
+          {
+            "label": "Worktree implementation",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/worktree.ts"
+          },
+          {
+            "label": "Tool usage and settings",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/README.md"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Each child sends its task, selected context and tool results to its configured model provider. inherit_context is false by default; the general-purpose agent still inherits the parent system prompt.",
+        "zh": "每个子代理把任务、选定上下文和工具结果发送给自己的模型供应商。inherit_context 默认 false；general-purpose 仍继承父会话系统提示词。"
+      },
+      "failure": {
+        "en": "A requested worktree that cannot be created fails the tool call instead of silently sharing the parent directory. Completed worktree changes are preserved on a local pi-agent-<id> branch; the temporary directory is removed.",
+        "zh": "明确要求的 worktree 创建失败会使工具调用失败，不会悄悄退回父目录。完成后的修改保存在本地 pi-agent-<id> 分支，临时目录会被移除。"
+      }
+    },
+    {
+      "name": "pi-subagents",
+      "summary": {
+        "en": "Focused workers, parallel or chained tasks, and observable background runs.",
+        "zh": "专注任务的 worker、并行或串行任务，以及可观察的后台执行。"
+      },
+      "mechanism": {
+        "en": "Foreground children use SDK sessions in the parent process. Background children use a detached runner process hosting SDK sessions. Managed worktrees are optional here too, including per-child isolation in workflows.",
+        "zh": "前台子代理使用父进程中的 SDK 会话；后台子代理使用承载 SDK 会话的独立 runner 进程。此包同样支持可选的托管 worktree，包括按工作流子任务隔离。"
+      },
+      "prerequisites": {
+        "en": "A Pi host and authorized child models; npm Pi uses the detached Node runner for background work. Managed worktrees require Git and a clean source checkout. The documented standalone boundary is Pi 0.86.1 Linux x64.",
+        "zh": "需要 Pi 和已授权的子模型；npm 版 Pi 的后台任务使用独立 Node runner。托管 worktree 要求 Git 及干净的来源工作区。上游记录的独立二进制兼容边界是 Pi 0.86.1 Linux x64。"
+      },
+      "limitations": {
+        "en": "Separate context does not separate files. Without worktrees, coordinate writers explicitly. globalConcurrencyLimit defaults to 20 children inside a run, while maxSubagentSpawnsPerRun separately defaults to 64 total admissions. These are not a token budget.",
+        "zh": "独立上下文不会隔离文件；不使用 worktree 时须明确分配写入责任。globalConcurrencyLimit 默认限制单次执行内同时运行 20 个子任务，maxSubagentSpawnsPerRun 另限总接纳 64 个；这些都不是 Token 预算。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.70.1 · 1ac7b5e2652e9571164847ac2905ab4aded92791",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Foreground SDK execution",
+            "url": "https://github.com/nicobailon/pi-subagents/blob/1ac7b5e2652e9571164847ac2905ab4aded92791/src/runs/foreground/execution.ts"
+          },
+          {
+            "label": "Detached background runner",
+            "url": "https://github.com/nicobailon/pi-subagents/blob/1ac7b5e2652e9571164847ac2905ab4aded92791/src/runs/background/async-execution.ts"
+          },
+          {
+            "label": "Workflow and worktree reference",
+            "url": "https://github.com/nicobailon/pi-subagents/blob/1ac7b5e2652e9571164847ac2905ab4aded92791/docs/workflows.md"
+          },
+          {
+            "label": "Concurrency configuration",
+            "url": "https://github.com/nicobailon/pi-subagents/blob/1ac7b5e2652e9571164847ac2905ab4aded92791/docs/configuration.md"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Tasks, supplied or forked context and tool output reach each selected model provider. Forking a long parent conversation can repeat substantial input context.",
+        "zh": "任务、传入或分叉的上下文及工具输出会发送到各选定模型供应商。分叉长对话可能重复大量输入上下文。"
+      },
+      "failure": {
+        "en": "Inspect failed runs and captured artifacts before retrying. Worktree handoff records preserve patches and cleanup status; a successful child result does not imply its changes were merged.",
+        "zh": "重试前检查失败记录与产物。Worktree 交接记录保留补丁和清理状态；子任务完成不代表修改已经合并。"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Pi defaults and extension model",
+      "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/README.md"
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "slug": "jev",
+  "title": {
+    "en": "TypeSafe AI (Jev) for Pi: Plugins, Setup & Comparison | Pi Index",
+    "zh": "TypeSafe AI（Jev）Pi 插件：安装、配置与选型 | Pi Index"
+  },
+  "description": {
+    "en": "Compare four Jev integrations for Pi: context pruning, code checks, tool supervision, and model routing. Verified setup, API keys, data sharing, failure behavior, and source revisions.",
+    "zh": "比较四种 Pi 的 Jev 集成：上下文裁剪、代码检查、工具调用监督与模型路由。核验安装配置、API Key、外发数据、故障行为及源码版本。"
+  },
+  "intro": {
+    "en": [
+      "TypeSafe AI is the company behind Jev, its first public System One model, announced on September 15, 2026 in early access. Jev returns typed decisions and probabilities for questions defined by software. These community Pi extensions use it as a judging service; your selected coding model still writes the code.",
+      "Start with TypeSafe's official announcement, documentation, and API console in the sources below. Choose a plugin by the decision you need: retain context, examine an edit, supervise tool use, or select the next coding model. This comparison was source-reviewed on September 21, 2026; we did not run paid API evaluations."
+    ],
+    "zh": [
+      "TypeSafe AI 是 Jev 背后的公司。2026 年 9 月 15 日，官方以 early access 形式发布首个公开的 System One 模型 Jev：软件预先定义问题，模型返回带概率的结构化判定。这些社区 Pi 扩展将它接为判定服务，具体代码仍由你选择的主模型编写。",
+      "下方来源提供 TypeSafe 官方发布文、文档和 API 控制台入口。按你要解决的问题选择插件：保留哪些上下文、是否应修改代码、怎样监督工具调用，或下一轮使用哪个主模型。本页于 2026 年 9 月 21 日查阅源码与文档，未进行付费 API 实测。"
+    ]
+  },
+  "sections": [
+    {
+      "id": "setup-key",
+      "title": {
+        "en": "API key and first check",
+        "zh": "API Key 与首次检查"
+      },
+      "paragraphs": {
+        "en": [
+          "Create a TypeSafe account in the official console and confirm that the key can access Jev. The shell variable below is accepted by all four candidates. Set it before starting Pi and substitute your own key locally. Installation commands appear on the resource cards and come from the catalog.",
+          "After installing, restart Pi. Each extension also makes requests to a judgment provider; an existing subscription to your coding model does not supply TypeSafe access. Start with one extension so its interventions and request counts remain easy to inspect."
+        ],
+        "zh": [
+          "先在官方控制台创建 TypeSafe 账户，确认 Key 有 Jev 访问权限。四个候选都接受下方环境变量；在启动 Pi 前设置，并在本机替换为自己的 Key。安装命令列在资源卡片中，统一从目录数据读取。",
+          "安装后重启 Pi。这些扩展会额外请求判定服务，已有的主模型订阅不会自动提供 TypeSafe 访问权限。建议先启用一个扩展，便于查看介入效果和请求数。"
+        ]
+      },
+      "code": "export TYPESAFE_API_KEY='YOUR_TYPESAFE_API_KEY'"
+    },
+    {
+      "id": "compaction-setup",
+      "title": {
+        "en": "Context pruning: preserve records and inspect savings",
+        "zh": "上下文裁剪：保留记录并检查节省情况"
+      },
+      "paragraphs": {
+        "en": [
+          "For QuentinDanblon's pi-fast-jev-compaction, use the Git installation on its card. The npm package with the same name points to a different author's repository. Optional configuration belongs in ~/.pi/agent/fast-jev-compaction.json; the example keeps the default background scoring and 0.5 retention threshold. Run /jev-compaction for status, /jev-compaction probe for one live key check, or /jev-compaction off to disable pruning.",
+          "The context hook changes the next model request; it does not replace Pi's persisted summary compaction. User/assistant text and thinking stay intact. Recent calls are protected; older results can be shortened, and whole call/result pairs are removed only when the tool is classified as read-only. Long arguments of retained calls may also be abridged.",
+          "The author's simulator reports 31.8% and 37.7% net savings for two screenshot-heavy sessions under background scoring, including a modeled cache rewrite penalty. Those sessions had about 90% tool-result payload. These are author-reported replay estimates, not our measurements or a promise for text-heavy work. Compare your provider's actual usage and cache cost as well as the plugin's character counter."
+        ],
+        "zh": [
+          "QuentinDanblon 的 pi-fast-jev-compaction 请使用卡片中的 Git 安装方式。同名 npm 包指向另一作者的仓库。可选配置位于 ~/.pi/agent/fast-jev-compaction.json；示例保留默认后台评分与 0.5 保留阈值。用 /jev-compaction 查看状态，/jev-compaction probe 发起一次真实 Key 检查，/jev-compaction off 关闭裁剪。",
+          "context Hook 只改变下一次主模型请求，不替换 Pi 写入会话的摘要压缩。用户与助手文本、思考内容保持原样。近期调用受保护；旧结果可截短，仅当工具被判为只读时才整对删除调用和结果；保留调用的过长参数也可能缩写。",
+          "作者的模拟器在两个截图密集会话中报告后台评分净节省 31.8% 与 37.7%，计算中包含估算的缓存重写成本；这两个会话约 90% 的载荷来自工具结果。这是作者的回放估算，不是本站实测，也不能推广到文本密集任务。验证时同时观察供应商实际用量、缓存成本和插件字符计数。"
+        ]
+      },
+      "code": "{\n  \"enabled\": true,\n  \"pruneInBackground\": true,\n  \"keepThreshold\": 0.5,\n  \"preserveRecentMessages\": 6\n}"
+    },
+    {
+      "id": "code-setup",
+      "title": {
+        "en": "Code checks: local installation and thresholds",
+        "zh": "代码检查：本地安装与阈值"
+      },
+      "paragraphs": {
+        "en": [
+          "pi-jev-code has no npm package at the verification date. Clone KamilPostrozny/pi-jev-code, open that directory, and run its install.sh to install runtime dependencies before using the local-path command on its card. Replace /absolute/path/to/pi-jev-code with your checkout. The verified manifest is v0.5.2 and pins @typesafe-ai/sdk to 0.6.0.",
+          "Use /jev-code status to check the key and enabled gates. /jev-code preedit on|off, /jev-code rank on|off, and /jev-code diff on|off control them separately. The gate blocks hard scope/target/design/requirement concerns at 0.80 and evidence/context concerns at 0.90. Strong, unambiguous evidence for the same target can resolve an evidence-only retry; it does not override a hard concern.",
+          "The final review runs after an edited agent turn and includes changes committed since the user task's baseline. REVIEW or FAIL can ask the same agent to continue; the automatic audit is capped at three reviews per task. Inspect /jev-code telemetry and .pi/jev-code/telemetry.jsonl to see checks and outcomes. This remains a single-agent workflow."
+        ],
+        "zh": [
+          "核验时 pi-jev-code 尚无 npm 包。先克隆 KamilPostrozny/pi-jev-code，进入目录运行其 install.sh 安装运行依赖，再使用卡片中的本地路径安装命令；将 /absolute/path/to/pi-jev-code 换成实际目录。核验的包版本是 v0.5.2，@typesafe-ai/sdk 固定为 0.6.0。",
+          "用 /jev-code status 检查 Key 与开关。/jev-code preedit on|off、/jev-code rank on|off、/jev-code diff on|off 分别控制三个环节。范围、目标、设计、需求的硬性风险阈值为 0.80；证据或上下文不足阈值为 0.90。同目标的强且无歧义证据可以解除仅因证据不足产生的重试拦截，不会覆盖硬性风险。",
+          "最终审查在发生编辑的 Agent 回合结束后运行，包含用户任务基线以来已经提交的修改。REVIEW 或 FAIL 可让同一个 Agent 继续处理，每个任务最多自动审查三次。通过 /jev-code telemetry 和 .pi/jev-code/telemetry.jsonl 查看判定及结果；它仍是单 Agent 工作流。"
+        ]
+      }
+    },
+    {
+      "id": "warden-setup",
+      "title": {
+        "en": "Supervision: choose online judgment and intervention mode",
+        "zh": "监督：选择在线判定和介入方式"
+      },
+      "paragraphs": {
+        "en": [
+          "After installing pi-warden, run /warden enable, read the data-sharing notice, and supply a key to enable Jev judgments. Skipping the key keeps only offline guards. /warden test sends a synthetic request only when an online judge is enabled; otherwise it checks patterns locally. /warden status shows consent, backend, request count, and mode.",
+          "The user file is ~/.pi/agent/pi-warden/config.json. The example below selects interactive confirmation; the default steer mode returns a held action to the agent to reconsider. In a headless session confirm falls back to steer. A project .pi/pi-warden.json cannot grant consent or change the judgment backend. Put project rules in pi-warden.md, one heading per rule. Merge this snippet into the existing user file and keep the typesafe: true setting written by /warden enable; replacing the entire file would disable online judgment.",
+          "TypeSafe is the default backend. OpenRouter is an alternative selected with typesafeBackend: openrouter in the user file and OPENROUTER_API_KEY; it uses that provider's judgment backend, not Jev. This page reviews the published npm v0.28.4 payload and its gitHead. The repository main branch was already v0.33.3, so newer main-branch behavior is not assumed here."
+        ],
+        "zh": [
+          "安装 pi-warden 后运行 /warden enable，阅读数据外发说明并提供 Key 才会启用 Jev；跳过 Key 仅保留离线检查。/warden test 只有在在线判定已启用时才发送合成请求，否则仅验证本地模式规则。/warden status 可查看授权、后端、请求计数和模式。",
+          "用户配置位于 ~/.pi/agent/pi-warden/config.json。下方示例选择交互确认；默认 steer 模式将被拦截的调用退回给 Agent 重新考虑。无界面时 confirm 会回退为 steer。项目的 .pi/pi-warden.json 不能授予外发许可或更换判定后端。项目规则写入 pi-warden.md，每个标题对应一条规则。 请将示例合并进现有用户配置，保留 /warden enable 写入的 typesafe: true；覆盖整个文件会关闭在线判定。",
+          "默认后端是 TypeSafe。也可在用户配置中设 typesafeBackend: openrouter 并提供 OPENROUTER_API_KEY，此时使用该后端的模型判定，不是 Jev。本页核验 npm 已发布的 v0.28.4 包及其 gitHead；当时 main 分支已到 v0.33.3，不将尚未发布的新行为算入该安装包。"
+        ]
+      },
+      "code": "{\n  \"mode\": \"confirm\",\n  \"typesafeBackend\": \"typesafe\",\n  \"action\": { \"failOpen\": true }\n}"
+    },
+    {
+      "id": "router-setup",
+      "title": {
+        "en": "Model routing: authenticate targets and start with notifications",
+        "zh": "模型路由：授权目标模型并先观察推荐"
+      },
+      "paragraphs": {
+        "en": [
+          "pi-jev-model-router needs both a TypeSafe key and credentials for the target coding providers. Its built-in chains use OpenRouter; replace routes and kindModels with provider/model IDs available in your Pi installation when using other providers. /jev-router lists availability and authentication, while /jev-route followed by task text previews a recommendation.",
+          "Save the example in ~/.pi/agent/pi-jev-model-router.json and reload. notify mode records recommendations without switching. auto switches eligible prompts; confirm asks through Pi's selector, but falls through to automatic switching when the host has no selector. Use notify when you require observation without automatic changes.",
+          "At 70% budget pressure the default policy drops one tier; at 90% it normally selects quick, with an exception for high-demand work. It does not block turns or enforce a spending ceiling. Model availability, task floors, and prompt-cache cost also affect the choice. A missing target credential cannot be supplied by the router."
+        ],
+        "zh": [
+          "pi-jev-model-router 同时需要 TypeSafe Key 和目标主模型供应商的授权。默认候选链使用 OpenRouter；使用其他供应商时，应将 routes 与 kindModels 改为本机 Pi 支持的 provider/model ID。/jev-router 显示可用性与授权状态，/jev-route 后接任务文本可预览推荐。",
+          "将示例保存为 ~/.pi/agent/pi-jev-model-router.json 后重载。notify 只记录推荐，不切换模型；auto 对符合条件的提示执行切换；confirm 通过 Pi 的选择器询问，但宿主没有选择器时会直接自动切换。若需要纯观察，请用 notify。",
+          "默认预算压力达到 70% 时降一档，90% 时通常选择 quick，对高需求任务有例外；它不会阻断回合或执行消费硬上限。目标可用性、任务最低档位与提示词缓存成本也参与决策。路由器无法代替你授权目标供应商。"
+        ]
+      },
+      "code": "{\n  \"mode\": \"notify\",\n  \"budget\": {\n    \"dailyUsd\": 5,\n    \"monthlyUsd\": 100,\n    \"softRatio\": 0.7,\n    \"hardRatio\": 0.9\n  }\n}"
+    }
+  ],
+  "resources": [
+    {
+      "name": "pi-fast-jev-compaction",
+      "summary": {
+        "en": "For long sessions dominated by stale tool results; trims context while retaining the original session history.",
+        "zh": "适合大量旧工具结果占据上下文的长会话；裁剪请求内容，同时保留原始会话历史。"
+      },
+      "mechanism": {
+        "en": "A context hook scores old call/result pairs with Jev, then keeps, truncates, or removes eligible pairs. Background scores usually apply to a later request.",
+        "zh": "context Hook 用 Jev 为旧调用/结果评分，再保留、截短或删除符合条件的成对记录；后台评分通常在后续请求生效。"
+      },
+      "prerequisites": {
+        "en": "Node 20+, Pi extension API (development manifest: Pi 0.85.1), Git installation, and a TypeSafe key via FAST_JEV_API_KEY, JEV_API_KEY, or TYPESAFE_API_KEY.",
+        "zh": "Node 20+、Pi 扩展 API（开发清单使用 Pi 0.85.1）、Git 安装及 TypeSafe Key；支持 FAST_JEV_API_KEY、JEV_API_KEY 或 TYPESAFE_API_KEY。"
+      },
+      "dataSent": {
+        "en": "A fitted representation of conversation text and tool calls goes to TypeSafe. Results in the shared state are summarized; each judged result supplies up to 300 leading characters by default.",
+        "zh": "将适配长度后的对话文本和工具调用发送至 TypeSafe；共享状态中工具结果以摘要表示，待判定结果默认另附前 300 个字符。"
+      },
+      "failure": {
+        "en": "No key leaves context unchanged. Failed scoring keeps unscored calls; earlier cached decisions can still apply. Invalid call/result pairing returns the original messages.",
+        "zh": "无 Key 时不修改上下文；评分失败保留未获判定的调用，已有缓存判定仍可能生效；调用/结果配对校验失败则返回原消息。"
+      },
+      "limitations": {
+        "en": "Pruning can invalidate provider prompt caches. Read-only classification and model judgments have limits; the author's screenshot-session savings are not a general benchmark.",
+        "zh": "裁剪可能使供应商提示词缓存失效。只读分类与模型判断都有边界；作者截图会话的节省比例不能作为通用基准。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.1.0 · 679041b8511515c9a0fcebd617afebabd87ae7f6 (2026-09-18)",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "README / installation / replay estimates",
+            "url": "https://github.com/QuentinDanblon/pi-fast-jev-compaction/blob/679041b8511515c9a0fcebd617afebabd87ae7f6/README.md"
+          },
+          {
+            "label": "Context hook / scoring / safe application",
+            "url": "https://github.com/QuentinDanblon/pi-fast-jev-compaction/blob/679041b8511515c9a0fcebd617afebabd87ae7f6/index.ts"
+          },
+          {
+            "label": "Package requirements",
+            "url": "https://github.com/QuentinDanblon/pi-fast-jev-compaction/blob/679041b8511515c9a0fcebd617afebabd87ae7f6/package.json"
+          },
+          {
+            "label": "Same-name npm package metadata",
+            "url": "https://registry.npmjs.org/pi-fast-jev-compaction/0.2.0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pi-jev-code",
+      "summary": {
+        "en": "For one coding agent that needs search ranking, evidence checks before edits, and a review of its cumulative task diff.",
+        "zh": "适合给单个编程 Agent 增加搜索重排、编辑前证据检查与累计任务 diff 审查。"
+      },
+      "mechanism": {
+        "en": "Tool hooks rerank search results and gate mutations; agent_end reviews baseline-to-current changes and may request a same-agent follow-up.",
+        "zh": "工具 Hook 重排搜索结果并检查修改；agent_end 审查基线至当前的变更，必要时请求同一个 Agent 继续处理。"
+      },
+      "prerequisites": {
+        "en": "Pi ≥0.85.0, Node ≥20, Git for task diffs, TYPESAFE_API_KEY, and a local checkout with npm runtime dependencies installed via install.sh.",
+        "zh": "Pi ≥0.85.0、Node ≥20、用于任务 diff 的 Git、TYPESAFE_API_KEY，以及已用 install.sh 安装 npm 运行依赖的本地源码目录。"
+      },
+      "dataSent": {
+        "en": "TypeSafe receives task text, proposed resulting code, cumulative diff, repository excerpts, and recent verification output, bounded by the extension's text limits.",
+        "zh": "TypeSafe 接收任务文本、拟修改后的代码、累计 diff、仓库片段与近期验证输出；扩展按自身文本限制截断这些内容。"
+      },
+      "failure": {
+        "en": "Missing key disables automatic checks. Automatic API/runtime failures warn and allow normal work to continue; explicit Jev tools still require a valid key.",
+        "zh": "缺少 Key 会关闭自动检查；自动检查遇到 API 或运行错误时告警并放行正常工作，显式 Jev 工具仍要求有效 Key。"
+      },
+      "limitations": {
+        "en": "Not a multi-agent reviewer. Thresholds are heuristic, search parsing is conservative, and the final audit is post-turn with at most three automatic reviews per task.",
+        "zh": "不是多 Agent 审查器。阈值是启发式规则，搜索解析较保守；最终审查在回合之后执行，每个任务最多自动审查三次。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.5.2 · 6a6aa02e839e7953ab9fabb79e1cf247973e77c9 (2026-09-17)",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "README / single-agent workflow",
+            "url": "https://github.com/KamilPostrozny/pi-jev-code/blob/6a6aa02e839e7953ab9fabb79e1cf247973e77c9/README.md"
+          },
+          {
+            "label": "Hooks / thresholds / request data / failures",
+            "url": "https://github.com/KamilPostrozny/pi-jev-code/blob/6a6aa02e839e7953ab9fabb79e1cf247973e77c9/src/index.ts"
+          },
+          {
+            "label": "Runtime dependency installer",
+            "url": "https://github.com/KamilPostrozny/pi-jev-code/blob/6a6aa02e839e7953ab9fabb79e1cf247973e77c9/install.sh"
+          },
+          {
+            "label": "Package manifest",
+            "url": "https://github.com/KamilPostrozny/pi-jev-code/blob/6a6aa02e839e7953ab9fabb79e1cf247973e77c9/package.json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pi-warden",
+      "summary": {
+        "en": "For supervision of risky tool calls, project rules, repeated failures, and unverified completion claims, with a usable offline layer.",
+        "zh": "适合监督高风险工具调用、项目规则、重复失败及缺乏验证的完成声明，同时保留可用的离线检查层。"
+      },
+      "mechanism": {
+        "en": "Lifecycle hooks combine local patterns with pi-typesafe judgments. Steer feeds issues back to the agent; confirm can hold calls for human approval.",
+        "zh": "生命周期 Hook 将本地模式规则与 pi-typesafe 判定结合；steer 将问题反馈给 Agent，confirm 可挂起调用等待人工确认。"
+      },
+      "prerequisites": {
+        "en": "Node ≥22.19.0 and Pi ≥0.85.1 <1 per the published manifest. Jev requires consent plus a TypeSafe key; optional OpenRouter judgment uses OPENROUTER_API_KEY.",
+        "zh": "发行包清单要求 Node ≥22.19.0、Pi ≥0.85.1 且 <1。Jev 需要外发授权与 TypeSafe Key；可选 OpenRouter 判定使用 OPENROUTER_API_KEY。"
+      },
+      "dataSent": {
+        "en": "With consent, the selected provider receives redacted/truncated prompts, up to eight recent messages, action/code samples, rules, and guard-specific output or final-message samples. Redaction is best-effort.",
+        "zh": "授权后，所选供应商接收脱敏并截断的提示、最多八条近期消息、操作/代码样本、规则及相应检查所需的输出或最终消息样本；脱敏只提供尽力保护。"
+      },
+      "failure": {
+        "en": "No key/consent keeps offline checks. On service errors, default failOpen adds no new semantic hold but existing pattern holds remain; failOpen: false can raise a hold. Request-budget exhaustion falls back offline.",
+        "zh": "无 Key 或授权时保留离线检查。服务错误时，默认 failOpen 不新增语义拦截，但已有模式规则拦截仍在；failOpen: false 可提高到挂起级别。请求额度耗尽后回退离线。"
+      },
+      "limitations": {
+        "en": "An advisory extension, not an OS sandbox or proof of safety. confirm requires an interactive host; user-defined deny/confirmation rules can still apply in advise mode.",
+        "zh": "属于辅助监督扩展，不是操作系统沙箱，也不能证明安全。confirm 依赖交互宿主；用户自定义拒绝/确认规则在 advise 模式也可能生效。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "npm v0.28.4 · 725d05e3dd7e4d16d7c2dfba11d8cb9085144cad (2026-09-19)",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Published npm version / gitHead",
+            "url": "https://registry.npmjs.org/pi-warden/0.28.4"
+          },
+          {
+            "label": "Published-version configuration",
+            "url": "https://github.com/DevMortimer/pi-warden/blob/725d05e3dd7e4d16d7c2dfba11d8cb9085144cad/docs/configuration.md"
+          },
+          {
+            "label": "Published-version data handling",
+            "url": "https://github.com/DevMortimer/pi-warden/blob/725d05e3dd7e4d16d7c2dfba11d8cb9085144cad/docs/data-handling.md"
+          },
+          {
+            "label": "Pattern and API failure behavior",
+            "url": "https://github.com/DevMortimer/pi-warden/blob/725d05e3dd7e4d16d7c2dfba11d8cb9085144cad/src/guard.ts"
+          },
+          {
+            "label": "Consent and intervention hooks",
+            "url": "https://github.com/DevMortimer/pi-warden/blob/725d05e3dd7e4d16d7c2dfba11d8cb9085144cad/src/extension.ts"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pi-jev-model-router",
+      "summary": {
+        "en": "For choosing among already-authorized coding models based on task demand, spending policy, and the cost of losing a warm prompt cache.",
+        "zh": "适合按任务需求、消费策略与提示词缓存失效成本，在已经授权的主模型之间选择。"
+      },
+      "mechanism": {
+        "en": "An input hook asks Jev to classify the task, applies local tier/budget/cache rules, then calls Pi's setModel and setThinkingLevel before the turn.",
+        "zh": "input Hook 让 Jev 判断任务，再应用本地档位、预算、缓存规则，于回合前调用 Pi 的 setModel 与 setThinkingLevel。"
+      },
+      "prerequisites": {
+        "en": "Pi, Node 20+ per the README, TYPESAFE_API_KEY with Jev access, and authentication for every target provider. Defaults target OpenRouter models.",
+        "zh": "Pi、README 要求的 Node 20+、具 Jev 权限的 TYPESAFE_API_KEY，以及各目标供应商的授权；默认候选是 OpenRouter 模型。"
+      },
+      "dataSent": {
+        "en": "TypeSafe receives the prompt, recent user/assistant text (up to 4,000 characters after per-message clipping), cwd, active model, context token count, spend totals, caps, and budget pressure.",
+        "zh": "TypeSafe 接收提示、逐条截断后的近期用户/助手文本（合计最多 4,000 字符）、工作目录、当前模型、上下文 token 数、消费累计、额度与预算压力。"
+      },
+      "failure": {
+        "en": "Missing key, timeout, request failure, or no usable route leaves the current model in place. Unavailable targets are skipped through fallback chains; eligible input waits for classification.",
+        "zh": "缺 Key、超时、请求失败或没有可用路由时保留当前模型；目标不可用时按候选链回退。符合路由条件的输入会等待分类结果。"
+      },
+      "limitations": {
+        "en": "Budget caps do not stop spending. Cache penalties are estimates. confirm becomes automatic switching on hosts without a selector; notify is the observation-only mode.",
+        "zh": "预算额度不会停止消费；缓存成本是估算值。宿主缺少选择器时 confirm 会变成自动切换，纯观察应使用 notify。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "npm v0.3.0 · 5ca26ca1dac255252d9a83341dec0813301c8f97 (2026-09-21)",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "README / setup and route configuration",
+            "url": "https://github.com/da-vinci-noob/pi-jev-model-router/blob/5ca26ca1dac255252d9a83341dec0813301c8f97/README.md"
+          },
+          {
+            "label": "Actual TypeSafe request payload",
+            "url": "https://github.com/da-vinci-noob/pi-jev-model-router/blob/5ca26ca1dac255252d9a83341dec0813301c8f97/extensions/pi-jev-model-router/jev.ts"
+          },
+          {
+            "label": "Input hook / confirmation / failure behavior",
+            "url": "https://github.com/da-vinci-noob/pi-jev-model-router/blob/5ca26ca1dac255252d9a83341dec0813301c8f97/extensions/pi-jev-model-router/index.ts"
+          },
+          {
+            "label": "Tier and budget policy",
+            "url": "https://github.com/da-vinci-noob/pi-jev-model-router/blob/5ca26ca1dac255252d9a83341dec0813301c8f97/extensions/pi-jev-model-router/router.ts"
+          },
+          {
+            "label": "Published npm version / gitHead",
+            "url": "https://registry.npmjs.org/pi-jev-model-router/0.3.0"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "TypeSafe AI: Introducing System One Models & Jev (2026-09-15)",
+      "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev"
+    },
+    {
+      "label": "TypeSafe official documentation",
+      "url": "https://docs.typesafe.ai/"
+    },
+    {
+      "label": "TypeSafe API console",
+      "url": "https://console.typesafe.ai/"
+    }
+  ]
+}

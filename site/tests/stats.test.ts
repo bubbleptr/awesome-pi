@@ -3,7 +3,7 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Resource } from '../src/lib/catalog';
-import { loadCatalog } from '../src/lib/catalog';
+import { loadPublishedCatalog as loadCatalog } from '../src/lib/published-routes';
 import { emptySnapshot, formatCount, githubRepo, npmPackage, readSnapshot, registryRepo, statsFor, weeklyTrend } from '../src/lib/stats';
 
 describe('GitHub repository parsing', () => {
@@ -82,8 +82,7 @@ describe('stats snapshot', () => {
     expect(readSnapshot(file)).toEqual({ generatedAt: '2026-09-15T00:00:00.000Z', github: { 'a/b': { stars: 7 } }, npm: { pkg: { weekly: 42, trend: 5 } } });
   });
   test('maps resources to their repository and package stats', () => {
-    const catalog = loadCatalog();
-    const webAccess = catalog.resources.find(resource => resource.name === 'pi-web-access')!;
+    const webAccess: Resource = { id: 'web', name: 'pi-web-access', url: 'https://github.com/nicobailon/pi-web-access', install: 'pi install npm:pi-web-access', kind: 'packages', categories: [], descriptions: { en: [], zh: [] }, searchText: '' };
     expect(statsFor(webAccess, emptySnapshot())).toEqual({ repo: 'nicobailon/pi-web-access', package: 'pi-web-access', stars: null, weekly: null, trend: null });
     const snapshot = { ...emptySnapshot(), github: { 'nicobailon/pi-web-access': { stars: 100 } }, npm: { 'pi-web-access': { weekly: 50, trend: 10 } } };
     expect(statsFor(webAccess, snapshot)).toMatchObject({ stars: 100, weekly: 50, trend: 10 });

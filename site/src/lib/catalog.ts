@@ -17,6 +17,7 @@ export type Resource = {
 };
 export type Category = { id: string; name: string; kind: ResourceKind; count: number };
 export type Catalog = { resources: Resource[]; categories: Category[]; recordCount: number };
+export type ResourceArchive = Pick<Resource, 'name' | 'url' | 'install' | 'kind' | 'descriptions' | 'categories'>;
 
 const sections: Record<string, ResourceKind> = {
   Packages: 'packages', Themes: 'themes',
@@ -84,9 +85,24 @@ export function parseReadme(markdown: string): RawRecord[] {
 function identity(record: RawRecord): string { return `${record.name}\0${record.url}`; }
 function recordKey(record: RawRecord): string { return `${identity(record)}\0${record.kind}\0${record.category}`; }
 
-export function createCatalog(markdown: Record<Locale, string>): Catalog {
+export function createCatalog(markdown: Record<Locale, string>, archives: ResourceArchive[] = []): Catalog {
   const en = parseReadme(markdown.en);
   const zh = parseReadme(markdown.zh);
+  // Recover only registered resources; unrelated translation errors remain build failures.
+  for (const archive of archives) {
+    if (en.some(record => record.name === archive.name) && zh.some(record => record.name === archive.name)) continue;
+    const live = [...en, ...zh].filter(record => record.name === archive.name);
+    const references = live.length ? live : archive.categories.map(category => ({
+      name: archive.name, url: archive.url, install: archive.install, kind: archive.kind,
+      category, categoryName: [...en, ...zh].find(record => record.category === category)?.categoryName ?? category,
+      description: '',
+    }));
+    for (const [locale, records] of [['en', en], ['zh', zh]] as const) for (const reference of references) {
+      if (!records.some(record => recordKey(record) === recordKey(reference))) {
+        records.push({ ...reference, description: archive.descriptions[locale].join(' ') });
+      }
+    }
+  }
   if (!en.length || !zh.length) throw new Error('Catalog or translation is empty');
   const translations = new Map(zh.map(record => [recordKey(record), record]));
   const resources = new Map<string, Resource>();
@@ -119,9 +135,9 @@ export function createCatalog(markdown: Record<Locale, string>): Catalog {
   return { resources: [...resources.values()], categories: [...categories.values()], recordCount: en.length };
 }
 
-export function loadCatalog(): Catalog {
+export function loadCatalog(archives: ResourceArchive[] = []): Catalog {
   return createCatalog({
     en: readFileSync(new URL('../../../README.en.md', import.meta.url), 'utf8'),
     zh: readFileSync(new URL('../../../README.md', import.meta.url), 'utf8'),
-  });
+  }, archives);
 }
