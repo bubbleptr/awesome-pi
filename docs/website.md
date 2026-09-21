@@ -63,7 +63,7 @@ bun run --cwd site preview
 - Framework Preset：Other，由 `vercel.json` 提供构建指令。
 - 生产分支：`main`；功能分支用于预览部署。
 - 构建指令运行完整验证，失败时阻止发布。
-- 无数据库、服务端函数或运行时密钥需求。
+- 静态站点本身无数据库、服务端函数或运行时密钥需求；访问统计服务独立部署在 VPS。
 - `.vercel/`、`site/dist/`、依赖与本地截图不纳入版本控制。
 - 正式域名为 `piindex.dev`，DNS 托管在 Cloudflare，记录需设为 DNS only（关闭 CF 代理）供 Vercel 签发证书。canonical、OG 链接、sitemap 与 hreflang 均由 `site/astro.config.mjs` 的 `site` 派生；`site/public/robots.txt` 指向 `sitemap-index.xml`（由 `@astrojs/sitemap` 生成）。
 
@@ -71,13 +71,15 @@ bun run --cwd site preview
 
 ## 访问统计
 
-网站通过 `@vercel/analytics/astro` 接入 Vercel Web Analytics，在每个页面加载一次：目录使用 `Directory.astro`，分类、详情与专题使用共享 `EditorialPage.astro`。英文 `/` 和中文 `/zh/` 分别记录浏览量，可在 Vercel 控制台查看访客、浏览量、来源、国家/地区和设备等基础数据。
+2026-09-22 开始迁移到自托管 Plausible Community Edition v3.2.1。网站端接入与本地验证已完成，部署验收进行中；尚不能据此声称公共采集域名可用、真实事件已入库或仪表盘已验收。
 
-首次启用时，在 Vercel 的 **awesome-pi** 项目（域名 `awesome-pi-list.vercel.app`）中进入 **Analytics**，点击 **Enable**（如果尚未启用），然后重新部署包含此改动的版本。部署后访问网站，再到 Analytics 查看数据；仅安装包和本地验证不会使线上统计生效。
+站点标识为 `piindex.dev`，公共采集源为 `https://events.piindex.dev`，私有仪表盘入口为 `https://stats.piindex.dev`。统计服务部署在独立 VPS，部署文档、凭据和访问控制由运维管理。静态站点仍由 Vercel 托管。
 
-开发服务器使用 SDK 的开发模式，不发送正式统计数据；生产构建使用正式统计脚本。已接入 `command_copied` 与 `repo_clicked` 自定义事件；复制仅在剪贴板写入成功后计数，字段包含完整资源名、语言和页面来源，仓库点击另含 github/npm 目的地。徽章复制、站内导航和 TypeSafe 官网入口不计插件转化。自定义事件需要 Pro 或 Enterprise；2026-09-21 查询项目仍为 Hobby，需要用户自行处理套餐。
+目录页 `Directory.astro` 和分类、详情、专题共用的 `EditorialPage.astro` 各渲染一次本地 `Analytics.astro`。该组件异步加载基础 `/js/script.js`，由脚本记录当前页面浏览量；不启用自动外链统计，避免与显式仓库点击事件重复计数。异步加载使统计请求延迟时筛选、复制等页面交互仍可运行。`site/src/scripts/analytics.ts` 的统一 `track(window, name, properties)` 将属性传给 Plausible 的 `props`；脚本就绪前使用其兼容队列保存事件。Plausible 基础脚本默认忽略 localhost 与 127.0.0.1 的采集，本地验证不代表生产采集生效。
 
-接入和排查步骤见 [Vercel Web Analytics 官方指南](https://vercel.com/docs/analytics/quickstart)。
+`command_copied` 与 `repo_clicked` 的语义保持不变：复制仅在剪贴板写入成功后计数，字段包含完整资源名 `package`、语言 `locale` 和页面来源 `surface`，仓库点击另含 `destination`（github/npm）。徽章复制、站内导航和 TypeSafe 官网入口不计插件转化。CE 自托管支持这些自定义事件和属性，不再需要升级 Vercel 套餐；复制次数仍不等于实际安装次数。
+
+部署验收需要检查公共脚本、`/api/event`、真实页面浏览与两类自定义事件入库，以及私有仪表盘中的事件和属性。测试流量应与业务观察区分。Google Search Console 和发布后 14/30 天复盘继续沿用 [SEO 交付记录](seo-delivery.md) 的口径，采集缺口必须明确记录。实现接口可核对 [CE v3.2.1 事件源码](https://github.com/plausible/analytics/blob/v3.2.1/tracker/src/track.js)。
 
 ## 视觉验收
 

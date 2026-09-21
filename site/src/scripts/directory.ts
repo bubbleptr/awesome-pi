@@ -1,9 +1,8 @@
 import { matchesResource, readFilters, writeFilters, type Filters } from '../lib/filter';
 import { text } from '../lib/i18n';
 import { initializeInteractions } from './interactions';
-import type { track } from '@vercel/analytics';
 
-export function initializeDirectory(document: Document, window: Window, trackEvent?: typeof track): void {
+export function initializeDirectory(document: Document, window: Window): void {
   const root = document.querySelector<HTMLElement>('[data-directory]');
   if (!root) return;
   const locale = root.dataset.locale === 'zh' ? 'zh' : 'en';
@@ -69,6 +68,6 @@ export function initializeDirectory(document: Document, window: Window, trackEve
   });
   window.addEventListener('popstate', () => { filters = readFilters(window.location.search, categories); render(); });
 
-  initializeInteractions(document, window, trackEvent);
+  initializeInteractions(document, window);
   render();
 }
