@@ -1,14 +1,14 @@
 ---
 import Analytics from './Analytics.astro';
+import DirectoryGuides from './DirectoryGuides.astro';
 import { type Locale } from '../lib/catalog';
 import englishReadme from '../../../README.en.md?raw';
 import chineseReadme from '../../../README.md?raw';
 import { categoryLabel, kindOrder, repository, text } from '../lib/i18n';
 import { emptySnapshot, formatCount, parseSnapshot, statsFor } from '../lib/stats';
-import { createPublishedCatalog, packagePath, publishedRoutes, routePath } from '../lib/published-routes';
+import { createPublishedCatalog, packagePath } from '../lib/published-routes';
 import Icon from './Icon.astro';
 import '../styles/global.css';
-import '../styles/directory-guides.css';
 
 const { locale = 'en' } = Astro.props as { locale: Locale };
 const catalog = createPublishedCatalog({ en: englishReadme, zh: chineseReadme });
@@ -21,8 +21,6 @@ const socialImageUrl = new URL('/og-image-v4.png', Astro.site);
 const categoryMap = new Map(catalog.categories.map(category => [category.id, category]));
 const total = catalog.resources.length;
 const categoryUrl = (id: string) => `${base}?category=${id}`;
-const guides = Object.entries(publishedRoutes.categories).filter(([, route]) => route.status === 'active');
-const jevPublished = publishedRoutes.topics.jev?.status === 'active';
 const repoDestination = (url: string) => {
   const hostname = new URL(url).hostname;
   if (hostname === 'github.com' || hostname === 'www.github.com') return 'github';
@@ -120,11 +118,7 @@ const structuredData = {
         </div>
       </section>
 
-      {(guides.length > 0 || jevPublished) && <nav class="directory-guides" aria-label={locale === 'zh' ? '指南与专题' : 'Guides and topics'}>
-        <span class="directory-guides-label">{locale === 'zh' ? '选型指南' : 'Explore the guides'}</span>
-        {guides.map(([slug]) => <a class="guide-link" href={routePath('categories', slug, locale)}>{categoryLabel(categoryMap.get(slug)?.name ?? slug, locale)}<span aria-hidden="true">→</span></a>)}
-        {jevPublished && <a class="topic-link" href={routePath('topics', 'jev', locale)}>TypeSafe AI / Jev<span aria-hidden="true">→</span></a>}
-      </nav>}
+      <DirectoryGuides locale={locale} />
 
       <div class="directory-layout">
         <aside class="sidebar" aria-label={t.filter}>
