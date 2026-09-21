@@ -1,0 +1,194 @@
+{
+  "slug": "pi-web-access",
+  "title": {
+    "en": "pi-web-access: Install, Search Fallbacks, PDF & YouTube",
+    "zh": "pi-web-access：安装、搜索降级、PDF 与 YouTube"
+  },
+  "description": {
+    "en": "Set up pi-web-access with source-verified search routing, PDF extraction, YouTube dependencies and practical verification steps.",
+    "zh": "安装 pi-web-access，了解经源码核验的搜索降级、PDF 提取、YouTube 依赖与实际验证步骤。"
+  },
+  "intro": {
+    "en": [
+      "pi-web-access adds web_search, fetch_content and follow-up content retrieval to Pi. Use the installation command below, restart Pi, then begin with a public URL or a small search.",
+      "Zero setup applies to the keyless Exa MCP search path. It does not promise free access to every provider, offline operation, authenticated websites or YouTube analysis without an available backend."
+    ],
+    "zh": [
+      "pi-web-access 为 Pi 添加 web_search、fetch_content 和后续内容读取工具。使用下方安装命令，重启 Pi 后，先读取公开网址或做一次小范围搜索。",
+      "零配置指免 Key 的 Exa MCP 搜索路径，不代表所有供应商都免费、可以离线使用，或无需后端即可读取登录网站和分析 YouTube。"
+    ]
+  },
+  "sections": [
+    {
+      "id": "search-routing",
+      "title": {
+        "en": "How search falls back",
+        "zh": "搜索如何降级"
+      },
+      "paragraphs": {
+        "en": [
+          "Automatic search starts with configured SearXNG. When the active model is openai-codex it tries authenticated OpenAI first; otherwise Exa precedes OpenAI. Keyed Exa uses the direct API and unkeyed Exa uses MCP.",
+          "The remaining eligible sequence in this revision is Brave → Parallel → TinyFish → Search1API → Searchinfinity → Querit → Tavily → Firecrawl → Jina → SERPdive → Kagi → Bocha → Ollama → Perplexity → Gemini API/Web. Unavailable services are skipped. Cookie-based Gemini Web is opt-in.",
+          "DuckDuckGo is explicit-only. A named provider stays strict; searchRouting.providers can define an ordered route, and fallbackOn controls which failure types advance it. Do not assume every error silently selects another backend."
+        ],
+        "zh": [
+          "自动搜索先尝试已配置的 SearXNG。当前模型为 openai-codex 时，优先尝试已授权 OpenAI；否则 Exa 先于 OpenAI。有 Exa Key 使用直接 API，无 Key 使用 MCP。",
+          "此提交之后的可用来源顺序为 Brave → Parallel → TinyFish → Search1API → Searchinfinity → Querit → Tavily → Firecrawl → Jina → SERPdive → Kagi → Bocha → Ollama → Perplexity → Gemini API/Web。未配置的服务会跳过；依赖 Cookie 的 Gemini Web 需显式开启。",
+          "DuckDuckGo 需显式选择。指定单个 provider 时严格使用该来源；searchRouting.providers 可定义顺序，fallbackOn 决定哪些错误可以继续下一来源，不应假定所有错误都会自动降级。"
+        ]
+      }
+    },
+    {
+      "id": "fetch-routing",
+      "title": {
+        "en": "How URL extraction differs",
+        "zh": "网址提取的另一条路径"
+      },
+      "paragraphs": {
+        "en": [
+          "A GitHub repository can be cloned for local file access. Ordinary HTML first uses direct HTTP, Readability and an RSC parser. Configured self-hosted Firecrawl or Crawl4AI may follow; third-party hosted extractors require fetchRouting.allowRemoteHostedProviders: true for remote HTTP(S) targets.",
+          "That opt-in lets a remote service receive the target URL and perform its own fetch. It is separate from API search configuration. Neither the fallback chain nor “intelligent extraction” guarantees access to login-only, paywalled or anti-bot content."
+        ],
+        "zh": [
+          "GitHub 仓库可克隆后本地读取。普通 HTML 先使用直接 HTTP、Readability 及 RSC 解析；之后可尝试配置好的自托管 Firecrawl 或 Crawl4AI。远程 HTTP(S) 目标若要用第三方托管提取器，需配置 fetchRouting.allowRemoteHostedProviders: true。",
+          "开启后，远程服务会收到目标网址并自行抓取；这与搜索 API 配置分别控制。降级链或“智能提取”都不保证读取登录页、付费墙或反爬页面。"
+        ]
+      }
+    },
+    {
+      "id": "pdf",
+      "title": {
+        "en": "PDF dependencies and data paths",
+        "zh": "PDF 的依赖与数据路径"
+      },
+      "paragraphs": {
+        "en": [
+          "PDF extraction tries configured Datalab, then configured Gemini, then local unpdf/pdf.js. The local path does not need pdftotext, a browser or an API key, but reads only embedded text and has no OCR. Remote PDF tiers receive the PDF bytes.",
+          "Set pdf.provider to unpdf for local extraction; scanned pages may then return little or no text. Defaults are 20 MB and the first 100 pages. Remote errors can fall back locally, while cancellation and credential/configuration errors are not treated as ordinary recoverable failures."
+        ],
+        "zh": [
+          "PDF 按已配置的 Datalab、已配置的 Gemini、最后本地 unpdf/pdf.js 的顺序提取。本地路径不需要 pdftotext、浏览器或 Key，但只能读取内嵌文字，没有 OCR；远程 PDF 路径会收到文件内容。",
+          "设置 pdf.provider 为 unpdf 可选择本地提取；扫描件可能读不到有效文字。默认限制 20 MB、前 100 页。远程普通错误可回退本地，但取消及凭据/配置错误不会被当作普通可恢复错误。"
+        ]
+      },
+      "code": "{\n  \"pdf\": { \"provider\": \"unpdf\", \"maxSizeMB\": 20, \"maxPages\": 100 }\n}"
+    },
+    {
+      "id": "youtube",
+      "title": {
+        "en": "YouTube analysis versus frame extraction",
+        "zh": "区分 YouTube 理解与抽帧"
+      },
+      "paragraphs": {
+        "en": [
+          "YouTube understanding tries Gemini Web when browser cookies are explicitly allowed, then Gemini API, then Perplexity. Configure an available authorized backend; private and age-restricted videos can fail across the chain.",
+          "ffmpeg and yt-dlp are optional system binaries for retrieving YouTube frames as images. They are not prerequisites for remote transcript/visual descriptions. Local video frame extraction needs ffmpeg; video analysis can upload the file to Gemini."
+        ],
+        "zh": [
+          "YouTube 理解先尝试明确允许浏览器 Cookie 的 Gemini Web，再尝试 Gemini API、Perplexity。需要至少一个可用并已授权的后端；私密及年龄限制视频可能在整条链上失败。",
+          "ffmpeg 和 yt-dlp 是将 YouTube 帧提取为图片时的可选系统程序，并非远程转录/画面描述的前置条件。本地视频抽帧需要 ffmpeg；视频理解可能将文件上传到 Gemini。"
+        ]
+      }
+    },
+    {
+      "id": "verify",
+      "title": {
+        "en": "Configure and verify",
+        "zh": "配置并验证"
+      },
+      "paragraphs": {
+        "en": [
+          "Optional provider settings live in ~/.pi/agent/web-search.json. For example, braveApiKey can use \"$BRAVE_API_KEY\" to resolve that environment variable. Merge the PDF example above into the same JSON object when needed.",
+          "After restarting Pi, request a search and fetch as shown. Check source URLs and provider metadata, then try a known text PDF. These are reproducible verification steps, not a claim that this project ran each upstream service or measured extraction accuracy."
+        ],
+        "zh": [
+          "可选供应商配置位于 ~/.pi/agent/web-search.json。例如 braveApiKey 可写成 \"$BRAVE_API_KEY\"，从该环境变量解析凭据。需要时将上面的 PDF 设置合并到同一个 JSON 对象。",
+          "重启 Pi 后请求下面的搜索与抓取，检查来源链接及供应商元数据，再试一份已知的文本 PDF。这是可复现的验证方法，不代表本项目已调用所有上游服务或测量提取准确度。"
+        ]
+      },
+      "code": "web_search({ query: \"Pi coding agent documentation\", numResults: 3 })\nfetch_content({ url: \"https://pi.dev/\" })"
+    }
+  ],
+  "resources": [
+    {
+      "name": "pi-web-access",
+      "summary": {
+        "en": "Search, page extraction, PDF reading and video analysis through one extension.",
+        "zh": "在同一扩展中搜索网页、提取正文、读取 PDF 和分析视频。"
+      },
+      "mechanism": {
+        "en": "Registers native Pi tools. Search routes to provider APIs or Exa MCP; ordinary URLs start with direct HTTP and local HTML extraction, with configured extraction fallbacks. GitHub repository URLs have a local clone path.",
+        "zh": "注册 Pi 原生工具。搜索通过供应商 API 或 Exa MCP；普通网址先走直接 HTTP 与本地 HTML 提取，再按配置降级。GitHub 仓库网址另有本地克隆路径。"
+      },
+      "prerequisites": {
+        "en": "Pi and outbound network access. Exa MCP needs no API key; keyed providers need their own credentials. GitHub cloning needs Git. PDF text extraction uses bundled unpdf/pdf.js; ffmpeg and yt-dlp are optional for video frames.",
+        "zh": "需要 Pi 和可访问外网的网络。Exa MCP 免 Key，其他 API 需对应凭据。GitHub 克隆需要 Git；PDF 本地文字提取使用包内 unpdf/pdf.js；视频抽帧可选安装 ffmpeg 和 yt-dlp。"
+      },
+      "limitations": {
+        "en": "Keyless does not mean offline or unlimited. DuckDuckGo is explicit-only. The local PDF fallback has no OCR. Private or age-restricted YouTube videos can fail, and readable content behind a paywall is not guaranteed.",
+        "zh": "免 Key 不代表离线或无限额度。DuckDuckGo 需显式选择；PDF 本地兜底没有 OCR；私密或年龄受限的 YouTube 视频可能失败，也不保证获取付费墙后的正文。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.30.0 · 6c5afa1d0d43eef8552284ad73f4bd9f0612a378",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Search routing source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/gemini-search.ts"
+          },
+          {
+            "label": "URL extraction source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/extract.ts"
+          },
+          {
+            "label": "PDF extraction source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/pdf-extract.ts"
+          },
+          {
+            "label": "YouTube extraction source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/youtube-extract.ts"
+          },
+          {
+            "label": "Configuration and dependencies",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/README.md"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Queries go to the chosen search service. Hosted extraction receives URLs; configured Datalab/Gemini PDF processing receives PDF bytes. Local video analysis may upload video to Gemini. Browser-cookie access is opt-in.",
+        "zh": "查询发送给选中的搜索服务。托管提取服务接收网址；配置 Datalab/Gemini 的 PDF 处理会发送 PDF 文件内容；本地视频分析可能上传视频到 Gemini。浏览器 Cookie 读取需显式启用。"
+      },
+      "failure": {
+        "en": "Automatic search tries eligible fallbacks; a named provider is strict. Exhausted routes return diagnostics. Remote hosted HTTP extraction is disabled unless fetchRouting.allowRemoteHostedProviders is enabled.",
+        "zh": "自动搜索尝试可用降级来源；指定供应商时严格使用该来源。来源耗尽返回诊断。远程托管 HTTP 提取须启用 fetchRouting.allowRemoteHostedProviders。"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Search routing source",
+      "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/gemini-search.ts"
+    },
+    {
+      "label": "URL extraction source",
+      "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/extract.ts"
+    },
+    {
+      "label": "PDF extraction source",
+      "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/pdf-extract.ts"
+    },
+    {
+      "label": "YouTube extraction source",
+      "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/youtube-extract.ts"
+    },
+    {
+      "label": "Configuration and dependencies",
+      "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/README.md"
+    }
+  ],
+  "alternatives": [
+    "@juicesharp/rpiv-web-tools",
+    "@ollama/pi-web-search"
+  ]
+}

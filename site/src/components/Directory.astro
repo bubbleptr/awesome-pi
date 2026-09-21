@@ -1,15 +1,17 @@
 ---
 import Analytics from '@vercel/analytics/astro';
-import { createCatalog, type Locale } from '../lib/catalog';
+import { type Locale } from '../lib/catalog';
 import englishReadme from '../../../README.en.md?raw';
 import chineseReadme from '../../../README.md?raw';
 import { categoryLabel, kindOrder, repository, text } from '../lib/i18n';
 import { emptySnapshot, formatCount, parseSnapshot, statsFor } from '../lib/stats';
+import { createPublishedCatalog, packagePath, publishedRoutes, routePath } from '../lib/published-routes';
 import Icon from './Icon.astro';
 import '../styles/global.css';
+import '../styles/directory-guides.css';
 
 const { locale = 'en' } = Astro.props as { locale: Locale };
-const catalog = createCatalog({ en: englishReadme, zh: chineseReadme });
+const catalog = createPublishedCatalog({ en: englishReadme, zh: chineseReadme });
 const statsRaw = Object.values(import.meta.glob('../data/stats.json', { query: '?raw', import: 'default', eager: true }))[0] as string | undefined;
 const stats = statsRaw ? parseSnapshot(statsRaw) : emptySnapshot();
 const t = text[locale];
@@ -19,6 +21,14 @@ const socialImageUrl = new URL('/og-image-v4.png', Astro.site);
 const categoryMap = new Map(catalog.categories.map(category => [category.id, category]));
 const total = catalog.resources.length;
 const categoryUrl = (id: string) => `${base}?category=${id}`;
+const guides = Object.entries(publishedRoutes.categories).filter(([, route]) => route.status === 'active');
+const jevPublished = publishedRoutes.topics.jev?.status === 'active';
+const repoDestination = (url: string) => {
+  const hostname = new URL(url).hostname;
+  if (hostname === 'github.com' || hostname === 'www.github.com') return 'github';
+  if (hostname === 'npmjs.com' || hostname === 'www.npmjs.com') return 'npm';
+  return undefined;
+};
 const statsDate = stats.generatedAt
   ? new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', { dateStyle: 'medium' }).format(new Date(stats.generatedAt))
   : null;
@@ -95,7 +105,7 @@ const structuredData = {
       </div>
     </header>
 
-    <main class="page-shell" data-directory data-locale={locale} data-total={total}>
+    <main class="page-shell" data-directory data-interactions data-locale={locale} data-surface="home" data-total={total}>
       <section class="intro" aria-labelledby="page-title">
         <div class="intro-copy">
           <p class="eyebrow"><span class="status-dot"></span>{t.eyebrow}</p>
@@ -108,6 +118,12 @@ const structuredData = {
           <div><strong>{catalog.categories.length}</strong><span>{t.categories.toLowerCase()}</span></div>
         </div>
       </section>
+
+      {(guides.length > 0 || jevPublished) && <nav class="directory-guides" aria-label={locale === 'zh' ? '指南与专题' : 'Guides and topics'}>
+        <span class="directory-guides-label">{locale === 'zh' ? '选型指南' : 'Explore the guides'}</span>
+        {guides.map(([slug]) => <a class="guide-link" href={routePath('categories', slug, locale)}>{categoryLabel(categoryMap.get(slug)?.name ?? slug, locale)}<span aria-hidden="true">→</span></a>)}
+        {jevPublished && <a class="topic-link" href={routePath('topics', 'jev', locale)}>TypeSafe AI / Jev<span aria-hidden="true">→</span></a>}
+      </nav>}
 
       <div class="directory-layout">
         <aside class="sidebar" aria-label={t.filter}>
@@ -147,13 +163,16 @@ const structuredData = {
               const long = description.length > (locale === 'zh' ? 110 : 220);
               const search = `${resource.searchText} ${resource.categories.map(id => categoryLabel(categoryMap.get(id)!.name, 'zh')).join(' ')}`;
               const metrics = statsFor(resource, stats);
+              const detailPath = packagePath(resource, locale);
+              const destination = repoDestination(resource.url);
               return <article class="resource" id={resource.id} data-resource data-kind={resource.kind} data-categories={resource.categories.join(' ')} data-search={search} data-stars={metrics.stars ?? undefined} data-downloads={metrics.weekly ?? undefined}>
-                <div class="resource-heading"><h3><a href={resource.url} target="_blank" rel="noopener noreferrer">{resource.name}<Icon name="arrow" size={16} /></a></h3>{(metrics.stars !== null || metrics.weekly !== null) && <span class="resource-stats">{metrics.stars !== null && <span class="stat" title={t.statsStars}><Icon name="star" size={15} />{formatCount(metrics.stars, locale)}</span>}{metrics.weekly !== null && <span class="stat" title={t.statsDownloads}><Icon name="download" size={15} />{formatCount(metrics.weekly, locale)}{t.perWeek}{metrics.trend !== null && <span class:list={['trend', metrics.trend >= 0 ? 'up' : 'down']}>{metrics.trend >= 0 ? '▲' : '▼'}{Math.abs(metrics.trend)}%</span>}</span>}</span>}</div>
+                <div class="resource-heading"><h3>{detailPath ? <a class="package-link" href={detailPath}>{resource.name}</a> : <a href={resource.url} target="_blank" rel="noopener noreferrer" data-repo-link={destination ? true : undefined} data-package={destination ? resource.name : undefined} data-destination={destination}>{resource.name}<Icon name="arrow" size={16} /></a>}</h3>{(metrics.stars !== null || metrics.weekly !== null) && <span class="resource-stats">{metrics.stars !== null && <span class="stat" title={t.statsStars}><Icon name="star" size={15} />{formatCount(metrics.stars, locale)}</span>}{metrics.weekly !== null && <span class="stat" title={t.statsDownloads}><Icon name="download" size={15} />{formatCount(metrics.weekly, locale)}{t.perWeek}{metrics.trend !== null && <span class:list={['trend', metrics.trend >= 0 ? 'up' : 'down']}>{metrics.trend >= 0 ? '▲' : '▼'}{Math.abs(metrics.trend)}%</span>}</span>}</span>}</div>
                 <div class="resource-description">
                   {long ? <details class="description-details"><summary><span class="description-preview">{description}</span><span class="details-toggle"><span class="when-closed">{t.more}</span><span class="when-open">{t.less}</span><Icon name="chevron" size={12} /></span></summary><p class="description-full">{description}</p></details> : <p>{description}</p>}
                 </div>
                 <div class="resource-categories"><a href={categoryUrl(resource.kind)} class="resource-kind" data-category={resource.kind} data-label={t.kinds[resource.kind]}>{t.kinds[resource.kind]}</a>{resource.categories.map(id => <a href={categoryUrl(id)} class="resource-tag" data-category={id} data-label={categoryLabel(categoryMap.get(id)!.name, locale)}>{categoryLabel(categoryMap.get(id)!.name, locale)}</a>)}</div>
-                {resource.install ? <div class="install-command"><span class="command-prompt" aria-hidden="true">$</span><code>{resource.install}</code><button class="copy-button" data-copy={resource.install} aria-label={`${t.copyCommand}: ${resource.name}`}><Icon name="copy" size={14} /><span data-copy-label>{t.copy}</span></button></div> : <a class="install-instructions" href={resource.url} target="_blank" rel="noopener noreferrer">{t.missing}<Icon name="arrow" size={14} /></a>}
+                {detailPath && <div class="resource-guide-links"><a class="package-link" href={detailPath}>{locale === 'zh' ? '详情' : 'Guide'}<span aria-hidden="true">→</span></a><a href={resource.url} target="_blank" rel="noopener noreferrer" data-repo-link={destination ? true : undefined} data-package={destination ? resource.name : undefined} data-destination={destination}>{t.project}<Icon name="arrow" size={13} /></a></div>}
+                {resource.install ? <div class="install-command"><span class="command-prompt" aria-hidden="true">$</span><code>{resource.install}</code><button class="copy-button" data-copy={resource.install} data-package={resource.name} aria-label={`${t.copyCommand}: ${resource.name}`}><Icon name="copy" size={14} /><span data-copy-label>{t.copy}</span></button></div> : <a class="install-instructions" href={resource.url} target="_blank" rel="noopener noreferrer" data-repo-link={destination ? true : undefined} data-package={destination ? resource.name : undefined} data-destination={destination}>{t.missing}<Icon name="arrow" size={14} /></a>}
               </article>;
             })}
           </div>

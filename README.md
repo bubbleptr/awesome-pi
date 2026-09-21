@@ -69,7 +69,7 @@ pi list
 
 Web 搜索和内容获取 Package，让 Pi 能够访问互联网信息。
 
-- 🔥 [pi-web-access](https://github.com/nicobailon/pi-web-access) - Web 搜索、URL 内容获取、GitHub 克隆、PDF 提取、YouTube 视频理解。零配置，智能降级链。`pi install npm:pi-web-access`
+- 🔥 [pi-web-access](https://github.com/nicobailon/pi-web-access) - Web 搜索、URL 获取、PDF 提取与 YouTube 理解；默认免 Key 搜索使用 Exa MCP，按配置降级，DuckDuckGo 需显式选择。`pi install npm:pi-web-access`
 - 🔥 [@juicesharp/rpiv-web-tools](https://github.com/juicesharp/rpiv-mono) - 可插拔 Web 搜索（Brave, Tavily, Serper, Exa, Jina, Firecrawl, SearXNG, Ollama）。`pi install npm:@juicesharp/rpiv-web-tools`
 - 🔥 [@ollama/pi-web-search](https://pi.dev/packages/@ollama/pi-web-search) - 使用 Ollama Web 搜索和获取 API。`pi install npm:@ollama/pi-web-search`
 - [pi-smart-fetch](https://github.com/Thinkscape/agent-smart-fetch) - 桌面浏览器 TLS 模拟，批量获取，多格式输出（markdown/html/text/json）。`pi install npm:pi-smart-fetch`
@@ -83,7 +83,7 @@ Web 搜索和内容获取 Package，让 Pi 能够访问互联网信息。
 
 MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
-- 🔥 [pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) - MCP 适配器扩展，用约 200 token 代理工具替代数百个 MCP 工具定义。支持惰性启动、元数据缓存、直连工具。`pi install npm:pi-mcp-adapter`
+- 🔥 [pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) - 按需发现与调用 MCP 工具，支持惰性启动、元数据缓存和可选直接工具。作者估计代理定义约 200 Token，不含发现结果及调用内容。`pi install npm:pi-mcp-adapter`
 
 > MCP 生态对接：[Bright Data Web MCP](https://github.com/earendil-works/pi/discussions/76), [Scrapeless MCP](https://github.com/earendil-works/pi/discussions/74)，以及任何兼容 MCP 的服务器。
 
@@ -94,7 +94,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 子代理 Package，支持任务委托、并行执行和多代理编排。
 
 - 🔥 [pi-subagents](https://github.com/nicobailon/pi-subagents) - Nico Bailon（nicobailon）维护的社区子代理扩展，支持链式、并行执行和 TUI 澄清。`pi install npm:pi-subagents`
-- 🔥 [@tintinweb/pi-subagents](https://github.com/tintinweb/pi-subagents) - Claude Code 风格子代理，并行后台代理、实时 widget、Git worktree 隔离。`pi install npm:@tintinweb/pi-subagents`
+- 🔥 [@tintinweb/pi-subagents](https://github.com/tintinweb/pi-subagents) - Claude Code 风格子代理，在宿主 SDK 会话中运行，支持并行后台任务、实时 widget 和可选 Git worktree 隔离。`pi install npm:@tintinweb/pi-subagents`
 - 🔥 [@gotgenes/pi-subagents](https://pi.dev/packages/@gotgenes/pi-subagents) - tintinweb 的友好分支。`pi install npm:@gotgenes/pi-subagents`
 - [@narumitw/pi-subagents](https://github.com/narumiruna/pi-extensions) - 单/并行/链式执行模式的子代理。`pi install npm:@narumitw/pi-subagents`
 - [pi-interactive-subagents](https://github.com/HazAT/pi-interactive-subagents) - 异步交互式子代理，完全非阻塞，支持多路复用器。`pi install git:github.com/HazAT/pi-interactive-subagents`
@@ -126,6 +126,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 安全与权限控制 Package。
 
+- [pi-warden](https://github.com/DevMortimer/pi-warden) - 通过 TypeSafe Jev 或 OpenRouter 监督工具调用与项目规则，同时提供离线模式检查。需要 Node 22.19+；模型判定不是系统沙箱。`pi install npm:pi-warden`
 - 🔥 [@gotgenes/pi-permission-system](https://github.com/gotgenes/pi-packages) - 三层权限状态（allow/deny/ask），生命周期钩子集成、子代理权限转发、审计日志。`pi install npm:@gotgenes/pi-permission-system`
 - [@aliou/pi-guardrails](https://github.com/aliou/pi-guardrails) - 安全护栏套件：文件保护策略、工作区外路径访问控制、危险 shell 命令确认/拦截，含引导式配置。`pi install npm:@aliou/pi-guardrails`
 - [pi-sandbox](https://github.com/carderne/pi-sandbox) - OS 级 bash 沙箱（Anthropic sandbox-runtime）+ 文件 allow/deny，拦截时交互批准。`pi install npm:pi-sandbox`
@@ -143,6 +144,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 开发工具与代码智能 Package。
 
+- [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) - 单 Agent 的 Jev 搜索重排、编辑前检查和任务基线 diff 审查。需要 Pi 0.85+、Node 20+ 和 TYPESAFE_API_KEY；先克隆仓库并运行其中的 install.sh，再将下方路径替换为本地目录。`pi install /absolute/path/to/pi-jev-code`
 - 🔥 [pi-lens](https://github.com/apmantza/pi-lens) - 实时代码反馈——LSP、linter、formatter、类型检查、结构分析。`pi install npm:pi-lens`
 - 🔥 [@nitra/cursor](https://pi.dev/packages/@nitra/cursor) - CLI 下载 Cursor 规则到本地仓库。`pi install npm:@nitra/cursor`
 - 🔥 [@narumitw/pi-lsp](https://github.com/narumiruna/pi-extensions) - 可配置 LSP 诊断和源码修复，按文件扩展名路由。`pi install npm:@narumitw/pi-lsp`
@@ -172,6 +174,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 上下文管理 Package，优化 token 使用。
 
+- [pi-fast-jev-compaction](https://github.com/QuentinDanblon/pi-fast-jev-compaction) - Jev 为旧工具调用和结果评分，按请求裁剪上下文并保留会话历史。需要 TypeSafe Key；同名 npm 包属于另一作者，请使用此 Git 仓库安装。`pi install git:github.com/QuentinDanblon/pi-fast-jev-compaction`
 - 🔥 [context-mode](https://pi.dev/packages/context-mode) - MCP 插件，节省 98% 上下文窗口，支持沙箱代码执行、FTS5 知识库。`pi install npm:context-mode`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - 总结已完成的工具调用批次，从 LLM 上下文中修剪原始输出。5 种修剪模式。`pi install npm:pi-context-prune`
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Provider 前缀缓存命中/未命中的实时图形显示。`pi install npm:pi-cache-graph`
@@ -268,6 +271,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 
 其他实用 Package。
 
+- [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) - 根据 Jev 任务判定、预算策略和提示词缓存成本，在已授权的 Pi 模型间路由。需要 TypeSafe Key；预算额度只调整路由，不会停止消费。`pi install npm:pi-jev-model-router`
 - 🔥 [@juicesharp/rpiv-ask-user-question](https://github.com/juicesharp/rpiv-mono) - 交互式 ask_user 工具，可搜索分割窗格选择 UI、多选、自由输入。`pi install npm:@juicesharp/rpiv-ask-user-question`
 - 🔥 [pi-markdown-preview](https://pi.dev/packages/pi-markdown-preview) - 渲染 markdown + LaTeX 预览，支持终端、浏览器和 PDF 输出。`pi install npm:pi-markdown-preview`
 - 🔥 [pi-studio](https://pi.dev/packages/pi-studio) - 双窗格浏览器工作空间，支持提示/响应编辑、注释、实时预览。`pi install npm:pi-studio`

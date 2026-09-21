@@ -1,8 +1,9 @@
 import { describe, expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { Window, type HTMLAnchorElement } from 'happy-dom';
-import { loadCatalog } from '../src/lib/catalog';
 import { loadStats, statsFor } from '../src/lib/stats';
+import { loadPublishedCatalog as loadCatalog, getPublishedSlugs, packagePath, publishedRoutes, resolvePublishedResource, routePath, type RouteKind } from '../src/lib/published-routes';
+
 
 describe('generated static pages', () => {
   for (const [locale, path] of [['en', '../dist/index.html'], ['zh', '../dist/zh/index.html']] as const) {
@@ -62,7 +63,7 @@ describe('generated static pages', () => {
       for (const resource of catalog.resources) {
         const row = win.document.getElementById(resource.id)!;
         expect(row).not.toBeNull();
-        expect(row.querySelector<HTMLAnchorElement>('h3 a')?.getAttribute('href')).toBe(resource.url);
+        expect(row.querySelector<HTMLAnchorElement>('h3 a')?.getAttribute('href')).toBe(packagePath(resource, locale) ?? resource.url);
         expect(row.querySelector('[data-copy]')?.getAttribute('data-copy') ?? null).toBe(resource.install);
         for (const description of resource.descriptions[locale]) expect(row.textContent).toContain(description);
         const metrics = statsFor(resource, stats);
@@ -75,4 +76,87 @@ describe('generated static pages', () => {
       win.happyDOM.abort();
     });
   }
+});
+
+describe('published editorial pages', () => {
+  const kinds: RouteKind[] = ['packages', 'categories', 'topics'];
+  for (const kind of kinds) for (const slug of getPublishedSlugs(kind)) for (const locale of ['en', 'zh'] as const) {
+    const path = routePath(kind, slug, locale);
+    test(`${path} is an indexable translated page with working conversion controls`, () => {
+      const win = new Window();
+      try {
+        const html = readFileSync(new URL(`../dist${path}index.html`, import.meta.url), 'utf8');
+        win.document.write(html);
+        expect(win.document.querySelectorAll('h1')).toHaveLength(1);
+        expect(win.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`https://piindex.dev${path}`);
+        for (const [lang, targetLocale] of [['en', 'en'], ['zh-CN', 'zh'], ['x-default', 'en']] as const) {
+          expect(win.document.querySelector(`link[hreflang="${lang}"]`)?.getAttribute('href')).toBe(`https://piindex.dev${routePath(kind, slug, targetLocale)}`);
+        }
+        expect(win.document.querySelector('[data-language]')?.getAttribute('href')).toBe(routePath(kind, slug, locale === 'en' ? 'zh' : 'en'));
+        expect(win.document.querySelectorAll('vercel-analytics')).toHaveLength(1);
+        expect(win.document.querySelector('vercel-analytics')?.getAttribute('data-pathname')).toBe(path);
+        expect(win.document.querySelector('[data-interactions]')?.getAttribute('data-surface')).toBe(kind === 'packages' ? 'detail' : kind === 'topics' ? 'topic' : 'category');
+        expect(win.document.querySelectorAll('[data-repo-link]').length).toBeGreaterThan(0);
+        expect(win.document.querySelectorAll('[data-copy][data-package]').length).toBeGreaterThan(0);
+        if (kind === 'topics') {
+          expect(win.document.title).toContain('TypeSafe AI');
+          expect(win.document.title).toContain('Jev');
+        }
+        for (const button of win.document.querySelectorAll('[data-copy][data-package]')) {
+          const catalog = loadCatalog();
+          const name = button.getAttribute('data-package');
+          const resource = catalog.resources.find(resource => resource.name === name)
+            ?? getPublishedSlugs('packages').map(slug => resolvePublishedResource(slug, catalog)).find(resource => resource?.name === name);
+          expect(resource).toBeDefined();
+          expect(button.getAttribute('data-copy')).toBe(resource!.install);
+        }
+      } finally { win.happyDOM.abort(); }
+    });
+  }
+
+  test.each(['en', 'zh'] as const)('%s directory exposes published guides independently from filtering', locale => {
+    const win = new Window();
+    try {
+      win.document.write(readFileSync(new URL(`../dist/${locale === 'zh' ? 'zh/' : ''}index.html`, import.meta.url), 'utf8'));
+      for (const slug of getPublishedSlugs('topics')) expect(win.document.querySelector(`.topic-link[href="${routePath('topics', slug, locale)}"]`)).not.toBeNull();
+      if (publishedRoutes.packages['pi-mcp-adapter']?.status === 'active') expect(win.document.querySelector(`.package-link[href="${routePath('packages', 'pi-mcp-adapter', locale)}"]`)).not.toBeNull();
+      for (const slug of getPublishedSlugs('categories')) expect(win.document.querySelector(`.guide-link[href="${routePath('categories', slug, locale)}"]`)).not.toBeNull();
+      expect(win.document.querySelectorAll('.guide-link[data-category], .package-link[data-category], .topic-link[data-category]')).toHaveLength(0);
+      for (const resource of loadCatalog().resources) {
+        const row = win.document.getElementById(resource.id)!;
+        const path = packagePath(resource, locale);
+        expect(row.querySelector('h3 a')?.getAttribute('href')).toBe(path ?? resource.url);
+        const repoLink = row.querySelector<HTMLAnchorElement>('[data-repo-link]');
+        if (['github.com', 'www.npmjs.com', 'npmjs.com'].includes(new URL(resource.url).hostname)) expect(repoLink?.getAttribute('href')).toBe(resource.url);
+      }
+    } finally { win.happyDOM.abort(); }
+  });
+
+  test('all generated internal links and fragment targets exist', () => {
+    const dist = new URL('../dist/', import.meta.url);
+    for (const filename of readdirSync(dist, { recursive: true }).filter(file => String(file).endsWith('.html'))) {
+      const win = new Window();
+      try {
+        win.document.write(readFileSync(new URL(String(filename), dist), 'utf8'));
+        const current = new URL(String(filename).replace(/index\.html$/, ''), 'https://piindex.dev/');
+        for (const anchor of win.document.querySelectorAll('a[href]')) {
+          const target = new URL(anchor.getAttribute('href')!, current);
+          if (target.origin !== current.origin) continue;
+          const pathname = decodeURIComponent(target.pathname);
+          const targetFile = new URL(`.${pathname}${pathname.endsWith('/') ? 'index.html' : ''}`, dist);
+          expect(existsSync(targetFile), `${filename} → ${target.href}`).toBe(true);
+          if (target.hash && target.pathname === current.pathname) expect(win.document.getElementById(decodeURIComponent(target.hash.slice(1))), `${filename} → ${target.hash}`).not.toBeNull();
+        }
+      } finally { win.happyDOM.abort(); }
+    }
+  });
+
+  test('renamed package URLs have permanent hosting redirects in both languages', () => {
+    const config = JSON.parse(readFileSync(new URL('../../vercel.json', import.meta.url), 'utf8'));
+    for (const [slug, route] of Object.entries(publishedRoutes.packages)) {
+      if (route.status !== 'redirected') continue;
+      expect(getPublishedSlugs('packages')).toContain(route.redirectTo);
+      for (const locale of ['en', 'zh'] as const) expect(config.redirects).toContainEqual({ source: routePath('packages', slug, locale), destination: routePath('packages', route.redirectTo, locale), permanent: true });
+    }
+  });
 });

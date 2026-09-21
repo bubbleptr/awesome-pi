@@ -236,34 +236,43 @@ document.querySelectorAll<HTMLAnchorElement>('[data-repo-link]').forEach(link =>
 
 后续承接编码的 Agent 按以下 8 项任务推进。测试随对应功能完成，Task 8 汇总发布验收。Jev 专题完成内容与工程验收后优先上线，试点剩余页面继续推进；注册表随实际发布进度登记。
 
-- [ ] **Task 1: 建立持久化路由注册表与归档容灾机制**
+- [x] **Task 1: 建立持久化路由注册表与归档容灾机制**
   - 创建 `site/src/data/published-routes.json`，明确 6 个试点主题的稳定 slug；按发布进度登记 `packages`、`categories` 与 `topics`，为已发布包准备 archive 兜底快照；
   - 编写辅助读取函数 `getPublishedRoute(slug)` 与 `isPublished(resource)`；
   - 若涉及更名，在根目录 `vercel.json` 的 `redirects` 中写入永久 308 重定向规则。
-- [ ] **Task 2: 转化埋点接入与 Analytics 初始化**
+- [x] **Task 2: 转化埋点接入与 Analytics 初始化**
   - 确保新增页面模板均引入并渲染 `@vercel/analytics/astro` 的 `<Analytics />` 组件；
   - 在客户端脚本中接入 `command_copied`（仅在 Promise resolve 后上报）与 `repo_clicked` 外跳事件。
-- [ ] **Task 3: 首页内链分流与导航解耦改造**
+- [x] **Task 3: 首页内链分流与导航解耦改造**
   - 在 `Directory.astro` 中改造卡片链接：已发布项渲染指向 `/packages/[slug]` 的站内入口，未发布项继续直链外部；
   - 为 `pi-mcp-adapter` 增设显式的详情页入口；
   - Jev 专题发布后，在首页增加当前语言的专题入口；
   - 确保指南、详情和专题入口不含 `data-category` 属性。
-- [ ] **Task 4: TypeSafe AI / Jev 专题内容与模板（首批优先）**
+- [x] **Task 4: TypeSafe AI / Jev 专题内容与模板（首批优先）**
   - 核验第二节列出的 4 个候选，将符合要求的资源同步加入 `README.md` 与 `README.en.md` 的现有功能分类，继续由 catalog 提取基础数据；
   - 编写 `site/src/data/topics/jev.json`，按品牌与模型介绍、Pi 用途、场景比较、安装配置与限制的顺序组织双语内容，记录来源和核验日期；
   - 创建 `site/src/pages/topics/[slug].astro` 及中文镜像路由，支持独立 canonical、双语 hreflang、Analytics 和 `surface: 'topic'` 的事件；
   - 专题链接遵循发布状态，不把候选自动加入包详情发布名单。
-- [ ] **Task 5: 试点分类落地页模板与数据（严守内容验收四要素）**
+- [x] **Task 5: 试点分类落地页模板与数据（严守内容验收四要素）**
   - 编写 `site/src/data/categories/subagents.json` 与 `web-access-search.json` 的客观核验数据（明确机制、依赖、限制与证据来源）；
   - 创建 `site/src/pages/categories/[slug].astro` 及中文镜像路由。
-- [ ] **Task 6: 试点插件详情页模板开发（严守内容验收四要素）**
+- [x] **Task 6: 试点插件详情页模板开发（严守内容验收四要素）**
   - 创建 `site/src/pages/packages/[slug].astro` 及中文镜像路由；
   - 完整呈现实现机制、前置依赖、已知限制、命令一键复制（含成功埋点）、徽章代码提取框与同类替代推荐。
-- [ ] **Task 7: 静态 SVG 徽章服务开发**
+- [x] **Task 7: 静态 SVG 徽章服务开发**
   - 创建 `site/src/pages/badge/[slug].svg.ts` 端点，支持输出 Shields.io 风格的 SVG 矢量图。
-- [ ] **Task 8: 分层自动化测试编写与验证命令配置**
+- [x] **Task 8: 分层自动化测试编写与验证命令配置**
   - 新增 `tests/endpoint.test.ts` 检验 SVG 端点的 `Content-Type` 与结构；
   - 更新 `site/package.json` 中的 `test` 脚本，将 `tests/endpoint.test.ts` 纳入执行流（确保 `bun run validate` 自动包含该测试）；
   - 在 `tests/rendered.test.ts` 中遍历实际发布清单，加入首批 12 个页面的 canonical、hreflang、内链分流与 Analytics 初始化检验，覆盖 Jev 专题；
   - 在 `tests/directory.test.ts` 中加入原生导航点击不拦截、复制成功才上报、外跳上报的交互测试，并执行专题客户端逻辑验证 `surface: 'topic'`；
   - 执行 `bun run --cwd site validate`，确保数据测试、类型检查、构建及渲染测试全部绿灯通过。
+
+
+## 八、首批执行记录（2026-09-21）
+
+8 项工程任务已实现。核验发现原计划部分技术前提已与源码不符：pi-web-access 默认免 Key 搜索为 Exa MCP；两种子代理都支持可选 Worktree；MCP 的约 200 Token 是作者估计。执行以固定版本源码为准，详见 [分类与插件核验证据](pilot-evidence.md) 和 [Jev 核验证据](jev-evidence.md)。
+
+首批包缺失单语或双语 README 条目时，目录及详情使用发布快照；仍然存在但互相冲突的翻译继续阻止构建。没有实际更名，因此没有写入示例旧路径重定向；今后更名必须同步中英文 Vercel 永久重定向。
+
+Vercel 项目访问统计已启用，但当前 Hobby 套餐不支持自定义事件。代码接入不代表控制台已能收集转化；升级套餐属于用户手动事项。上线检查、人工事项和 14/30 天复盘口径记录在 [SEO 交付记录](seo-delivery.md)。

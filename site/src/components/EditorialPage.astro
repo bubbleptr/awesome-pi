@@ -1,0 +1,147 @@
+---
+import Analytics from '@vercel/analytics/astro';
+import { slug as resourceSlug, type Locale } from '../lib/catalog';
+import { getEditorial, repoDestination, reviewedResource } from '../lib/editorial';
+import { createPublishedCatalog, getPublishedRoute, getPublishedSlugs, packagePath, resolvePublishedResource, routePath, type RouteKind } from '../lib/published-routes';
+import { categoryLabel, repository, text } from '../lib/i18n';
+import englishReadme from '../../../README.en.md?raw';
+import chineseReadme from '../../../README.md?raw';
+import Icon from './Icon.astro';
+import '../styles/global.css';
+import '../styles/editorial.css';
+
+const { kind, slug, locale = 'en' } = Astro.props as { kind: RouteKind; slug: string; locale: Locale };
+const page = getEditorial(kind, slug);
+const catalog = createPublishedCatalog({ en: englishReadme, zh: chineseReadme });
+const t = text[locale];
+const zh = locale === 'zh';
+const base = zh ? '/zh/' : '/';
+const path = routePath(kind, slug, locale);
+const canonical = new URL(path, Astro.site).href;
+const english = new URL(routePath(kind, slug, 'en'), Astro.site).href;
+const chinese = new URL(routePath(kind, slug, 'zh'), Astro.site).href;
+const title = page.title[locale].endsWith('| Pi Index') ? page.title[locale] : `${page.title[locale]} | Pi Index`;
+const label = kind === 'topics' ? (zh ? '专题' : 'Topic') : kind === 'categories' ? (zh ? '选型指南' : 'Selection guide') : (zh ? '插件指南' : 'Package guide');
+const surface = kind === 'topics' ? 'topic' : kind === 'categories' ? 'category' : 'detail';
+const packageRoute = kind === 'packages' ? getPublishedRoute(slug) : undefined;
+const reviews = page.resources.map(review => ({ review, resource: kind === 'packages' ? resolvePublishedResource(slug, catalog)! : reviewedResource(review.name, catalog) }));
+const alternatives = (page.alternatives ?? []).map(name => reviewedResource(name, catalog));
+const image = new URL('/og-image-v4.png', Astro.site).href;
+const badge = `[![Pi Index](${new URL(`/badge/${slug}.svg`, Astro.site).href})](${canonical})`;
+const schema = {
+  '@context': 'https://schema.org', '@type': kind === 'packages' ? 'TechArticle' : 'CollectionPage',
+  name: title, headline: title, description: page.description[locale], url: canonical,
+  inLanguage: zh ? 'zh-CN' : 'en', isPartOf: { '@type': 'WebSite', name: 'Pi Index', url: new URL('/', Astro.site).href },
+};
+---
+<!doctype html>
+<html lang={zh ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={page.description[locale]} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={english} />
+    <link rel="alternate" hreflang="zh-CN" href={chinese} />
+    <link rel="alternate" hreflang="x-default" href={english} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={page.description[locale]} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={kind === 'packages' ? 'article' : 'website'} />
+    <meta property="og:locale" content={zh ? 'zh_CN' : 'en_US'} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1730" />
+    <meta property="og:image:height" content="909" />
+    <meta property="og:image:alt" content="Pi Index" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={page.description[locale]} />
+    <meta name="twitter:image" content={image} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">{t.skip}</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href={base} aria-label="Pi Index"><span class="brand-mark" aria-hidden="true">π</span><span><span class="brand-muted">pi</span>index</span></a>
+        <nav class="header-links" aria-label={zh ? '主要导航' : 'Main navigation'}>
+          <a href={base}>{zh ? '资源目录' : 'Directory'}</a>
+          <a class="language-link" data-language href={routePath(kind, slug, zh ? 'en' : 'zh')} lang={zh ? 'en' : 'zh-CN'}><Icon name="globe" size={16} />{zh ? 'English' : '中文'}</a>
+          <a class="github-link" href={repository} aria-label="GitHub"><Icon name="github" size={17} /></a>
+        </nav>
+      </div>
+    </header>
+    <main id="content" class="page-shell editorial" data-interactions data-locale={locale} data-surface={surface}>
+      <header class="editorial-intro">
+        <nav class="breadcrumbs" aria-label={zh ? '面包屑导航' : 'Breadcrumb'}><a href={base}>Pi Index</a><span aria-hidden="true">/</span><span>{label}</span></nav>
+        <p class="eyebrow">{label}</p>
+        <h1>{title.replace(/\s*\| Pi Index$/, '')}</h1>
+        <p class="editorial-deck">{page.description[locale]}</p>
+        {packageRoute?.status === 'deprecated' && <aside class="deprecated-notice" role="note"><strong>{zh ? '已废弃 / 已下架' : 'Deprecated / removed'}</strong><p>{packageRoute.deprecatedReason[locale]}</p>{packageRoute.replacementSlug && getPublishedSlugs('packages').includes(packageRoute.replacementSlug) && <a href={routePath('packages', packageRoute.replacementSlug, locale)}>{zh ? '查看替代方案 →' : 'View replacement →'}</a>}</aside>}
+      </header>
+      <div class="editorial-layout">
+        <aside class="editorial-nav">
+          <nav aria-label={zh ? '本页内容' : 'On this page'}>
+            <span>{zh ? '本页内容' : 'On this page'}</span>
+            <a href="#overview">{zh ? '概览' : 'Overview'}</a>
+            {reviews.length > 1 && <a href="#comparison">{zh ? '方案比较' : 'Comparison'}</a>}
+            <a href="#setup">{zh ? '安装与边界' : 'Setup & boundaries'}</a>
+            {page.sections.map(section => <a href={`#${section.id}`}>{section.title[locale]}</a>)}
+            <a href="#sources">{zh ? '一手来源' : 'Primary sources'}</a>
+          </nav>
+        </aside>
+        <article class="editorial-body">
+          <section id="overview" class="prose-section">
+            <h2>{zh ? '概览' : 'Overview'}</h2>
+            {page.intro[locale].map(paragraph => <p>{paragraph}</p>)}
+            {kind === 'topics' && <p class="official-links"><a href="https://typesafe.ai/">TypeSafe AI ↗</a><a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">{zh ? 'Jev 官方介绍 ↗' : 'Introducing Jev ↗'}</a></p>}
+          </section>
+          {reviews.length > 1 && <section id="comparison">
+            <h2>{zh ? '按用途比较' : 'Compare by use case'}</h2>
+            <p class="table-hint">{zh ? '表格可横向滚动；详细配置与来源见下方。' : 'Scroll the table horizontally; configuration and sources follow below.'}</p>
+            <div class="comparison-scroll" role="region" aria-label={zh ? '插件对比表' : 'Plugin comparison'} tabindex="0">
+              <table><thead><tr><th>{zh ? '资源与用途' : 'Resource & purpose'}</th><th>{zh ? '介入环节' : 'Mechanism'}</th><th>{zh ? '依赖与 Key' : 'Dependencies & keys'}</th><th>{zh ? '外发数据' : 'Data sent'}</th><th>{zh ? '失败行为' : 'Failure behavior'}</th><th>{zh ? '核验证据' : 'Evidence'}</th></tr></thead>
+                <tbody>{reviews.map(({ review, resource }) => <tr><th scope="row"><a href={`#${resourceSlug(resource.name)}`}>{resource.name}</a><p>{review.summary[locale]}</p></th><td>{review.mechanism[locale]}</td><td>{review.prerequisites[locale]}</td><td>{review.dataSent?.[locale] ?? '—'}</td><td>{review.failure?.[locale] ?? '—'}</td><td><time datetime={review.verification.date}>{review.verification.date}</time><br /><a href={review.verification.sources[0].url}>{review.verification.sources[0].label} ↗</a></td></tr>)}</tbody>
+              </table>
+            </div>
+          </section>}
+          <section id="setup">
+            <h2>{zh ? '安装与运行边界' : 'Installation & operating boundaries'}</h2>
+            {reviews.map(({ review, resource }) => <section class="reviewed-resource" id={resourceSlug(resource.name)}>
+              <h3>{resource.name}</h3>
+              <p>{review.summary[locale]}</p>
+              <div class="editorial-resource-links">
+                <a href={resource.url} data-repo-link={repoDestination(resource.url) ? true : undefined} data-package={resource.name} data-destination={repoDestination(resource.url)}>{zh ? '原项目' : 'Original project'} ↗</a>
+                {kind !== 'packages' && packagePath(resource, locale) && <a class="package-link" href={packagePath(resource, locale)}>{zh ? '完整指南 →' : 'Full guide →'}</a>}
+                {resource.categories.map(category => <a class="resource-tag" href={`${base}?category=${category}`}>{categoryLabel(catalog.categories.find(item => item.id === category)?.name ?? category, locale)}</a>)}
+              </div>
+              {resource.install ? <div class="install-command"><span class="command-prompt" aria-hidden="true">$</span><code>{resource.install}</code><button class="copy-button" type="button" data-copy={resource.install} data-package={resource.name} aria-label={`${t.copy}: ${resource.name}`}><Icon name="copy" size={14} /><span data-copy-label>{t.copy}</span></button></div> : <p><a href={resource.url} data-repo-link={repoDestination(resource.url) ? true : undefined} data-package={resource.name} data-destination={repoDestination(resource.url)}>{zh ? '按原项目安装说明配置 →' : 'Follow the project installation instructions →'}</a></p>}
+              <dl class="resource-facts">
+                <div><dt>{zh ? '实现机制' : 'Mechanism'}</dt><dd>{review.mechanism[locale]}</dd></div>
+                <div><dt>{zh ? '前置依赖' : 'Prerequisites'}</dt><dd>{review.prerequisites[locale]}</dd></div>
+                {review.dataSent && <div><dt>{zh ? '数据范围' : 'Data scope'}</dt><dd>{review.dataSent[locale]}</dd></div>}
+                {review.failure && <div><dt>{zh ? '失败行为' : 'Failure behavior'}</dt><dd>{review.failure[locale]}</dd></div>}
+                <div><dt>{zh ? '已知限制' : 'Known limitations'}</dt><dd>{review.limitations[locale]}</dd></div>
+              </dl>
+              <div class="verification"><p><strong>{review.verification.status === 'tested' ? (zh ? '已实测' : 'Tested') : (zh ? '已查阅源码 / 文档' : 'Source / documentation reviewed')}</strong> · <time datetime={review.verification.date}>{review.verification.date}</time><br /><code>{review.verification.revision}</code></p><ul>{review.verification.sources.map(source => <li><a href={source.url}>{source.label} ↗</a></li>)}</ul></div>
+            </section>)}
+          </section>
+          {page.sections.map(section => <section id={section.id} class="prose-section"><h2>{section.title[locale]}</h2>{section.paragraphs[locale].map(paragraph => <p>{paragraph}</p>)}{section.code && <pre><code>{section.code}</code></pre>}</section>)}
+          {alternatives.length > 0 && <section id="alternatives"><h2>{zh ? '相关与替代方案' : 'Related & alternative options'}</h2><ul class="alternatives">{alternatives.map(resource => <li><a href={packagePath(resource, locale) ?? resource.url} class={packagePath(resource, locale) ? 'package-link' : undefined} data-repo-link={!packagePath(resource, locale) && repoDestination(resource.url) ? true : undefined} data-package={resource.name} data-destination={repoDestination(resource.url)}>{resource.name} →</a><p>{resource.descriptions[locale][0]}</p></li>)}</ul></section>}
+          {kind === 'packages' && packageRoute?.status === 'active' && <section id="badge"><h2>{zh ? '在 README 中引用' : 'Link from your README'}</h2><img src={`/badge/${slug}.svg`} alt={`Pi Index: ${reviews[0].resource.name}`} width={64 + Math.max(80, reviews[0].resource.name.length * 7 + 16)} height="20" loading="lazy" /><label class="badge-label" for="badge-code">{zh ? 'Markdown 徽章代码' : 'Markdown badge code'}</label><textarea id="badge-code" readonly rows="3" spellcheck="false">{badge}</textarea><button class="badge-copy" type="button" data-copy={badge}><span data-copy-label>{zh ? '复制徽章代码' : 'Copy badge code'}</span></button></section>}
+          <section id="sources"><h2>{zh ? '一手来源与核验范围' : 'Primary sources & verification scope'}</h2><p>{zh ? '本文区分源码 / 文档核验与实际运行测试。未标注“已实测”的功能、性能和节省比例不代表本站测量结果。' : 'Source review and runtime testing are distinguished above. Features, performance and savings not marked “Tested” are not measurements by Pi Index.'}</p><ul class="source-list">{page.sources.map(source => <li><a href={source.url}>{source.label} ↗</a></li>)}</ul></section>
+          <nav class="related-guides" aria-label={zh ? '更多指南' : 'More guides'}>{getPublishedSlugs('categories').map(category => <a class="guide-link" href={routePath('categories', category, locale)}>{categoryLabel(catalog.categories.find(item => item.id === category)?.name ?? category, locale)} →</a>)}{getPublishedSlugs('topics').map(topic => <a class="topic-link" href={routePath('topics', topic, locale)}>TypeSafe AI / Jev →</a>)}</nav>
+        </article>
+      </div>
+      <footer class="site-footer"><div><a class="footer-brand" href={base}><span>pi</span>index</a><p>{t.notice}</p></div><div class="footer-links"><a href={`${repository}/issues/new`}>{t.report} ↗</a><a href={base}>{zh ? '返回目录' : 'Back to directory'} →</a></div></footer>
+      <div id="copy-status" class="copy-status" role="status" aria-live="polite"></div>
+    </main>
+    <Analytics />
+    <script>
+      import { initializeInteractions } from '../scripts/interactions';
+      initializeInteractions(document, window);
+    </script>
+  </body>
+</html>

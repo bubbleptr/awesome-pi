@@ -1,7 +1,9 @@
 import { matchesResource, readFilters, writeFilters, type Filters } from '../lib/filter';
 import { text } from '../lib/i18n';
+import { initializeInteractions } from './interactions';
+import type { track } from '@vercel/analytics';
 
-export function initializeDirectory(document: Document, window: Window): void {
+export function initializeDirectory(document: Document, window: Window, trackEvent?: typeof track): void {
   const root = document.querySelector<HTMLElement>('[data-directory]');
   if (!root) return;
   const locale = root.dataset.locale === 'zh' ? 'zh' : 'en';
@@ -67,26 +69,6 @@ export function initializeDirectory(document: Document, window: Window): void {
   });
   window.addEventListener('popstate', () => { filters = readFilters(window.location.search, categories); render(); });
 
-  const status = document.querySelector<HTMLElement>('#copy-status')!;
-  let statusTimeout: number | undefined;
-  function announceCopy(message: string): void {
-    window.clearTimeout(statusTimeout);
-    status.textContent = message;
-    statusTimeout = window.setTimeout(() => { status.textContent = ''; }, 4000);
-  }
-  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
-    button.addEventListener('click', async () => {
-      button.disabled = true;
-      try {
-        await window.navigator.clipboard.writeText(button.dataset.copy!);
-        const label = button.querySelector<HTMLElement>('[data-copy-label]')!;
-        label.textContent = t.copied;
-        announceCopy(t.copiedStatus);
-        button.dataset.copied = 'true';
-        window.setTimeout(() => { label.textContent = t.copy; delete button.dataset.copied; }, 1800);
-      } catch { announceCopy(t.copyError); }
-      finally { button.disabled = false; }
-    });
-  }
+  initializeInteractions(document, window, trackEvent);
   render();
 }

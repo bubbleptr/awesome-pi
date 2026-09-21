@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { createCatalog, parseReadme } from '../src/lib/catalog';
+import { createPublishedCatalog } from '../src/lib/published-routes';
 import { filterResources, readFilters, writeFilters } from '../src/lib/filter';
 
 const entry = (name: string, description: string, command = `pi install npm:${name}`) =>
@@ -61,8 +62,8 @@ describe('README catalog', () => {
   test('indexes every existing resource, preserves install commands, and separates resource types', () => {
     const en = readFileSync(new URL('../../README.en.md', import.meta.url), 'utf8');
     const zh = readFileSync(new URL('../../README.md', import.meta.url), 'utf8');
-    const catalog = createCatalog({ en, zh });
-    expect(catalog.resources.length).toBe(new Set(parseReadme(en).map(record => `${record.name}|${record.url}`)).size);
+    const catalog = createPublishedCatalog({ en, zh });
+    expect(catalog.resources.length).toBeGreaterThanOrEqual(new Set(parseReadme(en).map(record => `${record.name}|${record.url}`)).size);
     expect(catalog.resources.some(resource => resource.name === 'pi-vetter')).toBe(true);
     expect(catalog.resources.find(resource => resource.name === 'pi-verdict')?.descriptions.en.join(' ')).toContain('not an OS-level sandbox');
     expect(catalog.resources.find(resource => resource.name === 'pi-acp')?.kind).toBe('integrations');

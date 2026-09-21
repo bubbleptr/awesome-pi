@@ -1,0 +1,192 @@
+{
+  "slug": "tintinweb-pi-subagents",
+  "title": {
+    "en": "@tintinweb/pi-subagents: Background Agents & Worktrees",
+    "zh": "@tintinweb/pi-subagents：后台代理与 Worktree 隔离"
+  },
+  "description": {
+    "en": "Understand Tintin’s SDK child sessions, optional Git worktrees, live widgets, parallel limits and safe handoff of code changes.",
+    "zh": "了解 Tintin 的 SDK 子会话、可选 Git worktree、实时组件、并行限制与代码修改交接。"
+  },
+  "intro": {
+    "en": [
+      "This extension adds Agent, get_subagent_result and steer_subagent to Pi. It supports background work by default and live TUI inspection through /agents.",
+      "Worktree isolation is an explicit option, not the default behavior of every child. Separate conversations alone do not prevent two writers from editing the same files."
+    ],
+    "zh": [
+      "该扩展向 Pi 添加 Agent、get_subagent_result、steer_subagent，默认后台运行，并可通过 /agents 在 TUI 中查看。",
+      "Worktree 隔离需要明确选择，不是每个子代理的默认行为。仅有独立对话无法防止两个代理修改同一份文件。"
+    ]
+  },
+  "sections": [
+    {
+      "id": "runtime",
+      "title": {
+        "en": "Session and concurrency model",
+        "zh": "会话与并发模型"
+      },
+      "paragraphs": {
+        "en": [
+          "Ordinary children are SDK sessions inside the host process. Background calls return an ID, queue when capacity is occupied and notify the parent when done. Foreground calls wait for the result.",
+          "maxConcurrent defaults to 10 background agents. maxConcurrentForeground defaults to 0 (unlimited) and is a separate limit. Live widgets report activity and token counts; UI features depend on an interactive Pi host. SubagentWorkflow scripts use a worker thread, so “all execution is single-threaded” would also be inaccurate."
+        ],
+        "zh": [
+          "普通子代理是宿主进程内的 SDK 会话。后台调用返回 ID，容量占满时排队，完成后通知父会话；前台调用等待结果。",
+          "maxConcurrent 默认允许 10 个后台代理。maxConcurrentForeground 默认 0，表示前台不限，且与后台分别计算。实时组件展示活动和 Token，界面功能依赖交互式 Pi 宿主。SubagentWorkflow 脚本使用 worker 线程，因此也不能概括为全部单线程执行。"
+        ]
+      }
+    },
+    {
+      "id": "worktree",
+      "title": {
+        "en": "What worktree isolation guarantees",
+        "zh": "Worktree 隔离保证什么"
+      },
+      "paragraphs": {
+        "en": [
+          "Add isolation: \"worktree\" to the Agent call or agent frontmatter. The child works in a temporary checkout from committed history. Git and an initial commit are required; worktree creation errors fail the call rather than falling back to the parent checkout.",
+          "Staged and uncommitted parent changes are absent. Use the shared checkout for reviewing such diffs. A worktree separates working files, but a child with shell access can still leave that directory; it is not a security sandbox.",
+          "On completion, unchanged worktrees are removed. Changed work is committed or retained on a local pi-agent-<id> branch, and the temporary directory is removed. Review the named branch and run project checks before merging; there is no automatic merge into the parent branch."
+        ],
+        "zh": [
+          "在 Agent 调用或代理 frontmatter 中添加 isolation: \"worktree\"。子代理在已提交历史创建的临时工作区执行，需要 Git 和初始提交；创建失败会使调用失败，不会改在父目录执行。",
+          "父工作区的暂存及未提交修改不会被带入；审查这些 diff 应使用共享工作区。Worktree 分离了工作文件，但拥有 shell 的子代理仍可离开该目录，因此不是安全沙箱。",
+          "任务完成后，未修改的 worktree 直接移除；有修改则提交或保留到本地 pi-agent-<id> 分支，临时目录移除。应审查结果中给出的分支并运行项目检查再合并，扩展不会自动合入父分支。"
+        ]
+      }
+    },
+    {
+      "id": "example",
+      "title": {
+        "en": "Try a bounded task",
+        "zh": "尝试一个范围明确的任务"
+      },
+      "paragraphs": {
+        "en": [
+          "Use the install command below, confirm Pi ≥ 0.84.0, and restart. First run Explore without isolation to validate tools, model access and completion delivery. For a writer, request a worktree explicitly and give it one independently testable change.",
+          "The example creates an isolated writer. After it completes, inspect the branch reported by get_subagent_result and compare it against the original base. The example is a recipe; no model task was executed during this source review."
+        ],
+        "zh": [
+          "使用下方命令安装，确认 Pi ≥ 0.84.0 后重启。先运行不带隔离的 Explore，验证工具、模型授权和完成通知。写入任务再明确要求 worktree，并限定一个可独立验证的修改。",
+          "下面示例创建隔离的写入代理。完成后检查 get_subagent_result 给出的分支，与原始基点对比。本示例是使用方法，此次源码核验没有执行模型任务。"
+        ]
+      },
+      "code": "Agent({\n  subagent_type: \"general-purpose\",\n  prompt: \"Fix the documented failing test. Run the relevant tests and report the changed files.\",\n  description: \"Fix one failing test\",\n  isolation: \"worktree\",\n  run_in_background: true\n})"
+    },
+    {
+      "id": "context",
+      "title": {
+        "en": "Control context and spend",
+        "zh": "控制上下文与开销"
+      },
+      "paragraphs": {
+        "en": [
+          "inherit_context defaults to false; general-purpose still receives the parent system prompt. Agent frontmatter can lock context inheritance, model and isolation settings, overriding call parameters. Check /agents when a requested option seems ignored.",
+          "Every child has its own model usage. Copying a long conversation to several agents can multiply input costs; worktree creation adds filesystem work, not a token discount. Use focused prompts, suitable models and lower concurrency before expanding the fleet."
+        ],
+        "zh": [
+          "inherit_context 默认 false，但 general-purpose 仍接收父系统提示词。代理 frontmatter 可锁定上下文继承、模型与隔离设置，优先于调用参数；请求的选项似乎未生效时，先查看 /agents 中的代理配置。",
+          "每个子代理单独产生模型用量；向多个代理复制长对话会增加输入费用。创建 worktree 增加文件系统工作，不会打折 Token。扩大并行前，先用明确提示词、合适模型和较低并发。"
+        ]
+      }
+    },
+    {
+      "id": "alternative",
+      "title": {
+        "en": "How it differs from pi-subagents",
+        "zh": "与 pi-subagents 的区别"
+      },
+      "paragraphs": {
+        "en": [
+          "Nico’s pi-subagents also supports worktrees. Its foreground execution uses in-process SDK sessions, while background work uses a detached runner and exposes run artifacts. The difference is orchestration and lifecycle, not simply “worktrees versus no worktrees.”",
+          "Choose the tool interface and result handoff you prefer, then test a small read-only run in your actual host. Installing both can create overlapping orchestration choices for the model."
+        ],
+        "zh": [
+          "Nico 的 pi-subagents 也支持 worktree。其前台执行使用进程内 SDK 会话，后台则使用独立 runner，并提供执行产物。区别在编排方式与生命周期，不能简单分成“有/无 worktree”。",
+          "根据习惯选择工具接口及结果交接方式，再在实际宿主里运行小型只读任务。同时安装两者可能给模型提供重叠的编排入口。"
+        ]
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "@tintinweb/pi-subagents",
+      "summary": {
+        "en": "SDK child sessions with background queuing, live TUI visibility and optional Git worktrees.",
+        "zh": "通过 SDK 子会话提供后台队列、实时 TUI 状态与可选 Git worktree。"
+      },
+      "mechanism": {
+        "en": "Ordinary agents call createAgentSession in the host process. Background work returns an ID and sends a completion notification; worktree isolation changes the child working directory. Workflow scripts run in a worker thread.",
+        "zh": "普通代理在宿主进程内调用 createAgentSession。后台任务先返回 ID，完成后通知父会话；worktree 隔离改变子代理工作目录。工作流脚本运行在线程 worker 中。"
+      },
+      "prerequisites": {
+        "en": "Pi ≥ 0.84.0 and an authenticated model. Only worktree mode requires Git, a repository and at least one commit; ordinary child sessions can run outside Git repositories.",
+        "zh": "需要 Pi ≥ 0.84.0 及已授权模型。只有 worktree 模式需要 Git、仓库和至少一个提交，普通子会话可在非 Git 目录运行。"
+      },
+      "limitations": {
+        "en": "Background concurrency defaults to 10; excess work queues. Foreground capacity is separate and defaults to unlimited (0). Worktrees start from committed history and cannot see staged or uncommitted parent changes. Filesystem separation is not an OS sandbox.",
+        "zh": "后台并发默认 10，超出后排队；前台并发独立计算，默认 0 表示不限。Worktree 从已提交历史创建，看不到父目录的暂存或未提交修改。工作目录隔离不是操作系统沙箱。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.19.0 · e955e29c51b7a6cce37e1108cd2d6c57a77e151c",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Agent execution",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/agent-runner.ts"
+          },
+          {
+            "label": "Concurrency and lifecycle",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/agent-manager.ts"
+          },
+          {
+            "label": "Worktree implementation",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/worktree.ts"
+          },
+          {
+            "label": "Tool usage and settings",
+            "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/README.md"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Each child sends its task, selected context and tool results to its configured model provider. inherit_context is false by default; the general-purpose agent still inherits the parent system prompt.",
+        "zh": "每个子代理把任务、选定上下文和工具结果发送给自己的模型供应商。inherit_context 默认 false；general-purpose 仍继承父会话系统提示词。"
+      },
+      "failure": {
+        "en": "A requested worktree that cannot be created fails the tool call instead of silently sharing the parent directory. Completed worktree changes are preserved on a local pi-agent-<id> branch; the temporary directory is removed.",
+        "zh": "明确要求的 worktree 创建失败会使工具调用失败，不会悄悄退回父目录。完成后的修改保存在本地 pi-agent-<id> 分支，临时目录会被移除。"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Agent execution",
+      "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/agent-runner.ts"
+    },
+    {
+      "label": "Concurrency and lifecycle",
+      "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/agent-manager.ts"
+    },
+    {
+      "label": "Worktree implementation",
+      "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/src/worktree.ts"
+    },
+    {
+      "label": "Tool usage and settings",
+      "url": "https://github.com/tintinweb/pi-subagents/blob/e955e29c51b7a6cce37e1108cd2d6c57a77e151c/README.md"
+    },
+    {
+      "label": "Foreground SDK execution",
+      "url": "https://github.com/nicobailon/pi-subagents/blob/1ac7b5e2652e9571164847ac2905ab4aded92791/src/runs/foreground/execution.ts"
+    },
+    {
+      "label": "Detached background runner",
+      "url": "https://github.com/nicobailon/pi-subagents/blob/1ac7b5e2652e9571164847ac2905ab4aded92791/src/runs/background/async-execution.ts"
+    }
+  ],
+  "alternatives": [
+    "pi-subagents"
+  ]
+}

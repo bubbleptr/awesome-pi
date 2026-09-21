@@ -12,15 +12,35 @@ jobs:
       github.event.deployment_status.environment == 'Production'
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl -sf -X POST 'https://api.indexnow.org/indexnow' \
-            -H 'Content-Type: application/json' \
-            -d '{
-              "host": "piindex.dev",
-              "key": "de36895509049d938c9de542280e4173",
-              "keyLocation": "https://piindex.dev/de36895509049d938c9de542280e4173.txt",
-              "urlList": [
-                "https://piindex.dev/",
-                "https://piindex.dev/zh/"
-              ]
-            }'
+      - name: 提交当前线上 sitemap 中的页面
+        shell: python
+        run: |
+          import json
+          import urllib.request
+          import xml.etree.ElementTree as ET
+
+          origin = 'https://piindex.dev'
+          namespace = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+
+          def read_xml(url):
+              with urllib.request.urlopen(url, timeout=30) as response:
+                  return ET.fromstring(response.read())
+
+          index = read_xml(origin + '/sitemap-index.xml')
+          urls = set()
+          for entry in index.findall('s:sitemap/s:loc', namespace):
+              if not entry.text.startswith(origin + '/'):
+                  raise ValueError('Unexpected sitemap origin')
+              sitemap = read_xml(entry.text)
+              urls.update(item.text for item in sitemap.findall('s:url/s:loc', namespace))
+          if not urls or any(not url.startswith(origin + '/') for url in urls):
+              raise ValueError('Empty sitemap or unexpected page origin')
+          payload = json.dumps({
+              'host': 'piindex.dev',
+              'key': 'de36895509049d938c9de542280e4173',
+              'keyLocation': origin + '/de36895509049d938c9de542280e4173.txt',
+              'urlList': sorted(urls),
+          }).encode()
+          request = urllib.request.Request('https://api.indexnow.org/indexnow', data=payload, headers={'Content-Type': 'application/json'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+              print(f'IndexNow: {response.status}, {len(urls)} URLs submitted')

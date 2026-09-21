@@ -1,0 +1,256 @@
+{
+  "slug": "web-access-search",
+  "title": {
+    "en": "Pi Web Search: Keyless, API & Self-Hosted Options",
+    "zh": "Pi 网页搜索选型：免 Key、商业 API 与自托管"
+  },
+  "description": {
+    "en": "Compare Pi web search and fetching: Exa MCP, explicit DuckDuckGo, Brave, Tavily, Exa APIs, SearXNG and Ollama endpoints.",
+    "zh": "比较 Pi 网络搜索与抓取：Exa MCP、显式 DuckDuckGo、Brave/Tavily/Exa API、SearXNG 和 Ollama 端点。"
+  },
+  "intro": {
+    "en": [
+      "Searching discovers URLs; fetching reads a URL you already know. A keyless HTTP fetch is useful for public documentation, but does not replace a search engine or a browser for JavaScript-heavy pages.",
+      "Start with pi-web-access for keyless Exa MCP search and multi-format extraction. Use rpiv-web-tools for explicit backend selection, or @ollama/pi-web-search when its fixed local endpoint matches your existing Ollama setup."
+    ],
+    "zh": [
+      "搜索用于发现网址，抓取用于读取已知网址。免 Key 的 HTTP 抓取适合公开文档，但不能替代搜索引擎，也不能保证读取依赖 JavaScript 的页面。",
+      "希望免 Key 使用 Exa MCP 并提取多种格式，可从 pi-web-access 开始；希望明确选择后端，可用 rpiv-web-tools；已有匹配本地 Ollama 端点时，再考虑 @ollama/pi-web-search。"
+    ]
+  },
+  "sections": [
+    {
+      "id": "keyless",
+      "title": {
+        "en": "Keyless routes and fallback boundaries",
+        "zh": "免 Key 路径与降级边界"
+      },
+      "paragraphs": {
+        "en": [
+          "pi-web-access uses Exa MCP without an API key. A configured SearXNG endpoint precedes it; the active Codex model can prioritize authenticated OpenAI search. DuckDuckGo HTML search requires provider: \"duckduckgo\" and is excluded from automatic selection and provider: \"all\".",
+          "Direct URL extraction starts with local HTTP/HTML processing. Remote hosted page extractors require an explicit opt-in. Search fallback and page-extraction fallback are separate mechanisms; a blocked page is not solved merely by switching the search engine."
+        ],
+        "zh": [
+          "pi-web-access 可通过 Exa MCP 免 Key 搜索。配置过的 SearXNG 优先；当前模型为 Codex 时可优先使用已授权的 OpenAI 搜索。DuckDuckGo HTML 搜索需指定 provider: \"duckduckgo\"，不参加自动选择和 provider: \"all\"。",
+          "已知网址先经过本地 HTTP/HTML 提取；远程托管网页提取器需显式开启。搜索降级与正文提取降级是两套机制，换搜索引擎不一定能读取被拦截的网页。"
+        ]
+      }
+    },
+    {
+      "id": "providers",
+      "title": {
+        "en": "Brave, Tavily and Exa APIs",
+        "zh": "Brave、Tavily 与 Exa API"
+      },
+      "paragraphs": {
+        "en": [
+          "With rpiv-web-tools, Brave uses BRAVE_SEARCH_API_KEY and direct HTTP page fetching; Tavily uses TAVILY_API_KEY and its extraction service; Exa uses EXA_API_KEY and its own content extraction. These are credentialed API routes, unlike pi-web-access’s keyless Exa MCP route.",
+          "Run /web-tools to select a backend. Missing credentials are an error, not an automatic switch. For predictable provider selection, verify /web-tools --show before comparing results. Quotas and charges belong to each provider account."
+        ],
+        "zh": [
+          "rpiv-web-tools 中，Brave 使用 BRAVE_SEARCH_API_KEY，网页读取走直接 HTTP；Tavily 使用 TAVILY_API_KEY 及其提取服务；Exa 使用 EXA_API_KEY 及其正文接口。这些是有凭据的 API 路径，和 pi-web-access 的免 Key Exa MCP 不同。",
+          "运行 /web-tools 选择后端。缺少凭据会报错，不会自动切换。比较结果前，用 /web-tools --show 确认生效配置；额度与费用由各供应商账号决定。"
+        ]
+      }
+    },
+    {
+      "id": "local",
+      "title": {
+        "en": "What “local” actually means",
+        "zh": "“本地”具体指什么"
+      },
+      "paragraphs": {
+        "en": [
+          "rpiv-web-tools accepts SEARXNG_URL and OLLAMA_HOST. SearXNG needs JSON search enabled; it is a metasearch server that can still query public engines. Ollama local and cloud web-search endpoints have different paths, and a local daemon may still require sign-in or upstream access.",
+          "Neither package makes the public web available offline. The published @ollama/pi-web-search 0.0.5 source fixes the URL to localhost:11434 and registers web_search/web_fetch, despite different names and OLLAMA_HOST guidance in its README. Treat the published code as the compatibility boundary."
+        ],
+        "zh": [
+          "rpiv-web-tools 接受 SEARXNG_URL、OLLAMA_HOST。SearXNG 须启用 JSON 搜索；它是元搜索服务，仍可能查询公共引擎。Ollama 的本地和云端网络搜索路径不同，本地守护进程也可能需要登录或访问上游。",
+          "这些包不会让公共互联网离线可用。@ollama/pi-web-search 0.0.5 发布源码固定访问 localhost:11434，并注册 web_search/web_fetch，与 README 的工具名及 OLLAMA_HOST 描述不同；应以发布源码判断兼容边界。"
+        ]
+      }
+    },
+    {
+      "id": "verify",
+      "title": {
+        "en": "Check search and fetch separately",
+        "zh": "分别验证搜索与抓取"
+      },
+      "paragraphs": {
+        "en": [
+          "Install one web extension at a time because these packages can register overlapping tool names. In Pi, ask it to run the calls below, inspect the returned provider and source URLs, then fetch one result.",
+          "This checks routing and extraction independently. It does not prove search completeness or factual accuracy. The examples are usage recipes; this guide reviewed source and docs without making billed provider calls.",
+          "The calls below are specific to pi-web-access. rpiv and Ollama use their own web_search/web_fetch interfaces and do not accept this DuckDuckGo provider option."
+        ],
+        "zh": [
+          "建议一次启用一个网页扩展，这些包可能注册同名工具。在 Pi 中要求执行下面的调用，检查返回的供应商和来源链接，再读取一条结果。",
+          "这样能分别确认路由与正文提取，不代表搜索完整或答案准确。示例是验证方法；本指南核对源码与文档，未执行付费供应商调用。",
+          "下方调用仅适用于 pi-web-access。rpiv 与 Ollama 使用各自的 web_search/web_fetch 接口，不接受这里的 DuckDuckGo provider 参数。"
+        ]
+      },
+      "code": "web_search({ query: \"Pi coding agent extension documentation\", provider: \"duckduckgo\", numResults: 3 })\nfetch_content({ url: \"https://pi.dev/\" })"
+    }
+  ],
+  "resources": [
+    {
+      "name": "pi-web-access",
+      "summary": {
+        "en": "Search, page extraction, PDF reading and video analysis through one extension.",
+        "zh": "在同一扩展中搜索网页、提取正文、读取 PDF 和分析视频。"
+      },
+      "mechanism": {
+        "en": "Registers native Pi tools. Search routes to provider APIs or Exa MCP; ordinary URLs start with direct HTTP and local HTML extraction, with configured extraction fallbacks. GitHub repository URLs have a local clone path.",
+        "zh": "注册 Pi 原生工具。搜索通过供应商 API 或 Exa MCP；普通网址先走直接 HTTP 与本地 HTML 提取，再按配置降级。GitHub 仓库网址另有本地克隆路径。"
+      },
+      "prerequisites": {
+        "en": "Pi and outbound network access. Exa MCP needs no API key; keyed providers need their own credentials. GitHub cloning needs Git. PDF text extraction uses bundled unpdf/pdf.js; ffmpeg and yt-dlp are optional for video frames.",
+        "zh": "需要 Pi 和可访问外网的网络。Exa MCP 免 Key，其他 API 需对应凭据。GitHub 克隆需要 Git；PDF 本地文字提取使用包内 unpdf/pdf.js；视频抽帧可选安装 ffmpeg 和 yt-dlp。"
+      },
+      "limitations": {
+        "en": "Keyless does not mean offline or unlimited. DuckDuckGo is explicit-only. The local PDF fallback has no OCR. Private or age-restricted YouTube videos can fail, and readable content behind a paywall is not guaranteed.",
+        "zh": "免 Key 不代表离线或无限额度。DuckDuckGo 需显式选择；PDF 本地兜底没有 OCR；私密或年龄受限的 YouTube 视频可能失败，也不保证获取付费墙后的正文。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v0.30.0 · 6c5afa1d0d43eef8552284ad73f4bd9f0612a378",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Search routing source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/gemini-search.ts"
+          },
+          {
+            "label": "URL extraction source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/extract.ts"
+          },
+          {
+            "label": "PDF extraction source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/pdf-extract.ts"
+          },
+          {
+            "label": "YouTube extraction source",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/youtube-extract.ts"
+          },
+          {
+            "label": "Configuration and dependencies",
+            "url": "https://github.com/nicobailon/pi-web-access/blob/6c5afa1d0d43eef8552284ad73f4bd9f0612a378/README.md"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Queries go to the chosen search service. Hosted extraction receives URLs; configured Datalab/Gemini PDF processing receives PDF bytes. Local video analysis may upload video to Gemini. Browser-cookie access is opt-in.",
+        "zh": "查询发送给选中的搜索服务。托管提取服务接收网址；配置 Datalab/Gemini 的 PDF 处理会发送 PDF 文件内容；本地视频分析可能上传视频到 Gemini。浏览器 Cookie 读取需显式启用。"
+      },
+      "failure": {
+        "en": "Automatic search tries eligible fallbacks; a named provider is strict. Exhausted routes return diagnostics. Remote hosted HTTP extraction is disabled unless fetchRouting.allowRemoteHostedProviders is enabled.",
+        "zh": "自动搜索尝试可用降级来源；指定供应商时严格使用该来源。来源耗尽返回诊断。远程托管 HTTP 提取须启用 fetchRouting.allowRemoteHostedProviders。"
+      }
+    },
+    {
+      "name": "@juicesharp/rpiv-web-tools",
+      "summary": {
+        "en": "Choose a single search backend, including commercial APIs and self-hosted endpoints.",
+        "zh": "在商业搜索 API 和自托管服务端点之间选择一个搜索后端。"
+      },
+      "mechanism": {
+        "en": "Registers web_search and web_fetch. A per-call provider overrides the environment, then config, then the Brave default. Fetching uses provider extraction where available, otherwise direct HTTP-to-text.",
+        "zh": "注册 web_search 与 web_fetch。单次调用指定的 provider 优先于环境变量、配置文件及默认 Brave。抓取优先使用供应商提取接口，否则直接 HTTP 转文本。"
+      },
+      "prerequisites": {
+        "en": "Node.js ≥ 22 and Pi. Brave, Tavily and Exa require keys. SearXNG requires a reachable instance with JSON output enabled. Ollama requires working web-search endpoints; local and cloud endpoint paths differ.",
+        "zh": "需要 Node.js ≥ 22 和 Pi。Brave、Tavily、Exa 需要 Key；SearXNG 需要可达且启用 JSON 输出的实例；Ollama 需要可用的网络搜索端点，本地与云端路径不同。"
+      },
+      "limitations": {
+        "en": "No cross-provider fallback. Plain HTTP fetch does not render arbitrary JavaScript. Self-hosted endpoints do not establish offline operation or prove that the upstream search service stays within your network.",
+        "zh": "没有跨供应商自动降级。普通 HTTP 抓取不会执行任意 JavaScript。自托管入口不代表离线运行，也不证明上游搜索不会离开本地网络。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v2.10.1 · 0fdf4f813980d380e826b84d1280a4960e5d088e",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Provider selection and credentials",
+            "url": "https://github.com/juicesharp/rpiv-mono/blob/0fdf4f813980d380e826b84d1280a4960e5d088e/packages/rpiv-web-tools/providers/config.ts"
+          },
+          {
+            "label": "Provider reference",
+            "url": "https://github.com/juicesharp/rpiv-mono/blob/0fdf4f813980d380e826b84d1280a4960e5d088e/packages/rpiv-web-tools/docs/providers.md"
+          },
+          {
+            "label": "Ollama endpoint implementation",
+            "url": "https://github.com/juicesharp/rpiv-mono/blob/0fdf4f813980d380e826b84d1280a4960e5d088e/packages/rpiv-web-tools/providers/ollama.ts"
+          },
+          {
+            "label": "Fetch behavior",
+            "url": "https://github.com/juicesharp/rpiv-mono/blob/0fdf4f813980d380e826b84d1280a4960e5d088e/packages/rpiv-web-tools/docs/tools.md"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "The chosen service receives search queries and provider-extracted URLs. Direct HTTP fetch contacts the target site. SearXNG may forward queries to its configured engines.",
+        "zh": "选中的服务接收搜索查询与需要提取的网址；直接 HTTP 抓取访问目标网站。SearXNG 还可能将查询转发到配置的搜索引擎。"
+      },
+      "failure": {
+        "en": "Missing commercial credentials throw an actionable error instead of selecting another service. SearXNG 403 can indicate disabled JSON output; connection errors expose an unavailable local Ollama service.",
+        "zh": "缺少商业服务凭据会报错提示配置，不会改用其他服务。SearXNG 403 可能表示 JSON 输出关闭；连接错误可能表示本地 Ollama 未启动。"
+      }
+    },
+    {
+      "name": "@ollama/pi-web-search",
+      "summary": {
+        "en": "A small adapter for an already running local Ollama web-search service.",
+        "zh": "为已运行的本地 Ollama 网络搜索服务提供轻量接入。"
+      },
+      "mechanism": {
+        "en": "The published 0.0.5 code registers web_search and web_fetch and posts to localhost:11434/api/experimental/web_search and /web_fetch. It does not load a local language model itself.",
+        "zh": "0.0.5 发布源码注册 web_search、web_fetch，POST 到 localhost:11434/api/experimental/web_search 与 /web_fetch；扩展本身不加载本地语言模型。"
+      },
+      "prerequisites": {
+        "en": "Pi plus a running Ollama service exposing those experimental APIs. A 401 response asks the user to run ollama signin; the extension has no API-key configuration field.",
+        "zh": "需要 Pi 及提供这些实验 API 的 Ollama 服务。401 响应提示运行 ollama signin；扩展没有 API Key 配置字段。"
+      },
+      "limitations": {
+        "en": "The npm source hardcodes localhost:11434 despite README advice about OLLAMA_HOST, and actual tool names differ from the README. Endpoint compatibility depends on Ollama. A local endpoint is not a guarantee of offline or local-only search.",
+        "zh": "npm 源码将地址固定为 localhost:11434，虽然 README 提到 OLLAMA_HOST；实际工具名也与 README 不同。端点兼容性取决于 Ollama。本地入口不保证离线或只在本地搜索。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "npm 0.0.5 · shasum c36fd7dabda15c15e01566f4c4b3dbdf5ef34af4",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Published package and source archive",
+            "url": "https://registry.npmjs.org/@ollama/pi-web-search/0.0.5"
+          },
+          {
+            "label": "Pi package directory",
+            "url": "https://pi.dev/packages/@ollama/pi-web-search"
+          },
+          {
+            "label": "Ollama web-search documentation",
+            "url": "https://docs.ollama.com/capabilities/web-search"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Search queries and fetch URLs go to the local Ollama daemon. The extension does not control the daemon’s upstream routing.",
+        "zh": "查询与抓取网址发送给本地 Ollama 守护进程；扩展不控制守护进程的上游路由。"
+      },
+      "failure": {
+        "en": "API and connection errors are returned to Pi; there is no alternative provider fallback.",
+        "zh": "API 与连接错误返回给 Pi；没有备用供应商降级。"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "SearXNG JSON API",
+      "url": "https://docs.searxng.org/dev/search_api.html"
+    },
+    {
+      "label": "Ollama web search",
+      "url": "https://docs.ollama.com/capabilities/web-search"
+    }
+  ]
+}

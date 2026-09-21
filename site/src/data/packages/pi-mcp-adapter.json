@@ -1,0 +1,206 @@
+{
+  "slug": "pi-mcp-adapter",
+  "title": {
+    "en": "pi-mcp-adapter: MCP Setup, Lazy Servers & Token Costs",
+    "zh": "pi-mcp-adapter：MCP 配置、惰性启动与 Token 开销"
+  },
+  "description": {
+    "en": "Connect MCP servers to Pi with real configuration examples, metadata caching, selective direct tools and an honest explanation of the 200-token claim.",
+    "zh": "用真实配置示例将 MCP 服务接入 Pi，了解元数据缓存、按需直连工具与“200 Token”说法的适用范围。"
+  },
+  "intro": {
+    "en": [
+      "Pi can use MCP servers through this extension. The adapter exposes discovery and invocation through an mcp tool, instead of advertising every server tool schema at the start.",
+      "Use proxy discovery when you have many rarely used tools. Promote a small set of frequent tools with directTools when an extra discovery call costs more than their schema overhead."
+    ],
+    "zh": [
+      "Pi 可通过此扩展接入 MCP 服务。适配器使用 mcp 工具提供发现和调用能力，避免一开始就暴露所有服务的工具 schema。",
+      "大量低频工具适合代理发现；少量高频工具可用 directTools 直接注册，在发现调用次数与 schema 上下文开销之间选择。"
+    ]
+  },
+  "sections": [
+    {
+      "id": "tokens",
+      "title": {
+        "en": "What “about 200 tokens” measures",
+        "zh": "“约 200 Token”描述什么"
+      },
+      "paragraphs": {
+        "en": [
+          "The README estimates about 200 tokens for the compact proxy tool definition. This project did not benchmark that number, and it is not an upper bound on a full session or today’s optional tool surface.",
+          "Search results and tool descriptions still enter the conversation when requested. Arguments, outputs and selected direct schemas add tokens too. Compare the same task and enabled tools with your model’s usage reporting; more direct tools can erode the initial saving."
+        ],
+        "zh": [
+          "README 给出的约 200 Token 是紧凑代理工具定义的估计。本项目没有测量该数字，它不是整次会话或当前全部可选工具的上限。",
+          "按需搜索结果和工具描述仍会进入对话，参数、返回内容及选中的直接工具 schema 也占 Token。应在相同任务、启用工具和模型下比较实际用量；直接注册工具越多，初始节省越少。"
+        ]
+      }
+    },
+    {
+      "id": "config",
+      "title": {
+        "en": "A working configuration shape",
+        "zh": "实际配置格式"
+      },
+      "paragraphs": {
+        "en": [
+          "After installation and restart, create a project .mcp.json using the mcpServers object shown below. This is the upstream Chrome DevTools example with explicit lazy lifecycle. It needs Node/npx and the MCP server’s browser prerequisites; the pinned server version is an example, not a recommendation of the latest release.",
+          "Shared global configuration lives in ~/.config/mcp/mcp.json. Pi-owned overrides use ~/.pi/agent/mcp.json and .pi/mcp.json. Host-specific configs are not silently adopted by default; /mcp setup can review and import them."
+        ],
+        "zh": [
+          "安装重启后，在项目 .mcp.json 中使用下面的 mcpServers 结构。这沿用上游 Chrome DevTools 示例并明确指定惰性生命周期，需要 Node/npx 及该 MCP 服务自身的浏览器依赖；固定版本只用于示例，不代表最新版本推荐。",
+          "共享全局配置位于 ~/.config/mcp/mcp.json。Pi 专属覆盖使用 ~/.pi/agent/mcp.json 和 .pi/mcp.json。默认不会悄悄采用其他宿主的配置，可通过 /mcp setup 查看并导入。"
+        ]
+      },
+      "code": "{\n  \"mcpServers\": {\n    \"chrome-devtools\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"chrome-devtools-mcp@1.6.0\"],\n      \"lifecycle\": \"lazy\",\n      \"directTools\": false\n    }\n  }\n}"
+    },
+    {
+      "id": "cache",
+      "title": {
+        "en": "Lazy startup and cache behavior",
+        "zh": "惰性启动与缓存行为"
+      },
+      "paragraphs": {
+        "en": [
+          "Lazy is the default: a configured server need not run merely because Pi started. Tool metadata is cached in ~/.pi/agent/mcp-cache.json (or the configured Pi agent directory), so later search/list/describe operations can use cached definitions.",
+          "A new server has no metadata yet. Connect it once to discover tools; direct-tool registration can then load from cache and refresh when the live catalog changes. A cached definition is not a successful health check. /mcp reconnect <server> refreshes live state."
+        ],
+        "zh": [
+          "惰性是默认模式：Pi 启动不等于配置的所有服务都启动。工具元数据缓存在 ~/.pi/agent/mcp-cache.json，或自定义的 Pi agent 目录，之后的搜索、列表及描述可读取缓存。",
+          "新增服务还没有元数据，需要连接一次来发现工具；直接工具随后可从缓存注册，并随实际目录变化刷新。有缓存定义不代表健康检查成功；/mcp reconnect <server> 可刷新在线状态。"
+        ]
+      }
+    },
+    {
+      "id": "direct",
+      "title": {
+        "en": "Choose direct tools deliberately",
+        "zh": "按需启用直接工具"
+      },
+      "paragraphs": {
+        "en": [
+          "Per-server directTools: true exposes every tool schema; an array exposes only named original MCP tools; false keeps proxy-only access. directTools: \"search\" registers tools inactive and activates matches after mcp search.",
+          "Start with proxy-only, discover actual tool names, then add only frequent tools. Direct mode does not bypass server startup, authentication or approval. Enabling many schemas trades away the context benefit that motivated the proxy."
+        ],
+        "zh": [
+          "服务级 directTools: true 暴露全部工具 schema；数组只暴露列出的原始 MCP 工具名；false 保留代理调用。directTools: \"search\" 将工具先注册为未激活，mcp 搜索命中后再激活。",
+          "先从代理模式开始，发现真实工具名后再选择高频项。直接模式不会绕过服务启动、授权或审批；大量启用 schema 会减少代理原本带来的上下文收益。"
+        ]
+      }
+    },
+    {
+      "id": "verify",
+      "title": {
+        "en": "Verify discovery, then a read-only call",
+        "zh": "先验证发现，再做只读调用"
+      },
+      "paragraphs": {
+        "en": [
+          "Open /mcp to inspect configuration, then request the two calls below in Pi. Connecting can start the configured local process; it populates metadata for the subsequent search. Select a read-only tool from the returned schema and provide its actual required arguments.",
+          "Confirm the server, schema and real tool result separately. If only discovery succeeds, cached metadata may be hiding an unavailable server. Authentication and service setup still belong to that server. This guide reviewed source/configuration without starting third-party MCP services."
+        ],
+        "zh": [
+          "打开 /mcp 检查配置，再在 Pi 中请求下面两次调用。连接可能启动配置的本地进程，并为之后的搜索填充元数据。根据返回 schema 选择一个只读工具，填写它实际要求的参数。",
+          "分别确认服务、schema 和真实工具结果。如果只有发现成功，缓存可能掩盖服务不可达。授权与服务部署仍由相应服务决定。本指南核验了源码和配置，未启动第三方 MCP 服务。"
+        ]
+      },
+      "code": "mcp({ connect: \"chrome-devtools\" })\nmcp({ search: \"list pages\" })"
+    },
+    {
+      "id": "alternative",
+      "title": {
+        "en": "When a native extension is enough",
+        "zh": "何时直接用原生扩展"
+      },
+      "paragraphs": {
+        "en": [
+          "If the only requirement is web search and page extraction, pi-web-access can provide native Pi tools without configuring MCP servers. Use the adapter when an existing MCP server supplies capabilities you need across databases, browsers or other services."
+        ],
+        "zh": [
+          "如果只需要网页搜索及正文提取，pi-web-access 可直接提供 Pi 原生工具，无需配置 MCP 服务。需要接入已有数据库、浏览器或其他 MCP 服务能力时，再使用适配器。"
+        ]
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "pi-mcp-adapter",
+      "summary": {
+        "en": "Discover MCP tools on demand, then call them through a compact proxy or selected direct tools.",
+        "zh": "按需发现 MCP 工具，通过紧凑代理或选定的直接工具调用。"
+      },
+      "mechanism": {
+        "en": "Registers an mcp discovery/call proxy. Tool metadata is cached on disk; lazy servers connect only when required. directTools promotes selected schemas to native Pi tools, trading discovery calls for more prompt context.",
+        "zh": "注册 mcp 发现与调用代理；工具元数据缓存在磁盘，惰性服务按需连接。directTools 将选定 schema 注册成 Pi 原生工具，以增加提示词上下文换取更少发现步骤。"
+      },
+      "prerequisites": {
+        "en": "Pi plus a compatible MCP server. Stdio servers need their command runtime (such as Node/npx); HTTP servers need a reachable MCP endpoint and any required bearer/OAuth credentials.",
+        "zh": "需要 Pi 和兼容的 MCP 服务。stdio 服务需要其命令运行时，例如 Node/npx；HTTP 服务需要可达的 MCP 端点及所需 Bearer/OAuth 凭据。"
+      },
+      "limitations": {
+        "en": "“About 200 tokens” is the author’s proxy-definition estimate, not a measured total session cost. Discovery responses, arguments, results, optional tools and direct schemas still consume context. Empty or stale metadata needs a live connection to refresh.",
+        "zh": "“约 200 Token”是作者对代理工具定义的估计，不是本项目测得的整次会话开销。发现结果、参数、输出、可选工具和直连 schema 仍占上下文；缺失或过期元数据需联网刷新。"
+      },
+      "verification": {
+        "date": "2026-09-21",
+        "revision": "v2.35.0 · 1569578ae0ddc697f275560ff7b793031ea95ed4",
+        "status": "source-reviewed",
+        "sources": [
+          {
+            "label": "Proxy and configuration overview",
+            "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/README.md"
+          },
+          {
+            "label": "Metadata cache source",
+            "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/metadata-cache.ts"
+          },
+          {
+            "label": "Lifecycle implementation",
+            "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/lifecycle.ts"
+          },
+          {
+            "label": "Direct tool registration",
+            "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/direct-tools.ts"
+          },
+          {
+            "label": "Config defaults",
+            "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/config.ts"
+          }
+        ]
+      },
+      "dataSent": {
+        "en": "Tool arguments are sent to the selected MCP server and results enter the Pi/model context. Local stdio servers can access resources permitted to their process; the proxy is not a data isolation boundary.",
+        "zh": "工具参数发送给所选 MCP 服务，返回结果进入 Pi/模型上下文。本地 stdio 服务可访问其进程权限允许的资源；代理层不构成数据隔离边界。"
+      },
+      "failure": {
+        "en": "A cached tool list does not prove the server is reachable. Failed calls report transport/auth errors. Configured approval gates fail closed in headless sessions when interactive approval is unavailable.",
+        "zh": "能读到缓存工具列表不代表服务可达；调用失败会报告传输或授权错误。配置了审批门槛时，无交互会话不能获得审批会拒绝调用。"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Proxy and configuration overview",
+      "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/README.md"
+    },
+    {
+      "label": "Metadata cache source",
+      "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/metadata-cache.ts"
+    },
+    {
+      "label": "Lifecycle implementation",
+      "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/lifecycle.ts"
+    },
+    {
+      "label": "Direct tool registration",
+      "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/direct-tools.ts"
+    },
+    {
+      "label": "Config defaults",
+      "url": "https://github.com/nicobailon/pi-mcp-adapter/blob/1569578ae0ddc697f275560ff7b793031ea95ed4/config.ts"
+    }
+  ],
+  "alternatives": [
+    "pi-web-access"
+  ]
+}
