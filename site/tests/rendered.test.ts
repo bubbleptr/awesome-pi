@@ -7,13 +7,12 @@ import { loadPublishedCatalog as loadCatalog, getPublishedSlugs, packagePath, pu
 
 describe('generated static pages', () => {
   for (const [locale, path] of [['en', '../dist/index.html'], ['zh', '../dist/zh/index.html']] as const) {
-    test(`${locale} includes exactly one analytics tracker for its page route`, () => {
+    test(`${locale} includes exactly one pageview tracker`, () => {
       const win = new Window();
       try {
         win.document.write(readFileSync(new URL(path, import.meta.url), 'utf8'));
-        const trackers = win.document.querySelectorAll('vercel-analytics');
+        const trackers = win.document.querySelectorAll('script[data-domain]');
         expect(trackers).toHaveLength(1);
-        expect(trackers[0]?.getAttribute('data-pathname')).toBe(locale === 'zh' ? '/zh/' : '/');
       } finally {
         win.happyDOM.abort();
       }
@@ -93,8 +92,7 @@ describe('published editorial pages', () => {
           expect(win.document.querySelector(`link[hreflang="${lang}"]`)?.getAttribute('href')).toBe(`https://piindex.dev${routePath(kind, slug, targetLocale)}`);
         }
         expect(win.document.querySelector('[data-language]')?.getAttribute('href')).toBe(routePath(kind, slug, locale === 'en' ? 'zh' : 'en'));
-        expect(win.document.querySelectorAll('vercel-analytics')).toHaveLength(1);
-        expect(win.document.querySelector('vercel-analytics')?.getAttribute('data-pathname')).toBe(path);
+        expect(win.document.querySelectorAll('script[data-domain]')).toHaveLength(1);
         expect(win.document.querySelector('[data-interactions]')?.getAttribute('data-surface')).toBe(kind === 'packages' ? 'detail' : kind === 'topics' ? 'topic' : 'category');
         expect(win.document.querySelectorAll('[data-repo-link]').length).toBeGreaterThan(0);
         expect(win.document.querySelectorAll('[data-copy][data-package]').length).toBeGreaterThan(0);

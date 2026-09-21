@@ -86,8 +86,9 @@
 ## 三、 转化埋点体系与初始化规范 (Analytics & Events)
 
 ### 1. 全局初始化要求
-- **现状与隐患**：当前 `<Analytics />` 仅存在于 `Directory.astro` 中。若新分类页和详情页未加载此组件，SDK 不会被加载初始化，直接调用 `track()` 将会被静默丢弃。
-- **规则**：所有新增的分类页（`categories/[slug].astro`）、详情页（`packages/[slug].astro`）和专题页（`topics/[slug].astro`）模板**必须引入并渲染 `<Analytics />` 组件**，每个页面只初始化一次，可使用共享 Layout。
+- **当前接入（2026-09-22）**：网站端已迁移到自托管 Plausible CE v3.2.1。`Directory.astro` 和共享 `EditorialPage.astro` 各渲染一次本地 `site/src/components/Analytics.astro`；线上部署验收仍在进行中。
+- **规则**：所有新增的分类页（`categories/[slug].astro`）、详情页（`packages/[slug].astro`）和专题页（`topics/[slug].astro`）模板必须通过共享组件加载一次统计脚本。使用 `async` 独立加载基础 `/js/script.js`，避免统计服务延迟阻塞页面交互；不启用自动外链统计，以免与显式 `repo_clicked` 双计。
+- **采集边界**：公共采集源配置为 `https://events.piindex.dev`，站点标识为 `piindex.dev`；私有仪表盘为 `https://stats.piindex.dev`。统一使用 `site/src/scripts/analytics.ts` 的 `track(window, name, properties)`，通过 Plausible `props` 传递属性，脚本未就绪时进入兼容队列。CE 支持现有自定义事件与属性，无需升级 Vercel 套餐。服务部署文档与私有配置由运维管理。
 
 ### 2. 采集事件与防御性计数规范
 | 事件名称 | 触发时机 | 携带参数 (Payload) | 统计目的与约束 |
@@ -99,23 +100,28 @@
 
 ### 3. 前端埋点挂载实现
 ```typescript
-import { track } from '@vercel/analytics';
+import { track } from './analytics';
 
 // Count only successful clipboard writes.
-try {
-  await window.navigator.clipboard.writeText(command);
-  track('command_copied', { package: resourceName, locale, surface });
-} catch {
-  announceCopy(t.copyError);
-}
+button.addEventListener('click', async () => {
+  try {
+    await window.navigator.clipboard.writeText(command);
+  } catch {
+    announceCopy(t.copyError);
+    return;
+  }
+  track(window, 'command_copied', { package: resourceName, locale, surface });
+});
 
 // Track original project links without intercepting navigation.
-document.querySelectorAll<HTMLAnchorElement>('[data-repo-link]').forEach(link => {
+document.querySelectorAll<HTMLAnchorElement>('[data-repo-link][data-package]').forEach(link => {
+  const destination = link.dataset.destination;
+  if (destination !== 'github' && destination !== 'npm') return;
   link.addEventListener('click', () => {
-    track('repo_clicked', {
-      package: link.dataset.package ?? 'unknown',
+    track(window, 'repo_clicked', {
+      package: link.dataset.package!,
       locale,
-      destination: link.dataset.destination ?? 'github',
+      destination,
       surface
     });
   });
@@ -220,7 +226,7 @@ document.querySelectorAll<HTMLAnchorElement>('[data-repo-link]').forEach(link =>
 
 ### 2. 交互与事件回归测试 (`tests/directory.test.ts`)
 - **导航点击回归**：在 HappyDOM 运行 `initializeDirectory` 后，模拟点击 `.guide-link`、`.package-link` 与 `.topic-link`，断言事件未被 `preventDefault()`，且未触发单页内 DOM 筛选逻辑；
-- **埋点上报验证**：模拟剪贴板复制成功，断言 `track('command_copied', ...)` 收到正确参数；模拟剪贴板抛出异常，断言 `track` 未被调用；模拟点击外跳仓库，断言 `track('repo_clicked', ...)` 正确触发。
+- **埋点上报验证**：模拟剪贴板复制成功，断言 Plausible 公开接口收到 `command_copied` 及正确的 `props`；模拟剪贴板抛出异常，断言没有上报；模拟点击外跳仓库，断言 `repo_clicked` 正确触发且不拦截导航。统计脚本未就绪时，成功复制与仓库点击进入兼容队列。
 - **专题交互验证**：初始化专题使用的客户端逻辑，验证未发布独立详情页的候选仍能复制和外跳，并上报完整资源名与 `surface: 'topic'`；站内链接和 TypeSafe 官网入口不触发 `repo_clicked`。
 
 ### 3. HTTP 响应与 SVG 端点验收 (`tests/endpoint.test.ts` 新增)
@@ -241,7 +247,7 @@ document.querySelectorAll<HTMLAnchorElement>('[data-repo-link]').forEach(link =>
   - 编写辅助读取函数 `getPublishedRoute(slug)` 与 `isPublished(resource)`；
   - 若涉及更名，在根目录 `vercel.json` 的 `redirects` 中写入永久 308 重定向规则。
 - [x] **Task 2: 转化埋点接入与 Analytics 初始化**
-  - 确保新增页面模板均引入并渲染 `@vercel/analytics/astro` 的 `<Analytics />` 组件；
+  - 确保新增页面模板均引入并渲染本地 `Analytics.astro` 组件；2026-09-22 的网站端迁移改为 Plausible CE 基础脚本；
   - 在客户端脚本中接入 `command_copied`（仅在 Promise resolve 后上报）与 `repo_clicked` 外跳事件。
 - [x] **Task 3: 首页内链分流与导航解耦改造**
   - 在 `Directory.astro` 中改造卡片链接：已发布项渲染指向 `/packages/[slug]` 的站内入口，未发布项继续直链外部；
@@ -275,4 +281,10 @@ document.querySelectorAll<HTMLAnchorElement>('[data-repo-link]').forEach(link =>
 
 首批包缺失单语或双语 README 条目时，目录及详情使用发布快照；仍然存在但互相冲突的翻译继续阻止构建。没有实际更名，因此没有写入示例旧路径重定向；今后更名必须同步中英文 Vercel 永久重定向。
 
-Vercel 项目访问统计已启用，但当前 Hobby 套餐不支持自定义事件。代码接入不代表控制台已能收集转化；升级套餐属于用户手动事项。上线检查、人工事项和 14/30 天复盘口径记录在 [SEO 交付记录](seo-delivery.md)。
+2026-09-21 的验收记录显示 Vercel 项目访问统计已启用，但当时的 Hobby 套餐不支持自定义事件，代码接入不代表控制台已能收集转化；当日没有升级套餐。该历史状态保留在 [SEO 交付记录](seo-delivery.md)。
+
+## 九、统计迁移补记（2026-09-22）
+
+网站端已替换为自托管 Plausible CE，事件名称、属性及转化语义保持不变，不再需要升级 Vercel 套餐。`bun run --cwd site validate` 通过 56 项单元/交互/端点测试、20 项静态产物测试、类型检查与构建；另经本地浏览器确认统计脚本请求挂起时，筛选和复制仍可运行。
+
+部署验收进行中，公共采集域名、真实事件入库与私有仪表盘尚未完成验收。采集切换的实际覆盖时间和缺口应记录在复盘中；Google Search Console 与原定 14/30 天复盘继续执行，统计迁移不重置 SEO 页面观察期。上线检查和复盘口径见 [SEO 交付记录](seo-delivery.md)，接入细节见 [网站说明](website.md#访问统计)。

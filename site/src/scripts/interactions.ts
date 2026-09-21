@@ -1,7 +1,7 @@
-import { track } from '@vercel/analytics';
+import { track } from './analytics';
 import { text } from '../lib/i18n';
 
-export function initializeInteractions(document: Document, window: Window, trackEvent: typeof track = track): void {
+export function initializeInteractions(document: Document, window: Window): void {
   const root = document.querySelector<HTMLElement>('[data-interactions]');
   if (!root) return;
   const locale = root.dataset.locale === 'zh' ? 'zh' : 'en';
@@ -38,7 +38,7 @@ export function initializeInteractions(document: Document, window: Window, track
         delete button.dataset.copied;
       }, 1800);
       if (button.dataset.package) {
-        trackEvent('command_copied', { package: button.dataset.package, locale, surface });
+        track(window, 'command_copied', { package: button.dataset.package, locale, surface });
       }
     });
   }
@@ -47,7 +47,7 @@ export function initializeInteractions(document: Document, window: Window, track
     const destination = link.dataset.destination;
     if (destination !== 'github' && destination !== 'npm') continue;
     link.addEventListener('click', () => {
-      trackEvent('repo_clicked', { package: link.dataset.package!, locale, surface, destination });
+      track(window, 'repo_clicked', { package: link.dataset.package!, locale, surface, destination });
     });
   }
 }

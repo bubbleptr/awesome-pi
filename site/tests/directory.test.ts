@@ -4,7 +4,7 @@ import { initializeDirectory } from '../src/scripts/directory';
 import { initializeInteractions } from '../src/scripts/interactions';
 
 type RecordedEvent = { name: string; properties?: Record<string, unknown> };
-const recorder = (events: RecordedEvent[]) => (name: string, properties?: Record<string, unknown>) => { events.push({ name, properties }); };
+const recorder = (events: RecordedEvent[]) => (name: string, options: { props: Record<string, unknown> }) => { events.push({ name, properties: options.props }); };
 
 const windows: Window[] = [];
 function setup(path = '/', events: RecordedEvent[] = []) {
@@ -26,7 +26,8 @@ function setup(path = '/', events: RecordedEvent[] = []) {
       <article data-resource data-kind="themes" data-categories="dark-themes" data-search="theme dark"><button data-copy="pi install npm:theme"><span data-copy-label>Copy</span></button></article>
       <p id="copy-status" role="status"></p>
     </main>`;
-  initializeDirectory(win.document as unknown as Document, win as unknown as globalThis.Window, recorder(events));
+  Object.assign(win, { plausible: recorder(events) });
+  initializeDirectory(win.document as unknown as Document, win as unknown as globalThis.Window);
   return win;
 }
 afterEach(() => { for (const win of windows.splice(0)) win.happyDOM.abort(); });
@@ -105,6 +106,22 @@ describe('directory interactions', () => {
     expect(events).toEqual([{ name: 'command_copied', properties: { package: '@scope/search', locale: 'en', surface: 'home' } }]);
     expect(button.disabled).toBe(false);
   });
+  test('keeps successful copies and repository clicks available while analytics loads', async () => {
+    const win = setup();
+    const browser = win as unknown as globalThis.Window;
+    Reflect.deleteProperty(browser, 'plausible');
+    Object.defineProperty(win.navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } });
+    win.document.querySelector<HTMLButtonElement>('[data-copy]')!.click();
+    await Promise.resolve();
+    const event = new win.MouseEvent('click', { bubbles: true, cancelable: true });
+    win.document.querySelector('[data-repo-link]')!.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+    expect(win.document.querySelector('[data-copy-label]')!.textContent).toBe('Copied');
+    expect(browser.plausible?.q).toEqual([
+      ['command_copied', { props: { package: '@scope/search', locale: 'en', surface: 'home' } }],
+      ['repo_clicked', { props: { package: '@scope/search', locale: 'en', surface: 'home', destination: 'github' } }],
+    ]);
+  });
   test('copies the exact command and announces success only after the clipboard write completes', async () => {
     const win = setup();
     const copied: string[] = [];
@@ -150,7 +167,8 @@ describe('content page interactions', () => {
         <button data-copy="[![Pi Index](https://piindex.dev/badge/pi-web-access.svg)](https://piindex.dev/packages/pi-web-access/)"><span data-copy-label>复制徽章</span></button>
         <p id="copy-status" role="status"></p>
       </main>`;
-    initializeInteractions(win.document as unknown as Document, win as unknown as globalThis.Window, recorder(events));
+    Object.assign(win, { plausible: recorder(events) });
+    initializeInteractions(win.document as unknown as Document, win as unknown as globalThis.Window);
     return win;
   }
 

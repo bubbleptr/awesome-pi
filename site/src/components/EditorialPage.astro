@@ -1,5 +1,5 @@
 ---
-import Analytics from '@vercel/analytics/astro';
+import Analytics from './Analytics.astro';
 import { slug as resourceSlug, type Locale } from '../lib/catalog';
 import { getEditorial, repoDestination, reviewedResource } from '../lib/editorial';
 import { createPublishedCatalog, getPublishedRoute, getPublishedSlugs, packagePath, resolvePublishedResource, routePath, type RouteKind } from '../lib/published-routes';
@@ -60,6 +60,7 @@ const schema = {
     <meta name="twitter:description" content={page.description[locale]} />
     <meta name="twitter:image" content={image} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#content">{t.skip}</a>
@@ -138,7 +139,6 @@ const schema = {
       <footer class="site-footer"><div><a class="footer-brand" href={base}><span>pi</span>index</a><p>{t.notice}</p></div><div class="footer-links"><a href={`${repository}/issues/new`}>{t.report} ↗</a><a href={base}>{zh ? '返回目录' : 'Back to directory'} →</a></div></footer>
       <div id="copy-status" class="copy-status" role="status" aria-live="polite"></div>
     </main>
-    <Analytics />
     <script>
       import { initializeInteractions } from '../scripts/interactions';
       initializeInteractions(document, window);

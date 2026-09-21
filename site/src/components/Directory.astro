@@ -1,5 +1,5 @@
 ---
-import Analytics from '@vercel/analytics/astro';
+import Analytics from './Analytics.astro';
 import { type Locale } from '../lib/catalog';
 import englishReadme from '../../../README.en.md?raw';
 import chineseReadme from '../../../README.md?raw';
@@ -91,6 +91,7 @@ const structuredData = {
     <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
     <title>{t.title}</title>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#resources">{t.skip}</a>
@@ -194,6 +195,5 @@ const structuredData = {
       import { initializeDirectory } from '../scripts/directory';
       initializeDirectory(document, window);
     </script>
-    <Analytics />
   </body>
 </html>
