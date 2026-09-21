@@ -1,200 +1,161 @@
-# Pi Index SEO 与自然增长实施规划 (SEO & Growth Plan)
+# Pi Index SEO 与自然增长实施规划 (V2 精细化方案)
 
-> **目标**：在 60 天内将站点 Ahrefs DR 从 2 提升至 20+，扩充搜索引擎索引面（从 2 个页面扩充至 250+ 独立页面），确立 Pi Index 作为 Pi Coding Agent 生态第一聚合入口（Topical Authority），并承接 AI 搜索引擎（Perplexity、ChatGPT Search 等）的核心推荐流量。
-
----
-
-## 一、 核心现状诊断与破局策略
-
-### 1. 为什么当前 DR 仅为 2 且流量受限？
-- **索引表面积极小（Surface Area Deficit）**：目前整站仅有 `/` 与 `/zh/` 两个独立 URL。所有的分类筛选（`?category=...`）和 100+ 个 Package 全靠客户端 JS 渲染，且 `canonical` 统一指回根目录，导致搜索引擎无法抓取任何具体插件或分类作为独立落地页。
-- **长尾搜索无法承接**：开发者搜索 `pi-web-access`、`pi subagents`、`pi install context-mode` 或 `pi coding agent mcp adapter` 时，缺少对应的独立页面匹配搜索意图。
-- **缺乏反向外链机制**：没有给被收录的开源作者提供回链理由（如 GitHub Badge），没有主动打通官方仓库或开发者聚合社区。
-
-### 2. 为什么该赛道竞争难度极低（KD < 15）？
-- **生态处于爆发初期**：Pi（`pi.dev` / `earendil-works/pi`）作为极简极客风格的终端 AI Coding Harness，生态快速增长，但除了官方裸文档和散落的 GitHub 仓库外，**全网没有任何系统化的第三方结构化扩展索引站**。
-- **内容具有天然独占性**：拥有最完整的中英双语翻译、GitHub/npm 动态数据（Star/周下载量）、一键安装命令与分类归纳。
+> **修订说明 (V2)**：放弃盲目、粗暴的“全量 200+ 插件页面铺开”模式，防止陷入 Google **“浅薄内容（Thin Content）”**惩罚与新站（DR 2）抓取配额阻断；全面转向**“核心分类深度选型指南（10~12 个垂直微百科） + 头部高热插件（Top 20~25 准入制）”**的高质量精细化打法。
 
 ---
 
-## 二、 页面与路由架构规范 (Architecture Spec)
+## 一、 战略调整与设计哲学
 
-其他开发 Agent 请按照以下规范扩展 Astro 页面与静态生成逻辑。
+### 1. 为什么坚决不做全量单包生成？
+- **规避 Thin Content 惩罚**：原列表中大量小插件仅有 10~20 字的简介和一条安装命令。机械式生成独立页面无法提供“增量价值（Little or no added value）”，极易导致 Google 判定为低质页面，进而拉低全站权威度。
+- **避免新站抓取预算阻断（Crawl Budget Bloat）**：DR 2 站点的抓取预算极为有限。盲目塞入 200+ URL 会在 Google Search Console 中积压大量“已发现 - 尚未编入索引”，稀释真正有价值页面的权重。
+- **匹配真实搜索意图**：用户在 Google 搜索特定小插件（0 Star、个位数下载）的概率几乎为零；而高频搜索绝大多数集中在**分类选型词**（如 `pi subagents`、`pi mcp adapter`、`pi web access`）和**头部明星工具**（如 `pi-web-access`、`rpiv-web-tools`、`plannotator`）。
 
+### 2. 核心打法：把分类页打造成“Pi 生态垂直选型微百科”
+每一个核心分类落地页（如 `/categories/subagents/`）都不再是简单的卡片复制，而是一篇结构极其严密、包含**概念导读、横向对比表格、场景决策树、实操代码与 FAQ 结构化数据**的权威选型指南。
+
+---
+
+## 二、 页面分级规划与范围界定
+
+全站将页面划分为 3 个梯队，稳步递进：
+
+### 第一梯队：10~12 个核心分类落地页（最高优先级 ⭐⭐⭐⭐⭐）
+**准入标准**：收录资源数量 $\ge 5$ 项，具有明确独立搜索意图的分类。
+- **首批重点核心分类**：
+  1. `subagents`（子代理，9 项）—— 核心热点，多代理编排
+  2. `web-access-search`（网页与搜索，7 项）—— 装机必备网络获取工具
+  3. `task-management`（任务管理，12 项）—— 计划与任务流
+  4. `security-permission`（安全与权限，10 项）—— 执行拦截与安全沙箱
+  5. `ui-enhancement`（界面增强，10 项）—— 终端状态栏与 TUI 美化
+  6. `dev-tools-code-intelligence`（开发与代码智能，8 项）—— AST、LSP、调试工具
+  7. `package-collections`（扩展合集，8 项）—— 社区优秀配置与打捆推荐
+  8. `persistent-memory`（持久化记忆，5 项）—— 长期上下文与记忆知识库
+  9. `context-management`（上下文管理，5 项）—— Token 压缩与滑动窗口优化
+  10. `dark-themes`（深色主题，14 项）—— 终端高频美化
+  11. `theme-packs`（主题合集，7 项）—— 多配色打包
+- **低频分类处理原则**：对只有 1~2 项资源的分类（如 `MCP Adapter`、`Plan Mode`、`Loop Engineering`），**暂不单独生成独立页面**，避免产生空壳页；在分类导航中可保留筛选，或后续随着生态扩充再独立建页。
+
+### 第二梯队：头部高热插件详情页（Top 20~25 准入制 ⭐⭐⭐⭐）
+**准入标准**（满足任一条件即可建页）：
+1. README 中带有 `🔥` 标识的重点推荐插件；
+2. GitHub Stars $\ge 50$ 或 npm 每周下载量 $\ge 100$。
+- **页面定位**：提供详细的特性介绍、源码直达、安装代码与 **“Featured on Pi Index” 徽章代码提取框**（作为换取 GitHub README 外链的核心载体）。
+
+### 第三梯队：全球索引文件与 AI 搜索接入（GEO / LLMO ⭐⭐⭐⭐）
+- `/public/llms.txt` 与 `/public/llms-full.txt`：为 Perplexity、ChatGPT Search 等提供权威引用的结构化文本。
+
+---
+
+## 三、 核心分类落地页具体实现规范 (Category Guide Specs)
+
+这是本阶段工作量最核心、SEO 价值最高的部分。
+
+### 1. 数据架构：解耦内容与展示 (`site/src/data/categories/`)
+为避免将大段文本写死在 Astro 组件中，在 `site/src/data/categories/` 目录下为每个核心分类创建元数据配置文件（如 `subagents.json` 或 `.ts`）：
+
+```typescript
+export interface CategoryGuideData {
+  id: string; // 对应 catalog 中的 category id
+  intro: {
+    en: string; // 200~300 词的概念科普与机制介绍
+    zh: string;
+  };
+  comparison: {
+    en: { name: string; highlight: string; features: string[] }[];
+    zh: { name: string; highlight: string; features: string[] }[];
+  };
+  recommendations: {
+    en: { scenario: string; recommendedPackage: string; reason: string }[];
+    zh: { scenario: string; recommendedPackage: string; reason: string }[];
+  };
+  faqs: {
+    en: { question: string; answer: string }[];
+    zh: { question: string; answer: string }[];
+  };
+}
 ```
-site/src/pages/
-├── index.astro                     # 英文首页（目录大盘）
-├── zh/index.astro                  # 中文首页（目录大盘）
-├── categories/
-│   └── [slug].astro                # 英文分类独立落地页 (如 /categories/subagents/)
-├── zh/categories/
-│   └── [slug].astro                # 中文分类独立落地页 (如 /zh/categories/subagents/)
-├── packages/
-│   └── [id].astro                  # 英文插件详情页 (如 /packages/pi-web-access/)
-├── zh/packages/
-│   └── [id].astro                  # 中文插件详情页 (如 /zh/packages/pi-web-access/)
-├── badge/
-│   └── [id].svg.ts                 # 动态/静态 SVG 徽章生成端点 (Featured on Pi Index)
-```
+
+### 2. 页面 5 大核心模块（自上而下）
+
+#### 模块 1：概念科普与运行机制 (Hero & Concept)
+- 讲解 Pi 核心 Harness 如何通过 Package 注入该能力，解释其底层原理。
+- 覆盖高价值 LSI 关键词（如多 Agent 委托、Worktree 隔离、上下文损耗等）。
+
+#### 模块 2：横向对比速查表 (Feature Comparison Table) 🔥
+- 渲染标准 HTML `<table>`。
+- 列项：**扩展名称** | **关键特性/实现机制** | **支持的 Provider / 依赖** | **Stars / 周下载** | **安装命令**
+- **作用**：捕获 Google 搜索结果第 0 位的**“精选摘要 (Featured Snippets)”**，并成为 Perplexity 等 AI 的首选数据源。
+
+#### 模块 3：场景选型决策指南 (Which One to Choose?)
+- 针对常见开发者场景给出 3~4 条明确建议。
+- 例：*“如果你需要 Git 隔离的多后台 Agent：选 `@tintinweb/pi-subagents`”*；*“如果你追求轻量零配置：选 `pi-subagents`”*。
+
+#### 模块 4：精选资源动态列表 (Curated Resource Cards)
+- 展示该分类下的所有插件卡片，带实时 Star 数、下载量、一键复制安装命令、项目外链。
+
+#### 模块 5：FAQ 常见问题与结构化数据 (FAQ Accordion + Schema)
+- 3~4 个真实的高频开发者疑问与解答。
+- 注入 Schema.org 的 `FAQPage` JSON-LD，直接在 Google SERP 呈现富媒体展开卡片。
 
 ---
 
-## 三、 具体页面技术实现规范 (Page Implementation Specs)
+## 四、 头部插件详情落地页实现规范 (Top Package Specs)
 
-### 1. 分类独立落地页 (`categories/[slug].astro` / `zh/categories/[slug].astro`)
+针对 Top 20~25 个核心包，提供精美富媒体落地页：
 
-- **数据源**：从 `createCatalog` 获取所有类别，`getStaticPaths` 为每个 `category.id` 生成路由。
-- **SEO 核心标签**：
-  - `Title (EN)`: `{Category Name} Packages for Pi Coding Agent — Pi Index`
-  - `Title (ZH)`: `{中文分类名} 扩展包精选 - Pi Coding Agent 插件目录 | Pi Index`
-  - `Description (EN)`: `Discover the best {Category Name} packages and extensions for Pi Coding Agent. View install commands, GitHub stars, and weekly npm downloads.`
-  - `Description (ZH)`: `浏览精选的 Pi Coding Agent {中文分类名} 扩展与工具。查看一键安装命令、GitHub Star 数和 npm 每周下载量。`
-  - `Canonical`: `https://piindex.dev/categories/{category.id}/` (ZH: `.../zh/categories/{category.id}/`)
-- **页面内容区块**：
-  1. **面包屑导航**：`Home > Categories > {Category Name}`
-  2. **分类导语与大标题 (H1)**：突出分类用途与收录资源总数。
-  3. **分类专属资源列表**：复用现有的卡片展示逻辑，支持即时安装命令复制。
-  4. **相关分类推荐（横向内链）**：引导用户探索相邻分类（如 MCP Adapter 链接到 Dev Tools）。
-- **结构化数据 (JSON-LD)**：
-  - `@type: "CollectionPage"` 与 `@type: "ItemList"`，输出该分类下所有扩展的名称与 URL。
-
----
-
-### 2. 插件详情落地页 (`packages/[id].astro` / `zh/packages/[id].astro`)
-
-每个收录的资源均生成独立的富媒体详情页，作为长尾搜索的直接承接页。
-
-- **数据源**：`catalog.resources` 中的每一项，匹配 `stats.json` 中的数据。
-- **SEO 核心标签**：
-  - `Title (EN)`: `{Package Name} — Pi Coding Agent Extension | Pi Index`
-  - `Title (ZH)`: `{Package Name} - Pi Coding Agent 扩展安装与介绍 | Pi Index`
-  - `Description`: 精准截取资源中英文描述，末尾拼接 `Learn how to install and use {name} with Pi Coding Agent.`
-  - `Canonical`: `https://piindex.dev/packages/{resource.id}/`
-- **页面核心模块（自上而下）**：
-  1. **面包屑 (Breadcrumbs)**：`Home > Packages > {Kind} > {Package Name}`
-  2. **插件 Header**：
-     - H1：`{Package Name}`
-     - 来源标签（npm / GitHub）与所属分类标签（带链接可跳回分类页）
-     - 活跃度指标徽章：GitHub Stars、npm 周下载量与增长趋势（▲/▼）
-  3. **一键安装核心区 (Hero Install Card)**：
-     - 命令框：`pi install {npm:xxx | git:xxx}`，支持一键点击复制
-     - 提示文案：告知如何在 Pi CLI 终端中运行
-  4. **扩展详细介绍与特性说明**：
-     - 完整的中英文描述
-     - 外部链接：直接跳转至原始 GitHub 仓库 / npm 页面
-  5. **“Featured on Pi Index” 徽章代码提取框（外链抓手！）**：
-     - 引导插件作者挂在他们的 README 顶部：
+1. **SEO Meta 标签**：
+   - `Title`: `{Package Name} — Pi Coding Agent Extension | Pi Index`
+   - `Canonical`: 动态指向当前页面具体路径。
+2. **核心模块**：
+   - **Hero Install Area**：带终端风格命令框 `$ pi install ...`，一键复制并有明确反馈。
+   - **Metrics Card**：GitHub Stars、npm 下载、增长趋势。
+   - **“Featured on Pi Index” 徽章提取卡片**：
+     - 展示 SVG 预览及一键复制 Markdown：
        ```markdown
-       [![Featured on Pi Index](https://piindex.dev/badge/{resource.id}.svg)](https://piindex.dev/packages/{resource.id})
+       [![Featured on Pi Index](https://piindex.dev/badge/{id}.svg)](https://piindex.dev/packages/{id})
        ```
-     - 提供一键复制代码和实时 SVG 预览
-  6. **同类替代与推荐 (Similar Extensions / Related)**：
-     - 算法：同分类下的 3~4 个其他扩展推荐卡片
-     - 作用：构建紧密的站内纵向/横向网状内链（Internal Mesh Linking），提升爬虫抓取深度与页面权重传递。
-- **结构化数据 (JSON-LD)**：
-  ```json
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "{Package Name}",
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "Cross-platform",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "{Description}",
-    "url": "{resource.url}"
-  }
-  ```
+   - **同类替代推荐 (Related)**：推荐同分类下的其他 2~3 个扩展，建立网状内链。
+3. **结构化数据 (JSON-LD)**：
+   - 注入 `SoftwareApplication` 与 `BreadcrumbList`。
 
 ---
 
-### 3. SVG 徽章服务 (`site/src/pages/badge/[id].svg.ts`)
+## 五、 外链与 DR 突破执行方案 (Off-Page Playbook)
 
-- **功能**：由 Astro API Route 静态或动态输出符合 Shields.io 风格的 SVG 矢量图。
-- **内容设计**：
-  - 左侧灰色：`Pi Index`
-  - 右侧绿色/蓝色：`Featured` 或展示实时 `★ {stars}`
-- **缓存策略**：设置 `Cache-Control: public, max-age=86400, s-maxage=604800`，减轻服务端压力并加速 GitHub 渲染。
+目标：从目前的 **DR 2 突破至 20+**。
 
----
-
-### 4. 站点级 SEO 增强与内链打通
-
-1. **首页内链改造**：
-   - 当前首页的插件卡片标题链接只跳到了外部 GitHub (`resource.url`)。
-   - **改造要求**：卡片标题增加进入详情页的站内链接（或卡片内提供“查看详情页”入口），既保持外链可达，又将首页的巨大权重分流至所有详情页与分类页。
-2. **Sitemap 自动更新**：
-   - 确保 `site/astro.config.mjs` 中的 `@astrojs/sitemap` 能够自动扫描并包含所有生成的分支路由（200+ URL）。
-3. **针对 AI 搜索引擎的 `llms.txt` (GEO 建设)**：
-   - 在 `site/public/llms.txt` 提供标准的站点清单，包含 Pi 生态总览、分类导航与前 30 高星插件索引。
-   - 在 `site/public/llms-full.txt` 中提供包含所有 Package 安装命令的轻量 Markdown 文档，供 Perplexity、ChatGPT、Claude 抓取并作为标准引用源。
+1. **针对 Top 20 插件作者提 Issue / PR（核心战术）**
+   - 筛选出最热门的 20 个插件仓库（例如 `pi-web-access`, `pi-subagents`, `plannotator` 等）。
+   - 提交极具诚意的友善 Issue/PR，说明已将其收录并在详情页提供动态数据跟踪，附上已生成好的 Badge Markdown。
+   - 借助 GitHub（DR 98）的高权重反向链接打下第一波基础。
+2. **上游官方仓库 `earendil-works/pi` 整合**
+   - 提交 PR 至官方文档的 `packages.md` 或 README，在生态扩展目录中增加 `Pi Index` 链接。
+3. **精准渠道宣发**
+   - Hacker News (Show HN)、Reddit (r/commandline, r/LocalLLaMA)、V2EX、掘金、知乎。
 
 ---
 
-## 四、 外链与 DR 突破执行方案 (Off-Page SEO & Backlinks Playbook)
+## 六、 Agent 落地执行任务清单 (Actionable Task Checklist)
 
-DR 突破的关键是获取具有真实权威度的**外部独立引荐域名（Referring Domains）**。以下是 4 个低阻力执行方案：
+后续承接编码的 Agent 请严格依照以下任务依序执行：
 
-### 1. 开源作者“挂徽章”计划 (The Badge Outreach Engine)
-- **目标**：为前 30 个高热度扩展作者（如 `pi-web-access`, `pi-subagents`, `rpiv-web-tools`）提 PR 或 Issue。
-- **沟通模版 (GitHub Issue / PR Template)**：
-  ```markdown
-  Title: Added {Package Name} to Pi Index directory + badge
-
-  Hi @{author},
-
-  We've featured `{Package Name}` in the community directory [Pi Index](https://piindex.dev/packages/{id}), which tracks weekly npm downloads and GitHub stars to help Pi developers discover packages.
-
-  If you'd like to showcase this in your README, feel free to include the badge:
-  [![Featured on Pi Index](https://piindex.dev/badge/{id}.svg)](https://piindex.dev/packages/{id})
-
-  Thanks for building for the Pi ecosystem!
-  ```
-- **预期成果**：只要有 10~15 位作者合并，即可从 GitHub（DR 98）获得多条高质量反向链接，并在后续克隆站、抓取站中产生长尾连锁外链效应。
-
-### 2. Pi 官方与上游代码库整合
-- 向 `earendil-works/pi` 提交 PR 或在 Discussions 留言：
-  - 在官方文档的 `docs/packages.md` 或 README 的 "Community & Ecosystem" 章节增加：`[Pi Index](https://piindex.dev) - Community package directory and search`.
-- 在 Pi 官方 Discord 或开发者群组中活跃分享精选清单。
-
-### 3. 双语开发者社区种子内容宣发
-| 渠道 | 目标受众 | 选题方向 |
-| :--- | :--- | :--- |
-| **Hacker News (Show HN)** | 全球极客/终端控 | *Show HN: Pi Index – A curated directory for the minimalist Pi Coding Agent* |
-| **Reddit (r/LocalLLaMA, r/commandline)** | 本地大模型 & 终端开发者 | *Supercharge your Pi Agent: Top 10 community extensions for subagents & web search* |
-| **V2EX (程序员/分享发现)** | 国内第一批极客尝鲜者 | 《给极简终端 AI 编程助手 Pi 做了一个扩展导航：piindex.dev》 |
-| **掘金 / 知乎** | 国内前沿开发者与架构师 | 《告别臃肿 IDE：Pi Coding Agent 生态全景与核心扩展横评》 |
-
-### 4. 开发者导航与产品聚合站提交
-- 提交至：Product Hunt、DevHunt、Toolify.ai、AlternativeTo、SaaSHub、LibHunt。
-
----
-
-## 五、 后续 Agent 执行任务清单 (Task Checklist)
-
-请后续负责编码实现的 Agent 严格按照以下任务顺序落地：
-
-- [ ] **Task 1: 辅助函数与数据层扩展** (`site/src/lib/catalog.ts`)
-  - 确认每个 resource 均有规范的 slug / id 生成逻辑；
-  - 导出辅助函数：`getRelatedResources(resource, limit = 4)`，用于推荐同类插件。
-- [ ] **Task 2: 分类落地页开发**
-  - 创建 `site/src/pages/categories/[slug].astro`
-  - 创建 `site/src/pages/zh/categories/[slug].astro`
-  - 接入 `CollectionPage` + `ItemList` JSON-LD 与多语言 canonical 标签。
-- [ ] **Task 3: 插件详情落地页开发**
-  - 创建 `site/src/pages/packages/[id].astro`
-  - 创建 `site/src/pages/zh/packages/[id].astro`
-  - 实现命令一键复制、相关推荐内链模块、徽章代码一键复制模块。
-  - 接入 `SoftwareApplication` JSON-LD。
-- [ ] **Task 4: SVG 徽章端点开发**
-  - 创建 `site/src/pages/badge/[id].svg.ts`
-  - 输出格式标准的 Shields.io 风格矢量徽章。
-- [ ] **Task 5: 首页与全局内链打通**
-  - 更新 `site/src/components/Directory.astro`，使卡片可以平滑导航至详情页与分类页。
-- [ ] **Task 6: AI 友好文件部署**
-  - 编写脚本或直接创建 `site/public/llms.txt`。
-- [ ] **Task 7: 自动化测试用例校验**
-  - 运行 `bun run --cwd site validate`，确保新增路由不破坏既有的一致性检查和测试规范。
+- [ ] **Task 1: 核心分类元数据与内容体系建设**
+  - 在 `site/src/data/categories/` 中建立首批 10~12 个高频分类的内容配置文件（定义 intro、comparison、recommendations、faqs）。
+  - 编写中英双语的高质量选型内容。
+- [ ] **Task 2: 分类落地页模板开发**
+  - 创建 `site/src/pages/categories/[slug].astro` 及 `zh/categories/[slug].astro`。
+  - 实现对比表格、场景建议模块、资源卡片列表与 FAQ 手风琴组件。
+  - 接入 `FAQPage` + `CollectionPage` JSON-LD。
+- [ ] **Task 3: 头部插件详情页开发（准入过滤）**
+  - 在 `site/src/lib/catalog.ts` 中增加过滤逻辑 `isTopResource(resource, stats)`。
+  - 创建 `site/src/pages/packages/[id].astro` 及 `zh/packages/[id].astro`，仅为通过准入条件的头部资源生成路由。
+  - 实现徽章代码一键复制与同类推荐模块。
+- [ ] **Task 4: SVG 徽章服务开发**
+  - 创建 `site/src/pages/badge/[id].svg.ts`，动态/静态生成符合 Shields.io 规范的矢量图。
+- [ ] **Task 5: 首页内链改造**
+  - 在首页 `Directory.astro` 侧边栏和分类标题处增加进入分类落地页的语义化链接，将主页权重顺畅导入分类页。
+- [ ] **Task 6: AI 友好入口部署**
+  - 创建 `site/public/llms.txt`，结构化罗列分类指南与核心扩展。
+- [ ] **Task 7: 自动化构建与测试通过**
+  - 运行 `bun run --cwd site validate`，确保新增页面通过 Astro 静态检查和测试套件。
