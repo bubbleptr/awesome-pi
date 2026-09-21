@@ -37,6 +37,16 @@
 
 正式站另进行 1 次安装验收浏览，标记 `utm_source=deployment-check`；Stats API 确认仅 1 次 pageview、没有自定义转化，仪表盘已正常打开。业务复盘排除该来源。独立 QA 站点已在验收后删除。
 
+## Jev 专题调整（2026-09-22）
+
+双语专题改为五个主推：`pi-jev (y0usaf)`、`pi-warden`、`pi-jev (TheoOliveira)`、`pi-jev-skill-picker`、`pi-jev-router (win4r)`。原 compaction、code、model-router 三项保留在“更多实现”和功能目录中。两个专题地址不变，未新增插件详情页或徽章。新增四项资源同时进入双语 README，安装按钮继续读取 catalog。
+
+核实热门 Router 原帖属于 win4r，同名 npm 包不属于该作者；两个 `pi-jev` 明确区分作者和安装源。Warden 重新按 npm 0.34.1 核验，更新默认本地检查、云端授权、故障和项目配置边界。五项均为固定源码与文档核验，未执行候选插件或付费 API 请求，不能当作效果实测。选择依据与历史证据见 [Jev 核验记录](jev-evidence.md)。
+
+`bun run --cwd site validate` 输出为 56 pass / 0 fail、Astro 0 errors / 0 warnings、14 pages built、20 pass / 0 fail。使用本地开发服务器在 1440×900 与 390×844 下检查中英文专题：五个比较项、五个复制按钮、三个补充链接，页面无横向溢出；各语言的五个安装命令复制正确，语言切换和补充列表导航正常。真实浏览器验证复制与项目点击的事件属性仍为 `surface=topic`，拦截采集域名以避免正式站测试流量；未把本地队列检查视为新一轮公网采集验收。截图为本地 `output/playwright/jev-refresh-*.png`。
+
+通过原有 `stats` 脚本刷新目录快照，本次八个 Jev 项目的 GitHub 数据及四个 npm 安装项数据均已取得。全目录抓取仍有历史无效链接等缺口：脚本输出 109/112 个仓库、121/122 个 npm 包，失败项沿用旧值或保持缺失，不伪造零值。专题不把 Stars 当作搜索量，也不显示无法核实的书签数。
+
 ## 发布后 14 / 30 天复盘
 
 从实际生产上线日起计时；统计迁移不重置 SEO 页面的观察期，未满观察期不能宣称完成收录或增长目标。已在本任务安排两次自动复盘：2026-10-05 与 2026-10-21，均为 Asia/Shanghai 10:00。复盘优先使用已有授权；结合 GSC 与 Plausible 数据，缺 GSC、采集异常或事件数据不足时明确列出缺口。迁移前后数据按实际覆盖日期说明，不将缺失事件视为零转化。

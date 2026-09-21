@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T08:00:51.707Z",
+  "generatedAt": "2026-09-21T17:10:05.734Z",
   "github": {
     "a5c-ai/babysitter-pi": {
       "stars": 5
@@ -20,13 +20,13 @@
       "stars": 285
     },
     "aliou/pi-processes": {
-      "stars": 92
+      "stars": 93
     },
     "apmantza/pi-lens": {
-      "stars": 425
+      "stars": 426
     },
     "backnotprop/plannotator": {
-      "stars": 8840
+      "stars": 8848
     },
     "baphuongna/pi-crew": {
       "stars": 53
@@ -35,13 +35,13 @@
       "stars": 3
     },
     "BetterWright/betterwright": {
-      "stars": 310
+      "stars": 311
     },
     "can1357/oh-my-pi": {
-      "stars": 32211
+      "stars": 32280
     },
     "carderne/pi-sandbox": {
-      "stars": 246
+      "stars": 247
     },
     "championswimmer/pi-cache-graph": {
       "stars": 33
@@ -50,7 +50,7 @@
       "stars": 244
     },
     "chandra447/pi-hermes-memory": {
-      "stars": 449
+      "stars": 451
     },
     "code-yeongyu/pi-ast-grep": {
       "stars": 19
@@ -68,7 +68,7 @@
       "stars": 10
     },
     "code-yeongyu/senpi": {
-      "stars": 439
+      "stars": 441
     },
     "codella/pi-packages": {
       "stars": 1
@@ -76,8 +76,14 @@
     "CryptoLibertus/pi-peer": {
       "stars": 9
     },
+    "da-vinci-noob/pi-jev-model-router": {
+      "stars": 1
+    },
     "dbachelder/pi-btw": {
       "stars": 194
+    },
+    "DevMortimer/pi-warden": {
+      "stars": 124
     },
     "dingdinglz/pi-worktree": {
       "stars": 1
@@ -86,10 +92,10 @@
       "stars": 0
     },
     "dmtrKovalenko/fff": {
-      "stars": 10791
+      "stars": 10797
     },
     "edlsh/pi-ask-user": {
-      "stars": 159
+      "stars": 160
     },
     "ElieMessieCode/pi-code-theme": {
       "stars": 0
@@ -104,10 +110,10 @@
       "stars": 225
     },
     "Gentleman-Programming/engram": {
-      "stars": 6737
+      "stars": 6740
     },
     "Gentleman-Programming/gentle-shell": {
-      "stars": 948
+      "stars": 953
     },
     "gintasz/neuralyzer": {
       "stars": 38
@@ -116,19 +122,19 @@
       "stars": 16
     },
     "gotgenes/pi-packages": {
-      "stars": 227
+      "stars": 228
     },
     "hasit/pi-community-themes": {
       "stars": 33
     },
     "HazAT/pi-interactive-subagents": {
-      "stars": 704
+      "stars": 705
     },
     "heyhuynhgiabuu/openpi": {
       "stars": 214
     },
     "Hypabolic/Hypa": {
-      "stars": 183
+      "stars": 182
     },
     "ifiokjr/oh-pi": {
       "stars": 154
@@ -140,22 +146,25 @@
       "stars": 72
     },
     "jayzeng/pi-memory": {
-      "stars": 167
+      "stars": 169
     },
     "jesset/pi-verdict": {
-      "stars": 3
+      "stars": 8
     },
     "jesset/pi-vetter": {
-      "stars": 0
+      "stars": 1
     },
     "jmfederico/pi-web": {
-      "stars": 794
+      "stars": 797
     },
     "jonjonrankin/pi-caveman": {
       "stars": 105
     },
     "juicesharp/rpiv-mono": {
-      "stars": 810
+      "stars": 815
+    },
+    "KamilPostrozny/pi-jev-code": {
+      "stars": 0
     },
     "kylebrodeur/pi-agent-bus": {
       "stars": 2
@@ -194,37 +203,37 @@
       "stars": 2
     },
     "mitsuhiko/agent-stuff": {
-      "stars": 3145
+      "stars": 3147
     },
     "mjasnikovs/pi-task": {
-      "stars": 127
+      "stars": 128
     },
     "mksglu/context-mode": {
-      "stars": 23814
+      "stars": 23857
     },
     "monotykamary/pi-fabric": {
-      "stars": 241
+      "stars": 243
     },
     "narumiruna/pi-extensions": {
-      "stars": 588
+      "stars": 592
     },
     "nicobailon/pi-interactive-shell": {
       "stars": 587
     },
     "nicobailon/pi-mcp-adapter": {
-      "stars": 1505
+      "stars": 1517
     },
     "nicobailon/pi-powerline-footer": {
-      "stars": 436
+      "stars": 437
     },
     "nicobailon/pi-subagents": {
-      "stars": 3716
+      "stars": 3719
     },
     "nicobailon/pi-web-access": {
-      "stars": 1498
+      "stars": 1500
     },
     "ogulcancelik/pi-extensions": {
-      "stars": 543
+      "stars": 544
     },
     "omaclaren/pi-markdown-preview": {
       "stars": 125
@@ -235,11 +244,17 @@
     "prateekmedia/pi-hooks": {
       "stars": 97
     },
+    "QuentinDanblon/pi-fast-jev-compaction": {
+      "stars": 2
+    },
     "QuintinShaw/pi-dynamic-workflows": {
       "stars": 532
     },
     "robzolkos/pi-theme-synthwave-84": {
       "stars": 4
+    },
+    "safzanpirani/pi-jev-skill-picker": {
+      "stars": 22
     },
     "samfoy/pi-memory": {
       "stars": 82
@@ -263,19 +278,22 @@
       "stars": 129
     },
     "svkozak/pi-acp": {
-      "stars": 690
+      "stars": 691
     },
     "TaterDoge/pi-packages": {
       "stars": 3
+    },
+    "TheoOliveira/pi-jev": {
+      "stars": 31
     },
     "Thinkscape/agent-smart-fetch": {
       "stars": 64
     },
     "tianrendong/pi-chrome": {
-      "stars": 51
+      "stars": 52
     },
     "tintinweb/pi-subagents": {
-      "stars": 1199
+      "stars": 1201
     },
     "tintinweb/pi-tasks": {
       "stars": 215
@@ -298,8 +316,14 @@
     "vigolium/piolium": {
       "stars": 136
     },
+    "win4r/pi-jev-router": {
+      "stars": 8
+    },
+    "y0usaf/pi-jev": {
+      "stars": 131
+    },
     "yvgude/lean-ctx": {
-      "stars": 3820
+      "stars": 3819
     },
     "Zetaphor/pi-vscode-extension": {
       "stars": 46
@@ -621,6 +645,11 @@
       "trend": 192,
       "repo": "vigolium/piolium"
     },
+    "@y0usaf/pi-jev": {
+      "weekly": 377,
+      "trend": null,
+      "repo": null
+    },
     "agent-comms": {
       "weekly": 18952,
       "trend": 95,
@@ -677,8 +706,8 @@
       "repo": null
     },
     "pi-cache-graph": {
-      "weekly": 42,
-      "trend": -11,
+      "weekly": 104,
+      "trend": 70,
       "repo": null
     },
     "pi-caveman": {
@@ -741,14 +770,24 @@
       "trend": -15,
       "repo": null
     },
+    "pi-jev": {
+      "weekly": 582,
+      "trend": null,
+      "repo": null
+    },
+    "pi-jev-model-router": {
+      "weekly": 753,
+      "trend": null,
+      "repo": null
+    },
     "pi-kanagawa": {
       "weekly": 22,
       "trend": -15,
       "repo": null
     },
     "pi-lean-ctx": {
-      "weekly": 831,
-      "trend": 39,
+      "weekly": 970,
+      "trend": 17,
       "repo": "yvgude/lean-ctx"
     },
     "pi-lens": {
@@ -879,6 +918,11 @@
     "pi-vetter": {
       "weekly": 66,
       "trend": -1,
+      "repo": null
+    },
+    "pi-warden": {
+      "weekly": 3637,
+      "trend": null,
       "repo": null
     },
     "pi-web-access": {

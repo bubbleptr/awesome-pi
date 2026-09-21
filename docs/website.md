@@ -88,6 +88,7 @@ bun run --cwd site preview
 
 ## 指南、专题与稳定地址
 
+- 专题数据的 `resources` 用于完整比较与安装说明，`alternatives` 用于“更多实现”。Jev 专题采用 5 个主推、3 个补充实现；同名项目以作者区分，并与双语 README 中的资源名称完全一致。
 - 发布注册表：`site/src/data/published-routes.json`；只有 active 包获得目录详情入口，Jev 候选不会自动生成详情页。
 - 编辑内容：`site/src/data/categories/`、`packages/`、`topics/` 的双语 JSON；资源基础信息继续复用 catalog。
 - active 包从目录取最新数据，整条记录缺失时用归档；deprecated 保留历史页面和替代提示；redirected 在 `vercel.json` 配置双语永久跳转，避免生成客户端刷新页。
