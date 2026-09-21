@@ -85,9 +85,13 @@ bun run --cwd site preview
 
 交付时在真实浏览器中检查英文、中文、搜索、分类、复制结果、分享链接与空结果状态。至少检查桌面和手机尺寸，确认没有页面横向溢出，并提供截图。截图保存在被 Git 忽略的 `output/playwright/`。
 
+2026-09-22 首页指南卡改版：`bun run --cwd site validate` 通过 56 项功能测试与 20 项产物测试，Astro 0 错误、0 警告。新增可访问名称必须包含可见链接文字的断言，先确认双语失败，再修正 CTA 名称并重跑通过。浏览器检查双语 1440 / 1024 / 768 / 390 / 320px，无页面溢出或文字裁剪；悬停动画单次结束，减少动态效果设置、键盘焦点、真实触摸模拟、指南导航及搜索条件随语言切换均通过。截图为 `output/playwright/guides-bento-*.png`，测试拦截采集域名，未写入正式站转化。
+
 
 ## 指南、专题与稳定地址
 
+- 首页的「热门扩展选型指南」由 `DirectoryGuides.astro` 展示为 Bento 卡片：Jev 为主卡，分类指南为紧凑卡；文案随语言切换，入口仍以发布注册表为准。使用独立 CTA，卡片正文可选择复制；「浏览全部资源」可跳过指南区直达目录。
+- `GuideIllustration.astro` 提供决策分流、子任务派发与网页来源三种装饰 SVG。仅支持精细指针悬停且未请求减少动态效果时播放一次，使用 transform / opacity；触摸与键盘操作不触发插图动画。禁止加入循环播放或动画运行依赖。
 - 专题数据的 `resources` 用于完整比较与安装说明，`alternatives` 用于“更多实现”。Jev 专题采用 5 个主推、3 个补充实现；同名项目以作者区分，并与双语 README 中的资源名称完全一致。
 - 发布注册表：`site/src/data/published-routes.json`；只有 active 包获得目录详情入口，Jev 候选不会自动生成详情页。
 - 编辑内容：`site/src/data/categories/`、`packages/`、`topics/` 的双语 JSON；资源基础信息继续复用 catalog。

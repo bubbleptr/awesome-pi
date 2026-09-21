@@ -1,0 +1,218 @@
+---
+type Props = {
+  variant: 'jev' | 'subagents' | 'web';
+  locale?: 'en' | 'zh';
+};
+
+const { variant, locale = 'en' } = Astro.props;
+const labels = locale === 'zh'
+  ? { task: '任务', decide: '判定', tools: '工具', skills: '技能', models: '模型', search: '搜索来源' }
+  : { task: 'Task', decide: 'DECIDE', tools: 'Tools', skills: 'Skills', models: 'Models', search: 'Find sources' };
+const wide = variant === 'jev';
+---
+
+<svg
+  class:list={['guide-illustration', `guide-illustration--${variant}`]}
+  width={wide ? 440 : 200}
+  height={wide ? 180 : 120}
+  viewBox={wide ? '0 0 440 180' : '0 0 200 120'}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {variant === 'jev' && (
+    <>
+      <g class="art-line">
+        <path d="M126 90h50m87 0h23m0-48v96m0-96h24m-24 48h24m-24 48h24" />
+        <path d="m170 86 4 4-4 4" />
+        <circle cx="286" cy="90" r="2.5" class="art-junction" />
+      </g>
+      <g>
+        <rect class="art-panel" x="20" y="58" width="106" height="64" rx="11" />
+        <path class="art-line" d="M33 102h57m-57 7h38" />
+        <path class="art-ink" d="m33 73 5 5-5 5m11 0h8" />
+        <text class="art-label" x="62" y="82">{labels.task}</text>
+      </g>
+      <g class="jev-core">
+        <rect class="art-panel art-accent" x="177" y="56" width="86" height="68" rx="17" />
+        <text class="art-wordmark" x="220" y="86" text-anchor="middle">Jev</text>
+        <text class="art-caption" x="220" y="107" text-anchor="middle">{labels.decide}</text>
+      </g>
+      <g class="art-node art-node--first">
+        <rect class="art-panel" x="310" y="24" width="108" height="36" rx="9" />
+        <path class="art-ink" d="m327 36-6 6 6 6m9-12 6 6-6 6" />
+        <text class="art-label" x="351" y="46">{labels.tools}</text>
+      </g>
+      <g class="art-node art-node--second">
+        <rect class="art-panel" x="310" y="72" width="108" height="36" rx="9" />
+        <path class="art-ink" d="M322 84h8l3 3v13h-11zm8 0v4h3m-7 5h4m-4 3h4" />
+        <text class="art-label" x="351" y="94">{labels.skills}</text>
+      </g>
+      <g class="art-node art-node--third">
+        <rect class="art-panel" x="310" y="120" width="108" height="36" rx="9" />
+        <rect class="art-ink" x="322" y="131" width="15" height="14" rx="3" />
+        <path class="art-ink" d="M326 128v3m7-3v3m-7 14v3m7-3v3m-14-13h3m-3 6h3m15-6h3m-3 6h3" />
+        <text class="art-label" x="351" y="142">{labels.models}</text>
+      </g>
+      <circle class="art-signal art-accent-fill" cx="151" cy="90" r="3" />
+    </>
+  )}
+
+  {variant === 'subagents' && (
+    <>
+      <g class="art-line">
+        <path d="M56 60h27m0-35v70m0-70h12M83 60h12M83 95h12" />
+        <circle cx="83" cy="60" r="2.5" class="art-junction" />
+      </g>
+      <rect class="art-panel art-accent" x="12" y="42" width="44" height="36" rx="10" />
+      <text class="art-parent" x="34" y="65" text-anchor="middle">Pi</text>
+      {[12, 47, 82].map((y, index) => (
+        <g class:list={['art-node', `art-node--${['first', 'second', 'third'][index]}`]}>
+          <rect class="art-panel" x="95" y={y} width="86" height="26" rx="7" />
+          <circle class="art-line" cx="108" cy={y + 13} r="3" />
+          <text class="art-small-label" x="119" y={y + 17}>{labels.task} {index + 1}</text>
+          <path class="task-check art-accent" d={`m164 ${y + 13} 3 3 5-6`} />
+        </g>
+      ))}
+      <circle class="art-signal art-accent-fill" cx="69" cy="60" r="2.5" />
+    </>
+  )}
+
+  {variant === 'web' && (
+    <>
+      <rect class="art-panel" x="14" y="14" width="172" height="28" rx="9" />
+      <circle class="art-ink" cx="29" cy="27" r="4.5" />
+      <path class="art-ink" d="m32.5 30.5 3 3" />
+      <text class="art-small-label" x="45" y="32">{labels.search}</text>
+      <path class="art-line" d="M100 42v12m-51 0h102" />
+      <g class="art-node art-node--first">
+        <rect class="art-panel" x="22" y="54" width="56" height="52" rx="7" />
+        <path class="art-line" d="M33 69h22m-22 8h31m-31 8h18m-18 8h26" />
+      </g>
+      <g class="art-node art-node--third">
+        <rect class="art-panel" x="124" y="54" width="54" height="52" rx="7" />
+        <path class="art-line" d="M144 69h22m-26 8h26m-21 8h21m-24 8h17" />
+      </g>
+      <g class="web-document">
+        <rect class="art-panel art-accent" x="66" y="50" width="69" height="61" rx="8" />
+        <path class="art-ink" d="M78 65h23" />
+        <path class="art-line" d="M78 75h45m-45 8h38m-38 8h43m-43 8h25" />
+        <circle class="art-accent" cx="119" cy="64" r="3" />
+        <path class="web-scan art-accent" d="M73 76h55" />
+      </g>
+    </>
+  )}
+</svg>
+
+<style>
+  .guide-illustration {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--guide-art-ink, currentColor);
+    pointer-events: none;
+  }
+
+  .art-panel {
+    fill: var(--guide-art-fill, transparent);
+    stroke: var(--guide-art-line, currentColor);
+  }
+
+  .art-line { stroke: var(--guide-art-line, currentColor); }
+  .art-ink { stroke: var(--guide-art-ink, currentColor); }
+  .art-accent { stroke: var(--guide-art-accent, currentColor); }
+  .art-accent-fill { fill: var(--guide-art-accent, currentColor); stroke: none; }
+  .art-junction { fill: var(--guide-art-line, currentColor); stroke: none; }
+
+  text {
+    fill: var(--guide-art-ink, currentColor);
+    stroke: none;
+    font-family: inherit;
+    font-weight: 500;
+  }
+
+  .art-label { font-size: 12px; }
+  .art-small-label { font-size: 10px; }
+  .art-wordmark { font-size: 23px; font-weight: 600; letter-spacing: -0.7px; }
+  .art-parent { font-size: 16px; font-weight: 600; }
+  .art-caption { font-size: 9px; letter-spacing: 0.8px; }
+
+  .art-signal,
+  .web-scan { opacity: 0; }
+
+  .jev-core,
+  .art-node,
+  .task-check,
+  .web-document {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .art-node--first { --art-delay: 0ms; }
+  .art-node--second { --art-delay: 70ms; }
+  .art-node--third { --art-delay: 140ms; }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    :global(.guide-card:hover) .art-signal {
+      animation: guide-signal 780ms cubic-bezier(0.65, 0, 0.35, 1) 1;
+    }
+
+    :global(.guide-card:hover) .jev-core {
+      animation: guide-decision 780ms cubic-bezier(0.65, 0, 0.35, 1) 1;
+    }
+
+    :global(.guide-card:hover) .art-node {
+      animation: guide-node 700ms cubic-bezier(0.32, 0.72, 0, 1) var(--art-delay) 1;
+    }
+
+    :global(.guide-card:hover) .task-check {
+      animation: guide-check 700ms cubic-bezier(0.32, 0.72, 0, 1) var(--art-delay) 1;
+    }
+
+    :global(.guide-card:hover) .web-scan {
+      animation: guide-scan 840ms cubic-bezier(0.65, 0, 0.35, 1) 1;
+    }
+  }
+
+  @keyframes guide-signal {
+    0% { transform: translateX(-10px); opacity: 0; }
+    22% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { transform: translateX(10px); opacity: 0; }
+  }
+
+  @keyframes guide-decision {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    40% { transform: scale(1.035); opacity: 0.78; }
+  }
+
+  @keyframes guide-node {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    32% { transform: translateY(-2px); opacity: 0.72; }
+  }
+
+  @keyframes guide-check {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    30% { transform: scale(0.92); opacity: 0.35; }
+    70% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes guide-scan {
+    0% { transform: translateY(-10px); opacity: 0; }
+    20% { opacity: 0.9; }
+    75% { opacity: 0.9; }
+    100% { transform: translateY(20px); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .guide-illustration,
+    .guide-illustration * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>

@@ -120,6 +120,12 @@ describe('published editorial pages', () => {
       if (publishedRoutes.packages['pi-mcp-adapter']?.status === 'active') expect(win.document.querySelector(`.package-link[href="${routePath('packages', 'pi-mcp-adapter', locale)}"]`)).not.toBeNull();
       for (const slug of getPublishedSlugs('categories')) expect(win.document.querySelector(`.guide-link[href="${routePath('categories', slug, locale)}"]`)).not.toBeNull();
       expect(win.document.querySelectorAll('.guide-link[data-category], .package-link[data-category], .topic-link[data-category]')).toHaveLength(0);
+      for (const link of win.document.querySelectorAll('.directory-guides a')) {
+        const visible = link.cloneNode(true) as HTMLAnchorElement;
+        visible.querySelectorAll('[aria-hidden="true"]').forEach(node => node.remove());
+        const label = visible.textContent.trim();
+        expect(link.getAttribute('aria-label') ?? label).toContain(label);
+      }
       for (const resource of loadCatalog().resources) {
         const row = win.document.getElementById(resource.id)!;
         const path = packagePath(resource, locale);
