@@ -126,6 +126,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 安全与权限控制 Package。
 
+- [pi-jev (y0usaf)](https://github.com/y0usaf/pi-jev) - 用 Jev 判定工具调用与结果，并提供 `jev_ask` 工具。默认 shadow 观察模式；Jev 请求需要 `TYPESAFE_API_KEY`。`pi install npm:@y0usaf/pi-jev`
 - [pi-warden](https://github.com/DevMortimer/pi-warden) - 通过 TypeSafe Jev 或 OpenRouter 监督工具调用与项目规则，同时提供离线模式检查。需要 Node 22.19+；模型判定不是系统沙箱。`pi install npm:pi-warden`
 - 🔥 [@gotgenes/pi-permission-system](https://github.com/gotgenes/pi-packages) - 三层权限状态（allow/deny/ask），生命周期钩子集成、子代理权限转发、审计日志。`pi install npm:@gotgenes/pi-permission-system`
 - [@aliou/pi-guardrails](https://github.com/aliou/pi-guardrails) - 安全护栏套件：文件保护策略、工作区外路径访问控制、危险 shell 命令确认/拦截，含引导式配置。`pi install npm:@aliou/pi-guardrails`
@@ -144,6 +145,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 开发工具与代码智能 Package。
 
+- [pi-jev (TheoOliveira)](https://github.com/TheoOliveira/pi-jev) - 基于 Jev 按任务选择工具与 Skill，并提供结构化判定。自动路由默认关闭；Jev 请求需要 `TYPESAFE_API_KEY` 或本地 Key 文件。`pi install npm:pi-jev`
 - [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) - 单 Agent 的 Jev 搜索重排、编辑前检查和任务基线 diff 审查。需要 Pi 0.85+、Node 20+ 和 TYPESAFE_API_KEY；先克隆仓库并运行其中的 install.sh，再将下方路径替换为本地目录。`pi install /absolute/path/to/pi-jev-code`
 - 🔥 [pi-lens](https://github.com/apmantza/pi-lens) - 实时代码反馈——LSP、linter、formatter、类型检查、结构分析。`pi install npm:pi-lens`
 - 🔥 [@nitra/cursor](https://pi.dev/packages/@nitra/cursor) - CLI 下载 Cursor 规则到本地仓库。`pi install npm:@nitra/cursor`
@@ -174,6 +176,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 上下文管理 Package，优化 token 使用。
 
+- [pi-jev-skill-picker](https://github.com/safzanpirani/pi-jev-skill-picker) - 用 `skill_search` 与 `skill_load` 按需检索、加载 Skill，替换每轮完整技能目录。Jev 排序需要 TypeSafe Key；无 Key 或全部请求失败时提供词法候选。`pi install git:github.com/safzanpirani/pi-jev-skill-picker`
 - [pi-fast-jev-compaction](https://github.com/QuentinDanblon/pi-fast-jev-compaction) - Jev 为旧工具调用和结果评分，按请求裁剪上下文并保留会话历史。需要 TypeSafe Key；同名 npm 包属于另一作者，请使用此 Git 仓库安装。`pi install git:github.com/QuentinDanblon/pi-fast-jev-compaction`
 - 🔥 [context-mode](https://pi.dev/packages/context-mode) - MCP 插件，节省 98% 上下文窗口，支持沙箱代码执行、FTS5 知识库。`pi install npm:context-mode`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - 总结已完成的工具调用批次，从 LLM 上下文中修剪原始输出。5 种修剪模式。`pi install npm:pi-context-prune`
@@ -271,6 +274,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 
 其他实用 Package。
 
+- [pi-jev-router (win4r)](https://github.com/win4r/pi-jev-router) - 按任务在已配置的 Pi 模型间路由。默认 shadow 仅记录建议，Jev 网络判定默认关闭；通过 `/route init` 配置模型，配置 TypeSafe Key 后用 `/route jev on` 启用 Jev。需要 Node 22.19+、Pi 0.84.2–0.86.x。`pi install git:github.com/win4r/pi-jev-router`
 - [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) - 根据 Jev 任务判定、预算策略和提示词缓存成本，在已授权的 Pi 模型间路由。需要 TypeSafe Key；预算额度只调整路由，不会停止消费。`pi install npm:pi-jev-model-router`
 - 🔥 [@juicesharp/rpiv-ask-user-question](https://github.com/juicesharp/rpiv-mono) - 交互式 ask_user 工具，可搜索分割窗格选择 UI、多选、自由输入。`pi install npm:@juicesharp/rpiv-ask-user-question`
 - 🔥 [pi-markdown-preview](https://pi.dev/packages/pi-markdown-preview) - 渲染 markdown + LaTeX 预览，支持终端、浏览器和 PDF 输出。`pi install npm:pi-markdown-preview`

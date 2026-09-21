@@ -126,6 +126,7 @@ Terminal UI enhancement packages for better interactive experience.
 
 Security and permission control packages.
 
+- [pi-jev (y0usaf)](https://github.com/y0usaf/pi-jev) - Jev judgments for tool calls and results, plus a `jev_ask` tool. Defaults to shadow observation mode; Jev requests require `TYPESAFE_API_KEY`. `pi install npm:@y0usaf/pi-jev`
 - [pi-warden](https://github.com/DevMortimer/pi-warden) - Tool-call and project-rule supervision with TypeSafe Jev or OpenRouter, plus offline pattern checks. Requires Node 22.19+; model judgments are not a sandbox. `pi install npm:pi-warden`
 - 🔥 [@gotgenes/pi-permission-system](https://github.com/gotgenes/pi-packages) - Three-tier permission states (allow/deny/ask), lifecycle hook integration, subagent permission forwarding, audit logs. `pi install npm:@gotgenes/pi-permission-system`
 - [@aliou/pi-guardrails](https://github.com/aliou/pi-guardrails) - Safety guardrail suite: file protection policies, path access control outside the workspace, confirmation/blocking of risky shell commands, with guided onboarding. `pi install npm:@aliou/pi-guardrails`
@@ -144,6 +145,7 @@ Security and permission control packages.
 
 Development tools and code intelligence packages.
 
+- [pi-jev (TheoOliveira)](https://github.com/TheoOliveira/pi-jev) - Task-based tool and Skill selection with Jev, plus structured judgments. Automatic routing is off by default; Jev requests require `TYPESAFE_API_KEY` or a local key file. `pi install npm:pi-jev`
 - [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) - Single-agent Jev search ranking, pre-edit checks, and task-baseline diff review. Requires Pi 0.85+, Node 20+, and TYPESAFE_API_KEY. Clone the repository and run its install.sh first; replace the path below with that checkout. `pi install /absolute/path/to/pi-jev-code`
 - 🔥 [pi-lens](https://github.com/apmantza/pi-lens) - Real-time code feedback — LSP, linters, formatters, type checking, structural analysis. `pi install npm:pi-lens`
 - 🔥 [@nitra/cursor](https://pi.dev/packages/@nitra/cursor) - CLI to download Cursor rules into local repositories. `pi install npm:@nitra/cursor`
@@ -174,6 +176,7 @@ Persistent memory packages for retaining information across sessions.
 
 Context management packages for optimizing token usage.
 
+- [pi-jev-skill-picker](https://github.com/safzanpirani/pi-jev-skill-picker) - Replaces the full per-turn skill catalog with on-demand discovery and loading through `skill_search` and `skill_load`. Jev ranking requires a TypeSafe key; missing keys or failures across all requests return lexical candidates. `pi install git:github.com/safzanpirani/pi-jev-skill-picker`
 - [pi-fast-jev-compaction](https://github.com/QuentinDanblon/pi-fast-jev-compaction) - Jev scores old tool calls/results for per-request pruning while preserving session history. Requires a TypeSafe key; install this Git repository because the same-name npm package belongs to another author. `pi install git:github.com/QuentinDanblon/pi-fast-jev-compaction`
 - 🔥 [context-mode](https://pi.dev/packages/context-mode) - MCP plugin that saves 98% of context window with sandboxed code execution and FTS5 knowledge base. `pi install npm:context-mode`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - Summarizes completed tool call batches and prunes raw output from LLM context. 5 pruning modes. `pi install npm:pi-context-prune`
@@ -271,6 +274,7 @@ Communication and collaboration packages.
 
 Other utility packages.
 
+- [pi-jev-router (win4r)](https://github.com/win4r/pi-jev-router) - Routes tasks across configured Pi models. Defaults to shadow mode that only records recommendations, with Jev network judgments disabled. Configure models with `/route init`, then configure a TypeSafe key and use `/route jev on` to enable Jev. Requires Node 22.19+ and Pi 0.84.2–0.86.x. `pi install git:github.com/win4r/pi-jev-router`
 - [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) - Routes prompts across authenticated Pi models using Jev task judgments, budget policy, and cache-aware switching. Requires a TypeSafe key; budget caps change routing rather than stop spending. `pi install npm:pi-jev-model-router`
 - 🔥 [@juicesharp/rpiv-ask-user-question](https://github.com/juicesharp/rpiv-mono) - Interactive ask_user tool with searchable split-pane selection UI, multi-select, and free input. `pi install npm:@juicesharp/rpiv-ask-user-question`
 - 🔥 [pi-markdown-preview](https://pi.dev/packages/pi-markdown-preview) - Renders markdown + LaTeX previews with terminal, browser, and PDF output. `pi install npm:pi-markdown-preview`

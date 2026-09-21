@@ -44,7 +44,7 @@
 ### 1. 试点 6 个主题（12 个独立 URL）的需求映射表
 | 试点主题与路径 | 目标查询 (Queries) | 用户核心疑问与搜索意图 | 页面形态 | 必须解答的技术问题与交付标准 |
 | :--- | :--- | :--- | :--- | :--- |
-| **TypeSafe AI / Jev**<br>`/topics/jev/`<br>`/zh/topics/jev/` | `typesafe ai`<br>`jev pi`<br>`jev plugins`<br>`jev compaction` | "TypeSafe AI 与 Jev 是什么关系？哪些 Pi 插件已经接入？怎么安装、配置和选择？" | 跨分类热点专题，首批优先 | 1. 解释品牌、模型与 Pi 插件的关系，并提供官方入口；<br>2. 按上下文裁剪、模型路由、代码检查和工具调用监督比较候选；<br>3. 核验安装方法、Key 与版本要求、数据发送范围、失败行为和效果证据。 |
+| **TypeSafe AI / Jev**<br>`/topics/jev/`<br>`/zh/topics/jev/` | `typesafe ai`<br>`jev pi`<br>`jev plugins`<br>`jev compaction` | "TypeSafe AI 与 Jev 是什么关系？哪些 Pi 插件已经接入？怎么安装、配置和选择？" | 跨分类热点专题，首批优先 | 1. 解释品牌、模型与 Pi 插件的关系，并提供官方入口；<br>2. 按工具监督、工具 / Skill 选择和任务边界模型路由比较主推，并保留上下文裁剪与代码检查等补充实现；<br>3. 核验安装方法、Key 与版本要求、数据发送范围、失败行为和效果证据。 |
 | **Subagents**<br>`/categories/subagents/`<br>`/zh/categories/subagents/` | `pi coding agent subagents`<br>`pi subagents tutorial` | "Pi 默认只有 4 个基础工具，怎么运行多 Agent？不同插件机制有何差异？" | 分类选型指南 | 1. 解释 Pi Harness 的单进程/多进程任务调度机制；<br>2. 对比各方案：进程派生 vs Git Worktree 隔离；<br>3. 给出各方案的 Token 开销、上下文隔离度与适用场景。 |
 | **Web Access**<br>`/categories/web-access-search/`<br>`/zh/categories/web-access-search/` | `pi web search`<br>`pi-web-access` | "如何在 Pi 终端里进行实时网络搜索？有哪些免 Key 和本地数据源方案？" | 分类选型指南 | 1. 对比纯抓取降级链（DuckDuckGo/URL 获取）与商业搜索 API（Brave/Tavily/Exa/Ollama）；<br>2. 明确说明各方案的依赖与网络前置要求（如是否需自备 API Key）。 |
 | **`pi-web-access`**<br>`/packages/pi-web-access/`<br>`/zh/packages/pi-web-access/` | `pi-web-access`<br>`pi install pi-web-access` | "搜索该包的安装命令、参数配置、网络降级机制与支持的文件格式" | 精选插件详情页 | 1. 详述零配置背后的智能降级链机制；<br>2. 说明 PDF 提取、YouTube 视频理解的前置依赖（如系统依赖工具）；<br>3. 提供 `pi install npm:pi-web-access` 命令与验证方法。 |
@@ -70,7 +70,7 @@
 - 首批只新增这一对专题页。候选插件仍保留原功能分类，不为凑专题批量生成插件详情页；分类指南与专题复用同一份 catalog 资源数据。
 - 每个候选标注核验日期、版本或源码提交，以及“已查阅源码/文档”或“已实测”的证据状态。性能、节省比例与安全效果按实际证据描述。
 
-首批核验以下 4 个候选。以下用途来自项目资料，尚未在本项目环境中实测；上线前重新核对安装方式和当前能力，不达内容要求的候选暂不收录。
+2026-09-21 首批核验并发布了以下 4 个候选。用途与边界来自固定版本的源码、文档查阅，未在本项目环境中运行插件。历史证据保留在 [Jev 核验记录](jev-evidence.md)。
 
 | 候选与一手来源 | Jev 的用途 | 页面必须核验的边界 |
 | :--- | :--- | :--- |
@@ -78,6 +78,10 @@
 | [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) | 搜索重排、编辑前检查与任务 diff 审查 | 单 Agent 的适用范围、判定阈值、API 故障处理 |
 | [pi-warden](https://github.com/DevMortimer/pi-warden) | 工具调用、项目规则与任务完成情况监督 | 启用 Jev 的配置、其他判定后端、离线行为与人工确认方式 |
 | [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) | 根据任务需求和预算选择主模型 | 目标模型授权、切换条件、预算策略是否为硬性消费上限 |
+
+2026-09-22 根据新增项目与一手来源调整专题：主推 `pi-jev (y0usaf)`、`pi-warden`、`pi-jev (TheoOliveira)`、`pi-jev-skill-picker`、`pi-jev-router (win4r)`，覆盖工具监督、工具 / Skill 选择和任务边界模型路由。原有 compaction、code、model-router 三项保留在“更多实现”及原功能分类中，不移除稳定地址。Warden 依据 npm 0.34.1 重新核验。
+
+主推顺序综合项目关注度、可安装性、用途差异和证据完整度，不是统一热度榜。Stars 是累计关注，不能替代搜索量或质量评价；泛 Jev 推文的互动不能归给单个 Pi 插件。AISuperDomain 的 Router 帖已核实指向 win4r 项目。两个同名 `pi-jev` 明确标注作者，npm 与 Git 安装方式逐项对应实际包来源。
 
 对比表统一包含用途、介入环节、依赖与 Key、发送到外部服务的数据范围、失败行为和证据来源。安装命令从核验后的资源数据读取，不根据仓库名称猜测 npm 包名。
 
@@ -255,7 +259,7 @@ document.querySelectorAll<HTMLAnchorElement>('[data-repo-link][data-package]').f
   - Jev 专题发布后，在首页增加当前语言的专题入口；
   - 确保指南、详情和专题入口不含 `data-category` 属性。
 - [x] **Task 4: TypeSafe AI / Jev 专题内容与模板（首批优先）**
-  - 核验第二节列出的 4 个候选，将符合要求的资源同步加入 `README.md` 与 `README.en.md` 的现有功能分类，继续由 catalog 提取基础数据；
+  - 首批 4 项已完成核验；2026-09-22 更新为 5 个主推与 3 个补充实现。资源同步到 `README.md` 与 `README.en.md` 的现有功能分类，继续由 catalog 提取基础数据；
   - 编写 `site/src/data/topics/jev.json`，按品牌与模型介绍、Pi 用途、场景比较、安装配置与限制的顺序组织双语内容，记录来源和核验日期；
   - 创建 `site/src/pages/topics/[slug].astro` 及中文镜像路由，支持独立 canonical、双语 hreflang、Analytics 和 `surface: 'topic'` 的事件；
   - 专题链接遵循发布状态，不把候选自动加入包详情发布名单。
