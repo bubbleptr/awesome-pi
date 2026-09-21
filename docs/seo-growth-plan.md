@@ -86,7 +86,7 @@
 ## 三、 转化埋点体系与初始化规范 (Analytics & Events)
 
 ### 1. 全局初始化要求
-- **当前接入（2026-09-22）**：网站端已迁移到自托管 Plausible CE v3.2.1。`Directory.astro` 和共享 `EditorialPage.astro` 各渲染一次本地 `site/src/components/Analytics.astro`；线上部署验收仍在进行中。
+- **当前接入（2026-09-22）**：网站端已迁移到自托管 Plausible CE v3.2.1。`Directory.astro` 和共享 `EditorialPage.astro` 各渲染一次本地 `site/src/components/Analytics.astro`；PR #30 已合并上线，14 个生产 HTML 页均通过单次异步脚本检查。
 - **规则**：所有新增的分类页（`categories/[slug].astro`）、详情页（`packages/[slug].astro`）和专题页（`topics/[slug].astro`）模板必须通过共享组件加载一次统计脚本。使用 `async` 独立加载基础 `/js/script.js`，避免统计服务延迟阻塞页面交互；不启用自动外链统计，以免与显式 `repo_clicked` 双计。
 - **采集边界**：公共采集源配置为 `https://events.piindex.dev`，站点标识为 `piindex.dev`；私有仪表盘为 `https://stats.piindex.dev`。统一使用 `site/src/scripts/analytics.ts` 的 `track(window, name, properties)`，通过 Plausible `props` 传递属性，脚本未就绪时进入兼容队列。CE 支持现有自定义事件与属性，无需升级 Vercel 套餐。服务部署文档与私有配置由运维管理。
 
@@ -287,4 +287,4 @@ document.querySelectorAll<HTMLAnchorElement>('[data-repo-link][data-package]').f
 
 网站端已替换为自托管 Plausible CE，事件名称、属性及转化语义保持不变，不再需要升级 Vercel 套餐。`bun run --cwd site validate` 通过 56 项单元/交互/端点测试、20 项静态产物测试、类型检查与构建；另经本地浏览器确认统计脚本请求挂起时，筛选和复制仍可运行。
 
-部署验收进行中，公共采集域名、真实事件入库与私有仪表盘尚未完成验收。采集切换的实际覆盖时间和缺口应记录在复盘中；Google Search Console 与原定 14/30 天复盘继续执行，统计迁移不重置 SEO 页面观察期。上线检查和复盘口径见 [SEO 交付记录](seo-delivery.md)，接入细节见 [网站说明](website.md#访问统计)。
+公网脚本、采集接口、隔离站点真实浏览器入库及 Stats API 回读均通过；私有仪表盘由 Cloudflare Access 保护，owner 登录与目标配置已验收。2026-09-22 起正式站开始使用 Plausible，线上 14 页均已切换。采集切换的实际覆盖时间和缺口应记录在复盘中；Google Search Console 与原定 14/30 天复盘继续执行，统计迁移不重置 SEO 页面观察期。上线检查和复盘口径见 [SEO 交付记录](seo-delivery.md)，接入细节见 [网站说明](website.md#访问统计)。

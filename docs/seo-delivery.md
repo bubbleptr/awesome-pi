@@ -31,13 +31,13 @@
 
 网站端已替换为 Plausible Community Edition v3.2.1 自托管接入，保留 `command_copied`、`repo_clicked` 及原有 `package`、`locale`、`surface`、`destination` 属性。复制成功才计数，徽章复制、站内导航和 TypeSafe 官网入口仍不计插件转化；基础脚本不启用自动外链事件，避免重复计数。CE 支持现有自定义事件与属性，无需升级 Vercel 套餐。
 
-配置中的公共采集源为 `https://events.piindex.dev`，私有仪表盘为 `https://stats.piindex.dev`，站点标识为 `piindex.dev`。服务位于独立 VPS，部署文档和私有配置由运维管理。**部署验收进行中：公共域名、真实采集入库和私有仪表盘尚未完成验收。** 本地通过不等于线上数据已可用。
+配置中的公共采集源为 `https://events.piindex.dev`，私有仪表盘为 `https://stats.piindex.dev`，站点标识为 `piindex.dev`。服务位于独立 VPS，部署文档和私有配置由运维管理。[PR #30](https://github.com/bubbleptr/awesome-pi/pull/30) 已合并，生产源码提交为 `ba74d7aeece3b3bab44f3549c3be8598ba5bb26b`。2026-09-22 00:23（Asia/Shanghai）已核对 14 个线上 HTML 页面均为 200、各一次异步 Plausible 脚本、无 Vercel Insights 脚本，sitemap 保持 14 页；生产部署、CI 与 IndexNow 均成功。
 
-网站端执行 `bun run --cwd site validate`，56 项单元/交互/端点测试和 20 项静态产物测试通过，类型检查为 0 错误、0 警告，仍生成 14 个 HTML 页面与 3 个 SVG。新增测试覆盖统计脚本尚未就绪时的事件队列。真实浏览器验证中，采集脚本请求持续挂起时，异步加载仍允许筛选与复制正常运行；截图为本地 `output/playwright/plausible-analytics-loading.png`。这些是 2026-09-22 的网站端验证结果，不替换上文 2026-09-21 的生产验收与测试记录。
+网站端执行 `bun run --cwd site validate`，56 项单元/交互/端点测试和 20 项静态产物测试通过，类型检查为 0 错误、0 警告，仍生成 14 个 HTML 页面与 3 个 SVG。新增测试覆盖统计脚本尚未就绪时的事件队列。真实浏览器验证中，采集脚本请求持续挂起时，异步加载仍允许筛选与复制正常运行；截图为本地 `output/playwright/plausible-analytics-loading.png`。真实浏览器另直连公网采集源，独立 QA 站点的 `/public-browser-check/` 路径在 Stats API 中返回 1 次 pageview 和两个自定义事件各 1 次，四个属性完整；控制台无错误或警告，复制内容正确。未把测试转化写入正式站。公共域名只开放脚本与采集；仪表盘经 Cloudflare Tunnel 和 Access 邮箱白名单保护，owner 登录及两个目标配置已验收。这些是 2026-09-22 的迁移验证结果，不替换上文 2026-09-21 的生产验收与测试记录。
 
 ## 发布后 14 / 30 天复盘
 
-从实际生产上线日起计时；统计迁移不重置 SEO 页面的观察期，未满观察期不能宣称完成收录或增长目标。已在本任务安排两次自动复盘：2026-10-05 与 2026-10-21，均为 Asia/Shanghai 10:00。复盘优先使用已有授权；结合 GSC 与 Plausible 数据，缺 GSC、采集未验收或事件数据不足时明确列出缺口。迁移前后数据按实际覆盖日期说明，不将缺失事件视为零转化。
+从实际生产上线日起计时；统计迁移不重置 SEO 页面的观察期，未满观察期不能宣称完成收录或增长目标。已在本任务安排两次自动复盘：2026-10-05 与 2026-10-21，均为 Asia/Shanghai 10:00。复盘优先使用已有授权；结合 GSC 与 Plausible 数据，缺 GSC、采集异常或事件数据不足时明确列出缺口。迁移前后数据按实际覆盖日期说明，不将缺失事件视为零转化。
 
 | 观察项 | 口径 |
 | --- | --- |

@@ -71,7 +71,7 @@ bun run --cwd site preview
 
 ## 访问统计
 
-2026-09-22 开始迁移到自托管 Plausible Community Edition v3.2.1。网站端接入与本地验证已完成，部署验收进行中；尚不能据此声称公共采集域名可用、真实事件已入库或仪表盘已验收。
+2026-09-22 已切换到自托管 Plausible Community Edition v3.2.1。[PR #30](https://github.com/bubbleptr/awesome-pi/pull/30) 已合并并发布；14 个线上页面均只加载一次异步统计脚本。
 
 站点标识为 `piindex.dev`，公共采集源为 `https://events.piindex.dev`，私有仪表盘入口为 `https://stats.piindex.dev`。统计服务部署在独立 VPS，部署文档、凭据和访问控制由运维管理。静态站点仍由 Vercel 托管。
 
@@ -79,7 +79,7 @@ bun run --cwd site preview
 
 `command_copied` 与 `repo_clicked` 的语义保持不变：复制仅在剪贴板写入成功后计数，字段包含完整资源名 `package`、语言 `locale` 和页面来源 `surface`，仓库点击另含 `destination`（github/npm）。徽章复制、站内导航和 TypeSafe 官网入口不计插件转化。CE 自托管支持这些自定义事件和属性，不再需要升级 Vercel 套餐；复制次数仍不等于实际安装次数。
 
-部署验收需要检查公共脚本、`/api/event`、真实页面浏览与两类自定义事件入库，以及私有仪表盘中的事件和属性。测试流量应与业务观察区分。Google Search Console 和发布后 14/30 天复盘继续沿用 [SEO 交付记录](seo-delivery.md) 的口径，采集缺口必须明确记录。实现接口可核对 [CE v3.2.1 事件源码](https://github.com/plausible/analytics/blob/v3.2.1/tracker/src/track.js)。
+部署验收已通过公共脚本、`/api/event`、真实浏览器采集与 Stats API 回读：独立测试站的同一路径记录 1 次页面浏览、两类自定义事件各 1 次，属性完整。私有入口要求 Cloudflare Access 邮箱白名单登录；Plausible owner 登录与两个目标的配置已核实。测试使用隔离站点，未写入正式站的转化数据。Google Search Console 和发布后 14/30 天复盘继续沿用 [SEO 交付记录](seo-delivery.md) 的口径，采集缺口必须明确记录。实现接口可核对 [CE v3.2.1 事件源码](https://github.com/plausible/analytics/blob/v3.2.1/tracker/src/track.js)。
 
 ## 视觉验收
 
