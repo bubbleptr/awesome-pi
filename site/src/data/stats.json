@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-15T02:15:58.242Z",
+  "generatedAt": "2026-09-21T08:00:51.707Z",
   "github": {
     "a5c-ai/babysitter-pi": {
       "stars": 5
     },
     "acolomba/pi-claude-marketplace": {
-      "stars": 23
+      "stars": 24
     },
     "acsezen/pi-memory-honcho": {
       "stars": 2
@@ -17,16 +17,16 @@
       "stars": 0
     },
     "aliou/pi-guardrails": {
-      "stars": 278
+      "stars": 285
     },
     "aliou/pi-processes": {
-      "stars": 90
+      "stars": 92
     },
     "apmantza/pi-lens": {
-      "stars": 412
+      "stars": 425
     },
     "backnotprop/plannotator": {
-      "stars": 8687
+      "stars": 8840
     },
     "baphuongna/pi-crew": {
       "stars": 53
@@ -35,31 +35,31 @@
       "stars": 3
     },
     "BetterWright/betterwright": {
-      "stars": 280
+      "stars": 310
     },
     "can1357/oh-my-pi": {
-      "stars": 31143
+      "stars": 32211
     },
     "carderne/pi-sandbox": {
-      "stars": 234
+      "stars": 246
     },
     "championswimmer/pi-cache-graph": {
       "stars": 33
     },
     "championswimmer/pi-context-prune": {
-      "stars": 239
+      "stars": 244
     },
     "chandra447/pi-hermes-memory": {
-      "stars": 436
+      "stars": 449
     },
     "code-yeongyu/pi-ast-grep": {
-      "stars": 18
+      "stars": 19
     },
     "code-yeongyu/pi-lsp-client": {
       "stars": 16
     },
     "code-yeongyu/pi-rules": {
-      "stars": 11
+      "stars": 12
     },
     "code-yeongyu/pi-webfetch": {
       "stars": 7
@@ -68,7 +68,7 @@
       "stars": 10
     },
     "code-yeongyu/senpi": {
-      "stars": 429
+      "stars": 439
     },
     "codella/pi-packages": {
       "stars": 1
@@ -77,85 +77,85 @@
       "stars": 9
     },
     "dbachelder/pi-btw": {
-      "stars": 189
+      "stars": 194
     },
     "dingdinglz/pi-worktree": {
-      "stars": 0
+      "stars": 1
     },
     "dkmnx/pi-cursor-theme": {
       "stars": 0
     },
     "dmtrKovalenko/fff": {
-      "stars": 10726
+      "stars": 10791
     },
     "edlsh/pi-ask-user": {
-      "stars": 153
+      "stars": 159
     },
     "ElieMessieCode/pi-code-theme": {
       "stars": 0
     },
     "ExaDev/agent-comms": {
-      "stars": 20
+      "stars": 21
     },
     "ferologics/pi-system-theme": {
       "stars": 5
     },
     "fitchmultz/pi-agent-browser-native": {
-      "stars": 219
+      "stars": 225
     },
     "Gentleman-Programming/engram": {
-      "stars": 6594
+      "stars": 6737
     },
-    "Gentleman-Programming/gentle-pi": {
-      "stars": 804
+    "Gentleman-Programming/gentle-shell": {
+      "stars": 948
     },
     "gintasz/neuralyzer": {
-      "stars": 39
+      "stars": 38
     },
     "gonzalonicolasr/zero-pi": {
       "stars": 16
     },
     "gotgenes/pi-packages": {
-      "stars": 218
+      "stars": 227
     },
     "hasit/pi-community-themes": {
       "stars": 33
     },
     "HazAT/pi-interactive-subagents": {
-      "stars": 689
+      "stars": 704
     },
     "heyhuynhgiabuu/openpi": {
-      "stars": 213
+      "stars": 214
     },
     "Hypabolic/Hypa": {
-      "stars": 182
+      "stars": 183
     },
     "ifiokjr/oh-pi": {
-      "stars": 153
+      "stars": 154
     },
     "javierportillo/pi-hackerman": {
       "stars": 1
     },
     "jayshah5696/pi-agent-extensions": {
-      "stars": 69
+      "stars": 72
     },
     "jayzeng/pi-memory": {
-      "stars": 159
+      "stars": 167
     },
     "jesset/pi-verdict": {
-      "stars": 2
+      "stars": 3
     },
     "jesset/pi-vetter": {
       "stars": 0
     },
     "jmfederico/pi-web": {
-      "stars": 760
+      "stars": 794
     },
     "jonjonrankin/pi-caveman": {
-      "stars": 104
+      "stars": 105
     },
     "juicesharp/rpiv-mono": {
-      "stars": 785
+      "stars": 810
     },
     "kylebrodeur/pi-agent-bus": {
       "stars": 2
@@ -164,7 +164,7 @@
       "stars": 16
     },
     "llblab/pi-telegram": {
-      "stars": 127
+      "stars": 129
     },
     "markacianfrani/pi-theme-flexoki": {
       "stars": 2
@@ -173,10 +173,10 @@
       "stars": 16
     },
     "MasuRii/pi-permission-system": {
-      "stars": 164
+      "stars": 165
     },
     "MattDevy/pi-extensions": {
-      "stars": 142
+      "stars": 147
     },
     "mavam/pi-terminal-theme": {
       "stars": 13
@@ -194,49 +194,49 @@
       "stars": 2
     },
     "mitsuhiko/agent-stuff": {
-      "stars": 3129
+      "stars": 3145
     },
     "mjasnikovs/pi-task": {
-      "stars": 83
+      "stars": 127
     },
     "mksglu/context-mode": {
-      "stars": 22872
+      "stars": 23814
     },
     "monotykamary/pi-fabric": {
-      "stars": 222
+      "stars": 241
     },
     "narumiruna/pi-extensions": {
-      "stars": 563
+      "stars": 588
     },
     "nicobailon/pi-interactive-shell": {
-      "stars": 583
+      "stars": 587
     },
     "nicobailon/pi-mcp-adapter": {
-      "stars": 1469
+      "stars": 1505
     },
     "nicobailon/pi-powerline-footer": {
-      "stars": 429
+      "stars": 436
     },
     "nicobailon/pi-subagents": {
-      "stars": 3591
+      "stars": 3716
     },
     "nicobailon/pi-web-access": {
-      "stars": 1446
+      "stars": 1498
     },
     "ogulcancelik/pi-extensions": {
-      "stars": 534
+      "stars": 543
     },
     "omaclaren/pi-markdown-preview": {
       "stars": 125
     },
     "omaclaren/pi-studio": {
-      "stars": 210
+      "stars": 212
     },
     "prateekmedia/pi-hooks": {
       "stars": 97
     },
     "QuintinShaw/pi-dynamic-workflows": {
-      "stars": 522
+      "stars": 532
     },
     "robzolkos/pi-theme-synthwave-84": {
       "stars": 4
@@ -260,31 +260,31 @@
       "stars": 1
     },
     "spences10/my-pi": {
-      "stars": 127
+      "stars": 129
     },
     "svkozak/pi-acp": {
-      "stars": 678
+      "stars": 690
     },
     "TaterDoge/pi-packages": {
       "stars": 3
     },
     "Thinkscape/agent-smart-fetch": {
-      "stars": 61
+      "stars": 64
     },
     "tianrendong/pi-chrome": {
-      "stars": 49
+      "stars": 51
     },
     "tintinweb/pi-subagents": {
-      "stars": 1154
+      "stars": 1199
     },
     "tintinweb/pi-tasks": {
-      "stars": 204
+      "stars": 215
     },
     "tmdgusya/roach-pi": {
-      "stars": 275
+      "stars": 276
     },
     "tomsej/pi-ext": {
-      "stars": 72
+      "stars": 76
     },
     "tuanhung303/pi-agent-flow": {
       "stars": 40
@@ -293,13 +293,13 @@
       "stars": 8
     },
     "victor-software-house/pi-curated-themes": {
-      "stars": 14
+      "stars": 15
     },
     "vigolium/piolium": {
-      "stars": 134
+      "stars": 136
     },
     "yvgude/lean-ctx": {
-      "stars": 3783
+      "stars": 3820
     },
     "Zetaphor/pi-vscode-extension": {
       "stars": 46
@@ -307,373 +307,373 @@
   },
   "npm": {
     "@a5c-ai/babysitter-pi": {
-      "weekly": 690,
-      "trend": -53,
+      "weekly": 1222,
+      "trend": 70,
       "repo": "a5c-ai/babysitter-pi"
     },
     "@aliou/pi-guardrails": {
-      "weekly": 560,
-      "trend": 22,
+      "weekly": 1267,
+      "trend": 126,
       "repo": null
     },
     "@aliou/pi-processes": {
-      "weekly": 444,
-      "trend": 4,
+      "weekly": 608,
+      "trend": 37,
       "repo": null
     },
     "@baretread/pi-forge": {
-      "weekly": 37,
-      "trend": -44,
+      "weekly": 67,
+      "trend": 52,
       "repo": "BareTread/pi-forge"
     },
     "@codella/pi-theme-candy": {
-      "weekly": 6,
-      "trend": 50,
+      "weekly": 2,
+      "trend": -67,
       "repo": null
     },
     "@codella/pi-theme-christmas": {
       "weekly": 1,
-      "trend": -80,
+      "trend": -50,
       "repo": "codella/pi-packages"
     },
     "@codella/pi-theme-cyberpunk": {
-      "weekly": 7,
-      "trend": 75,
+      "weekly": 6,
+      "trend": -14,
       "repo": null
     },
     "@codella/pi-theme-grayscale": {
       "weekly": 2,
-      "trend": -33,
+      "trend": 0,
       "repo": "codella/pi-packages"
     },
     "@cryptolibertus/pi-peer": {
-      "weekly": 74,
-      "trend": 35,
+      "weekly": 10,
+      "trend": -86,
       "repo": "CryptoLibertus/pi-peer"
     },
     "@dinglz/pi-worktree": {
-      "weekly": 14,
-      "trend": null,
+      "weekly": 155,
+      "trend": 869,
       "repo": null
     },
     "@eliemessiecode/pi-code-theme": {
-      "weekly": 10,
-      "trend": 400,
+      "weekly": 1,
+      "trend": -90,
       "repo": null
     },
     "@ff-labs/pi-fff": {
-      "weekly": 5018,
-      "trend": -27,
+      "weekly": 5249,
+      "trend": 5,
       "repo": "dmtrKovalenko/fff"
     },
     "@gintasz/pi-neuralyzer": {
-      "weekly": 11,
-      "trend": 120,
+      "weekly": 7,
+      "trend": -42,
       "repo": null
     },
     "@gonrocca/zero-pi": {
-      "weekly": 146,
-      "trend": 403,
+      "weekly": 224,
+      "trend": 53,
       "repo": "gonzalonicolasr/zero-pi"
     },
     "@gotgenes/pi-permission-system": {
-      "weekly": 7285,
-      "trend": -23,
+      "weekly": 10102,
+      "trend": 39,
       "repo": null
     },
     "@gotgenes/pi-subagents": {
-      "weekly": 2402,
-      "trend": -24,
+      "weekly": 2039,
+      "trend": -15,
       "repo": "gotgenes/pi-packages"
     },
     "@gravewhisper/pi-theme-monokai-classic": {
-      "weekly": 0,
-      "trend": -100,
+      "weekly": 4,
+      "trend": 0,
       "repo": null
     },
     "@hypabolic/pi-hypa": {
-      "weekly": 890,
-      "trend": 79,
+      "weekly": 1362,
+      "trend": 53,
       "repo": null
     },
     "@ifi/oh-pi-themes": {
-      "weekly": 87,
-      "trend": -14,
+      "weekly": 102,
+      "trend": -1,
       "repo": "ifiokjr/oh-pi"
     },
     "@javiportillo/pi-hackerman": {
-      "weekly": 3,
+      "weekly": 9,
       "trend": 0,
       "repo": null
     },
     "@jmfederico/pi-web": {
-      "weekly": 1587,
-      "trend": -9,
+      "weekly": 1266,
+      "trend": -33,
       "repo": null
     },
     "@juicesharp/rpiv-advisor": {
-      "weekly": 1520,
-      "trend": -8,
+      "weekly": 1387,
+      "trend": -9,
       "repo": null
     },
     "@juicesharp/rpiv-ask-user-question": {
-      "weekly": 43444,
-      "trend": 8,
+      "weekly": 50616,
+      "trend": 17,
       "repo": null
     },
     "@juicesharp/rpiv-btw": {
-      "weekly": 1653,
-      "trend": 72,
+      "weekly": 1218,
+      "trend": -26,
       "repo": null
     },
     "@juicesharp/rpiv-i18n": {
-      "weekly": 1569,
-      "trend": 22,
+      "weekly": 6285,
+      "trend": 301,
       "repo": "juicesharp/rpiv-mono"
     },
     "@juicesharp/rpiv-pi": {
-      "weekly": 831,
-      "trend": 17,
+      "weekly": 429,
+      "trend": -48,
       "repo": null
     },
     "@juicesharp/rpiv-todo": {
-      "weekly": 34219,
-      "trend": -5,
+      "weekly": 31831,
+      "trend": -7,
       "repo": null
     },
     "@juicesharp/rpiv-voice": {
-      "weekly": 751,
-      "trend": 19,
+      "weekly": 376,
+      "trend": -50,
       "repo": null
     },
     "@juicesharp/rpiv-web-tools": {
-      "weekly": 1382,
-      "trend": 0,
+      "weekly": 1237,
+      "trend": -39,
       "repo": null
     },
     "@juicesharp/rpiv-workflow": {
-      "weekly": 760,
-      "trend": 11,
+      "weekly": 440,
+      "trend": -42,
       "repo": "juicesharp/rpiv-mono"
     },
     "@llblab/pi-telegram": {
-      "weekly": 3948,
-      "trend": 17,
+      "weekly": 2504,
+      "trend": -37,
       "repo": "llblab/pi-telegram"
     },
     "@m64/pi-remembra-theme": {
-      "weekly": 10,
-      "trend": -9,
+      "weekly": 9,
+      "trend": -10,
       "repo": "m64/pi-remembra-theme"
     },
     "@matyah00/openpi": {
-      "weekly": 10,
-      "trend": 233,
+      "weekly": 6,
+      "trend": -40,
       "repo": null
     },
     "@mjasnikovs/pi-task": {
-      "weekly": 3789,
-      "trend": -12,
+      "weekly": 3291,
+      "trend": -13,
       "repo": null
     },
     "@narumitw/pi-accounts": {
-      "weekly": 216,
-      "trend": -36,
-      "repo": null
-    },
-    "@narumitw/pi-caffeinate": {
-      "weekly": 397,
-      "trend": -31,
-      "repo": null
-    },
-    "@narumitw/pi-chrome-devtools": {
-      "weekly": 729,
-      "trend": 147,
-      "repo": null
-    },
-    "@narumitw/pi-firecrawl": {
-      "weekly": 2067,
+      "weekly": 307,
       "trend": 42,
       "repo": null
     },
+    "@narumitw/pi-caffeinate": {
+      "weekly": 563,
+      "trend": 42,
+      "repo": null
+    },
+    "@narumitw/pi-chrome-devtools": {
+      "weekly": 917,
+      "trend": 26,
+      "repo": null
+    },
+    "@narumitw/pi-firecrawl": {
+      "weekly": 1532,
+      "trend": -27,
+      "repo": null
+    },
     "@narumitw/pi-goal": {
-      "weekly": 3597,
-      "trend": -6,
+      "weekly": 8419,
+      "trend": 134,
       "repo": null
     },
     "@narumitw/pi-lsp": {
-      "weekly": 1359,
-      "trend": 0,
+      "weekly": 1846,
+      "trend": 4,
       "repo": null
     },
     "@narumitw/pi-plan-mode": {
-      "weekly": 5897,
-      "trend": 77,
-      "repo": null
-    },
-    "@narumitw/pi-retry": {
-      "weekly": 163,
-      "trend": 7,
-      "repo": null
-    },
-    "@narumitw/pi-statusline": {
-      "weekly": 897,
+      "weekly": 5360,
       "trend": -9,
       "repo": null
     },
+    "@narumitw/pi-retry": {
+      "weekly": 138,
+      "trend": -15,
+      "repo": null
+    },
+    "@narumitw/pi-statusline": {
+      "weekly": 1285,
+      "trend": 43,
+      "repo": null
+    },
     "@narumitw/pi-subagents": {
-      "weekly": 363,
-      "trend": -19,
+      "weekly": 574,
+      "trend": 58,
       "repo": null
     },
     "@narumitw/pi-sync": {
-      "weekly": 377,
-      "trend": -44,
+      "weekly": 445,
+      "trend": 18,
       "repo": null
     },
     "@narumitw/pi-usage": {
-      "weekly": 11278,
-      "trend": 88,
+      "weekly": 15720,
+      "trend": 39,
       "repo": null
     },
     "@narumitw/pi-worktree": {
-      "weekly": 360,
-      "trend": 35,
+      "weekly": 460,
+      "trend": 19,
       "repo": null
     },
     "@nitra/cursor": {
-      "weekly": 796,
-      "trend": 67,
+      "weekly": 536,
+      "trend": -33,
       "repo": "n/cursor"
     },
     "@ogulcancelik/pi-ghostty-theme-sync": {
       "weekly": 15,
-      "trend": 50,
+      "trend": 0,
       "repo": null
     },
     "@ollama/pi-web-search": {
-      "weekly": 1590,
-      "trend": -2,
+      "weekly": 2340,
+      "trend": 18,
       "repo": null
     },
     "@plannotator/pi-extension": {
-      "weekly": 17830,
-      "trend": 39,
+      "weekly": 22564,
+      "trend": 27,
       "repo": "backnotprop/plannotator"
     },
     "@quintinshaw/pi-dynamic-workflows": {
-      "weekly": 4818,
-      "trend": -48,
+      "weekly": 4288,
+      "trend": -24,
       "repo": null
     },
     "@ravan08/pi-langfuse": {
-      "weekly": 19,
-      "trend": -76,
+      "weekly": 13,
+      "trend": -32,
       "repo": null
     },
     "@samfp/pi-memory": {
-      "weekly": 262,
-      "trend": 5,
+      "weekly": 173,
+      "trend": -41,
       "repo": "samfoy/pi-memory"
     },
     "@sherif-fanous/pi-catppuccin": {
-      "weekly": 44,
-      "trend": -34,
+      "weekly": 122,
+      "trend": 97,
       "repo": null
     },
     "@sherif-fanous/pi-theme-sync": {
-      "weekly": 57,
-      "trend": 1325,
+      "weekly": 18,
+      "trend": -68,
       "repo": null
     },
     "@smoose/pi-themes": {
-      "weekly": 18,
-      "trend": -90,
+      "weekly": 69,
+      "trend": 229,
       "repo": null
     },
     "@spences10/pi-themes": {
-      "weekly": 275,
-      "trend": 96,
+      "weekly": 143,
+      "trend": -54,
       "repo": null
     },
     "@taterdoge/pi-ayu": {
-      "weekly": 8,
-      "trend": 0,
+      "weekly": 5,
+      "trend": -50,
       "repo": "TaterDoge/pi-packages"
     },
     "@tintinweb/pi-subagents": {
-      "weekly": 6553,
-      "trend": -8,
+      "weekly": 5940,
+      "trend": -9,
       "repo": null
     },
     "@tintinweb/pi-tasks": {
-      "weekly": 925,
-      "trend": 25,
+      "weekly": 1321,
+      "trend": 43,
       "repo": null
     },
     "@victor-software-house/pi-curated-themes": {
-      "weekly": 323,
-      "trend": -4,
+      "weekly": 388,
+      "trend": 1,
       "repo": null
     },
     "@vigolium/piolium": {
-      "weekly": 225,
-      "trend": -16,
+      "weekly": 658,
+      "trend": 192,
       "repo": "vigolium/piolium"
     },
     "agent-comms": {
-      "weekly": 9705,
-      "trend": 7197,
+      "weekly": 18952,
+      "trend": 95,
       "repo": "ExaDev/agent-comms"
     },
     "betterwright": {
-      "weekly": 3873,
-      "trend": 60,
+      "weekly": 4639,
+      "trend": 20,
       "repo": null
     },
     "context-mode": {
-      "weekly": 16324,
-      "trend": 28,
+      "weekly": 13979,
+      "trend": -14,
       "repo": "mksglu/context-mode"
     },
     "gentle-engram": {
-      "weekly": 2474,
-      "trend": 16,
+      "weekly": 4254,
+      "trend": 54,
       "repo": "Gentleman-Programming/engram"
     },
     "gentle-pi": {
-      "weekly": 4166,
-      "trend": 37,
-      "repo": "Gentleman-Programming/gentle-pi"
+      "weekly": 9378,
+      "trend": 125,
+      "repo": "Gentleman-Programming/gentle-shell"
     },
     "pi-acp": {
-      "weekly": 78951,
-      "trend": -14,
+      "weekly": 28409,
+      "trend": -64,
       "repo": null
     },
     "pi-agent-browser-native": {
-      "weekly": 3743,
-      "trend": 70,
+      "weekly": 4323,
+      "trend": 15,
       "repo": null
     },
     "pi-agent-bus": {
-      "weekly": 16,
-      "trend": 300,
+      "weekly": 10,
+      "trend": -37,
       "repo": null
     },
     "pi-agent-flow": {
-      "weekly": 160,
-      "trend": 5,
+      "weekly": 176,
+      "trend": 4,
       "repo": "tuanhung303/pi-agent-flow"
     },
     "pi-ask-user": {
-      "weekly": 1690,
-      "trend": 10,
+      "weekly": 1548,
+      "trend": -8,
       "repo": "edlsh/pi-ask-user"
     },
     "pi-btw": {
-      "weekly": 2269,
-      "trend": -2,
+      "weekly": 5879,
+      "trend": 116,
       "repo": null
     },
     "pi-cache-graph": {
@@ -682,68 +682,68 @@
       "repo": null
     },
     "pi-caveman": {
-      "weekly": 737,
-      "trend": -2,
+      "weekly": 924,
+      "trend": 25,
       "repo": null
     },
     "pi-chrome": {
-      "weekly": 1901,
-      "trend": 343,
+      "weekly": 780,
+      "trend": -59,
       "repo": "tianrendong/pi-chrome"
     },
     "pi-claude-marketplace": {
-      "weekly": 478,
-      "trend": 24,
+      "weekly": 308,
+      "trend": -36,
       "repo": null
     },
     "pi-context-prune": {
-      "weekly": 301,
-      "trend": 36,
+      "weekly": 278,
+      "trend": -30,
       "repo": null
     },
     "pi-crew": {
-      "weekly": 1178,
-      "trend": 189,
+      "weekly": 875,
+      "trend": -26,
       "repo": "baphuongna/pi-crew"
     },
     "pi-cursor-theme": {
-      "weekly": 6,
-      "trend": 100,
+      "weekly": 5,
+      "trend": -17,
       "repo": null
     },
     "pi-digital-rust-theme": {
-      "weekly": 13,
-      "trend": 333,
+      "weekly": 12,
+      "trend": -20,
       "repo": null
     },
     "pi-fabric": {
-      "weekly": 3318,
-      "trend": -43,
+      "weekly": 7010,
+      "trend": 111,
       "repo": null
     },
     "pi-hermes-memory": {
-      "weekly": 3902,
-      "trend": -1,
+      "weekly": 4436,
+      "trend": 14,
       "repo": null
     },
     "pi-hooks": {
-      "weekly": 21,
-      "trend": 24,
+      "weekly": 23,
+      "trend": 5,
       "repo": null
     },
     "pi-interactive-shell": {
-      "weekly": 964,
-      "trend": -12,
+      "weekly": 814,
+      "trend": -16,
       "repo": null
     },
     "pi-intercom": {
-      "weekly": 2405,
-      "trend": -40,
+      "weekly": 2035,
+      "trend": -15,
       "repo": null
     },
     "pi-kanagawa": {
-      "weekly": 24,
-      "trend": 14,
+      "weekly": 22,
+      "trend": -15,
       "repo": null
     },
     "pi-lean-ctx": {
@@ -752,143 +752,143 @@
       "repo": "yvgude/lean-ctx"
     },
     "pi-lens": {
-      "weekly": 32297,
-      "trend": 218,
+      "weekly": 20994,
+      "trend": -35,
       "repo": null
     },
     "pi-macos-theme-sync": {
-      "weekly": 3,
-      "trend": 200,
+      "weekly": 2,
+      "trend": -50,
       "repo": "adstastic/pi-macos-theme-sync"
     },
     "pi-markdown-preview": {
-      "weekly": 1072,
-      "trend": -33,
+      "weekly": 2747,
+      "trend": 156,
       "repo": "omaclaren/pi-markdown-preview"
     },
     "pi-mcp-adapter": {
-      "weekly": 241578,
-      "trend": 10,
+      "weekly": 181664,
+      "trend": -25,
       "repo": null
     },
     "pi-memory": {
-      "weekly": 7364,
-      "trend": 30,
+      "weekly": 7414,
+      "trend": 1,
       "repo": null
     },
     "pi-memory-honcho": {
-      "weekly": 7,
-      "trend": 40,
+      "weekly": 12,
+      "trend": 0,
       "repo": null
     },
     "pi-peacock": {
       "weekly": 4,
-      "trend": -20,
+      "trend": -43,
       "repo": "metmirr/pi-peacock"
     },
     "pi-permission-system": {
-      "weekly": 315,
-      "trend": 8,
+      "weekly": 405,
+      "trend": 13,
       "repo": "MasuRii/pi-permission-system"
     },
     "pi-powerline-footer": {
-      "weekly": 13738,
-      "trend": 132,
+      "weekly": 16258,
+      "trend": 18,
       "repo": "nicobailon/pi-powerline-footer"
     },
     "pi-sandbox": {
-      "weekly": 867,
-      "trend": 10,
+      "weekly": 1055,
+      "trend": 22,
       "repo": null
     },
     "pi-simplify": {
-      "weekly": 5848,
-      "trend": -15,
+      "weekly": 6030,
+      "trend": 3,
       "repo": "MattDevy/pi-extensions"
     },
     "pi-smart-fetch": {
-      "weekly": 403,
-      "trend": -4,
+      "weekly": 539,
+      "trend": 34,
       "repo": null
     },
     "pi-studio": {
-      "weekly": 465,
-      "trend": -55,
+      "weekly": 374,
+      "trend": -20,
       "repo": "omaclaren/pi-studio"
     },
     "pi-subagents": {
-      "weekly": 87065,
-      "trend": -7,
+      "weekly": 94495,
+      "trend": 9,
       "repo": null
     },
     "pi-system-theme": {
-      "weekly": 14,
-      "trend": 27,
+      "weekly": 20,
+      "trend": 18,
       "repo": "ferologics/pi-system-theme"
     },
     "pi-terminal-theme": {
-      "weekly": 210,
-      "trend": 60,
+      "weekly": 214,
+      "trend": -9,
       "repo": null
     },
     "pi-theme-flexoki": {
-      "weekly": 5,
-      "trend": -29,
+      "weekly": 4,
+      "trend": -20,
       "repo": null
     },
     "pi-theme-flip": {
-      "weekly": 5,
-      "trend": 150,
+      "weekly": 6,
+      "trend": 20,
       "repo": null
     },
     "pi-theme-switcher": {
-      "weekly": 17,
-      "trend": 1600,
+      "weekly": 4,
+      "trend": -76,
       "repo": null
     },
     "pi-theme-synthwave-84": {
-      "weekly": 28,
-      "trend": -15,
+      "weekly": 35,
+      "trend": 0,
       "repo": null
     },
     "pi-themes-rose-pine": {
-      "weekly": 7,
-      "trend": -30,
+      "weekly": 6,
+      "trend": -14,
       "repo": null
     },
     "pi-tokyo-night": {
-      "weekly": 19,
-      "trend": 90,
+      "weekly": 22,
+      "trend": -24,
       "repo": null
     },
     "pi-toolbox": {
-      "weekly": 24,
-      "trend": 33,
+      "weekly": 35,
+      "trend": 9,
       "repo": "indydevdan/pi-toolbox"
     },
     "pi-venice": {
-      "weekly": 26,
-      "trend": 136,
+      "weekly": 15,
+      "trend": -53,
       "repo": null
     },
     "pi-verdict": {
-      "weekly": 394,
-      "trend": -55,
+      "weekly": 713,
+      "trend": 81,
       "repo": null
     },
     "pi-vetter": {
-      "weekly": 67,
-      "trend": -83,
+      "weekly": 66,
+      "trend": -1,
       "repo": null
     },
     "pi-web-access": {
-      "weekly": 90738,
-      "trend": 20,
+      "weekly": 83086,
+      "trend": -8,
       "repo": null
     },
     "pi-workstation": {
-      "weekly": 12,
-      "trend": 20,
+      "weekly": 21,
+      "trend": 31,
       "repo": null
     }
   }
