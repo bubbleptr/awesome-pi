@@ -53,6 +53,7 @@ pi list
   - [Featured Themes](#featured-themes)
   - [Theme Tools](#theme-tools)
 - [Editor Integration](#editor-integration)
+- [SDKs & Clients](#sdks--clients)
 - [Alternative Distributions](#alternative-distributions)
 
 ---
@@ -386,6 +387,13 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [pi-vscode-extension](https://github.com/Zetaphor/pi-vscode-extension) - 将 Pi 嵌入为 VS Code 扩展。`pi install git:github.com/Zetaphor/pi-vscode-extension`
 
 > Zed 编辑器通过 ACP Registry 原生支持 Pi：配置 `"agent_servers": { "pi-acp": { "type": "registry" } }` 即可使用。
+
+
+## SDKs & Clients
+
+用于在应用代码中驱动 Pi 的程序化客户端 / SDK（不是 Pi Package）。
+
+- [pi-agent-python-sdk](https://github.com/cheenulabs/pi-agent-python-sdk) - 非官方社区 Python SDK：以 RPC 模式启动 Pi CLI，提供类型化的同步/异步 API，支持提示、流式事件、会话与 RPC 控制。`python -m pip install pi-agent-python-sdk` · [PyPI](https://pypi.org/project/pi-agent-python-sdk/)
 
 
 ## Alternative Distributions

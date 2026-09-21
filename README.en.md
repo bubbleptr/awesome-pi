@@ -53,6 +53,7 @@ pi list
   - [Featured Themes](#featured-themes)
   - [Theme Tools](#theme-tools)
 - [Editor Integration](#editor-integration)
+- [SDKs & Clients](#sdks--clients)
 - [Alternative Distributions](#alternative-distributions)
 
 ---
@@ -386,6 +387,13 @@ Editor integration packages for embedding Pi into IDEs.
 - [pi-vscode-extension](https://github.com/Zetaphor/pi-vscode-extension) - Embeds Pi as a VS Code extension. `pi install git:github.com/Zetaphor/pi-vscode-extension`
 
 > Zed editor natively supports Pi via the ACP Registry: configure `"agent_servers": { "pi-acp": { "type": "registry" } }`.
+
+
+## SDKs & Clients
+
+Programmatic clients and SDKs for driving Pi from application code (not Pi packages).
+
+- [pi-agent-python-sdk](https://github.com/cheenulabs/pi-agent-python-sdk) - Unofficial community Python SDK that launches the Pi CLI in RPC mode and exposes typed sync/async APIs for prompts, streaming, sessions, and RPC control. `python -m pip install pi-agent-python-sdk` · [PyPI](https://pypi.org/project/pi-agent-python-sdk/)
 
 
 ## Alternative Distributions
