@@ -6,7 +6,7 @@
   </linearGradient>
   <clipPath id="rounded"><rect x="24" width="64" height="20" rx="3"/></clipPath>
   <g clip-path="url(#rounded)">
-    <path fill="#187a45" d="M24 0h64v20H24z"/>
+    <path fill="#555" d="M24 0h64v20H24z"/>
     <path fill="url(#shade)" d="M24 0h64v20H24z"/>
   </g>
   <svg x="2" y="0" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true">
