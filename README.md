@@ -220,6 +220,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [@gonrocca/zero-pi](https://pi.dev/packages/@gonrocca/zero-pi) - 规范驱动开发工作流（探索→计划→构建→验证）。`pi install npm:@gonrocca/zero-pi`
 - [@narumitw/pi-worktree](https://github.com/narumiruna/pi-extensions) - 交互式 Git worktree：创建 / 切换 / 删除，并把 Pi 会话切到新工作区。`pi install npm:@narumitw/pi-worktree`
 - [@dinglz/pi-worktree](https://github.com/dingdinglz/pi-worktree) - 面向 Pi 的 Git worktree 工作流：隔离开发、校验 PR 发布结果，并支持恢复中断流程、合并回原工作目录。`pi install npm:@dinglz/pi-worktree`
+- [YYLO](https://github.com/yylo-dev/yylo) - 编码代理命令行编排器，将 Pi 作为子代理调度（`yy pi` / `--subagent pi`，支持 `.pi/skills`）：类型化任务生命周期、每任务独立分支/worktree、合并前独立校验、哈希回执。独立 CLI，非 Pi Package。`npm install --global @yylo/cli`
 
 ---
 

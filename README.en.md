@@ -220,6 +220,7 @@ Task management and goal tracking packages.
 - [@gonrocca/zero-pi](https://pi.dev/packages/@gonrocca/zero-pi) - Spec-driven development workflow (explore→plan→build→verify). `pi install npm:@gonrocca/zero-pi`
 - [@narumitw/pi-worktree](https://github.com/narumiruna/pi-extensions) - Interactive Git worktrees: create, switch, remove, and move the Pi session into the new workspace. `pi install npm:@narumitw/pi-worktree`
 - [@dinglz/pi-worktree](https://github.com/dingdinglz/pi-worktree) - Git worktree workflows for Pi with verified PR publishing and resumable merges back to the original checkout. `pi install npm:@dinglz/pi-worktree`
+- [YYLO](https://github.com/yylo-dev/yylo) - Command-line orchestrator for coding agents that drives Pi as a subagent (`yy pi` / `--subagent pi`, supports `.pi/skills`): typed task lifecycle, dedicated branch/worktree per task, independent pre-merge validation, hash-linked receipts. Standalone CLI, not a Pi package. `npm install --global @yylo/cli`
 
 ---
 
