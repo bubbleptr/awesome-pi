@@ -79,6 +79,10 @@ bun run --cwd site preview
 
 `command_copied` 与 `repo_clicked` 的语义保持不变：复制仅在剪贴板写入成功后计数，字段包含完整资源名 `package`、语言 `locale` 和页面来源 `surface`，仓库点击另含 `destination`（github/npm）。徽章复制、站内导航和 TypeSafe 官网入口不计插件转化。CE 自托管支持这些自定义事件和属性，不再需要升级 Vercel 套餐；复制次数仍不等于实际安装次数。
 
+首页 Bento 的「查看专题 / 比较方案」入口单独记录 `guide_clicked`，属性为 `guide`（`jev`、`subagents`、`web-access-search`）、`locale`（`en` / `zh`）和 `placement`（`home_bento`）。仅在链接激活时记录一次，保留原生跳转与新标签打开行为；卡片正文、插图、悬停及「浏览全部资源」不计数。它表示对指南的兴趣，不是复制命令或安装插件。仪表盘在 **Goal conversions → guide_clicked** 查看，再按 **Properties → guide** 比较各指南，也可按 `locale` 区分语言。新增事件需同步配置 Plausible 站点目标和自定义属性。
+
+2026-09-22 已为正式站追加 `guide_clicked` 目标及 `guide`、`placement` 可查询属性，保留原两个目标与四个属性，独立回查通过；配置过程未向正式站发送模拟事件。普通点击、键盘激活、修饰键及鼠标中键打开链接均纳入指南点击，右键菜单不计数。
+
 部署验收已通过公共脚本、`/api/event`、真实浏览器采集与 Stats API 回读：独立测试站的同一路径记录 1 次页面浏览、两类自定义事件各 1 次，属性完整。私有入口要求 Cloudflare Access 邮箱白名单登录；Plausible owner 登录与两个目标的配置已核实。测试使用隔离站点，未写入正式站的转化数据。Google Search Console 和发布后 14/30 天复盘继续沿用 [SEO 交付记录](seo-delivery.md) 的口径，采集缺口必须明确记录。实现接口可核对 [CE v3.2.1 事件源码](https://github.com/plausible/analytics/blob/v3.2.1/tracker/src/track.js)。
 
 ## 视觉验收
