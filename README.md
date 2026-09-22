@@ -148,6 +148,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-jev (TheoOliveira)](https://github.com/TheoOliveira/pi-jev) - 基于 Jev 按任务选择工具与 Skill，并提供结构化判定。自动路由默认关闭；Jev 请求需要 `TYPESAFE_API_KEY` 或本地 Key 文件。`pi install npm:pi-jev`
 - [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) - 单 Agent 的 Jev 搜索重排、编辑前检查和任务基线 diff 审查。需要 Pi 0.85+、Node 20+ 和 TYPESAFE_API_KEY；先克隆仓库并运行其中的 install.sh，再将下方路径替换为本地目录。`pi install /absolute/path/to/pi-jev-code`
 - 🔥 [pi-lens](https://github.com/apmantza/pi-lens) - 实时代码反馈——LSP、linter、formatter、类型检查、结构分析。`pi install npm:pi-lens`
+- [pi-agent-ide](https://github.com/alexshpunt/pi-agent-ide) - Pi 的统一 Agent 原生 IDE：安全编辑、文本/AST/LSP 搜索、持久终端、交互式调试、视觉检查、诊断、撤销和渐进式能力指南。`pi install npm:pi-agent-ide`
 - 🔥 [@nitra/cursor](https://pi.dev/packages/@nitra/cursor) - CLI 下载 Cursor 规则到本地仓库。`pi install npm:@nitra/cursor`
 - 🔥 [@narumitw/pi-lsp](https://github.com/narumiruna/pi-extensions) - 可配置 LSP 诊断和源码修复，按文件扩展名路由。`pi install npm:@narumitw/pi-lsp`
 - [@ff-labs/pi-fff](https://pi.dev/packages/@ff-labs/pi-fff) - FFF 驱动的模糊文件和内容搜索。`pi install npm:@ff-labs/pi-fff`

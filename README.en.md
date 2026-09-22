@@ -148,6 +148,7 @@ Development tools and code intelligence packages.
 - [pi-jev (TheoOliveira)](https://github.com/TheoOliveira/pi-jev) - Task-based tool and Skill selection with Jev, plus structured judgments. Automatic routing is off by default; Jev requests require `TYPESAFE_API_KEY` or a local key file. `pi install npm:pi-jev`
 - [pi-jev-code](https://github.com/KamilPostrozny/pi-jev-code) - Single-agent Jev search ranking, pre-edit checks, and task-baseline diff review. Requires Pi 0.85+, Node 20+, and TYPESAFE_API_KEY. Clone the repository and run its install.sh first; replace the path below with that checkout. `pi install /absolute/path/to/pi-jev-code`
 - 🔥 [pi-lens](https://github.com/apmantza/pi-lens) - Real-time code feedback — LSP, linters, formatters, type checking, structural analysis. `pi install npm:pi-lens`
+- [pi-agent-ide](https://github.com/alexshpunt/pi-agent-ide) - Unified agent-native IDE for Pi: guarded editing, text/AST/LSP search, persistent terminals, interactive debugging, visual inspection, diagnostics, undo, and progressive capability guides. `pi install npm:pi-agent-ide`
 - 🔥 [@nitra/cursor](https://pi.dev/packages/@nitra/cursor) - CLI to download Cursor rules into local repositories. `pi install npm:@nitra/cursor`
 - 🔥 [@narumitw/pi-lsp](https://github.com/narumiruna/pi-extensions) - Configurable LSP diagnostics and source fixes, routed by file extension. `pi install npm:@narumitw/pi-lsp`
 - [@ff-labs/pi-fff](https://pi.dev/packages/@ff-labs/pi-fff) - FFF-powered fuzzy file and content search. `pi install npm:@ff-labs/pi-fff`
