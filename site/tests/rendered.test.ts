@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'bun:test';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { Window, type HTMLAnchorElement } from 'happy-dom';
+import { Window, type HTMLAnchorElement, type HTMLInputElement } from 'happy-dom';
 import { loadStats, statsFor } from '../src/lib/stats';
+import { initializeDirectory } from '../src/scripts/directory';
 import { loadPublishedCatalog as loadCatalog, getPublishedSlugs, packagePath, publishedRoutes, resolvePublishedResource, routePath, type RouteKind } from '../src/lib/published-routes';
 
 
@@ -133,6 +134,37 @@ describe('published editorial pages', () => {
         const repoLink = row.querySelector<HTMLAnchorElement>('[data-repo-link]');
         if (['github.com', 'www.npmjs.com', 'npmjs.com'].includes(new URL(resource.url).hostname)) expect(repoLink?.getAttribute('href')).toBe(resource.url);
       }
+    } finally { win.happyDOM.abort(); }
+  });
+
+  test.each(['en', 'zh'] as const)('%s Bento tracks only guide activation and preserves native navigation and filters', locale => {
+    const win = new Window({ url: `https://example.com/${locale === 'zh' ? 'zh/' : ''}?q=Brave&category=web-access-search` });
+    try {
+      win.document.write(readFileSync(new URL(`../dist/${locale === 'zh' ? 'zh/' : ''}index.html`, import.meta.url), 'utf8'));
+      const events: Array<{ name: string; props: Record<string, string> }> = [];
+      Object.assign(win, { plausible: (name: string, options: { props: Record<string, string> }) => events.push({ name, props: options.props }) });
+      initializeDirectory(win.document as unknown as Document, win as unknown as globalThis.Window);
+      const section = win.document.querySelector('.directory-guides')!;
+      for (const target of section.querySelectorAll('.guide-card, .guide-illustration, .guides-directory-link')) {
+        target.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
+        target.dispatchEvent(new win.MouseEvent('mouseover', { bubbles: true }));
+      }
+      expect(events).toEqual([]);
+      const links = section.querySelectorAll<HTMLAnchorElement>('.guide-card-link');
+      expect(links.length).toBeGreaterThan(0);
+      for (const [index, link] of links.entries()) {
+        const href = link.getAttribute('href')!;
+        link.dispatchEvent(new win.MouseEvent('auxclick', { bubbles: true, button: 2 }));
+        expect(events).toHaveLength(index);
+        const event = new win.MouseEvent(index === 2 ? 'auxclick' : 'click', { bubbles: true, cancelable: true, metaKey: index === 1, button: index === 2 ? 1 : 0 });
+        link.querySelector('span')!.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(false);
+        expect(link.getAttribute('href')).toBe(href);
+        expect(events).toHaveLength(index + 1);
+        expect(events[index]).toEqual({ name: 'guide_clicked', props: { guide: href.split('/').filter(Boolean).at(-1)!, locale, placement: 'home_bento' } });
+      }
+      expect(win.document.querySelector<HTMLInputElement>('#search')!.value).toBe('Brave');
+      expect(win.document.querySelector('[data-category="web-access-search"]')!.getAttribute('aria-current')).toBe('true');
     } finally { win.happyDOM.abort(); }
   });
 

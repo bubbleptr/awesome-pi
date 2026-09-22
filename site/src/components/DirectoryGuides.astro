@@ -37,7 +37,7 @@ const copy: Record<string, { title: string; description: string; illustration: '
         <span class="guide-kicker"><span aria-hidden="true"></span>{zh ? '热点专题' : 'In focus'}</span>
         <h3>{zh ? 'Jev 决策层' : 'A decision layer with Jev'}</h3>
         <p>{zh ? '让 Jev 参与工具判定、技能选择与模型路由。比较不同集成的用途、配置与边界。' : 'Tool judgments, skill selection and model routing. Compare what each Jev integration does and how to set it up.'}</p>
-        <a class="topic-link guide-card-link" href={routePath('topics', 'jev', locale)} aria-label={zh ? '查看专题：Jev' : 'Explore the guide: Jev'}>{zh ? '查看专题' : 'Explore the guide'}<span aria-hidden="true">↗</span></a>
+        <a class="topic-link guide-card-link" data-guide="jev" data-placement="home_bento" href={routePath('topics', 'jev', locale)} aria-label={zh ? '查看专题：Jev' : 'Explore the guide: Jev'}>{zh ? '查看专题' : 'Explore the guide'}<span aria-hidden="true">↗</span></a>
       </div>
       <div class="guide-art guide-art--jev"><GuideIllustration variant="jev" locale={locale} /></div>
     </article>}
@@ -49,7 +49,7 @@ const copy: Record<string, { title: string; description: string; illustration: '
         <div class="guide-card-copy">
           <h3>{title}</h3>
           <p>{card?.description ?? page.description[locale]}</p>
-          <a class="guide-link guide-card-link" href={routePath('categories', slug, locale)} aria-label={zh ? `比较方案：${title}` : `Compare options: ${title}`}>{zh ? '比较方案' : 'Compare options'}<span aria-hidden="true">↗</span></a>
+          <a class="guide-link guide-card-link" data-guide={slug} data-placement="home_bento" href={routePath('categories', slug, locale)} aria-label={zh ? `比较方案：${title}` : `Compare options: ${title}`}>{zh ? '比较方案' : 'Compare options'}<span aria-hidden="true">↗</span></a>
         </div>
         {card && <div class="guide-art guide-art--compact"><GuideIllustration variant={card.illustration} locale={locale} /></div>}
       </article>;

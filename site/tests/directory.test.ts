@@ -18,6 +18,7 @@ function setup(path = '/', events: RecordedEvent[] = []) {
       <a class="guide-link" href="/categories/web-access-search/">Web guide</a>
       <a class="package-link" href="/packages/pi-web-access/">Package guide</a>
       <a class="topic-link" href="/topics/jev/">Jev topic</a>
+      <a data-guide="jev" data-placement="home_bento" href="/topics/jev/">Bento guide</a>
       <a data-repo-link data-package="@scope/search" data-destination="github" href="https://github.com/example/search">Repository</a>
       <h2 id="results-heading">All resources</h2><span id="result-count"></span>
       <p id="empty-state" hidden>No results <button data-reset>Reset</button></p>
@@ -106,7 +107,7 @@ describe('directory interactions', () => {
     expect(events).toEqual([{ name: 'command_copied', properties: { package: '@scope/search', locale: 'en', surface: 'home' } }]);
     expect(button.disabled).toBe(false);
   });
-  test('keeps successful copies and repository clicks available while analytics loads', async () => {
+  test('keeps successful copies, repository and guide clicks available while analytics loads', async () => {
     const win = setup();
     const browser = win as unknown as globalThis.Window;
     Reflect.deleteProperty(browser, 'plausible');
@@ -115,11 +116,13 @@ describe('directory interactions', () => {
     await Promise.resolve();
     const event = new win.MouseEvent('click', { bubbles: true, cancelable: true });
     win.document.querySelector('[data-repo-link]')!.dispatchEvent(event);
+    win.document.querySelector('[data-guide]')!.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
     expect(event.defaultPrevented).toBe(false);
     expect(win.document.querySelector('[data-copy-label]')!.textContent).toBe('Copied');
     expect(browser.plausible?.q).toEqual([
       ['command_copied', { props: { package: '@scope/search', locale: 'en', surface: 'home' } }],
       ['repo_clicked', { props: { package: '@scope/search', locale: 'en', surface: 'home', destination: 'github' } }],
+      ['guide_clicked', { props: { guide: 'jev', locale: 'en', placement: 'home_bento' } }],
     ]);
   });
   test('copies the exact command and announces success only after the clipboard write completes', async () => {

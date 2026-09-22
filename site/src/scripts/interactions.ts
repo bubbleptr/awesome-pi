@@ -50,4 +50,14 @@ export function initializeInteractions(document: Document, window: Window): void
       track(window, 'repo_clicked', { package: link.dataset.package!, locale, surface, destination });
     });
   }
+
+  for (const link of root.querySelectorAll<HTMLAnchorElement>('a[data-guide][data-placement]')) {
+    const trackGuide = () => {
+      track(window, 'guide_clicked', { guide: link.dataset.guide!, locale, placement: link.dataset.placement! });
+    };
+    link.addEventListener('click', trackGuide);
+    link.addEventListener('auxclick', event => {
+      if (event.button === 1) trackGuide();
+    });
+  }
 }
