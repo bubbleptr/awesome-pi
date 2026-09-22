@@ -75,6 +75,8 @@ bun run --cwd site preview
 
 站点标识为 `piindex.dev`，公共采集源为 `https://events.piindex.dev`，私有仪表盘入口为 `https://stats.piindex.dev`。统计服务部署在独立 VPS，部署文档、凭据和访问控制由运维管理。静态站点仍由 Vercel 托管。
 
+仓库的中英文 README 顶部提供 Pi Index 网站徽章，图片源为 `site/public/pi-index-badge.svg`，同时发布到 `/pi-index-badge.svg`。README 使用仓库相对图片路径，点击分别进入中文、英文首页；推广参数统一为 `utm_source=github`、`utm_medium=referral`、`utm_campaign=readme`，`utm_content=badge-zh` / `badge-en` 区分入口。可在 Plausible 按这些 UTM 筛选访问与后续目标事件；图片加载本身不计为网站访问。此徽章是整个网站的入口，插件详情页原有的三个专属徽章保持独立。
+
 目录页 `Directory.astro` 和分类、详情、专题共用的 `EditorialPage.astro` 各渲染一次本地 `Analytics.astro`。该组件异步加载基础 `/js/script.js`，由脚本记录当前页面浏览量；不启用自动外链统计，避免与显式仓库点击事件重复计数。异步加载使统计请求延迟时筛选、复制等页面交互仍可运行。`site/src/scripts/analytics.ts` 的统一 `track(window, name, properties)` 将属性传给 Plausible 的 `props`；脚本就绪前使用其兼容队列保存事件。Plausible 基础脚本默认忽略 localhost 与 127.0.0.1 的采集，本地验证不代表生产采集生效。
 
 `command_copied` 与 `repo_clicked` 的语义保持不变：复制仅在剪贴板写入成功后计数，字段包含完整资源名 `package`、语言 `locale` 和页面来源 `surface`，仓库点击另含 `destination`（github/npm）。徽章复制、站内导航和 TypeSafe 官网入口不计插件转化。CE 自托管支持这些自定义事件和属性，不再需要升级 Vercel 套餐；复制次数仍不等于实际安装次数。

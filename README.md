@@ -6,6 +6,7 @@
 
 > 社区维护的 [Pi Coding Agent](https://pi.dev) Package 精选列表。Pi 是由 earendil-works 开发的终端 AI 编程助手，拥有丰富的 Package 生态。本列表收录的扩展、技能和主题主要由社区作者发布，收录不代表 Pi 官方发布或背书。
 
+[![浏览 Pi Index 网站](./site/public/pi-index-badge.svg)](https://piindex.dev/zh/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=badge-zh)
 [![Pi](https://img.shields.io/badge/Pi-v0.84+-blue.svg)](https://pi.dev)
 [![Packages](https://img.shields.io/badge/Packages-5500+-green.svg)](https://pi.dev/packages)
 [![License](https://img.shields.io/badge/License-CC0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)

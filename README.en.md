@@ -6,6 +6,7 @@ English | [中文](./README.md)
 
 > A community-maintained list of [Pi Coding Agent](https://pi.dev) packages. Pi is a terminal AI coding harness by earendil-works with a thriving package ecosystem. Most listed extensions, skills, and themes are published by community authors; inclusion does not imply an official Pi release or endorsement.
 
+[![Browse the Pi Index website](./site/public/pi-index-badge.svg)](https://piindex.dev/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=badge-en)
 [![Pi](https://img.shields.io/badge/Pi-v0.84+-blue.svg)](https://pi.dev)
 [![Packages](https://img.shields.io/badge/Packages-5500+-green.svg)](https://pi.dev/packages)
 [![License](https://img.shields.io/badge/License-CC0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
