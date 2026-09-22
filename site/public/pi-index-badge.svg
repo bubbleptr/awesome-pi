@@ -4,10 +4,11 @@
     <stop offset="0" stop-color="#fff" stop-opacity=".1"/>
     <stop offset="1" stop-opacity=".1"/>
   </linearGradient>
-  <clipPath id="rounded"><rect x="24" width="64" height="20" rx="3"/></clipPath>
+  <clipPath id="rounded"><rect width="88" height="20" rx="3"/></clipPath>
   <g clip-path="url(#rounded)">
-    <path fill="#555" d="M24 0h64v20H24z"/>
-    <path fill="url(#shade)" d="M24 0h64v20H24z"/>
+    <path fill="#555" d="M0 0h24v20H0z"/>
+    <path fill="#187a45" d="M24 0h64v20H24z"/>
+    <path fill="url(#shade)" d="M0 0h88v20H0z"/>
   </g>
   <svg x="2" y="0" width="20" height="20" viewBox="0 0 64 64" aria-hidden="true">
     <text x="32" y="47" text-anchor="middle" font-family="Georgia,serif" font-size="52" fill="#187a45">π</text>
