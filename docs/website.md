@@ -77,7 +77,7 @@ bun run --cwd site preview
 
 仓库的中英文 README 顶部提供 Pi Index 网站徽章，图片源为 `site/public/pi-index-badge.svg`，同时发布到 `/pi-index-badge.svg`。README 使用仓库相对图片路径，点击分别进入中文、英文首页；推广参数统一为 `utm_source=github`、`utm_medium=referral`、`utm_campaign=readme`，`utm_content=badge-zh` / `badge-en` 区分入口。可在 Plausible 按这些 UTM 筛选访问与后续目标事件；图片加载本身不计为网站访问。此徽章是整个网站的入口，插件详情页原有的三个专属徽章保持独立。
 
-所有徽章左侧统一使用与 `favicon.svg` 一致的绿色圆角 π 标识，以内嵌 SVG 显示为 16×16，左栏宽 24，整体高 20；右侧保留 Website 或插件名。SVG 的 `title` / `aria-label` 继续包含 Pi Index 品牌名。详情页声明的图片宽度须与生成的 SVG 一致，避免缩窄左栏后图片被拉伸。
+所有徽章左侧统一使用透明底的绿色 π，沿用 `favicon.svg` 的字形，去掉灰色底栏和图标方块；内嵌 SVG 为 20×20，左侧预留宽 24，整体高 20。右侧保留带圆角的绿色 Website / 插件名标签，背景和渐变仅绘制在标签区域。SVG 的 `title` / `aria-label` 继续包含 Pi Index 品牌名。详情页声明的图片宽度须与生成的 SVG 一致，避免图片被拉伸。
 
 目录页 `Directory.astro` 和分类、详情、专题共用的 `EditorialPage.astro` 各渲染一次本地 `Analytics.astro`。该组件异步加载基础 `/js/script.js`，由脚本记录当前页面浏览量；不启用自动外链统计，避免与显式仓库点击事件重复计数。异步加载使统计请求延迟时筛选、复制等页面交互仍可运行。`site/src/scripts/analytics.ts` 的统一 `track(window, name, properties)` 将属性传给 Plausible 的 `props`；脚本就绪前使用其兼容队列保存事件。Plausible 基础脚本默认忽略 localhost 与 127.0.0.1 的采集，本地验证不代表生产采集生效。
 
