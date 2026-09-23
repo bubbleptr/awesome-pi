@@ -289,6 +289,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [@narumitw/pi-usage](https://github.com/narumiruna/pi-extensions) - `/usage` 读当前账号的 Codex / Copilot / OpenRouter 额度。`pi install npm:@narumitw/pi-usage`
 - [@narumitw/pi-accounts](https://github.com/narumiruna/pi-extensions) - `/account` 切换 Codex / Anthropic / Copilot OAuth 账号。`pi install npm:@narumitw/pi-accounts`
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - 从 Claude plugin marketplace 安装 commands / skills / agents / 部分 hooks / MCP。`pi install npm:pi-claude-marketplace`
+- [antiburn](https://github.com/antiburn/antiburn) - 本地桌面应用（macOS、Windows、Linux），读取 Pi 会话并检查常见的 token 浪费原因：会话过深、subagent 使用高价模型、缓存失效，以及未使用的 MCP、skill 和工具。也支持 Claude Code、Codex、Cursor 等 agent 的会话。独立应用，不是 Pi Package。
 
 ---
 
