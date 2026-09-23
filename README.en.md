@@ -402,6 +402,7 @@ Editor integration packages for embedding Pi into IDEs.
 Fork/alternative distributions of Pi with enhanced out-of-the-box experiences.
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - A feature-rich fork (~25.8k★) with 40+ providers, 32 built-in tools, LSP/DAP, Python runtime, and browser automation. Standalone CLI — not a Pi package. Do not confuse with the unrelated npm package `oh-my-pi` (acidsugarx). `curl -fsSL https://omp.sh/install | sh`
+- [pitago](https://github.com/cavaldos/pitago) - Polished terminal UI (TUI) frontend for the pi coding agent: real-time streaming chat, sidebar session/model/token stats, command palette, themes, marketplace, image-vision support. Standalone Go/Bubble Tea CLI wrapping `pi --mode rpc` — not a Pi package.
 
 
 ## Contributing
