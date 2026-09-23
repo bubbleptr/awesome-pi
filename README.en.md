@@ -289,6 +289,7 @@ Other utility packages.
 - [@narumitw/pi-usage](https://github.com/narumiruna/pi-extensions) - `/usage` for the current Codex / Copilot / OpenRouter account limits. `pi install npm:@narumitw/pi-usage`
 - [@narumitw/pi-accounts](https://github.com/narumiruna/pi-extensions) - `/account` to switch Codex / Anthropic / Copilot OAuth accounts. `pi install npm:@narumitw/pi-accounts`
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - Install commands, skills, agents, partial hooks, and MCP from Claude plugin marketplaces. `pi install npm:pi-claude-marketplace`
+- [antiburn](https://github.com/antiburn/antiburn) - Local desktop app (macOS, Windows, Linux) that reads Pi sessions and checks them for common causes of token burn: sessions too deep, premium models in subagents, broken caching, and unused MCPs, skills, and tools. Also reads Claude Code, Codex, Cursor, and other agent sessions. Standalone app, not a Pi package.
 
 ---
 
