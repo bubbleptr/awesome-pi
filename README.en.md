@@ -289,6 +289,7 @@ Other utility packages.
 - [@narumitw/pi-usage](https://github.com/narumiruna/pi-extensions) - `/usage` for the current Codex / Copilot / OpenRouter account limits. `pi install npm:@narumitw/pi-usage`
 - [@narumitw/pi-accounts](https://github.com/narumiruna/pi-extensions) - `/account` to switch Codex / Anthropic / Copilot OAuth accounts. `pi install npm:@narumitw/pi-accounts`
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - Install commands, skills, agents, partial hooks, and MCP from Claude plugin marketplaces. `pi install npm:pi-claude-marketplace`
+- [pi-attachments (qddfxp)](https://github.com/qddfxp/pi-attachments) - Turns dropped or pasted file paths into real attachments: images inlined (resizing left to pi core), other files listed under `[Attached files]` for the model to read on demand; clipboard files, long-paste collapsing, `/attach` picker and `/attachments` queue. Your wording is rewritten only when the message is nothing but paths. `pi install npm:pi-attachments`
 
 ---
 
