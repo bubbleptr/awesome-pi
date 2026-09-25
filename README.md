@@ -289,6 +289,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [@narumitw/pi-usage](https://github.com/narumiruna/pi-extensions) - `/usage` 读当前账号的 Codex / Copilot / OpenRouter 额度。`pi install npm:@narumitw/pi-usage`
 - [@narumitw/pi-accounts](https://github.com/narumiruna/pi-extensions) - `/account` 切换 Codex / Anthropic / Copilot OAuth 账号。`pi install npm:@narumitw/pi-accounts`
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - 从 Claude plugin marketplace 安装 commands / skills / agents / 部分 hooks / MCP。`pi install npm:pi-claude-marketplace`
+- [pi-attachments (qddfxp)](https://github.com/qddfxp/pi-attachments) - 把拖入或粘贴的文件路径变成真正的附件：图片直接内联（缩放交给 Pi 内核），其他文件列进消息末尾的 `[Attached files]` 块按需读取；支持剪贴板文件、超长粘贴自动折叠、`/attach` 选择器与 `/attachments` 队列。正文只在整条消息全是路径时才改写，粘贴日志不会被抠走路径。`pi install npm:pi-attachments`
 
 ---
 
