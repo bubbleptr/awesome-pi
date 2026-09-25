@@ -288,6 +288,7 @@ Other utility packages.
 - [@narumitw/pi-accounts](https://github.com/narumiruna/pi-extensions) - `/account` to switch Codex / Anthropic / Copilot OAuth accounts. `pi install npm:@narumitw/pi-accounts`
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - Install commands, skills, agents, partial hooks, and MCP from Claude plugin marketplaces. `pi install npm:pi-claude-marketplace`
 - [antiburn](https://github.com/antiburn/antiburn) - Local desktop app (macOS, Windows, Linux) that reads Pi sessions and checks them for common causes of token burn: sessions too deep, premium models in subagents, broken caching, and unused MCPs, skills, and tools. Also reads Claude Code, Codex, Cursor, and other agent sessions. Standalone app, not a Pi package.
+- [pi-attachments (qddfxp)](https://github.com/qddfxp/pi-attachments) - Turns dropped or pasted file paths into real attachments: images inlined (resizing left to pi core), other files listed under `[Attached files]` for the model to read on demand; clipboard files, long-paste collapsing, `/attach` picker and `/attachments` queue. Your wording is rewritten only when the message is nothing but paths. `pi install npm:pi-attachments`
 
 ---
 
