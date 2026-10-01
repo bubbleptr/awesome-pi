@@ -180,6 +180,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-jev-skill-picker](https://github.com/safzanpirani/pi-jev-skill-picker) - 用 `skill_search` 与 `skill_load` 按需检索、加载 Skill，替换每轮完整技能目录。Jev 排序需要 TypeSafe Key；无 Key 或全部请求失败时提供词法候选。`pi install git:github.com/safzanpirani/pi-jev-skill-picker`
 - [pi-fast-jev-compaction](https://github.com/QuentinDanblon/pi-fast-jev-compaction) - Jev 为旧工具调用和结果评分，按请求裁剪上下文并保留会话历史。需要 TypeSafe Key；同名 npm 包属于另一作者，请使用此 Git 仓库安装。`pi install git:github.com/QuentinDanblon/pi-fast-jev-compaction`
 - 🔥 [context-mode](https://pi.dev/packages/context-mode) - MCP 插件，节省 98% 上下文窗口，支持沙箱代码执行、FTS5 知识库。`pi install npm:context-mode`
+- [pi-trim](https://github.com/zhexusun10/pi-trim) - 在内存中移除系统消息中可识别的 Pi 身份介绍与文档样板，保留工具和项目指令。使用 `/pi-trim status` 与 `/pi-trim diff` 检查变化。作者：[zhexusun10](https://github.com/zhexusun10)。`pi install npm:pi-trim`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - 总结已完成的工具调用批次，从 LLM 上下文中修剪原始输出。5 种修剪模式。`pi install npm:pi-context-prune`
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Provider 前缀缓存命中/未命中的实时图形显示。`pi install npm:pi-cache-graph`
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - 通过 lean-ctx CLI 路由命令以节省 token。`pi install npm:pi-lean-ctx`
