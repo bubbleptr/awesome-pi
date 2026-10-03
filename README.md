@@ -120,6 +120,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [@narumitw/pi-caffeinate](https://github.com/narumiruna/pi-extensions) - 跨平台防止睡眠，长提示处理时保持唤醒。`pi install npm:@narumitw/pi-caffeinate`
 - [pi-ext](https://github.com/tomsej/pi-ext) - 综合 UI 套件：leader-key 浮动面板、powerline footer、工具药丸标签、telescope 模糊查找。`pi install git:github.com/tomsej/pi-ext`
 - [@juicesharp/rpiv-btw](https://github.com/juicesharp/rpiv-mono) - juicesharp 版 btw 侧对话。`pi install npm:@juicesharp/rpiv-btw`
+- [pi-code-render](https://github.com/chengyayu/pi-code-render) - 把代码块渲染成带 `[COPY]` 一键复制按钮的主题配色卡片，点击卡片可切回原始围栏文本；复制成功后在页脚短暂提示，不污染对话。`pi install npm:pi-code-render`
 
 ---
 
