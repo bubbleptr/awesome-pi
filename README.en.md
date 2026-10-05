@@ -402,6 +402,7 @@ Editor integration packages for embedding Pi into IDEs.
 Fork/alternative distributions of Pi with enhanced out-of-the-box experiences.
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - A feature-rich fork (~25.8k★) with 40+ providers, 32 built-in tools, LSP/DAP, Python runtime, and browser automation. Standalone CLI — not a Pi package. Do not confuse with the unrelated npm package `oh-my-pi` (acidsugarx). `curl -fsSL https://omp.sh/install | sh`
+- [mu](https://github.com/qybaihe/mu) - A coding agent built on Pi with a judgment kernel: a small, fast judge (Jev, a local model, or any LLM) makes the routine calls at 38 decision points, such as which tool output enters the context, whether a flagged command was asked for, prompt-injection screening of web and MCP output, and whether "done" was verified. Adds sub-agents, a built-in browser and a desktop app. Standalone CLI, not a Pi package; Pi's own commands are unchanged. `npm install -g mu-agent`
 
 
 ## Contributing
