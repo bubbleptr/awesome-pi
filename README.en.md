@@ -85,6 +85,7 @@ Web search and content fetching packages that give Pi access to internet informa
 MCP (Model Context Protocol) adapter packages for connecting to external tool ecosystems.
 
 - 🔥 [pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) - On-demand MCP discovery and calls, lazy startup, metadata caching and optional direct tools. The author estimates ~200 tokens for the proxy definition, excluding discovery and call content. `pi install npm:pi-mcp-adapter`
+- [pi-durabletask-mcp](https://github.com/Nyarlathoteppppp/pi-durabletask-mcp) - External MCP bridge maintained by Nyarlathoteppppp for Claude/Codex delegation to Pi, with steering, same-session follow-ups and optional SQLite restart recovery. Requires configured global Pi; not a Pi extension. `npm install -g pi-durabletask-mcp`
 
 > MCP ecosystem integration: [Bright Data Web MCP](https://github.com/earendil-works/pi/discussions/76), [Scrapeless MCP](https://github.com/earendil-works/pi/discussions/74), and any MCP-compatible server.
 
