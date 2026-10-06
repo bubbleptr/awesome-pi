@@ -1,0 +1,1265 @@
+{
+  "slug": "slippery-slop",
+  "sourceId": "2099045420496486415",
+  "date": "2026-09-13",
+  "title": {
+    "zh": "Slippery slop：代码质量与控制权",
+    "en": "Slippery slop: code quality and control"
+  },
+  "source": "https://x.com/pidotdev/status/2099045420496486415",
+  "video": "https://video.twimg.com/amplify_video/2098748958965215239/vid/avc1/1920x1080/6r8Wh1GSYDZnkOyT.mp4?tag=29",
+  "poster": "/talks/slippery-slop.jpg",
+  "duration": 801.531,
+  "portrait": false,
+  "series": "Sunday Meditations",
+  "tags": [
+    "Code quality",
+    "Astra"
+  ],
+  "sourceText": "Good morning from Vienna People of Pi🌞 Sunday meditations today from\n\n@badlogicgames and @mitsuhiko \n\nAmong other things: \n- agents that generate too much code poison their own  context (slippery slop)\n- code matters wherever control matters\n- unreadable code from Astra",
+  "summary": {
+    "zh": [
+      {
+        "start": 7.8,
+        "title": "代码越多，agent 自己也越难工作",
+        "text": "两人认为，模型大量生成代码会占用有限的上下文，进一步放大质量问题。即使并非所有实现都值得逐行关注，关键基础设施、接口和类型仍需要人的控制。"
+      },
+      {
+        "start": 73,
+        "title": "可读性下降会削弱人的参与",
+        "text": "Armin 描述 Astra 生成过度压缩的代码与工具调用，让他越来越不愿意阅读。他们提出训练目标可能存在冲突，但明确表示原因尚不确定。"
+      },
+      {
+        "start": 286.4,
+        "title": "测试通过不能替代理解",
+        "text": "即使有很高的覆盖率，也不等于覆盖所有重要输入。难读的实现让人更难判断测试是否充分，测试容易变成只有心理安慰的形式。"
+      },
+      {
+        "start": 394.7,
+        "title": "不同模型能否承担不同职责",
+        "text": "两人探讨让一个模型负责工具调用、另一个负责实现的可能性。这是一种待验证的设想，并非已经得到证实的解决办法。"
+      },
+      {
+        "start": 500.3,
+        "title": "更多产出是否带来更多用户价值",
+        "text": "对话区分了 token 消耗、提交数量与真正有价值的产品改进。Mario 更希望利用 agent 在相近交付速度下提高质量，而不是无限增加功能。"
+      },
+      {
+        "start": 700.1,
+        "title": "漏洞发现与修复能力并不同步",
+        "text": "他们讨论自动化安全研究的两面性：旧软件可能因此修复更多漏洞，但攻击门槛也下降，而验证与应用补丁仍消耗人的时间。"
+      }
+    ],
+    "en": [
+      {
+        "start": 7.8,
+        "title": "More code can make the agent’s own job harder",
+        "text": "They argue that excessive generated code consumes limited context and compounds quality problems. Critical infrastructure, interfaces and types still need human control even when not every implementation deserves line-by-line attention."
+      },
+      {
+        "start": 73,
+        "title": "Poor readability pushes people away from the code",
+        "text": "Armin describes compressed Astra code and tool calls that discourage inspection. They consider possible conflicts in training objectives, while making clear that the cause is uncertain."
+      },
+      {
+        "start": 286.4,
+        "title": "Passing tests do not replace understanding",
+        "text": "High coverage does not guarantee coverage of every important input. Unreadable implementations make test adequacy harder to judge, allowing tests to become reassurance without sufficient scrutiny."
+      },
+      {
+        "start": 394.7,
+        "title": "Could different models take different roles?",
+        "text": "They explore using one model for tool calls and another for implementation. This is a possible experiment, rather than an established solution."
+      },
+      {
+        "start": 500.3,
+        "title": "More output does not necessarily mean more value",
+        "text": "The discussion separates token spending and commit counts from meaningful product improvements. Mario would prefer similar delivery speed with higher quality over an endless expansion of features."
+      },
+      {
+        "start": 700.1,
+        "title": "Finding vulnerabilities and fixing them scale differently",
+        "text": "Automated security research may produce more fixes in established software, while also lowering the barrier to attack. Verifying and applying patches still takes human effort."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 1.7,
+      "text": "But you can't be loud.",
+      "zh": "但你不能大声。"
+    },
+    {
+      "start": 1.82,
+      "end": 3.16,
+      "text": "Be quiet with the sword.",
+      "zh": "拿着剑的时候安静一点。"
+    },
+    {
+      "start": 3.86,
+      "end": 4.92,
+      "text": "Be quiet with the sword.",
+      "zh": "拿着剑的时候安静一点。"
+    },
+    {
+      "start": 7.84,
+      "end": 10.52,
+      "text": "Code is less important than it used to be, obviously.",
+      "zh": "显然，代码已经没有以前那么重要了。"
+    },
+    {
+      "start": 11.48,
+      "end": 17.68,
+      "text": "But the question is, how good can your agent deal with a shit ton of code,",
+      "zh": "但问题是，面对这么一大堆代码，你的 agent 到底能处理得多好？"
+    },
+    {
+      "start": 17.68,
+      "end": 20.54,
+      "text": "given its limitations with respect to context window?",
+      "zh": "毕竟它的上下文窗口是有限的。"
+    },
+    {
+      "start": 21.3,
+      "end": 25.92,
+      "text": "So the agent is ultimately hurting itself by generating too much code.",
+      "zh": "所以，生成太多代码，到头来是在坑它自己。"
+    },
+    {
+      "start": 26.400000000000002,
+      "end": 28.1,
+      "text": "Is the code as important as it used to be?",
+      "zh": "代码还像以前一样重要吗？"
+    },
+    {
+      "start": 28.1,
+      "end": 29.1,
+      "text": "No, definitely not.",
+      "zh": "不，肯定没那么重要了。"
+    },
+    {
+      "start": 30.4,
+      "end": 35.86,
+      "text": "But I would say that it is still important in Astra is cool and all,",
+      "zh": "但我觉得代码仍然重要。Astra 很酷，"
+    },
+    {
+      "start": 35.86,
+      "end": 38.04,
+      "text": "just like Fable, but there's still slot machines.",
+      "zh": "Fable 也是，但它们仍然像老虎机。"
+    },
+    {
+      "start": 38.36,
+      "end": 43,
+      "text": "And I would say there is a lot of code where you don't need to know what it does and how it works.",
+      "zh": "确实有很多代码，你不需要知道它具体做什么、怎么工作。"
+    },
+    {
+      "start": 43.34,
+      "end": 48.7,
+      "text": "But there's also a lot of very important infrastructure code where you still want to know what it does.",
+      "zh": "但也有很多重要的基础设施代码，你还是得知道它在做什么。"
+    },
+    {
+      "start": 50.34,
+      "end": 52.980000000000004,
+      "text": "I think ultimately it comes down to control.",
+      "zh": "归根结底，这是控制权的问题。"
+    },
+    {
+      "start": 53.58,
+      "end": 56.7,
+      "text": "I personally like controlling interfaces and types.",
+      "zh": "我个人喜欢把接口和类型掌握在自己手里。"
+    },
+    {
+      "start": 56.7,
+      "end": 62.300000000000004,
+      "text": "And as long as I have control of that, the LLM is kind of limited in how much damage it can do.",
+      "zh": "只要这些还在我的控制之下，LLM 能造成的破坏就比较有限。"
+    },
+    {
+      "start": 62.56,
+      "end": 69.14,
+      "text": "Yes, the models can shit out immense amounts of code now, but by doing so, they're hurting themselves because ultimately they still have a limited context window.",
+      "zh": "没错，模型现在能疯狂吐出大量代码，但这也在坑自己，因为它们的上下文窗口终究有限。"
+    },
+    {
+      "start": 69.14,
+      "end": 73.02,
+      "text": "And if it doesn't fit, you get more slop.",
+      "zh": "一旦装不下，就会冒出更多垃圾代码。"
+    },
+    {
+      "start": 73.02,
+      "end": 78.9,
+      "text": "What I found interesting with the Astra release is that I,",
+      "zh": "Astra 发布后，我发现一件很有意思的事："
+    },
+    {
+      "start": 78.9,
+      "end": 85.06,
+      "text": "for the first time, felt like less and less desire to actually look at the code that it produces because it's so hard to see.",
+      "zh": "我第一次越来越不想看它生成的代码，因为实在太难看了。"
+    },
+    {
+      "start": 85.06,
+      "end": 87.58,
+      "text": "And not, I mean, it's hard to look at.",
+      "zh": "我是说，看着就很费劲。"
+    },
+    {
+      "start": 87.72,
+      "end": 92.02,
+      "text": "It is incredibly compressed in situations in where it shouldn't be,",
+      "zh": "它会在不该压缩的地方，把代码压得特别紧，"
+    },
+    {
+      "start": 92.02,
+      "end": 96.48,
+      "text": "even when it actually uses code generation for writing code.",
+      "zh": "甚至在正经生成代码时也是这样。"
+    },
+    {
+      "start": 96.68,
+      "end": 99.86,
+      "text": "But it's particularly unreadable when it uses code to call tools.",
+      "zh": "而用代码调用工具时，尤其难读。"
+    },
+    {
+      "start": 100.22,
+      "end": 107.04,
+      "text": "So like actually following along what it's doing is also getting harder and harder just by how it writes code.",
+      "zh": "光是它写代码的方式，就让人越来越难跟上它在做什么。"
+    },
+    {
+      "start": 107.04,
+      "end": 112.78,
+      "text": "And I think like to Mario's point, like it actually does get, like during the training process,",
+      "zh": "就像 Mario 说的，在训练过程中，"
+    },
+    {
+      "start": 112.78,
+      "end": 114.64,
+      "text": "it probably gets rewarded for token efficiency.",
+      "zh": "它可能会因为节省 token 而获得奖励。"
+    },
+    {
+      "start": 115.36000000000001,
+      "end": 119.94000000000001,
+      "text": "But as a result of this token efficiency, it is hard to read.",
+      "zh": "但追求这种 token 效率的结果，就是难以阅读。"
+    },
+    {
+      "start": 120.42,
+      "end": 126.88,
+      "text": "And there's a tension, I think, sort of forming where I think even if you get the",
+      "zh": "我觉得这里出现了一种矛盾：即使你把"
+    },
+    {
+      "start": 126.88,
+      "end": 131.0,
+      "text": "interfaces right and everything else, like if I look at an Astra produced code,",
+      "zh": "接口之类的都设计好了，看到 Astra 生成的代码时，"
+    },
+    {
+      "start": 131.0,
+      "end": 133,
+      "text": "I feel an urge to do code formatting.",
+      "zh": "我还是忍不住想给它格式化。"
+    },
+    {
+      "start": 133,
+      "end": 136.36,
+      "text": "Which I didn't feel for a very, very long time.",
+      "zh": "我已经很久很久没有这种感觉了。"
+    },
+    {
+      "start": 136.5,
+      "end": 142.16,
+      "text": "I basically haven't used code formats at all because I felt like the LLM is going to follow along the style of the code that's already there.",
+      "zh": "我基本没用过代码格式化工具，因为我觉得 LLM 会跟着现有代码的风格来写。"
+    },
+    {
+      "start": 142.28,
+      "end": 142.9,
+      "text": "And now it doesn't.",
+      "zh": "但现在它不跟了。"
+    },
+    {
+      "start": 143.42,
+      "end": 144.64,
+      "text": "Yeah, and it is kind of odd.",
+      "zh": "是啊，挺奇怪的。"
+    },
+    {
+      "start": 144.86,
+      "end": 145.78,
+      "text": "It is really odd.",
+      "zh": "真的很奇怪。"
+    },
+    {
+      "start": 145.86,
+      "end": 146.84,
+      "text": "And I don't know where it's going.",
+      "zh": "我也不知道接下来会怎样。"
+    },
+    {
+      "start": 147.28,
+      "end": 152.12,
+      "text": "But I'm a little bit feeling like this might become more of a thing now.",
+      "zh": "但我隐约觉得，这种情况可能会越来越常见。"
+    },
+    {
+      "start": 152.26,
+      "end": 153.52,
+      "text": "And I don't know how I feel about this.",
+      "zh": "我不知道该怎么看待它。"
+    },
+    {
+      "start": 155.36,
+      "end": 158.02,
+      "text": "You said something earlier, which I thought was interesting.",
+      "zh": "你之前说了一点，我觉得很有意思。"
+    },
+    {
+      "start": 158.02,
+      "end": 161.8,
+      "text": "As the models are trained to not only be coding agents,",
+      "zh": "模型不只被训练成编程 agent，"
+    },
+    {
+      "start": 161.8,
+      "end": 168.14,
+      "text": "but also like personal open claw-like assistants, it's that's a reason that the training might",
+      "zh": "也被训练成像 OpenClaw 那样的个人助手，所以训练里可能"
+    },
+    {
+      "start": 168.14,
+      "end": 174.28,
+      "text": "contain traces or things like just create whatever the",
+      "zh": "会有这样的轨迹或要求：随便写什么"
+    },
+    {
+      "start": 174.28,
+      "end": 178.38,
+      "text": "fucking code you want to create, as long as it does the thing the user asked for.",
+      "zh": "破代码都行，只要完成用户要的事情。"
+    },
+    {
+      "start": 178.38,
+      "end": 181.7,
+      "text": "And the user is a non-technical user and the user doesn't write production systems,",
+      "zh": "而那个用户不是技术人员，也不写生产系统，"
+    },
+    {
+      "start": 181.7,
+      "end": 188.07999999999998,
+      "text": "but just tiny little things like build me a daily news brief website or something.",
+      "zh": "只是做些小东西，比如“帮我做一个每日新闻简报网站”。"
+    },
+    {
+      "start": 188.29999999999998,
+      "end": 189.34,
+      "text": "Or Minecraft clone or anything.",
+      "zh": "或者仿个 Minecraft，什么都行。"
+    },
+    {
+      "start": 189.7,
+      "end": 195.64,
+      "text": "So if the models are now being trained to produce slop code just to make their users happy,",
+      "zh": "所以，如果模型现在被训练成只要让用户满意，就可以生成粗糙代码，"
+    },
+    {
+      "start": 195.64,
+      "end": 200.76,
+      "text": "which is totally fine, then we'll have a detrimental effect on using these models for production software.",
+      "zh": "这本身也没问题，但会损害它们用于生产软件开发的效果。"
+    },
+    {
+      "start": 200.76,
+      "end": 205.32,
+      "text": "So what I found quite interesting was,",
+      "zh": "我觉得很有意思的一点是，"
+    },
+    {
+      "start": 205.32,
+      "end": 211.12,
+      "text": "I noticed as you sort of look into the code that it produces,",
+      "zh": "仔细看它生成的代码，"
+    },
+    {
+      "start": 211.12,
+      "end": 214.78,
+      "text": "like in tests, in shaders, in embedded JavaScript,",
+      "zh": "比如测试、着色器、嵌入的 JavaScript，"
+    },
+    {
+      "start": 214.78,
+      "end": 217.94,
+      "text": "you can clearly notice that it's way worse than in the regular code that it writes.",
+      "zh": "你能明显看出这些比它平时写的普通代码差得多。"
+    },
+    {
+      "start": 218.18,
+      "end": 221.45999999999998,
+      "text": "So I wrote in a blog post, I think it's like one step removed from regular code.",
+      "zh": "我在博客里写过：好像只要偏离常规代码一层，"
+    },
+    {
+      "start": 221.56,
+      "end": 225.6,
+      "text": "It sort of starts falling into this pattern of really highly compressed things.",
+      "zh": "它就开始陷入那种把东西压得特别紧的模式。"
+    },
+    {
+      "start": 225.6,
+      "end": 227.85999999999999,
+      "text": "But then I was like, okay, maybe this just happens to me.",
+      "zh": "但我又想，也许只有我遇到这种情况。"
+    },
+    {
+      "start": 227.88,
+      "end": 233.52,
+      "text": "So I asked a bunch of people on Twitter, like, hey, if you build like an Astro game over the weekend and it works for you,",
+      "zh": "于是我在 Twitter 上问大家：如果你周末用 Astra 做了个游戏，而且觉得效果不错，"
+    },
+    {
+      "start": 233.52,
+      "end": 234.72,
+      "text": "just show me the code.",
+      "zh": "就把代码给我看看。"
+    },
+    {
+      "start": 234.88,
+      "end": 238.1,
+      "text": "And there were two people who replied like, oh yeah, it wasn't so bad.",
+      "zh": "有两个人回复说：“还好吧，没那么差。”"
+    },
+    {
+      "start": 238.18,
+      "end": 240.54,
+      "text": "And I just opened the code and it was really, really bad.",
+      "zh": "结果我打开一看，代码真的非常糟。"
+    },
+    {
+      "start": 241.56,
+      "end": 245.44,
+      "text": "And then it was, I think both of them replied, yeah, it's probably not nice.",
+      "zh": "后来他们好像也都说：“嗯，可能确实不太好看。”"
+    },
+    {
+      "start": 246,
+      "end": 251.12,
+      "text": "The thing is, like, we don't really expect it to actually write code this bad, I think.",
+      "zh": "问题在于，我觉得我们原本没想到它真会把代码写得这么差。"
+    },
+    {
+      "start": 251.12,
+      "end": 256.94,
+      "text": "Like, I got fully trusted that the models are at least certain level of,",
+      "zh": "我原本完全相信，模型至少能达到某种"
+    },
+    {
+      "start": 256.94,
+      "end": 258.66,
+      "text": "like, passing bar.",
+      "zh": "及格水平。"
+    },
+    {
+      "start": 258.9,
+      "end": 261.3,
+      "text": "And it feels a little bit like it violated this now.",
+      "zh": "可现在感觉它连这条底线都突破了。"
+    },
+    {
+      "start": 261.42,
+      "end": 261.82,
+      "text": "I don't know.",
+      "zh": "我也说不准。"
+    },
+    {
+      "start": 262.02,
+      "end": 263.7,
+      "text": "It definitely feels like a shift.",
+      "zh": "但确实感觉发生了变化。"
+    },
+    {
+      "start": 265.02,
+      "end": 270.94,
+      "text": "Yeah, just yesterday I did some work on an old C, C++ code base in Spine.",
+      "zh": "对，就在昨天，我在 Spine 的一个老 C、C++ 代码库里做修改。"
+    },
+    {
+      "start": 270.94,
+      "end": 275.42,
+      "text": "I switched back to 5.6 Sol",
+      "zh": "我又换回了 5.6 Sol，"
+    },
+    {
+      "start": 275.42,
+      "end": 280.21999999999997,
+      "text": "because Astro just couldn't write any sensible kind of code.",
+      "zh": "因为 Astra 就是写不出什么像样的代码。"
+    },
+    {
+      "start": 280.42,
+      "end": 281.68,
+      "text": "It's very weird.",
+      "zh": "很奇怪。"
+    },
+    {
+      "start": 281.9,
+      "end": 282.86,
+      "text": "It's very, very weird.",
+      "zh": "真的非常奇怪。"
+    },
+    {
+      "start": 283,
+      "end": 284.96,
+      "text": "I blame personality fans.",
+      "zh": "我怪那些追捧模型个性的人。"
+    },
+    {
+      "start": 286.4,
+      "end": 293.04,
+      "text": "One thought that I had was that if you have the idea,",
+      "zh": "我想到一点：假如你认为，"
+    },
+    {
+      "start": 293.04,
+      "end": 297.62,
+      "text": "at least in theory, that you don't have to at all consider the code because,",
+      "zh": "至少理论上，根本不用关心代码本身，"
+    },
+    {
+      "start": 297.62,
+      "end": 300.5,
+      "text": "like, the test coverage is going to guarantee you that the code works perfectly.",
+      "zh": "因为测试覆盖率能保证代码完美运行。"
+    },
+    {
+      "start": 300.94,
+      "end": 305.44,
+      "text": "Then, even if you have, like, 100% branch coverage,",
+      "zh": "那么，就算分支覆盖率达到了 100%，"
+    },
+    {
+      "start": 305.44,
+      "end": 310.3,
+      "text": "which I don't think is likely, do your reader cover all the possible inputs to that function?",
+      "zh": "虽然我觉得这不太可能，你真的覆盖了这个函数所有可能的输入吗？"
+    },
+    {
+      "start": 310.3,
+      "end": 316.7,
+      "text": "And one of the things that I noticed, like, with this is that because it",
+      "zh": "我注意到的一点是，它把代码"
+    },
+    {
+      "start": 316.7,
+      "end": 320.24,
+      "text": "compresses the code so much, I,",
+      "zh": "压缩得太厉害了，"
+    },
+    {
+      "start": 320.24,
+      "end": 325.82,
+      "text": "when I just look at the diff that it does, I don't have any confidence that,",
+      "zh": "光看它生成的 diff，我根本没有把握，"
+    },
+    {
+      "start": 325.82,
+      "end": 330.8,
+      "text": "like, I could even without asking the LLM tell you if the tests are sufficient.",
+      "zh": "能在不问 LLM 的情况下判断测试到底够不够。"
+    },
+    {
+      "start": 330.8,
+      "end": 334.32,
+      "text": "I'm really struggling with this whole thing because,",
+      "zh": "这整件事让我很苦恼。"
+    },
+    {
+      "start": 334.32,
+      "end": 338.02,
+      "text": "like, if the code is too unreadable, then, and I'm not saying,",
+      "zh": "如果代码太难读——我不是说"
+    },
+    {
+      "start": 338.02,
+      "end": 343.86,
+      "text": "like, it's completely unreadable, but, like, it becomes so that you're one step further away from it.",
+      "zh": "完全读不懂，而是你离代码又远了一层——"
+    },
+    {
+      "start": 343.86,
+      "end": 349.32,
+      "text": "And then you rely more on, like, okay, but there are tests and the tests pass and I can still navigate in my slop game.",
+      "zh": "你就会更依赖这种想法：“有测试，测试都过了，我那个粗糙游戏也还能玩。”"
+    },
+    {
+      "start": 349.46000000000004,
+      "end": 351.76,
+      "text": "And so, surely the whole thing must be working.",
+      "zh": "所以整套东西肯定没问题吧。"
+    },
+    {
+      "start": 352.56,
+      "end": 359.32,
+      "text": "But it's, like, it becomes so much harder to understand if you feel repulsed looking at the code.",
+      "zh": "可如果代码让你看着就抗拒，理解它就会困难得多。"
+    },
+    {
+      "start": 360.1,
+      "end": 364.7,
+      "text": "So, at that point, the tests also just become performative, right?",
+      "zh": "到这一步，测试也变成了做样子，对吧？"
+    },
+    {
+      "start": 364.7,
+      "end": 367.84,
+      "text": "It just gives you a good feeling of there are tests.",
+      "zh": "它只是让你觉得：“有测试，挺好。”"
+    },
+    {
+      "start": 368.28,
+      "end": 373.09999999999997,
+      "text": "I don't fucking know what they do and if they actually cover what we need to cover in the tests, but they exist.",
+      "zh": "我压根不知道它们在测什么，有没有覆盖该测的东西，反正它们存在。"
+    },
+    {
+      "start": 373.59999999999997,
+      "end": 374.65999999999997,
+      "text": "And that's why I feel good.",
+      "zh": "所以我就放心了。"
+    },
+    {
+      "start": 376.02,
+      "end": 378.56,
+      "text": "It's very emotion-based, all of it.",
+      "zh": "全都是在靠感觉。"
+    },
+    {
+      "start": 379.62,
+      "end": 386.71999999999997,
+      "text": "But if they produce code that is unreadable, then you have even less incentive of checking whether the code they produced makes any kind of fucking sense.",
+      "zh": "如果生成的代码让人读不下去，你就更不想检查它到底有没有道理了。"
+    },
+    {
+      "start": 386.96,
+      "end": 391.98,
+      "text": "So, it feels like we are getting pushed to being removed from the code.",
+      "zh": "感觉我们正在被一步步推离代码。"
+    },
+    {
+      "start": 391.98,
+      "end": 392.12,
+      "text": "Okay.",
+      "zh": "好。"
+    },
+    {
+      "start": 394.7,
+      "end": 397.94,
+      "text": "What if you use something like Astra, which is clearly,",
+      "zh": "如果用 Astra 这样的模型，它显然"
+    },
+    {
+      "start": 397.94,
+      "end": 401.32,
+      "text": "like, trained to succeed,",
+      "zh": "就是被训练来把事做成的，"
+    },
+    {
+      "start": 401.32,
+      "end": 405.78,
+      "text": "but you use it only for the tool calls.",
+      "zh": "但你只让它负责调用工具呢？"
+    },
+    {
+      "start": 405.9,
+      "end": 407.15999999999997,
+      "text": "Like, you don't use it for the writing.",
+      "zh": "不让它负责写代码。"
+    },
+    {
+      "start": 407.26,
+      "end": 410.44,
+      "text": "So, like, whenever it tries to write some code, you're like, oh, you stop.",
+      "zh": "每当它要写代码，你就说：“停下。”"
+    },
+    {
+      "start": 410.84,
+      "end": 415.59999999999997,
+      "text": "Some agent, I don't know, something else you implement now.",
+      "zh": "换个 agent，或者别的什么东西来实现。"
+    },
+    {
+      "start": 417.08,
+      "end": 420.7,
+      "text": "Because I really feel like there's a tension in the training process.",
+      "zh": "因为我真的觉得训练过程里存在冲突。"
+    },
+    {
+      "start": 420.7,
+      "end": 425.62,
+      "text": "They're like, either this is really good and we should like this because,",
+      "zh": "要么，这种做法确实很好，我们就应该接受，"
+    },
+    {
+      "start": 425.62,
+      "end": 430.12,
+      "text": "I don't know, software engineering is solved and it's just a bug fix that we have to deal with now.",
+      "zh": "比如软件工程已经解决了，眼下只剩修修补补。"
+    },
+    {
+      "start": 430.52,
+      "end": 431.78,
+      "text": "And so, we don't look at the code anymore.",
+      "zh": "那我们就不再看代码了。"
+    },
+    {
+      "start": 431.9,
+      "end": 432.92,
+      "text": "So, it doesn't matter how it looks.",
+      "zh": "代码长什么样也就不重要。"
+    },
+    {
+      "start": 433.06,
+      "end": 435.03999999999996,
+      "text": "And it's, like, really purely optimized for the LLM.",
+      "zh": "完全针对 LLM 优化就好。"
+    },
+    {
+      "start": 435.04,
+      "end": 440.82,
+      "text": "Or, these models are actually only behaving this way because they're being trained to do other things,",
+      "zh": "要么，模型之所以这样，只是因为它们被训练去做其他事情，"
+    },
+    {
+      "start": 440.82,
+      "end": 442.70000000000005,
+      "text": "particularly really good tool calling using code.",
+      "zh": "尤其是很擅长用代码调用工具。"
+    },
+    {
+      "start": 443.46000000000004,
+      "end": 449.84,
+      "text": "And so, there's a tension in the training process and you should actually use a different model that's being trained to be an",
+      "zh": "那么训练目标就存在冲突，你应该换个专门被训练成"
+    },
+    {
+      "start": 449.84,
+      "end": 451.12,
+      "text": "expert software engineer.",
+      "zh": "优秀软件工程师的模型。"
+    },
+    {
+      "start": 451.12,
+      "end": 454.68,
+      "text": "And I really don't know what the answer is here because,",
+      "zh": "我真的不知道答案是什么。"
+    },
+    {
+      "start": 454.68,
+      "end": 459,
+      "text": "like, it's not like you go to OpenAI page and it's like, yeah, do that.",
+      "zh": "毕竟你打开 OpenAI 的网页，也不会看到它明确告诉你该这么做。"
+    },
+    {
+      "start": 460.34000000000003,
+      "end": 464.44,
+      "text": "No, but maybe that's like a model capacity issue now.",
+      "zh": "不过，也许现在碰到的是模型容量的问题。"
+    },
+    {
+      "start": 464.44,
+      "end": 470.68,
+      "text": "Like, as they try to accommodate more and more use cases or vertical slices of",
+      "zh": "随着模型试图覆盖越来越多用例，或越来越多"
+    },
+    {
+      "start": 470.68,
+      "end": 477.34,
+      "text": "specific industries, obviously, the model needs to know about how to operate within these environments.",
+      "zh": "垂直行业，它显然就得学会如何在这些环境里工作。"
+    },
+    {
+      "start": 477.34,
+      "end": 483.76,
+      "text": "But that will ultimately mean that there are less parameters available to the things they used to be good",
+      "zh": "那最终就意味着，留给它原本擅长的事情的参数变少了，"
+    },
+    {
+      "start": 483.76,
+      "end": 486,
+      "text": "for, like software engineering.",
+      "zh": "比如软件工程。"
+    },
+    {
+      "start": 486.29999999999995,
+      "end": 487.78,
+      "text": "So, maybe we are hitting that now.",
+      "zh": "也许我们现在就撞上这个问题了。"
+    },
+    {
+      "start": 488.15999999999997,
+      "end": 492.88,
+      "text": "Maybe it's the, you're trying to accommodate as many industries as possible.",
+      "zh": "也许是因为想尽可能覆盖所有行业，"
+    },
+    {
+      "start": 493.15999999999997,
+      "end": 499.29999999999995,
+      "text": "So, your industry, specifically the software industry, is now suffering because there's not enough parameters left for your specific industry.",
+      "zh": "结果你所在的行业，尤其是软件行业，分到的参数不够，效果就受损了。"
+    },
+    {
+      "start": 500.05999999999995,
+      "end": 500.34,
+      "text": "I don't know.",
+      "zh": "我也不知道。"
+    },
+    {
+      "start": 500.34,
+      "end": 506.16,
+      "text": "The token spent on engineering went",
+      "zh": "工程方面的 token 消耗，"
+    },
+    {
+      "start": 506.16,
+      "end": 507.7,
+      "text": "up in a certain way.",
+      "zh": "一直在增长。"
+    },
+    {
+      "start": 507.73999999999995,
+      "end": 510.67999999999995,
+      "text": "So, you could see, like, month by month what that was.",
+      "zh": "你可以逐月看到这个变化。"
+    },
+    {
+      "start": 510.97999999999996,
+      "end": 513.76,
+      "text": "But none of the top line numbers moved up at all.",
+      "zh": "但那些顶线数字完全没有上涨，"
+    },
+    {
+      "start": 515.22,
+      "end": 517.6999999999999,
+      "text": "In a way, that was correlatable to this.",
+      "zh": "至少看不出跟它有什么关联。"
+    },
+    {
+      "start": 518.06,
+      "end": 519.68,
+      "text": "But obviously, the number of commits went up.",
+      "zh": "当然，提交次数增加了。"
+    },
+    {
+      "start": 519.8199999999999,
+      "end": 521.76,
+      "text": "The number of, like, other things that you could measure went up.",
+      "zh": "其他一些能统计的数量也增加了。"
+    },
+    {
+      "start": 522.4599999999999,
+      "end": 529.02,
+      "text": "And so, it went from, like, an insignificant part of, like, the expenditure of the company to a really meaningful part of the expenditure of the company.",
+      "zh": "这笔支出从公司开销里微不足道的一项，变成了相当可观的一项。"
+    },
+    {
+      "start": 529.02,
+      "end": 534.34,
+      "text": "And it might just be that we haven't figured out yet how to make that work.",
+      "zh": "也许只是我们还没弄明白，怎么真正把它用好。"
+    },
+    {
+      "start": 535.14,
+      "end": 541.48,
+      "text": "Or, like, what is being produced actually isn't that much",
+      "zh": "也可能只是整体来看，产出的东西并没有"
+    },
+    {
+      "start": 541.48,
+      "end": 543.4399999999999,
+      "text": "more meaningful overall.",
+      "zh": "多出那么多实际价值。"
+    },
+    {
+      "start": 544.26,
+      "end": 550.54,
+      "text": "And so, because now everybody, like, as an example, like, the baseline expectation that we",
+      "zh": "比如，现在大家对一款软件的基本期待，"
+    },
+    {
+      "start": 550.54,
+      "end": 553.0799999999999,
+      "text": "have now for a piece of software is that it does more.",
+      "zh": "已经变成它必须做更多事情。"
+    },
+    {
+      "start": 554.06,
+      "end": 557.62,
+      "text": "So, you need now to compete with everybody else who's in your space as well.",
+      "zh": "你还得跟同一领域里的其他所有人竞争。"
+    },
+    {
+      "start": 557.62,
+      "end": 560.32,
+      "text": "So, like, of course, your thing now should have a chatbot in it.",
+      "zh": "所以，你的产品当然也得有聊天机器人。"
+    },
+    {
+      "start": 560.7,
+      "end": 566.24,
+      "text": "Of course, there should be, I don't know, like, the UI should behave in a certain way that was previously not necessary.",
+      "zh": "界面当然也得做到一些以前根本不需要的东西。"
+    },
+    {
+      "start": 566.92,
+      "end": 571.48,
+      "text": "Like, more people now build mobile apps, I think, than they did before just because it became easier.",
+      "zh": "我觉得现在做移动应用的人也比以前多了，因为门槛降低了。"
+    },
+    {
+      "start": 571.98,
+      "end": 577.4,
+      "text": "So, maybe this is sort of, like, a really weird form of, like, we are required to build more.",
+      "zh": "也许这是一种很奇怪的局面：我们被要求做得更多，"
+    },
+    {
+      "start": 577.54,
+      "end": 580.26,
+      "text": "But, like, the amount of consumers is still the same.",
+      "zh": "但消费者的数量还是那么多。"
+    },
+    {
+      "start": 580.5600000000001,
+      "end": 584.04,
+      "text": "So, it just has become more expensive to the software engineering.",
+      "zh": "结果只是软件工程变得更贵了。"
+    },
+    {
+      "start": 584.1800000000001,
+      "end": 585.12,
+      "text": "I don't know if that's the answer.",
+      "zh": "我不知道这是不是答案。"
+    },
+    {
+      "start": 585.12,
+      "end": 591.62,
+      "text": "I mean, I guess it's hard to measure at the moment just because",
+      "zh": "我觉得现在也很难衡量，毕竟"
+    },
+    {
+      "start": 591.62,
+      "end": 597.42,
+      "text": "of the economic turmoil overall with oil being up and so on and so forth.",
+      "zh": "整体经济不太平，油价上涨，还有各种其他因素。"
+    },
+    {
+      "start": 597.5600000000001,
+      "end": 601.02,
+      "text": "So, just taking GDP is probably a bad, bad idea.",
+      "zh": "所以，单看 GDP 大概很不合适。"
+    },
+    {
+      "start": 601.28,
+      "end": 607.96,
+      "text": "But if you look at individual companies, I don't see them producing more meaningful features for the users if you're looking at software companies.",
+      "zh": "但看具体公司，尤其是软件公司，我没看到它们为用户做出更多真正有意义的功能。"
+    },
+    {
+      "start": 608.5,
+      "end": 609.58,
+      "text": "I just don't see it.",
+      "zh": "我真的没看到。"
+    },
+    {
+      "start": 609.58,
+      "end": 617.14,
+      "text": "Like, can you name a single software or SaaS product that has meaningfully changed in the past 12 months?",
+      "zh": "你能说出哪款软件或 SaaS 产品，在过去十二个月里发生了实质变化吗？"
+    },
+    {
+      "start": 617.62,
+      "end": 619.7,
+      "text": "I mean, I think in the AI space, you see that a little bit.",
+      "zh": "我觉得在 AI 领域，多少还是能看到一点。"
+    },
+    {
+      "start": 620.4000000000001,
+      "end": 623.82,
+      "text": "Yeah, but then the question is, who is using all of that stuff from the AI space?",
+      "zh": "对，但问题是，AI 领域做出来的这些东西，到底谁在用？"
+    },
+    {
+      "start": 624.38,
+      "end": 624.6,
+      "text": "Yeah.",
+      "zh": "是啊。"
+    },
+    {
+      "start": 624.6,
+      "end": 629.24,
+      "text": "I found, like, iOS 27 to be an interesting proof point here because,",
+      "zh": "我觉得 iOS 27 就是个挺有意思的例子，"
+    },
+    {
+      "start": 629.24,
+      "end": 635.12,
+      "text": "like, clearly there should be more people in Apple using AI tools.",
+      "zh": "因为苹果内部使用 AI 工具的人显然应该更多了。"
+    },
+    {
+      "start": 635.36,
+      "end": 641.12,
+      "text": "Like, I heard from people at Apple that there is, like, plenty amount of, like, AI supports of engineering going on.",
+      "zh": "我听苹果的人说，他们确实在大量使用 AI 辅助开发。"
+    },
+    {
+      "start": 641.12,
+      "end": 646.54,
+      "text": "But, like, from iOS 26 to 27, I felt like it was the most",
+      "zh": "但从 iOS 26 到 27，我感觉这是最"
+    },
+    {
+      "start": 646.54,
+      "end": 649.42,
+      "text": "boring iOS release.",
+      "zh": "无聊的一次 iOS 更新。"
+    },
+    {
+      "start": 650.76,
+      "end": 654.18,
+      "text": "Like, if anything, it's sort of the push against this in a way.",
+      "zh": "某种程度上，它反倒像是在反驳这种说法。"
+    },
+    {
+      "start": 655.08,
+      "end": 657.22,
+      "text": "I mean, I don't think that's bad, actually.",
+      "zh": "其实我不觉得这是坏事。"
+    },
+    {
+      "start": 657.44,
+      "end": 663.62,
+      "text": "I don't want a Cambrian explosion of new features and the home of Simpsons car, right?",
+      "zh": "我不想看到功能像寒武纪大爆发一样疯长，最后做出荷马·辛普森那辆车。"
+    },
+    {
+      "start": 663.62,
+      "end": 670.04,
+      "text": "But then I must wonder, does the additional resources that you have through agentic coding just ensure that",
+      "zh": "但这样我就得问：agent 编程带来的额外资源，是否至少能确保"
+    },
+    {
+      "start": 670.04,
+      "end": 671.7,
+      "text": "whatever you push out has higher quality?",
+      "zh": "交付出来的东西质量更高？"
+    },
+    {
+      "start": 672.74,
+      "end": 674.16,
+      "text": "I would like to think so.",
+      "zh": "我希望如此。"
+    },
+    {
+      "start": 674.38,
+      "end": 677.66,
+      "text": "I personally would like to use agents in a way where I can say,",
+      "zh": "我个人希望这样使用 agent："
+    },
+    {
+      "start": 677.66,
+      "end": 682.62,
+      "text": "okay, my velocity is kind of the same, but everything I release is actually of higher quality,",
+      "zh": "交付速度大致不变，但发布的每样东西质量都更高，"
+    },
+    {
+      "start": 682.62,
+      "end": 685.34,
+      "text": "even if the quantity stays kind of the same.",
+      "zh": "即便数量基本一样。"
+    },
+    {
+      "start": 685.72,
+      "end": 689.66,
+      "text": "That would be the goal for me when using agentic engineering tools.",
+      "zh": "这才是我使用 agent 工程工具想达到的目标。"
+    },
+    {
+      "start": 689.66,
+      "end": 695.84,
+      "text": "But I'm not sure if you're seeing that either, if you look at companies with their 999s going into the",
+      "zh": "但我也不知道有没有改善。看看这些公司的可用性指标，原来的几个九……"
+    },
+    {
+      "start": 695.84,
+      "end": 698.6999999999999,
+      "text": "9100 territory.",
+      "zh": "［此处可用性数字转写不清，待回听］"
+    },
+    {
+      "start": 700.12,
+      "end": 703.38,
+      "text": "I think where you see it a little bit in terms of,",
+      "zh": "我觉得在质量方面，可能有一点体现，"
+    },
+    {
+      "start": 703.38,
+      "end": 709.84,
+      "text": "like, quality, presumably, like, depending on how you look at this, is that software should become more secure because we are having",
+      "zh": "当然也取决于你怎么看：软件应该更安全了，因为我们不得不"
+    },
+    {
+      "start": 709.84,
+      "end": 711.54,
+      "text": "to work on all of the security reports.",
+      "zh": "处理所有这些安全报告。"
+    },
+    {
+      "start": 712.38,
+      "end": 712.4599999999999,
+      "text": "Right?",
+      "zh": "对吧？"
+    },
+    {
+      "start": 712.56,
+      "end": 714,
+      "text": "And I think, like...",
+      "zh": "而且我觉得……"
+    },
+    {
+      "start": 714,
+      "end": 717.78,
+      "text": "Well, that's not happening, I can tell you from first-hand experience.",
+      "zh": "但并没有。我可以用亲身经历告诉你。"
+    },
+    {
+      "start": 717.78,
+      "end": 720.22,
+      "text": "It's definitely not more secure.",
+      "zh": "它绝对没有更安全。"
+    },
+    {
+      "start": 721.66,
+      "end": 726.26,
+      "text": "But it's also riskier to be on the internet now with software.",
+      "zh": "但现在把软件放到互联网上，风险确实也更高了。"
+    },
+    {
+      "start": 727.4599999999999,
+      "end": 731.72,
+      "text": "One of our colleagues, like, he's a little bit more now worried about,",
+      "zh": "我们有个同事，现在更担心"
+    },
+    {
+      "start": 731.72,
+      "end": 737.68,
+      "text": "like, smart contracts and crypto wallets just because they have become such attractive targets for",
+      "zh": "智能合约和加密钱包了，因为它们已经成了"
+    },
+    {
+      "start": 737.68,
+      "end": 741.06,
+      "text": "automated security research.",
+      "zh": "自动化安全研究特别有吸引力的目标。"
+    },
+    {
+      "start": 741.06,
+      "end": 745.1,
+      "text": "But,",
+      "zh": "不过，"
+    },
+    {
+      "start": 745.1,
+      "end": 750.4,
+      "text": "I mean, there are definitely certain areas where, like, on average,",
+      "zh": "我觉得确实有一些领域，平均来说，"
+    },
+    {
+      "start": 750.4,
+      "end": 754.3,
+      "text": "like, there should be more fixes going into, like, curl is a good example,",
+      "zh": "应该修掉了更多问题。curl 就是个很好的例子，"
+    },
+    {
+      "start": 754.3,
+      "end": 755.2399999999999,
+      "text": "or, like, other software.",
+      "zh": "还有其他软件。"
+    },
+    {
+      "start": 755.3199999999999,
+      "end": 756.2399999999999,
+      "text": "This is really, really old.",
+      "zh": "这些软件已经存在非常久了。"
+    },
+    {
+      "start": 756.24,
+      "end": 760.78,
+      "text": "So, they got a lot more valid security reports, so they fixed them.",
+      "zh": "它们收到了更多有效的安全报告，于是修复了这些问题。"
+    },
+    {
+      "start": 760.98,
+      "end": 766.86,
+      "text": "So, like, in general, curl is probably safer now than it ever was.",
+      "zh": "总体来说，curl 现在可能比以往任何时候都安全。"
+    },
+    {
+      "start": 767.26,
+      "end": 769.84,
+      "text": "And it doesn't slop a ton of new features into it.",
+      "zh": "而且它也没有往里面塞一大堆粗糙的新功能。"
+    },
+    {
+      "start": 770.48,
+      "end": 775.5600000000001,
+      "text": "But also, the risk profile just went up simultaneously because of the same thing that...",
+      "zh": "但与此同时，同样的原因也提高了整体风险……"
+    },
+    {
+      "start": 775.5600000000001,
+      "end": 780.64,
+      "text": "And that is the problem, because the security patches still take humans to verify and apply.",
+      "zh": "问题就在这里：安全补丁仍然要靠人来验证和应用。"
+    },
+    {
+      "start": 781.6199999999999,
+      "end": 786.02,
+      "text": "But finding the security vulnerabilities is now, like, 100x easier.",
+      "zh": "可发现漏洞，现在却容易了一百倍。"
+    },
+    {
+      "start": 786.3199999999999,
+      "end": 792.74,
+      "text": "I literally just had my clanker kind of try to break the DRM of one of my old",
+      "zh": "我刚让我的“铁皮脑袋”试着破解一个老产品的"
+    },
+    {
+      "start": 792.74,
+      "end": 794.38,
+      "text": "products, and it just did it.",
+      "zh": "DRM，结果它就真做到了。"
+    },
+    {
+      "start": 794.8399999999999,
+      "end": 797.78,
+      "text": "It just, like, without intervention from my end.",
+      "zh": "完全没用我干预。"
+    },
+    {
+      "start": 797.78,
+      "end": 800.8599999999999,
+      "text": "So, yeah, interesting times.",
+      "zh": "所以，真是个有意思的时代。"
+    }
+  ],
+  "uploadedAt": "2026-09-13T08:00:01Z"
+}

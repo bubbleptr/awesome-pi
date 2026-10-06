@@ -68,6 +68,7 @@ const schema = {
       <div class="header-inner">
         <a class="brand" href={base} aria-label="Pi Index"><span class="brand-mark" aria-hidden="true">π</span><span><span class="brand-muted">pi</span>index</span></a>
         <nav class="header-links" aria-label={zh ? '主要导航' : 'Main navigation'}>
+          <a href={`${base}talks/`}>{locale === 'zh' ? '播客' : 'Talks'}</a>
           <a href={base}>{zh ? '资源目录' : 'Directory'}</a>
           <a class="language-link" data-language href={routePath(kind, slug, zh ? 'en' : 'zh')} lang={zh ? 'en' : 'zh-CN'}><Icon name="globe" size={16} />{zh ? 'English' : '中文'}</a>
           <a class="github-link" href={repository} aria-label="GitHub"><Icon name="github" size={17} /></a>

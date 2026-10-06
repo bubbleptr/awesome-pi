@@ -1,0 +1,1002 @@
+{
+  "model": "qwen-audio-3.1-asr-flash",
+  "date": "2026-10-06",
+  "method": "31 original-speed clips; 11 additional 0.85x focused clips; no transcript hints supplied. ASR-assisted review, not human listening certification.",
+  "changes": [
+    {
+      "id": "agent-frustrations:0013",
+      "before": {
+        "start": 67,
+        "end": 68,
+        "text": "Speed is now becoming a new problem.",
+        "zh": "现在，速度本身成了新问题。"
+      },
+      "after": {
+        "start": 67.08,
+        "end": 68.08,
+        "text": "Speed is now becoming",
+        "zh": "现在，速度本身"
+      },
+      "reason": "Whisper 与 Qwen 都只识别出一句 Speed；按 Qwen 词级时间拆为两个不重复片段，保留后续 ID。"
+    },
+    {
+      "id": "agent-frustrations:0014",
+      "before": {
+        "start": 68,
+        "end": 69,
+        "text": "Speed is now becoming a new problem.",
+        "zh": "速度本身成了新问题。"
+      },
+      "after": {
+        "start": 68.08,
+        "end": 69.36,
+        "text": "a new problem.",
+        "zh": "成了一个新问题。"
+      },
+      "reason": "a new problem 的 Qwen 时间为 68.08–69.36 秒；原记录重复了整句。"
+    },
+    {
+      "id": "harness-and-workflow:0022",
+      "before": {
+        "start": 73.38,
+        "end": 76.08,
+        "text": "And then it comes up a manual that's like, okay, how do you want me to review it?",
+        "zh": "它就弹出一个菜单，问：“你想让我怎么审查？”"
+      },
+      "after": {
+        "start": 73.38,
+        "end": 76.08,
+        "text": "And then it comes up a menu that's like, okay, how do you want me to review it?",
+        "zh": "它就弹出一个菜单，问：“你想让我怎么审查？”"
+      },
+      "reason": "局部 Whisper 与 Qwen 均识别为 menu。"
+    },
+    {
+      "id": "harness-and-workflow:0038",
+      "before": {
+        "start": 115.94,
+        "end": 122.12,
+        "text": "So I only have to wait for my coding harness producer or vendor to add a feature I need for my workflow.",
+        "zh": "所以，我不用等编程 harness 的厂商把我工作流需要的功能加进来。"
+      },
+      "after": {
+        "start": 115.94,
+        "end": 122.12,
+        "text": "So I don't have to wait for my coding harness producer or vendor to add a feature I need for my workflow.",
+        "zh": "所以，我不用等编程 harness 的厂商把我工作流需要的功能加进来。"
+      },
+      "reason": "Qwen 原速与 0.85 倍速均识别出 don't，与后文直接让 Pi 构建工具一致；Whisper 有分歧，保留记录。"
+    },
+    {
+      "id": "slippery-slop:0060",
+      "before": {
+        "start": 238.18,
+        "end": 240.54,
+        "text": "And I just opened the code, it wasn't really, really bad.",
+        "zh": "结果我打开一看，代码真的非常糟。"
+      },
+      "after": {
+        "start": 238.18,
+        "end": 240.54,
+        "text": "And I just opened the code and it was really, really bad.",
+        "zh": "结果我打开一看，代码真的非常糟。"
+      },
+      "reason": "局部 Whisper 与 Qwen 均为 was really, really bad，而非原稿的 wasn't。"
+    },
+    {
+      "id": "pi-durable:0457",
+      "before": {
+        "start": 1414.5,
+        "end": 1415.88,
+        "text": "it's actually now entirely clear",
+        "zh": "其实还不能完全确定［原文否定词疑似识别有误，待回听］，"
+      },
+      "after": {
+        "start": 1414.5,
+        "end": 1415.88,
+        "text": "it's actually not entirely clear",
+        "zh": "其实还不能完全确定，"
+      },
+      "reason": "Qwen 原速与降速两次均识别为 not entirely clear；与后文更多代码的论证一致，Whisper 的 now 保留在证据记录。"
+    },
+    {
+      "id": "pi-durable:0562",
+      "before": {
+        "start": 1612.4,
+        "end": 1615.4,
+        "text": "for all of our Arundel products going forward.",
+        "zh": "今后的 Earendil 产品都建立在它之上。"
+      },
+      "after": {
+        "start": 1612.4,
+        "end": 1615.4,
+        "text": "for all of our Earendil products going forward.",
+        "zh": "今后的 Earendil 产品都建立在它之上。"
+      },
+      "reason": "Qwen 的 Air and Deal 与 Earendil 发音对应，且作者官方组织为 Earendil Works；属名称规范化。"
+    },
+    {
+      "id": "pi-durable:0573",
+      "before": {
+        "start": 1638.6599999999999,
+        "end": 1643.26,
+        "text": "Also, don't be surprised if there are some new phases coming up on these meditations in the future.",
+        "zh": "另外，以后这些 Meditations 对谈里，如果出现一些新面孔，也不要意外。"
+      },
+      "after": {
+        "start": 1638.6599999999999,
+        "end": 1643.26,
+        "text": "Also, don't be surprised if there are some new faces coming up on these meditations in the future.",
+        "zh": "另外，以后这些 Meditations 对谈里，如果出现一些新面孔，也不要意外。"
+      },
+      "reason": "局部 Whisper 与 Qwen 均识别为 faces。"
+    },
+    {
+      "id": "changing-models:0131",
+      "before": {
+        "start": 557.36,
+        "end": 562.8,
+        "text": "which is like a desktop UI using Daniel's Climps framework.",
+        "zh": "它是一个用 Daniel 的 Climps 框架做的桌面界面［框架名待核］。"
+      },
+      "after": {
+        "start": 557.36,
+        "end": 562.8,
+        "text": "which is like a desktop UI using Daniel's Glimpse framework.",
+        "zh": "它是一个用 Daniel 的 Glimpse 框架做的桌面界面。"
+      },
+      "reason": "结合语音 Climps/CLIMPS、Daniel 和桌面 UI 上下文，对照 Daniel Griesser 的官方 Glimpse 仓库规范拼写；属来源辅助判断。"
+    },
+    {
+      "id": "changing-models:0155",
+      "before": {
+        "start": 646.12,
+        "end": 649.36,
+        "text": "And with those, they could really work well, which was retry, edit, bash.",
+        "zh": "有了这些就能很好地工作，比如 retry、edit、Bash［工具名转写待核］。"
+      },
+      "after": {
+        "start": 646.12,
+        "end": 649.36,
+        "text": "And with those, they could really work well, which was read, write, edit, bash.",
+        "zh": "有了这些就能很好地工作，也就是 read、write、edit、Bash。"
+      },
+      "reason": "Qwen 降速明确识别为 read, write, edit, bash，且与官方工具文档一致。"
+    },
+    {
+      "id": "changing-models:0251",
+      "before": {
+        "start": 952.7,
+        "end": 953.78,
+        "text": "We should tour in complete.",
+        "zh": "而那通常是图灵完备的。"
+      },
+      "after": {
+        "start": 952.7,
+        "end": 953.78,
+        "text": "Which is Turing complete.",
+        "zh": "而它是图灵完备的。"
+      },
+      "reason": "Qwen 原速为 which is Turing complete，局部 Whisper 也识别到 Turing complete；移除中文无根据的“通常”。"
+    }
+  ],
+  "clips": [
+    {
+      "id": "agent-frustrations-0013",
+      "source_start": 59,
+      "source_end": 77,
+      "original_cues": [
+        {
+          "id": "agent-frustrations:0013",
+          "start": 67,
+          "end": 68,
+          "text": "Speed is now becoming a new problem.",
+          "zh": "现在，速度本身成了新问题。"
+        },
+        {
+          "id": "agent-frustrations:0014",
+          "start": 68,
+          "end": 69,
+          "text": "Speed is now becoming a new problem.",
+          "zh": "速度本身成了新问题。"
+        }
+      ],
+      "whisper": "genetic tools, as well as what I see other people report, is really that because we haven't solved some of those fundamental problems, speed is now becoming a new problem. It generates so many more pieces of code that our capacity to keeping up.",
+      "qwen": "Genetic tools as well as well as the other people report is really that because we haven't solved some of those fundamental problems. Speed is now becoming a new problem. It generates so many more pieces of code. That our capacity to keeping up.",
+      "qwen_slow": null,
+      "changes": [
+        {
+          "id": "agent-frustrations:0013",
+          "before": {
+            "start": 67,
+            "end": 68,
+            "text": "Speed is now becoming a new problem.",
+            "zh": "现在，速度本身成了新问题。"
+          },
+          "after": {
+            "start": 67.08,
+            "end": 68.08,
+            "text": "Speed is now becoming",
+            "zh": "现在，速度本身"
+          },
+          "reason": "Whisper 与 Qwen 都只识别出一句 Speed；按 Qwen 词级时间拆为两个不重复片段，保留后续 ID。"
+        },
+        {
+          "id": "agent-frustrations:0014",
+          "before": {
+            "start": 68,
+            "end": 69,
+            "text": "Speed is now becoming a new problem.",
+            "zh": "速度本身成了新问题。"
+          },
+          "after": {
+            "start": 68.08,
+            "end": 69.36,
+            "text": "a new problem.",
+            "zh": "成了一个新问题。"
+          },
+          "reason": "a new problem 的 Qwen 时间为 68.08–69.36 秒；原记录重复了整句。"
+        }
+      ],
+      "assessment": "两套识别均只出现一次 Speed 句子，已拆为两条互补字幕，保留条目 ID，并据词级时间微调边界。"
+    },
+    {
+      "id": "harness-and-workflow-0003",
+      "source_start": 0,
+      "source_end": 19.62,
+      "original_cues": [
+        {
+          "id": "harness-and-workflow:0003",
+          "start": 5.5200000000000005,
+          "end": 11.620000000000001,
+          "text": "And I want my coding harness with my agent, so to speak, to work according to his workflow.",
+          "zh": "我可不希望自己的编程 harness 和 agent 非得按他的工作流来运作。"
+        }
+      ],
+      "whisper": "That's also how I think a coding harness should be. Like, he has a different workflow than I have. And I want my coding harness with my agent, so to speak, to work according to his workflow, because that would be terrible. I hate his workflow. So Pi is also a self-modifying, self-healing kind of harness, where the agent can...",
+      "qwen": "That's also how I think a coding harness should be. Like he has a different workflow than I have. And I want my coding harness with my agent, so to speak, to work according to his workflow, because that would be terrible. I hate his workflow. So PIA is also a self-modifying, self-healing kind of harness where the agent can.",
+      "qwen_slow": "Like he has a different workflow than I have. And I want my coding harness with my agent, so to speak, to work according to his workflow, because that would be terrible. I hate his workflow.",
+      "changes": [],
+      "assessment": "仍未解决：两套识别均为 I want，但中文补了否定、上下文又说 terrible。不能把语境推断当作声学确认，保留原稿与疑点。"
+    },
+    {
+      "id": "harness-and-workflow-0022",
+      "source_start": 65.38,
+      "source_end": 84.08,
+      "original_cues": [
+        {
+          "id": "harness-and-workflow:0022",
+          "start": 73.38,
+          "end": 76.08,
+          "text": "And then it comes up a manual that's like, okay, how do you want me to review it?",
+          "zh": "它就弹出一个菜单，问：“你想让我怎么审查？”"
+        }
+      ],
+      "whisper": "want the review to be like it looks exactly for the things that i want but i don't have to tell it like hey please review the change versus the main branch it's like hey review and then it comes up a menu that's like okay how do you want me to review it is it like uncommitted changes is it as a single commit is it a commit against the main thing and it's ui that sort of auto pop",
+      "qwen": "I want to review the B, like it looks exactly for the things that I want, but I don't have to tell it like, hey, please review the change versus the main branch. I can like, hey, review, and then it comes up a menu that's like, okay, how do you want me to review it? Is it like uncommitted changes? Is it as a single commit? Is it a commit against the main thing? And it's UI that sort of auto pop.",
+      "qwen_slow": null,
+      "changes": [
+        {
+          "id": "harness-and-workflow:0022",
+          "before": {
+            "start": 73.38,
+            "end": 76.08,
+            "text": "And then it comes up a manual that's like, okay, how do you want me to review it?",
+            "zh": "它就弹出一个菜单，问：“你想让我怎么审查？”"
+          },
+          "after": {
+            "start": 73.38,
+            "end": 76.08,
+            "text": "And then it comes up a menu that's like, okay, how do you want me to review it?",
+            "zh": "它就弹出一个菜单，问：“你想让我怎么审查？”"
+          },
+          "reason": "局部 Whisper 与 Qwen 均识别为 menu。"
+        }
+      ],
+      "assessment": "局部 Whisper 与 Qwen 均识别为 menu。"
+    },
+    {
+      "id": "harness-and-workflow-0033",
+      "source_start": 100.28,
+      "source_end": 120.94,
+      "original_cues": [
+        {
+          "id": "harness-and-workflow:0033",
+          "start": 108.28,
+          "end": 112.94,
+          "text": "Armin rebuilt that as an extension to buy Pi in, what was it?",
+          "zh": "Armin 把它重新做成了 Pi 扩展，花了多久来着？"
+        }
+      ],
+      "whisper": "having to jump for hoops. The Cloud Code team has released a new to-do tool a couple of days ago. Armin rebuilt that as an extension to buy Pi in, what was it, I don't know, an evening? An hour? So I only have to wait for my coding harness producer or vendor to add a feature.",
+      "qwen": "Having to jump for hoops. Yeah, like the Claude Code team has released a new to do tool like a couple of days ago. Armin rebuilt that as an extension to buy pi in what was it? I don't know. An evening hour. Yeah. So I don't have to wait for my coding harness producer or vendor to add a feature.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "Pi 前后仍有识别噪声；不补造具体措辞，现有中文未改。"
+    },
+    {
+      "id": "harness-and-workflow-0038",
+      "source_start": 107.94,
+      "source_end": 130.12,
+      "original_cues": [
+        {
+          "id": "harness-and-workflow:0038",
+          "start": 115.94,
+          "end": 122.12,
+          "text": "So I only have to wait for my coding harness producer or vendor to add a feature I need for my workflow.",
+          "zh": "所以，我不用等编程 harness 的厂商把我工作流需要的功能加进来。"
+        }
+      ],
+      "whisper": "Armin rebuilt that as an extension to buy Pi in, what was it? I don't know. An hour? Yeah. So I only have to wait for my coding harness producer or vendor to add a feature I need for my workflow. I just tell Pi, build me this. You just add it. It reads for documentation, which is just marked on files with examples and API descriptions.",
+      "qwen": "Armin rebuilt that as an extension to buy pi in what was it? I don't know. An evening hour? Yeah. So I don't have to wait for my coding harness producer or vendor to add a feature I need for my workflow. I just tell pi build me this. You just add it. It reads for documentation, which is just marked on files with examples and API description.",
+      "qwen_slow": "I don't know. An evening hour. Yeah. So I don't have to wait for my coding harness producer or vendor to add a feature I need for my workflow. I just tell Pi build me this. You just add it.",
+      "changes": [
+        {
+          "id": "harness-and-workflow:0038",
+          "before": {
+            "start": 115.94,
+            "end": 122.12,
+            "text": "So I only have to wait for my coding harness producer or vendor to add a feature I need for my workflow.",
+            "zh": "所以，我不用等编程 harness 的厂商把我工作流需要的功能加进来。"
+          },
+          "after": {
+            "start": 115.94,
+            "end": 122.12,
+            "text": "So I don't have to wait for my coding harness producer or vendor to add a feature I need for my workflow.",
+            "zh": "所以，我不用等编程 harness 的厂商把我工作流需要的功能加进来。"
+          },
+          "reason": "Qwen 原速与 0.85 倍速均识别出 don't，与后文直接让 Pi 构建工具一致；Whisper 有分歧，保留记录。"
+        }
+      ],
+      "assessment": "Qwen 原速与 0.85 倍速均识别出 don't，与后文直接让 Pi 构建工具一致；Whisper 有分歧，保留记录。"
+    },
+    {
+      "id": "harness-and-workflow-0041",
+      "source_start": 116.94,
+      "source_end": 137.94,
+      "original_cues": [
+        {
+          "id": "harness-and-workflow:0041",
+          "start": 124.94,
+          "end": 129.94,
+          "text": "It reads for documentation, which is just marked on files with examples and API descriptions.",
+          "zh": "它会读文档，也就是包含示例和 API 说明的 Markdown 文件。"
+        }
+      ],
+      "whisper": "my coding harness producer or vendor to add a feature I need for my workflow. I just tell Pi, build me this. You just add it. It reads for documentation, which is just marked on files with examples and API descriptions, and then it builds the thing. And I think that has value, at least as an experiment. Yeah, yeah. Also, I got...",
+      "qwen": "Wait, my coding harness producer or vendor to add a feature. I need for my workflow. I just tell pi built me this. You just add it. It reads for documentation, which is just marked on files with examples and api descriptions and then it builds the thing. And i think that has value at least as an experiment. Yeah. Yeah. Also, i got.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "两套仍为 marked on files；Markdown 解释合理但本轮没有新增声学支持，待确认。"
+    },
+    {
+      "id": "slippery-slop-0060",
+      "source_start": 230.18,
+      "source_end": 248.54,
+      "original_cues": [
+        {
+          "id": "slippery-slop:0060",
+          "start": 238.18,
+          "end": 240.54,
+          "text": "And I just opened the code, it wasn't really, really bad.",
+          "zh": "结果我打开一看，代码真的非常糟。"
+        }
+      ],
+      "whisper": "an astro game over the weekend and it works for you, just show me the code. There were two people who replied like, oh yeah, it wasn't so bad and I just opened the code and it was really, really bad. And then it was, I think both of them replied just, yeah, it's probably not nice. The thing is like, we don't really expect",
+      "qwen": "An astro game over the weekend and it works for you. Just show me the code. There were two people replied like, oh yeah, it wasn't so bad. And i just opened the code. It was really, really bad. And then it was, i think both of them replied this. Yeah, it's probably not nice. The thing is like we're like we don't really.",
+      "qwen_slow": null,
+      "changes": [
+        {
+          "id": "slippery-slop:0060",
+          "before": {
+            "start": 238.18,
+            "end": 240.54,
+            "text": "And I just opened the code, it wasn't really, really bad.",
+            "zh": "结果我打开一看，代码真的非常糟。"
+          },
+          "after": {
+            "start": 238.18,
+            "end": 240.54,
+            "text": "And I just opened the code and it was really, really bad.",
+            "zh": "结果我打开一看，代码真的非常糟。"
+          },
+          "reason": "局部 Whisper 与 Qwen 均为 was really, really bad，而非原稿的 wasn't。"
+        }
+      ],
+      "assessment": "局部 Whisper 与 Qwen 均为 was really, really bad，而非原稿的 wasn't。"
+    },
+    {
+      "id": "slippery-slop-0057",
+      "source_start": 219.88,
+      "source_end": 241.52,
+      "original_cues": [
+        {
+          "id": "slippery-slop:0057",
+          "start": 227.88,
+          "end": 233.52,
+          "text": "So I asked a bunch of people on Twitter, like, hey, if you build like an Astro game over the weekend and it works for you,",
+          "zh": "于是我在 Twitter 上问大家：如果你周末用 Astra 做了个游戏，而且觉得效果不错，"
+        }
+      ],
+      "whisper": "one step removed from regular code, it sort of starts falling into this pattern of really highly compressed things. But then I was like, okay, maybe this just happens to me. So I asked a bunch of people on Twitter, like, hey, if you build an Astro game over the weekend and it works for you, just show me the code. And there were two people who replied like, oh yeah, it wasn't so bad. And I just opened the code and it was really, really bad.",
+      "qwen": "One step removed from regular code. It sort of starts falling into this pattern of like really highly compressed things. But then i was like, okay, maybe this just happens to me. So i asked a bunch of people on to like, hey, if you build like an astro game over the weekend and it works for you, just show me the code. And there were two people replied like, oh yeah, it wasn't so bad. And i just opened the code.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "两套识别为 Astro；其他位置模型名不一致，未据此批量改名。"
+    },
+    {
+      "id": "slippery-slop-0070",
+      "source_start": 267.42,
+      "source_end": 288.21999999999997,
+      "original_cues": [
+        {
+          "id": "slippery-slop:0070",
+          "start": 275.42,
+          "end": 280.21999999999997,
+          "text": "because Astro just couldn't write any sensible kind of code.",
+          "zh": "因为 Astra 就是写不出什么像样的代码。"
+        }
+      ],
+      "whisper": "work on an old C, C++ code base in Spine. I switched back to 5.6 Sol because Astra just couldn't write any sensible kind of code. It's very weird. It's very, very weird. I blame personality. One thought that I had.",
+      "qwen": "Work on an old c c plus plus code base in spine. I switched back to 5.6 soul. Because as for just couldn't write any sensible kind of code. It's very weird. It's very, very weird. I i play in personality defense. One thought that i had.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "局部 Whisper 为 Astra，Qwen 为 as for；现译未改，仍有专名识别不稳定。"
+    },
+    {
+      "id": "slippery-slop-0073",
+      "source_start": 275,
+      "source_end": 292.96,
+      "original_cues": [
+        {
+          "id": "slippery-slop:0073",
+          "start": 283,
+          "end": 284.96,
+          "text": "I blame personality fans.",
+          "zh": "我怪那些追捧模型个性的人。"
+        }
+      ],
+      "whisper": "soul because Asperger couldn't write any sensible kind of code it's very weird it's very very weird I blame personality fans one thought that I had was that if you have the idea",
+      "qwen": "Sick soul. Because Astrid just couldn't write any sensible kind of code. It's very weird. It's very, very weird. I claim personal defense. One thought that I had was that if you have the idea.",
+      "qwen_slow": "It's very weird. It's very, very weird. I blame personality. One thought that I had.",
+      "changes": [],
+      "assessment": "原速出现 personality fans / personal defense，降速为 personality，后缀仍不稳定；未改译文。"
+    },
+    {
+      "id": "slippery-slop-0169",
+      "source_start": 681.66,
+      "source_end": 706.6999999999999,
+      "original_cues": [
+        {
+          "id": "slippery-slop:0169",
+          "start": 689.66,
+          "end": 695.84,
+          "text": "But I'm not sure if you're seeing that either, if you look at companies with their 999s going into the",
+          "zh": "但我也不知道有没有改善。看看这些公司的可用性指标，原来的几个九……"
+        },
+        {
+          "id": "slippery-slop:0170",
+          "start": 695.84,
+          "end": 698.6999999999999,
+          "text": "9100 territory.",
+          "zh": "［此处可用性数字转写不清，待回听］"
+        }
+      ],
+      "whisper": "of higher quality, even if the quantity stays kind of the same. That would be the goal for me when using Enchantic engineering tools. But I'm not sure if you're seeing that either, if you look at companies with their 999s going into the 9100 territory. I think where you see it a little bit in terms of quality, presumably, depending on how you look at this, is that...",
+      "qwen": "of higher quality, even if the quantity stays kind of the same. That would be the goal for me when using a chantic engineering tools. But I'm not sure if you're seeing that either, if you look at companies with their 999s going into the 91000 territory. So I think why you see the little bit in terms of like quality, presumably, like depending on how you look at this, is that.",
+      "qwen_slow": "for me when using hantec engineering tools. but i'm not sure if you're seeing that either. if you look at companies with their 999s going into the 91000 territory.",
+      "changes": [],
+      "assessment": "999s / 9100 / 91000 等识别仍不可信，未把它们转成确定百分比或可用性数字。"
+    },
+    {
+      "id": "slippery-slop-0193",
+      "source_start": 778.3199999999999,
+      "source_end": 800.74,
+      "original_cues": [
+        {
+          "id": "slippery-slop:0193",
+          "start": 786.3199999999999,
+          "end": 792.74,
+          "text": "I literally just had my clanker kind of try to break the DRM of one of my old",
+          "zh": "我刚让我的“铁皮脑袋”试着破解一个老产品的"
+        }
+      ],
+      "whisper": "still take humans to verify and apply. But finding the security vulnerabilities is now like 100x easier. I literally just had my clanker kind of try to break the DRM of one of my old products and it just did it. It just like without intervention from my end. So yeah, interesting time.",
+      "qwen": "still take humans to verify and apply. but finding the security vulnerabilities is now like 100x easier. i literally just had my clanker kind of try to break the drm of one of my old products and it just did it. it just like without intervention from my end. so yeah, interesting time.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "两套均识别 clanker；当前“铁皮脑袋”是翻译风格选择，无新增 ASR 修正。"
+    },
+    {
+      "id": "pi-durable-0137",
+      "source_start": 587.5,
+      "source_end": 604.96,
+      "original_cues": [
+        {
+          "id": "pi-durable:0137",
+          "start": 595.5,
+          "end": 596.96,
+          "text": "which is called Levos,",
+          "zh": "叫 Levos，"
+        }
+      ],
+      "whisper": "engine sitting on top of Postgres. And we built that originally to support a Pi-driven agent which is called Lepos to basically continue and suspend across basically a cloud deployment.",
+      "qwen": "Flow engine sitting on top of Postgres. And we built that originally to support a pie driven agent, which is called Levels, to basically continue and suspend across basically a cloud deployment.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "Levos / Lepos / Levels 三种结果；缺乏可靠项目名证据，未改。"
+    },
+    {
+      "id": "pi-durable-0344",
+      "source_start": 1210.12,
+      "source_end": 1228.02,
+      "original_cues": [
+        {
+          "id": "pi-durable:0344",
+          "start": 1218.12,
+          "end": 1220.02,
+          "text": "and then you eventually want to rewrite it in TypeScript,",
+          "zh": "然后最终想用 TypeScript 重写它时，"
+        }
+      ],
+      "whisper": "that the system in itself is so, like, you should be able to write an agent in this that maintains a two-year-old Slack channel and then you eventually want to rewrite it in TypeScript, but you can pick up the data as it was. So the idea here is that the underlying system is a trustworthy...",
+      "qwen": "that the system in itself is so, like, you should be able to write an agent in this that maintains a two-year-old slack channel, and then you eventually want to rewrite it in typescript, but you can pick up the data as it was, right? so the idea here is like that the underlying system is a trustworthy.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "两套仍是 TypeScript；保留原文，不以“跨语言”语境强行改成其他语言。"
+    },
+    {
+      "id": "pi-durable-0223",
+      "source_start": 941.84,
+      "source_end": 962.38,
+      "original_cues": [
+        {
+          "id": "pi-durable:0223",
+          "start": 949.84,
+          "end": 952.24,
+          "text": "And now it's like S in your face.",
+          "zh": "而现在，我们要把这些信息直接摆出来，"
+        },
+        {
+          "id": "pi-durable:0224",
+          "start": 953.4,
+          "end": 954.38,
+          "text": "So did the LLM.",
+          "zh": "让大模型看见。"
+        }
+      ],
+      "whisper": "So the trade-off actually now is sort of almost entirely inverse to what we did with Absurd, where we tried to make it as friendly for a human programmer to do. And now it's like S in your face. So the LLM is, there's going to be a little bit more code, but the LLM is going to be explicitly going through Checkpoint. So like as an example.",
+      "qwen": "The trade-off actually now is sort of almost entirely inverse to what we did with absurd, where we tried to make it as friendly for a human programmer to do. And now it's like as in your face. So the LLM is, there's going to be a little bit more code, but the LLM is going to be explicitly going through checkpoints. So like as an example,",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "Qwen 的 as in your face 比原稿稍通顺，但后一句仍断裂；中文理解可用，英文不擅自补全。"
+    },
+    {
+      "id": "pi-durable-0408",
+      "source_start": 1321.46,
+      "source_end": 1338.08,
+      "original_cues": [
+        {
+          "id": "pi-durable:0408",
+          "start": 1329.46,
+          "end": 1330.08,
+          "text": "It's not a bet",
+          "zh": "这并不是说它是不可靠的选择，"
+        }
+      ],
+      "whisper": "and it's basically the same thing, except you also inherit all of Effect.io. And we didn't want to make that. It's not a bet because a lot of people build on Effect.io, but we want it to be self-contained. And in terms of portability, it's actually very...",
+      "qwen": "And it's basically the same thing, except you also inherit all of Effectors and we didn't want to make that. It's not a bet because a lot of people build on Effectors, but we want it to be self contained and in terms of portability, it's actually very.",
+      "qwen_slow": "Carried all of Effectors and we didn't want to make that. It's not a bet because a lot of people build on Effectors, but we want it to be.",
+      "changes": [],
+      "assessment": "两种模型、两种速度仍为 not a bet；原中文解释仍待确认，未改。"
+    },
+    {
+      "id": "pi-durable-0457",
+      "source_start": 1406.5,
+      "source_end": 1427.1200000000001,
+      "original_cues": [
+        {
+          "id": "pi-durable:0457",
+          "start": 1414.5,
+          "end": 1415.88,
+          "text": "it's actually now entirely clear",
+          "zh": "其实还不能完全确定［原文否定词疑似识别有误，待回听］，"
+        },
+        {
+          "id": "pi-durable:0458",
+          "start": 1415.88,
+          "end": 1416.64,
+          "text": "that the Effect solution",
+          "zh": "Effect 方案"
+        },
+        {
+          "id": "pi-durable:0459",
+          "start": 1416.64,
+          "end": 1418.22,
+          "text": "is also definitely",
+          "zh": "也一定"
+        },
+        {
+          "id": "pi-durable:0460",
+          "start": 1418.22,
+          "end": 1419.1200000000001,
+          "text": "better for the agent",
+          "zh": "更适合 agent。"
+        }
+      ],
+      "whisper": "if I then start the same project without effects, like I did this a bunch of times now, like build this with effects, build it without effect, it's actually now entirely clear that the effects solution is also definitely better for the agent. Because for the very least, you actually do end up ironically with more code usually. And more code is still a little bit of a challenge.",
+      "qwen": "Um, if i then start the same project without effects, like i did this a bunch of times now, like build this with effects, build it without effect. It's actually not entirely clear that the effect solution is also definitely better for the agent. Because for the very least, you actually do end up ironically with more code usually. And more code is still a little bit of a challenge.",
+      "qwen_slow": "A bunch of times now, like build this with effect, build it without effect. It's actually not entirely clear that the effect solution is also definitely better for the agent.",
+      "changes": [
+        {
+          "id": "pi-durable:0457",
+          "before": {
+            "start": 1414.5,
+            "end": 1415.88,
+            "text": "it's actually now entirely clear",
+            "zh": "其实还不能完全确定［原文否定词疑似识别有误，待回听］，"
+          },
+          "after": {
+            "start": 1414.5,
+            "end": 1415.88,
+            "text": "it's actually not entirely clear",
+            "zh": "其实还不能完全确定，"
+          },
+          "reason": "Qwen 原速与降速两次均识别为 not entirely clear；与后文更多代码的论证一致，Whisper 的 now 保留在证据记录。"
+        }
+      ],
+      "assessment": "Qwen 原速与降速两次均识别为 not entirely clear；与后文更多代码的论证一致，Whisper 的 now 保留在证据记录。"
+    },
+    {
+      "id": "pi-durable-0562",
+      "source_start": 1604.4,
+      "source_end": 1623.4,
+      "original_cues": [
+        {
+          "id": "pi-durable:0562",
+          "start": 1612.4,
+          "end": 1615.4,
+          "text": "for all of our Arundel products going forward.",
+          "zh": "今后的 Earendil 产品都建立在它之上。"
+        }
+      ],
+      "whisper": "dare would look like. And also we are not just relying on external builders using PyDurable to figure out what works and what doesn't. We are actually betting on this for all of our Arundel products going forward. And in the future, that means in the next couple weeks, we have a bunch of team members who will use it in anger, build some tools that...",
+      "qwen": "There would look like. And also, we are not just relying on external builders using Py durable to figure out what works and what doesn't. We are actually betting on this for all of our Air and Deal products going forward. And in the future, that means in the next couple of weeks, we have a bunch of team members who will use it in anger, build some tools that.",
+      "qwen_slow": null,
+      "changes": [
+        {
+          "id": "pi-durable:0562",
+          "before": {
+            "start": 1612.4,
+            "end": 1615.4,
+            "text": "for all of our Arundel products going forward.",
+            "zh": "今后的 Earendil 产品都建立在它之上。"
+          },
+          "after": {
+            "start": 1612.4,
+            "end": 1615.4,
+            "text": "for all of our Earendil products going forward.",
+            "zh": "今后的 Earendil 产品都建立在它之上。"
+          },
+          "reason": "Qwen 的 Air and Deal 与 Earendil 发音对应，且作者官方组织为 Earendil Works；属名称规范化。"
+        }
+      ],
+      "assessment": "Qwen 的 Air and Deal 与 Earendil 发音对应，且作者官方组织为 Earendil Works；属名称规范化。"
+    },
+    {
+      "id": "pi-durable-0573",
+      "source_start": 1630.6599999999999,
+      "source_end": 1646.416,
+      "original_cues": [
+        {
+          "id": "pi-durable:0573",
+          "start": 1638.6599999999999,
+          "end": 1643.26,
+          "text": "Also, don't be surprised if there are some new phases coming up on these meditations in the future.",
+          "zh": "另外，以后这些 Meditations 对谈里，如果出现一些新面孔，也不要意外。"
+        }
+      ],
+      "whisper": "also provide the code that we created and are part of that process so other people can get inspired by that. Also, don't be surprised if there are some new faces coming up on these meditations in the future. Bye! Bye!",
+      "qwen": "Also provide the code that we that we created in the part of that process. So other people can get inspired by that. Also, don't be surprised if there's some new faces coming up on these meditations in the future. Bye. Bye.",
+      "qwen_slow": null,
+      "changes": [
+        {
+          "id": "pi-durable:0573",
+          "before": {
+            "start": 1638.6599999999999,
+            "end": 1643.26,
+            "text": "Also, don't be surprised if there are some new phases coming up on these meditations in the future.",
+            "zh": "另外，以后这些 Meditations 对谈里，如果出现一些新面孔，也不要意外。"
+          },
+          "after": {
+            "start": 1638.6599999999999,
+            "end": 1643.26,
+            "text": "Also, don't be surprised if there are some new faces coming up on these meditations in the future.",
+            "zh": "另外，以后这些 Meditations 对谈里，如果出现一些新面孔，也不要意外。"
+          },
+          "reason": "局部 Whisper 与 Qwen 均识别为 faces。"
+        }
+      ],
+      "assessment": "局部 Whisper 与 Qwen 均识别为 faces。"
+    },
+    {
+      "id": "changing-models-0026",
+      "source_start": 84.72,
+      "source_end": 103.6,
+      "original_cues": [
+        {
+          "id": "changing-models:0026",
+          "start": 92.72,
+          "end": 95.6,
+          "text": "For, yeah, well, Python, why a bash?",
+          "zh": "对，或者说，通过 Bash 来运行 Python。"
+        }
+      ],
+      "whisper": "recently with the release of Opus 5.5 was that it stopped using the edit tool and just basically uses bash for everything now. For yeah well, Python, why a bash? That might be token efficient. It might have some correctness issues like you identified.",
+      "qwen": "recently with the release of opus 5.5 was that it stopped using the edit tool and just basically uses bash for everything now. for, yeah, well, python wire bash. that might be token efficient. it might have some correctness issues like you identified.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "Qwen 为 Python wire Bash；via Bash 的解释有语音近似但仍非清晰识别，保留疑点。"
+    },
+    {
+      "id": "changing-models-0041",
+      "source_start": 136.68,
+      "source_end": 158.14,
+      "original_cues": [
+        {
+          "id": "changing-models:0041",
+          "start": 144.68,
+          "end": 150.14,
+          "text": "But I think like at least for the token max of the world, like why do we even care what the transcript is one?",
+          "zh": "不过，对那些追求大量使用 token 的人来说，首先就是：为什么还要在意执行记录？"
+        }
+      ],
+      "whisper": "So I think there are two macro trends, I would say, that affect us too. But I think at least for the token max of the world, why do we even care what a transcript is one? It's like you only look at the end result. And then the second, I think, thing worth discussing is not...",
+      "qwen": "So I think that there are two macro trends, I would say, that affect us too, but I think like at least for the token max of the world, like why do we even care what the transcript is one, right? It's like you only look at the end result. And then the second, I think, thing worth discussing is not.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "token max 与后半句仍含残句，未凭推测改写。"
+    },
+    {
+      "id": "changing-models-0085",
+      "source_start": 337.24,
+      "source_end": 357.12,
+      "original_cues": [
+        {
+          "id": "changing-models:0085",
+          "start": 345.24,
+          "end": 349.12,
+          "text": "which is Fable 5, 5.1 and Opus 5.5 uses,",
+          "zh": "包括 Fable 5、5.1 和 Opus 5.5，都用了一个模式。"
+        }
+      ],
+      "whisper": "doing and i think you looked into cloud code what's their solution here so cloud code on all the new models which is fable 5 5.1 and opus 5.5 uses i forgot the name they had a really funny name for this but it's basically a mode where two things are happening one is it it it basically pushes with an",
+      "qwen": "Doing and I think you looked into Claude Code. What's their solution here? So Claude Code on all the new models, which is Fable 5, 5.1 and Opus 5.5 uses, I forgot the name, they had a really funny name for this, but it's basically a mode where two things are happening. One is it basically pushes with an.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "两套名称、版本识别一致；不做当前产品版本真伪推断，字幕保留。"
+    },
+    {
+      "id": "changing-models-0124",
+      "source_start": 509.76,
+      "source_end": 531.24,
+      "original_cues": [
+        {
+          "id": "changing-models:0124",
+          "start": 517.76,
+          "end": 523.24,
+          "text": "like friend of ours, the Tunk, then for modems, which I think is pretty neat,",
+          "zh": "比如我们朋友做的那个工具［名称转写不清，待核］，我觉得挺不错。"
+        }
+      ],
+      "whisper": "Yes. And I also like, having tried a lot of div tools now and sort of div tools that also are Gentic integrated, like friend of ours, the Tunk, Ben from Modem, which I think is pretty neat, but it is also not quite what I want, I feel like. So there's this...",
+      "qwen": "Yes. And I also like, like having tried a lot of diff tools now and sort of diff tools that also are chantic integrated like friend of ours, the tank, then for modems, which I think is pretty neat, but it is also not quite what I want. I feel like. So there's.",
+      "qwen_slow": "And sort of these tools that also are chantic integrated, like friend of ours, the tank, then from modems, which I think is pretty neat, but it is also...",
+      "changes": [],
+      "assessment": "the Tunk / tank、Ben / then、Modem / modems 仍分歧，不补造人名和项目名。"
+    },
+    {
+      "id": "changing-models-0131",
+      "source_start": 549.36,
+      "source_end": 570.8,
+      "original_cues": [
+        {
+          "id": "changing-models:0131",
+          "start": 557.36,
+          "end": 562.8,
+          "text": "which is like a desktop UI using Daniel's Climps framework.",
+          "zh": "它是一个用 Daniel 的 Climps 框架做的桌面界面［框架名待核］。"
+        }
+      ],
+      "whisper": "at specific times. I have this in my custom PyReview extension, which is like a desktop UI using Daniel's Climps framework. And I've used this for months, right? And I just found I don't even need that anymore.",
+      "qwen": "At specific times. I have this in my custom pi. Pi review extension, which is like a desktop ui using daniels, klimps framework. And i've used this for months, right? And i just found i i don't even need that anymore.",
+      "qwen_slow": "Py review extension, which is like a desktop UI using Daniel's CLIMPS framework. And I've used this for months.",
+      "changes": [
+        {
+          "id": "changing-models:0131",
+          "before": {
+            "start": 557.36,
+            "end": 562.8,
+            "text": "which is like a desktop UI using Daniel's Climps framework.",
+            "zh": "它是一个用 Daniel 的 Climps 框架做的桌面界面［框架名待核］。"
+          },
+          "after": {
+            "start": 557.36,
+            "end": 562.8,
+            "text": "which is like a desktop UI using Daniel's Glimpse framework.",
+            "zh": "它是一个用 Daniel 的 Glimpse 框架做的桌面界面。"
+          },
+          "reason": "结合语音 Climps/CLIMPS、Daniel 和桌面 UI 上下文，对照 Daniel Griesser 的官方 Glimpse 仓库规范拼写；属来源辅助判断。"
+        }
+      ],
+      "assessment": "结合语音 Climps/CLIMPS、Daniel 和桌面 UI 上下文，对照 Daniel Griesser 的官方 Glimpse 仓库规范拼写；属来源辅助判断。"
+    },
+    {
+      "id": "changing-models-0155",
+      "source_start": 638.12,
+      "source_end": 657.36,
+      "original_cues": [
+        {
+          "id": "changing-models:0155",
+          "start": 646.12,
+          "end": 649.36,
+          "text": "And with those, they could really work well, which was retry, edit, bash.",
+          "zh": "有了这些就能很好地工作，比如 retry、edit、Bash［工具名转写待核］。"
+        }
+      ],
+      "whisper": "When I started working on Pi, my realization was that all the models back then were pretty much RL'd on the same trajectories apparently, because they assumed a base set of tools, and with those they could really work well, which was retried, edit, bash. And I guess the times are changing now, and the RL is now geared towards you only need bash. models started",
+      "qwen": "I started working on pi. My realization was that all the models back then were pretty much rl on the same trajectories apparently because they assumed the base set of tools and with those they could really work well, which was red, right? Edit bash. And i guess the times are changing now and the rl is now geared towards. You only need bash gpt models.",
+      "qwen_slow": "Check the res apparently because they assume the base set of tools and with those they could really work well, which was read, write, edit, bash. And I guess the times are changing now and.",
+      "changes": [
+        {
+          "id": "changing-models:0155",
+          "before": {
+            "start": 646.12,
+            "end": 649.36,
+            "text": "And with those, they could really work well, which was retry, edit, bash.",
+            "zh": "有了这些就能很好地工作，比如 retry、edit、Bash［工具名转写待核］。"
+          },
+          "after": {
+            "start": 646.12,
+            "end": 649.36,
+            "text": "And with those, they could really work well, which was read, write, edit, bash.",
+            "zh": "有了这些就能很好地工作，也就是 read、write、edit、Bash。"
+          },
+          "reason": "Qwen 降速明确识别为 read, write, edit, bash，且与官方工具文档一致。"
+        }
+      ],
+      "assessment": "Qwen 降速明确识别为 read, write, edit, bash，且与官方工具文档一致。"
+    },
+    {
+      "id": "changing-models-0194",
+      "source_start": 770.6,
+      "source_end": 788.08,
+      "original_cues": [
+        {
+          "id": "changing-models:0194",
+          "start": 778.6,
+          "end": 780.08,
+          "text": "But then you could also run Chef on it.",
+          "zh": "也可以让 Jev 来处理［原文名称转写待核］，"
+        }
+      ],
+      "whisper": "could actually say like this is a short summary of the description you could invest some extra tokens to summarize it but that's tricky as it streams in but then you could also run chef on it to sort of classify what's going on so i don't know it there's probably going to be some experiment",
+      "qwen": "Could actually say like this is short summary of the description. You could invest some extra tokens to summarize it, but that's tricky as it streams in. But then you could also run chef on it to sort of classify what's going on. So I don't know. It there's probably going to be some experiment.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "两套均为 Chef；后文有 Jev，但本片段未获得可靠声学区分，保留待核。"
+    },
+    {
+      "id": "changing-models-0240",
+      "source_start": 905.34,
+      "source_end": 925.8,
+      "original_cues": [
+        {
+          "id": "changing-models:0240",
+          "start": 913.34,
+          "end": 917.8,
+          "text": "Like I can just have a haiku or a terra or lunar model.",
+          "zh": "我总不能随便让一个 Haiku、Terra 或 Luna 模型，"
+        }
+      ],
+      "whisper": "that the model doesn't just have to look at the tool call usually it also has to look at the full context um for it to to actually make sense like i can just have a haiku or a terra or lunar model look at the single bash call and say yeah this is not dangerous or this is not destructive in a way that we don't want it to be destructive you",
+      "qwen": "That the model doesn't just have to look at the tool call. Usually it also has to look at the full context. For it to actually make sense. Like i can just have a haiku or a terra or lunar model. Look at the single bash call and say, yeah, this is not dangerous or this is not destructive in a way that we don't want it to be destructive.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "Haiku / Terra / lunar 的语音结果基本一致，Luna 拼写与原句情态仍保留待核。"
+    },
+    {
+      "id": "changing-models-0251",
+      "source_start": 944.7,
+      "source_end": 961.78,
+      "original_cues": [
+        {
+          "id": "changing-models:0251",
+          "start": 952.7,
+          "end": 953.78,
+          "text": "We should tour in complete.",
+          "zh": "而那通常是图灵完备的。"
+        }
+      ],
+      "whisper": "So if you do want to use it in a non-coding environment, you're probably going to give it a programming language with a Turing complete where good luck. So you've got to constrain everything around it.",
+      "qwen": "So if you do want to use it in a non-coding environment, you're probably going to give it a programming language, which is Turing complete, where good luck. So you've got to constrain everything around it.",
+      "qwen_slow": null,
+      "changes": [
+        {
+          "id": "changing-models:0251",
+          "before": {
+            "start": 952.7,
+            "end": 953.78,
+            "text": "We should tour in complete.",
+            "zh": "而那通常是图灵完备的。"
+          },
+          "after": {
+            "start": 952.7,
+            "end": 953.78,
+            "text": "Which is Turing complete.",
+            "zh": "而它是图灵完备的。"
+          },
+          "reason": "Qwen 原速为 which is Turing complete，局部 Whisper 也识别到 Turing complete；移除中文无根据的“通常”。"
+        }
+      ],
+      "assessment": "Qwen 原速为 which is Turing complete，局部 Whisper 也识别到 Turing complete；移除中文无根据的“通常”。"
+    },
+    {
+      "id": "changing-models-0262",
+      "source_start": 988.5600000000001,
+      "source_end": 1010.92,
+      "original_cues": [
+        {
+          "id": "changing-models:0262",
+          "start": 996.5600000000001,
+          "end": 1002.92,
+          "text": "And then the bash runs where you're sort of exe.dev or oversell workers or like",
+          "zh": "而 Bash 则运行在 exe.dev，或另一个 worker 平台［名称转写不清］，"
+        }
+      ],
+      "whisper": "So you have like one sandbox and another sandbox, which sort of makes sense, I guess, because like Kotemur theoretically runs where the harness runs, which is more trusted. And then the bash runs where you're sort of xe.dev or oversell workers or like Cloudflare durable object sandbox kind of sits. But it is all basically in a way really...",
+      "qwen": "So you have like one sandbox and another sandbox, which sort of makes sense, I guess, because like code most theoretically runs where the harness runs, which is more trusted. And then the bash runs where you're sort of xc.dev or resell workers or like cloud flador object sandbox kind of sits. But it is all basically in a way really.",
+      "qwen_slow": "Radically runs with harness runs, which is more trusted. And then the bash runs where you're sort of exit death or over sale workers or like cloud, flador object sandbox kind of sits.",
+      "changes": [],
+      "assessment": "oversell / resell / over sale 与 exe.dev 的识别仍混乱；不强行归为 Vercel。"
+    },
+    {
+      "id": "changing-models-0311",
+      "source_start": 1206.48,
+      "source_end": 1229.6999999999998,
+      "original_cues": [
+        {
+          "id": "changing-models:0311",
+          "start": 1214.48,
+          "end": 1221.6999999999998,
+          "text": "So we actually, so we added an endpoint where you can describe your task and what you get back is a rack filtered.",
+          "zh": "所以我们加了一个端点，你可以描述任务，返回的是经过检索筛选的结果："
+        }
+      ],
+      "whisper": "reconfigures radius. And we tried a bunch of things. And what we actually found to work the best today with these models is OpenAPI. So we added an endpoint where you can describe your task. And what you get back is a REC filtered. These are the endpoints that you might want to use plus the OpenAPI schema. And you can actually expose that via MCP. So it is actually very possible.",
+      "qwen": "Reconfigures radius. And we tried a bunch of things and the what we actually found to work the best today with these models is open API. So which actually, so we added an endpoint where you can describe your task and what you get back is a rec filtered. These are the endpoints that you might want to use plus the OpenAI schema. And you can actually expose it via MCP. So like it is actually very possible.",
+      "qwen_slow": null,
+      "changes": [],
+      "assessment": "rack / REC，无法区分 RAG 与其他说法；中文继续用“检索筛选”，未改英文。"
+    },
+    {
+      "id": "changing-models-0345",
+      "source_start": 1329.04,
+      "source_end": 1348.52,
+      "original_cues": [
+        {
+          "id": "changing-models:0345",
+          "start": 1337.04,
+          "end": 1340.52,
+          "text": "If you're bash only, you're kind of, you're kind of, yeah, full part.",
+          "zh": "如果只有 Bash，那你就……［此处表达转写不清，待回听］。"
+        }
+      ],
+      "whisper": "entries in the transcript. And I think this... If you are bash only, there's only one output, right? Sure. If you're bash only, you're kind of full part. But I think a future will be composed via MCP plus code mode. That kind of makes sense. I worry, though, that the models aren't...",
+      "qwen": "or entries in the transcript. and i think this- but you have to say, like, if you are bash only, there's only one output, right? sure, sure. if you bash only, you kind of, you kind of, yeah, full part. but i think a future where we compose via mcp plus code mode, that kind of makes sense. i worry, though, that the models aren't.",
+      "qwen_slow": "Only, there's only one output, right? Sure. Sure. If you batch only, you kind of, you kind of, yeah, full part. But I think a future will be composed via MCP.",
+      "changes": [],
+      "assessment": "两套和降速仍为 full part，无法可靠补全意思，保留待核。"
+    }
+  ]
+}

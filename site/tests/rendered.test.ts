@@ -196,3 +196,42 @@ describe('published editorial pages', () => {
     }
   });
 });
+
+describe('conversation pages', () => {
+  const slugs = ['pi-durable', 'changing-models', 'agent-frustrations', 'slippery-slop', 'harness-and-workflow'];
+  for (const locale of ['en', 'zh']) {
+    const base = locale === 'zh' ? '/zh/talks/' : '/talks/';
+    test(`${base} lists all five conversations`, () => {
+      const win = new Window();
+      try {
+        win.document.write(readFileSync(new URL(`../dist${base}index.html`, import.meta.url), 'utf8'));
+        expect(win.document.querySelectorAll('.talk-card')).toHaveLength(5);
+        for (const slug of slugs) expect(win.document.querySelector(`a[href="${base}${slug}/"]`)).not.toBeNull();
+      } finally { win.happyDOM.abort(); }
+    });
+    for (const slug of slugs) test(`${base}${slug}/ serves captions and summaries without client rendering`, () => {
+      const win = new Window();
+      try {
+        win.document.write(readFileSync(new URL(`../dist${base}${slug}/index.html`, import.meta.url), 'utf8'));
+        expect(win.document.querySelectorAll('h1')).toHaveLength(1);
+        expect(win.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`https://piindex.dev${base}${slug}/`);
+        expect(win.document.querySelector('video source')?.getAttribute('src')).toStartWith('https://video.twimg.com/');
+        expect(win.document.querySelector('track')?.getAttribute('src')).toBe(`${base}${slug}.vtt`);
+        expect(win.document.querySelector('track')?.hasAttribute('default')).toBe(true);
+        expect(win.document.querySelector('track')?.getAttribute('srclang')).toBe(locale === 'zh' ? 'zh-CN' : 'en');
+        const data = JSON.parse(readFileSync(new URL(`../src/data/talks/${slug}.json`, import.meta.url), 'utf8'));
+        const firstCue = data.segments[0];
+        const caption = locale === 'zh' ? firstCue.zh : firstCue.text;
+        expect(win.document.querySelector('.transcript-line [lang]')?.textContent).toBe(caption);
+        const vtt = readFileSync(new URL(`../dist${base}${slug}.vtt`, import.meta.url), 'utf8');
+        expect(vtt).toContain(caption);
+        expect(vtt.match(/ --> /g)?.length).toBe(data.segments.length);
+        expect(win.document.querySelector('.talk-watch-layout .transcript-panel')).not.toBeNull();
+        expect(win.document.querySelector('.talk-watch-layout .summary-panel')).toBeNull();
+        expect(win.document.querySelectorAll('[data-start]').length).toBeGreaterThan(10);
+        expect(win.document.querySelectorAll('[data-seek]').length).toBeGreaterThanOrEqual(3);
+        expect(readFileSync(new URL(`../dist/talks/${slug}.vtt`, import.meta.url), 'utf8')).toStartWith('WEBVTT\n');
+      } finally { win.happyDOM.abort(); }
+    });
+  }
+});

@@ -1,0 +1,2391 @@
+{
+  "slug": "changing-models",
+  "sourceId": "2104510506627121451",
+  "date": "2026-09-28",
+  "title": {
+    "zh": "模型变了，Pi 需要跟着改变吗？",
+    "en": "When models change, should Pi change too?"
+  },
+  "source": "https://x.com/pidotdev/status/2104510506627121451",
+  "video": "https://video.twimg.com/amplify_video/2104478098821447680/vid/avc1/1920x1080/ry6nsFyCvSiTjgEl.mp4?tag=29",
+  "poster": "/talks/changing-models.jpg",
+  "duration": 1466.791,
+  "portrait": false,
+  "series": "Monday Meditations",
+  "tags": [
+    "Models",
+    "Harness"
+  ],
+  "sourceText": "Welcome to our Monday Meditations. In which @badlogicgames and @mitsuhiko are talking about things that might or might not need to change in Pi given the changes in models.",
+  "summary": {
+    "zh": [
+      {
+        "start": 82,
+        "title": "模型转向 Bash，原有交互也要调整",
+        "text": "两人观察到新模型更倾向于通过 Bash 和 Python 修改文件，而不是调用专门的编辑工具。这会影响错误反馈、diff 展示，以及人对执行过程的可见性。"
+      },
+      {
+        "start": 176.5,
+        "title": "什么时候值得看执行记录",
+        "text": "普通编码任务中，两人更多在完成后用编辑器审查结果；涉及 CI、远程服务或边讨论边探索时，过程记录仍然重要。不同用途需要不同的呈现方式。"
+      },
+      {
+        "start": 333,
+        "title": "快照与 diff 并没有统一答案",
+        "text": "他们讨论用独立 Git 索引合成修改记录的方案，也指出跨目录操作、性能和多一层状态的成本。小提交和更好的 diff 工具仍是重要方向。"
+      },
+      {
+        "start": 637.9,
+        "title": "顺应模型行为，同时重新设计体验",
+        "text": "Pi 原有界面接近模型事件的直接呈现。两人提出通过工具参数中的简短描述、额外摘要等方式改善可读性，并把这些办法视为需要实验的方向。"
+      },
+      {
+        "start": 825.5,
+        "title": "安全边界不能只依赖工具分类",
+        "text": "当模型把操作集中到 Bash 或代码执行中，基于单个工具的审批会失去部分意义。Mario 质疑缺乏完整上下文的二次模型判断，更强调沙箱约束。"
+      },
+      {
+        "start": 1122,
+        "title": "MCP 与 code mode 需要结构化输出",
+        "text": "两人探讨 MCP 的鉴权价值以及代码编排需要的数据形态。Armin 分享 Radius 使用任务相关 OpenAPI schema 的经验，并认为面向代码调用的服务应提供结构化结果。"
+      },
+      {
+        "start": 1340.7,
+        "title": "仍需评估模型差异与新用途",
+        "text": "他们认为 MCP 加 code mode 有潜力，但不同模型的实现、能力及本地模型支持仍需测试。Armin 还提出用代码定义工作流，再由 Jev 反复选择路径的用途。"
+      }
+    ],
+    "en": [
+      {
+        "start": 82,
+        "title": "Bash-oriented models change the interaction",
+        "text": "They observe newer models preferring Bash and Python over dedicated edit tools, affecting error feedback, diff presentation and the user’s visibility into execution."
+      },
+      {
+        "start": 176.5,
+        "title": "When the execution transcript matters",
+        "text": "For routine coding, both often inspect the finished changes in an editor. Process visibility still matters for CI, remote services and conversations that alternate between exploration and discussion."
+      },
+      {
+        "start": 333,
+        "title": "Snapshots and diffs involve tradeoffs",
+        "text": "They discuss synthesizing diffs through a separate Git index, including costs around cross-directory work, performance and additional state. Small commits and better diff tools remain valuable."
+      },
+      {
+        "start": 637.9,
+        "title": "Follow model behavior while rethinking the interface",
+        "text": "Pi’s interface has closely reflected model events. They propose experiments such as short descriptions in tool arguments and additional summaries to make increasingly complex calls easier to follow."
+      },
+      {
+        "start": 825.5,
+        "title": "Tool categories alone cannot define the safety boundary",
+        "text": "As operations move into Bash and code execution, approvals based on individual tool types lose some usefulness. Mario questions secondary-model judgments without full context and emphasizes sandbox constraints."
+      },
+      {
+        "start": 1122,
+        "title": "MCP and code mode need structured results",
+        "text": "They discuss MCP’s authentication role and the data needed for code orchestration. Armin describes task-relevant OpenAPI schemas in Radius and argues for structured results from services intended for programmatic use."
+      },
+      {
+        "start": 1340.7,
+        "title": "Model differences and new uses still need evaluation",
+        "text": "MCP plus code mode looks promising to them, but implementations, model abilities and local-model support need testing. Armin also proposes code-defined workflows whose paths Jev can repeatedly select."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 3.36,
+      "text": "Yeah, welcome from the world of snot and coughs.",
+      "zh": "欢迎来到鼻涕和咳嗽的世界。"
+    },
+    {
+      "start": 5.16,
+      "end": 11.64,
+      "text": "Yes, Mario and I, we are at the beginning of the Kids",
+      "zh": "对，Mario 和我现在刚好赶上了孩子们"
+    },
+    {
+      "start": 11.64,
+      "end": 13.22,
+      "text": "Bring All Your Sickness at Home Wave.",
+      "zh": "把各种病带回家的这一波。"
+    },
+    {
+      "start": 13.22,
+      "end": 19.16,
+      "text": "Yeah, everybody sends their kids to school or kindergarten and then a week later everybody is sick.",
+      "zh": "大家把孩子送去学校或幼儿园，一周后所有人都病了。"
+    },
+    {
+      "start": 20.740000000000002,
+      "end": 22.6,
+      "text": "So a small little anecdote here.",
+      "zh": "说个小插曲。"
+    },
+    {
+      "start": 22.6,
+      "end": 28.64,
+      "text": "I started my career at Sentry pretty much exactly",
+      "zh": "我开始在 Sentry 工作的时间，差不多正好"
+    },
+    {
+      "start": 28.64,
+      "end": 31.12,
+      "text": "coinciding with us getting our first kid.",
+      "zh": "和我们第一个孩子出生重合。"
+    },
+    {
+      "start": 31.92,
+      "end": 36.1,
+      "text": "And now David, a friend of mine, founder of Sentry, now he has his first kid.",
+      "zh": "我的朋友、Sentry 创始人 David，现在也有了第一个孩子。"
+    },
+    {
+      "start": 36.1,
+      "end": 42.56,
+      "text": "And now he's learning all that stuff and then sharing on Twitter.",
+      "zh": "他现在才开始体会这些，然后在 Twitter 上分享。"
+    },
+    {
+      "start": 42.64,
+      "end": 43.980000000000004,
+      "text": "It's like, how do you manage to work with kids?",
+      "zh": "比如：有孩子以后到底怎么工作？"
+    },
+    {
+      "start": 44.24,
+      "end": 45.32,
+      "text": "It works.",
+      "zh": "能工作的。"
+    },
+    {
+      "start": 47.6,
+      "end": 49.68000000000001,
+      "text": "Yeah, first time.",
+      "zh": "是啊，第一次嘛。"
+    },
+    {
+      "start": 50.96,
+      "end": 52.14,
+      "text": "It just requires adjustment.",
+      "zh": "就是需要适应。"
+    },
+    {
+      "start": 52.6,
+      "end": 53.86,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 54.88,
+      "end": 59.94,
+      "text": "And we are now also adjusting to the models changing.",
+      "zh": "我们现在也在适应模型的变化。"
+    },
+    {
+      "start": 60.32,
+      "end": 60.980000000000004,
+      "text": "What a segue.",
+      "zh": "这转场真不错。"
+    },
+    {
+      "start": 61.56,
+      "end": 62.34,
+      "text": "And what a segue.",
+      "zh": "真是个好转场。"
+    },
+    {
+      "start": 63.42,
+      "end": 64.82000000000001,
+      "text": "You're really good at this now.",
+      "zh": "你现在越来越擅长这个了。"
+    },
+    {
+      "start": 67.7,
+      "end": 73.92,
+      "text": "So we decided we want to talk a little bit about how the new models behave and what",
+      "zh": "所以我们想聊聊新模型的行为，"
+    },
+    {
+      "start": 73.92,
+      "end": 78.66,
+      "text": "implications to have on harnesses and how we might or might not respond to that.",
+      "zh": "这对 harness 有什么影响，以及我们可能会怎么应对，或者不应对。"
+    },
+    {
+      "start": 80.32,
+      "end": 81.38,
+      "text": "And what we think about it.",
+      "zh": "还有我们怎么看这件事。"
+    },
+    {
+      "start": 81.38,
+      "end": 81.88,
+      "text": "Right.",
+      "zh": "对。"
+    },
+    {
+      "start": 81.88,
+      "end": 81.89999999999999,
+      "text": "Right.",
+      "zh": "对。"
+    },
+    {
+      "start": 82.03999999999999,
+      "end": 88.34,
+      "text": "So the problem that Armin identified recently with the release of Opus 5.5 was that it stopped using the",
+      "zh": "Armin 最近发现的问题是，Opus 5.5 发布后，"
+    },
+    {
+      "start": 88.34,
+      "end": 91.28,
+      "text": "edit tool and just basically uses bash for everything now.",
+      "zh": "它不再使用 edit 工具了，基本上什么事都用 Bash。"
+    },
+    {
+      "start": 92.72,
+      "end": 95.6,
+      "text": "For, yeah, well, Python, why a bash?",
+      "zh": "对，或者说，通过 Bash 来运行 Python。"
+    },
+    {
+      "start": 95.6,
+      "end": 99.19999999999999,
+      "text": "That might be token efficient.",
+      "zh": "这样可能比较省 token。"
+    },
+    {
+      "start": 99.19999999999999,
+      "end": 103.32,
+      "text": "It might have some correctness issues like you identified.",
+      "zh": "但也可能存在你发现的那些正确性问题。"
+    },
+    {
+      "start": 103.32,
+      "end": 109.62,
+      "text": "Like the code might not necessarily give the model signal that the edit didn't actually",
+      "zh": "比如，这些代码未必能让模型知道：这次编辑"
+    },
+    {
+      "start": 109.62,
+      "end": 111.16,
+      "text": "do what it's supposed to do.",
+      "zh": "其实没有达到预期的效果。"
+    },
+    {
+      "start": 111.16,
+      "end": 112.88,
+      "text": "So that's not cool.",
+      "zh": "这就不好了。"
+    },
+    {
+      "start": 112.88,
+      "end": 119.92,
+      "text": "And from a UX perspective, you, as the user watching a transcript flow by,",
+      "zh": "而从用户体验来说，你看着执行记录不断往下刷，"
+    },
+    {
+      "start": 119.92,
+      "end": 125.84,
+      "text": "don't get a nice diff anymore necessarily, but just a super complicated token efficient",
+      "zh": "未必还能看到清楚的 diff，而是一段极其复杂、节省 token 的"
+    },
+    {
+      "start": 125.84,
+      "end": 128.12,
+      "text": "bash call with Python intermixed.",
+      "zh": "Bash 调用，里面还混着 Python。"
+    },
+    {
+      "start": 128.4,
+      "end": 129.7,
+      "text": "And that's not great.",
+      "zh": "这体验也不太好。"
+    },
+    {
+      "start": 130.12,
+      "end": 132.56,
+      "text": "So the question is, what do we do, Armin?",
+      "zh": "所以问题来了，Armin，我们怎么办？"
+    },
+    {
+      "start": 132.7,
+      "end": 133.28,
+      "text": "What do we do?",
+      "zh": "怎么办呢？"
+    },
+    {
+      "start": 133.28,
+      "end": 139.08,
+      "text": "So maybe, so I think that there are two",
+      "zh": "我觉得这里有两个"
+    },
+    {
+      "start": 139.08,
+      "end": 142.54,
+      "text": "macro trends,",
+      "zh": "大的趋势，"
+    },
+    {
+      "start": 142.54,
+      "end": 144.6,
+      "text": "I would say, that affect us too.",
+      "zh": "它们也在影响我们。"
+    },
+    {
+      "start": 144.68,
+      "end": 150.14,
+      "text": "But I think like at least for the token max of the world, like why do we even care what the transcript is one?",
+      "zh": "不过，对那些追求大量使用 token 的人来说，首先就是：为什么还要在意执行记录？"
+    },
+    {
+      "start": 150.4,
+      "end": 152.4,
+      "text": "It's like you only look at the end result.",
+      "zh": "只看最终结果不就好了。"
+    },
+    {
+      "start": 152.4,
+      "end": 155.82,
+      "text": "And then the second, I think,",
+      "zh": "第二个我觉得"
+    },
+    {
+      "start": 155.82,
+      "end": 159.48000000000002,
+      "text": "thing worth discussing is not everything is a coding agent.",
+      "zh": "值得讨论的问题是，并不是所有 agent 都是编程 agent。"
+    },
+    {
+      "start": 160.68,
+      "end": 163.06,
+      "text": "And some things want to have more control.",
+      "zh": "有些场景需要更强的控制。"
+    },
+    {
+      "start": 163.38,
+      "end": 168.0,
+      "text": "And like the less likely an agent is at using the things you want him to use,",
+      "zh": "agent 越不愿意使用你希望它使用的工具，"
+    },
+    {
+      "start": 168.0,
+      "end": 172.20000000000002,
+      "text": "the more control you're sort of giving away in one form or another.",
+      "zh": "你就越是在以某种方式让出控制权。"
+    },
+    {
+      "start": 174.3,
+      "end": 176.54000000000002,
+      "text": "So maybe we start with like, what's the point of the transcript?",
+      "zh": "那我们先聊聊：执行记录到底有什么用？"
+    },
+    {
+      "start": 176.54000000000002,
+      "end": 181.0,
+      "text": "Yeah, I mean, for me,",
+      "zh": "对我来说，"
+    },
+    {
+      "start": 181.0,
+      "end": 187.48,
+      "text": "the transcript, the transcript with respect to seeing diffs and",
+      "zh": "如果执行记录的作用是看 diff 之类的东西，"
+    },
+    {
+      "start": 187.48,
+      "end": 191.23999999999998,
+      "text": "so on is meaningless for me 99% of all the time.",
+      "zh": "那在 99% 的时候，它对我都没意义。"
+    },
+    {
+      "start": 191.34,
+      "end": 195.06,
+      "text": "If I have more than one agent open, I'm not looking at all the transcripts flowing by.",
+      "zh": "如果我同时开着多个 agent，我不会盯着所有执行记录看。"
+    },
+    {
+      "start": 195.29999999999998,
+      "end": 196.18,
+      "text": "That's a waste of my time.",
+      "zh": "那是在浪费时间。"
+    },
+    {
+      "start": 196.26,
+      "end": 202.06,
+      "text": "I'm basically looking at the result, the artifacts, the file changes they made after they think they're done.",
+      "zh": "我主要看结果，看它们自认为完成之后产出的东西和文件改动。"
+    },
+    {
+      "start": 202.06,
+      "end": 208.2,
+      "text": "And I do this in a proper IDE or editor with a nice diff tool where I have code",
+      "zh": "而且我会在真正的 IDE 或编辑器里看，那里有好用的 diff 工具，"
+    },
+    {
+      "start": 208.2,
+      "end": 211.86,
+      "text": "navigation, might even be able to debug things like VS Code.",
+      "zh": "能跳转代码，甚至能调试，比如 VS Code。"
+    },
+    {
+      "start": 212.54,
+      "end": 218.94,
+      "text": "And that seems to be a much better spend of my time than watching transcripts go by and seeing edit tool",
+      "zh": "相比盯着执行记录、看 edit 工具调用，"
+    },
+    {
+      "start": 218.94,
+      "end": 224.62,
+      "text": "calls and kind of interfering when I see something stupid being generated or edited.",
+      "zh": "一看到生成或修改了蠢东西就插手，我觉得这样更值得花时间。"
+    },
+    {
+      "start": 226.2,
+      "end": 227.4,
+      "text": "I think it's the same for me.",
+      "zh": "我也差不多。"
+    },
+    {
+      "start": 227.4,
+      "end": 232.6,
+      "text": "I don't watch the transcript as it's doing except for a handful of cases,",
+      "zh": "除了少数几种情况，我不会在它执行时盯着记录。"
+    },
+    {
+      "start": 232.6,
+      "end": 238.84,
+      "text": "one of which is if I ask it to, for instance, do something with a computer.",
+      "zh": "一种情况是，我让它在计算机上做些操作。"
+    },
+    {
+      "start": 239.14000000000001,
+      "end": 243.72,
+      "text": "I'm not saying a computer use, but like, for instance,",
+      "zh": "我不是指 computer use，而是比如说，"
+    },
+    {
+      "start": 243.72,
+      "end": 250.04,
+      "text": "configure CI or figure out some access to a",
+      "zh": "配置 CI，或者搞清楚怎么访问"
+    },
+    {
+      "start": 250.04,
+      "end": 251.78,
+      "text": "remote service, like apply Pulumi things.",
+      "zh": "远程服务，比如执行 Pulumi 的变更。"
+    },
+    {
+      "start": 251.78,
+      "end": 253.22,
+      "text": "Then I really care about what it's doing.",
+      "zh": "这时候我就很关心它在做什么。"
+    },
+    {
+      "start": 254.7,
+      "end": 261.34,
+      "text": "But for the most part, the transcript to me doesn't have, at least when it implements stuff, I don't really care about it.",
+      "zh": "但大多数时候，至少它在实现功能时，我并不太关心执行记录。"
+    },
+    {
+      "start": 261.46,
+      "end": 268.7,
+      "text": "I do, however, have the situation where I have a conversation with the agent about how to solve a particular problem.",
+      "zh": "不过，我会和 agent 讨论具体问题该怎么解决。"
+    },
+    {
+      "start": 268.98,
+      "end": 274.62,
+      "text": "And in order for it to have a better understanding of what we're doing,",
+      "zh": "为了让它更好地理解我们在做的事情，"
+    },
+    {
+      "start": 274.62,
+      "end": 278.58,
+      "text": "it is encouraged to read files, understand the code base and so forth.",
+      "zh": "我会鼓励它读文件、理解代码库等等。"
+    },
+    {
+      "start": 278.58,
+      "end": 285.4,
+      "text": "And then you have this intermittent read some stuff, maybe do a POC, and then we discuss.",
+      "zh": "于是过程就是：读一些东西，也许做个概念验证，然后我们继续讨论。"
+    },
+    {
+      "start": 286.12,
+      "end": 292.16,
+      "text": "And so most of the transcript now no longer collapses as nice in Pi as it used to because like all their,",
+      "zh": "现在这些记录在 Pi 里不像以前那样能很好地折叠了，"
+    },
+    {
+      "start": 292.16,
+      "end": 297.56,
+      "text": "I mean, it probably already had a lot of like bash commands in there that already didn't compress all that well.",
+      "zh": "虽然以前也有不少 Bash 命令，本来就不太好折叠。"
+    },
+    {
+      "start": 297.78,
+      "end": 304.2,
+      "text": "But now the inputs to those tool calls are humongous because they are all the writes now and they don't collapse.",
+      "zh": "但现在这些工具调用的输入特别大，因为所有写入操作都放进去了，而且不会折叠。"
+    },
+    {
+      "start": 304.2,
+      "end": 309.74,
+      "text": "So the transcript now for me becomes harder to read when I do still want it just because all the",
+      "zh": "所以在我确实想读记录的时候，它反而更难读了，"
+    },
+    {
+      "start": 309.74,
+      "end": 313.78,
+      "text": "verbosity and the ugliness of the tool calls in there.",
+      "zh": "因为里面的工具调用又冗长又难看。"
+    },
+    {
+      "start": 314.42,
+      "end": 314.53999999999996,
+      "text": "Yeah.",
+      "zh": "是的。"
+    },
+    {
+      "start": 314.92,
+      "end": 321.18,
+      "text": "I can see that something that touches a production system or even a staging system where you want to actually see individual",
+      "zh": "我理解，如果操作涉及生产环境，甚至预发布环境，你确实会想看每条"
+    },
+    {
+      "start": 321.18,
+      "end": 326.84,
+      "text": "commands to judge whether something's going to go to shit real soon.",
+      "zh": "命令，判断它是不是马上就要搞砸。"
+    },
+    {
+      "start": 326.84,
+      "end": 328.44,
+      "text": "That makes sense.",
+      "zh": "这很合理。"
+    },
+    {
+      "start": 329.09999999999997,
+      "end": 332.91999999999996,
+      "text": "I don't know if there's a good solution to that.",
+      "zh": "我不知道有没有好的解决办法。"
+    },
+    {
+      "start": 333.02,
+      "end": 337.5,
+      "text": "Like we looked at what other harnesses like Codex or Claude Code are doing.",
+      "zh": "我们看过 Codex、Claude Code 等其他 harness 的做法。"
+    },
+    {
+      "start": 337.73999999999995,
+      "end": 339.59999999999997,
+      "text": "And I think you looked into Claude Code.",
+      "zh": "你应该研究过 Claude Code。"
+    },
+    {
+      "start": 339.78,
+      "end": 341.15999999999997,
+      "text": "What's their solution here?",
+      "zh": "它们是怎么解决的？"
+    },
+    {
+      "start": 341.16,
+      "end": 345.24,
+      "text": "So Claude Code on all the new models,",
+      "zh": "Claude Code 对所有新模型，"
+    },
+    {
+      "start": 345.24,
+      "end": 349.12,
+      "text": "which is Fable 5, 5.1 and Opus 5.5 uses,",
+      "zh": "包括 Fable 5、5.1 和 Opus 5.5，都用了一个模式。"
+    },
+    {
+      "start": 349.12,
+      "end": 353.88000000000005,
+      "text": "I forgot the name, they had a really funny name for this, but it's basically a mode where two things are happening.",
+      "zh": "名字我忘了，那个名字挺有意思的，但本质上它做两件事。"
+    },
+    {
+      "start": 354.06,
+      "end": 359.24,
+      "text": "One is it basically pushes with a prompt instruction, the agents would just use bash.",
+      "zh": "第一，通过提示词指令，推动 agent 直接使用 Bash。"
+    },
+    {
+      "start": 359.24,
+      "end": 363.8,
+      "text": "So like they're reinforcing even the thing that sort of it does by hand, out of the box anyways.",
+      "zh": "也就是说，模型本来默认就会这么做，它们还进一步强化了这种行为。"
+    },
+    {
+      "start": 364.52,
+      "end": 371.38,
+      "text": "But then what they are doing is they're snapshotting by writing into a separate Git work tree all the files that you're working on anyway.",
+      "zh": "第二，它会把你正在处理的文件写入一个单独的 Git 工作树，保存快照。"
+    },
+    {
+      "start": 371.58,
+      "end": 377.62,
+      "text": "So in addition to the Git, it's not the user work tree in the traditional sense,",
+      "zh": "在原有 Git 状态之外，它并不是传统意义上的用户工作树，"
+    },
+    {
+      "start": 377.62,
+      "end": 379.14,
+      "text": "but it writes into a separate index.",
+      "zh": "而是写入一个单独的索引。"
+    },
+    {
+      "start": 379.24,
+      "end": 384,
+      "text": "So it maintains for each repo you're working on a separate index just for one agentic run.",
+      "zh": "所以，对每个仓库，它都会为一次 agent 执行维护单独的索引。"
+    },
+    {
+      "start": 384,
+      "end": 387.24,
+      "text": "And then after and before each tool call,",
+      "zh": "然后在每次工具调用前后，"
+    },
+    {
+      "start": 387.24,
+      "end": 392.26,
+      "text": "it compares the state of that local checkout to the work tree it had before.",
+      "zh": "它会比较当前本地检出的状态和之前保存的工作树状态。"
+    },
+    {
+      "start": 392.42,
+      "end": 397.96,
+      "text": "And then it synthesizes a diff into the UI as if an edit tool call happened.",
+      "zh": "再在界面里合成一个 diff，看起来像是发生了一次 edit 工具调用。"
+    },
+    {
+      "start": 398.76,
+      "end": 401.66,
+      "text": "So you can see the snapshot as it was taking place there.",
+      "zh": "这样你就能看到当时发生的变化。"
+    },
+    {
+      "start": 403.58,
+      "end": 410.74,
+      "text": "And I think this is sort of, well, so I think that there are two kind of interesting things here.",
+      "zh": "我觉得这里有两点挺有意思。"
+    },
+    {
+      "start": 410.74,
+      "end": 415.62,
+      "text": "One is that I actually sometimes do perform edits from the wrong working directory.",
+      "zh": "首先，我有时确实会从另一个工作目录修改文件。"
+    },
+    {
+      "start": 416.34000000000003,
+      "end": 418.64,
+      "text": "And the reason for this is, for instance, we have pi, we have radius.",
+      "zh": "比如我们有 Pi，也有 Radius。"
+    },
+    {
+      "start": 419,
+      "end": 422.5,
+      "text": "Every once in a while, I have to work on two things and actually do let it commit to the other thing.",
+      "zh": "偶尔我需要同时处理两个项目，而且会让它向另一个项目提交。"
+    },
+    {
+      "start": 422.90000000000003,
+      "end": 425.28000000000003,
+      "text": "That will not work with the work tree approach anyway.",
+      "zh": "这种工作树方案就处理不了这种情况。"
+    },
+    {
+      "start": 425.38,
+      "end": 429.14,
+      "text": "So like the moment you're outside of this place where you are, it doesn't work.",
+      "zh": "只要越出了当前这个目录范围，就不管用了。"
+    },
+    {
+      "start": 429.46000000000004,
+      "end": 433.68,
+      "text": "The other thing is it's actually not super fast either because like you might have a lot of files in there,",
+      "zh": "另一个问题是，它也不算特别快，因为里面可能有很多文件，"
+    },
+    {
+      "start": 434.48,
+      "end": 440.44,
+      "text": "which are at least not sufficiently tracked by Git so that you can very trivially make that work.",
+      "zh": "Git 对这些文件的跟踪情况，并不足以让这件事轻易完成。"
+    },
+    {
+      "start": 440.74,
+      "end": 444.3,
+      "text": "So it's a little bit unclear, I think, if it's a good trade-off.",
+      "zh": "所以我不确定这个取舍是否划算。"
+    },
+    {
+      "start": 446.32,
+      "end": 453.14,
+      "text": "It also means in a way that what you generally consider to be the diff, which is against your commit,",
+      "zh": "而且你通常理解的 diff，是相对于自己的提交来说的；"
+    },
+    {
+      "start": 453.90000000000003,
+      "end": 457.62,
+      "text": "and what then the coding agent thinks, which is against some sort of other index,",
+      "zh": "编程 agent 理解的 diff，却是相对于另一个索引。"
+    },
+    {
+      "start": 458.08,
+      "end": 459.84000000000003,
+      "text": "like it's another form of indirection.",
+      "zh": "这又多了一层间接关系。"
+    },
+    {
+      "start": 460.26,
+      "end": 464.86,
+      "text": "I'm actually not convinced that that's a particularly necessary trade-off.",
+      "zh": "我不太相信这是一项特别有必要的取舍。"
+    },
+    {
+      "start": 464.86,
+      "end": 472.14,
+      "text": "I think at that point, just commit to Git and like make the diff experience versus the Git checkout work really well.",
+      "zh": "到了这一步，我觉得还不如直接提交到 Git，把相对于 Git 检出状态的 diff 体验做好。"
+    },
+    {
+      "start": 474.04,
+      "end": 474.78000000000003,
+      "text": "So I don't know.",
+      "zh": "所以，我也说不好。"
+    },
+    {
+      "start": 475.32,
+      "end": 477.96000000000004,
+      "text": "I actually, I think that there's another sort of like small wrinkle on it,",
+      "zh": "我觉得还有个小问题，"
+    },
+    {
+      "start": 478,
+      "end": 480.8,
+      "text": "which is like if you actually do want to watch the transcript,",
+      "zh": "就是假如你确实想看执行记录，"
+    },
+    {
+      "start": 481.14,
+      "end": 484.44,
+      "text": "like let's just assume you have a use case where you do want to watch the transcript.",
+      "zh": "我们就假设你有这样的使用场景，"
+    },
+    {
+      "start": 484.78000000000003,
+      "end": 488.06,
+      "text": "You can't read that stuff anyways as it's happening.",
+      "zh": "它执行时你其实也来不及读那些内容。"
+    },
+    {
+      "start": 488.06,
+      "end": 493.42,
+      "text": "So you could only ever read it once it's done, which like that's a little bit weird anyways.",
+      "zh": "你只能等它做完再读，这本身也有点奇怪。"
+    },
+    {
+      "start": 494.36,
+      "end": 498.2,
+      "text": "So in a way, if you do want to read the transcript,",
+      "zh": "所以，如果你真的想看执行记录，"
+    },
+    {
+      "start": 498.34,
+      "end": 500.06,
+      "text": "you probably want a summary of what it's about to do.",
+      "zh": "你可能更想要的是：它接下来准备做什么的简短说明。"
+    },
+    {
+      "start": 502.7,
+      "end": 503.44,
+      "text": "I suppose.",
+      "zh": "我想是这样。"
+    },
+    {
+      "start": 504.06,
+      "end": 507.26,
+      "text": "I guess the biggest takeaway here is we need better diff tools.",
+      "zh": "最大的结论可能是：我们需要更好的 diff 工具。"
+    },
+    {
+      "start": 507.26,
+      "end": 507.7,
+      "text": "Yes.",
+      "zh": "对。"
+    },
+    {
+      "start": 509.7,
+      "end": 510.02,
+      "text": "Yes.",
+      "zh": "对。"
+    },
+    {
+      "start": 510.2,
+      "end": 517.62,
+      "text": "And I also like, like having tried a lot of diff tools now and sort of diff tools that also are Gentic integrated,",
+      "zh": "我现在试过很多 diff 工具，也试过集成 agent 的 diff 工具，"
+    },
+    {
+      "start": 517.76,
+      "end": 523.24,
+      "text": "like friend of ours, the Tunk, then for modems, which I think is pretty neat,",
+      "zh": "比如我们朋友做的那个工具［名称转写不清，待核］，我觉得挺不错。"
+    },
+    {
+      "start": 523.62,
+      "end": 528.1,
+      "text": "but it is also not quite what I want, I feel like.",
+      "zh": "但它似乎也还不是我真正想要的。"
+    },
+    {
+      "start": 530.42,
+      "end": 536.86,
+      "text": "So there's definitely, at least for the coding use case, I think like the diff needs to work better.",
+      "zh": "所以，至少对编程场景来说，diff 确实需要做得更好。"
+    },
+    {
+      "start": 537.26,
+      "end": 542.02,
+      "text": "It needs to support also like multi-stage commits, like in a PR.",
+      "zh": "它还需要支持多阶段提交，比如一个 PR 中的多个阶段。"
+    },
+    {
+      "start": 542.42,
+      "end": 546.48,
+      "text": "Maybe not even multi-stage commits, but before you even commit,",
+      "zh": "也不一定是多阶段提交，而是在正式提交之前，"
+    },
+    {
+      "start": 546.74,
+      "end": 551.3199999999999,
+      "text": "you want to take snapshots of your files at specific times.",
+      "zh": "你就想在特定时刻给文件保存快照。"
+    },
+    {
+      "start": 552.2,
+      "end": 556.9,
+      "text": "I have this in my custom Pi review extension,",
+      "zh": "我的自定义 Pi review 扩展就有这个功能，"
+    },
+    {
+      "start": 557.36,
+      "end": 562.8,
+      "text": "which is like a desktop UI using Daniel's Glimpse framework.",
+      "zh": "它是一个用 Daniel 的 Glimpse 框架做的桌面界面。"
+    },
+    {
+      "start": 563.86,
+      "end": 566.4,
+      "text": "And I've used this for months, right?",
+      "zh": "我已经用了好几个月了。"
+    },
+    {
+      "start": 566.4,
+      "end": 570.48,
+      "text": "And I just found I don't even need that anymore.",
+      "zh": "但我发现，现在自己甚至不需要它了。"
+    },
+    {
+      "start": 570.66,
+      "end": 573.78,
+      "text": "Like I don't need these snapshots before I do a commit.",
+      "zh": "我不需要在提交之前保存这些快照。"
+    },
+    {
+      "start": 574.18,
+      "end": 575.84,
+      "text": "I don't care so much anymore,",
+      "zh": "已经没那么在意了，"
+    },
+    {
+      "start": 576,
+      "end": 582.22,
+      "text": "but mostly because I try to break down my stuff into very small commits in",
+      "zh": "主要是因为我会把工作拆成非常小的提交，"
+    },
+    {
+      "start": 582.22,
+      "end": 583.68,
+      "text": "terms of lines of code.",
+      "zh": "按代码行数来说是这样。"
+    },
+    {
+      "start": 584.04,
+      "end": 589.8,
+      "text": "But I guess that's not a scalable solution because some workflows might just result in a large diff,",
+      "zh": "但这恐怕不是适用于所有情况的办法，因为有些工作流就是会产生很大的 diff，"
+    },
+    {
+      "start": 589.88,
+      "end": 591.54,
+      "text": "and you might want to have the snapshots.",
+      "zh": "那你可能还是需要快照。"
+    },
+    {
+      "start": 591.54,
+      "end": 592.66,
+      "text": "Yeah, it's hard.",
+      "zh": "是啊，很难。"
+    },
+    {
+      "start": 593.12,
+      "end": 596.06,
+      "text": "I mean, like obviously the goal should be make very small PRs.",
+      "zh": "当然，目标应该是把 PR 做得很小。"
+    },
+    {
+      "start": 596.38,
+      "end": 600,
+      "text": "And I think generally that has been true before and after agents.",
+      "zh": "我觉得无论有没有 agent，这一点一直都成立。"
+    },
+    {
+      "start": 600,
+      "end": 606.42,
+      "text": "There are situations where this doesn't fully work because in addition to",
+      "zh": "但有些情况不完全适用，因为除了"
+    },
+    {
+      "start": 606.42,
+      "end": 608.84,
+      "text": "like the size of the PR,",
+      "zh": "PR 的大小之外，"
+    },
+    {
+      "start": 609.48,
+      "end": 615.1,
+      "text": "there's also the confidence that you have in shipping it or the complexity of testing it.",
+      "zh": "还要考虑你对上线的信心，以及测试的复杂程度。"
+    },
+    {
+      "start": 615.18,
+      "end": 620.16,
+      "text": "So you might actually have a commit even with feature flags that you're not willing to merge yet",
+      "zh": "所以，即便加了功能开关，有些提交你还是不愿意立即合并，"
+    },
+    {
+      "start": 620.16,
+      "end": 621.5,
+      "text": "because you want to test it properly.",
+      "zh": "因为你想先充分测试。"
+    },
+    {
+      "start": 621.5,
+      "end": 624.4,
+      "text": "And then these have a tendency to getting a little bit larger.",
+      "zh": "这样一来，它们就容易越变越大。"
+    },
+    {
+      "start": 626.14,
+      "end": 628.7,
+      "text": "And then you actually might want to do these checkpoints in between.",
+      "zh": "你可能就会想在中间保存一些检查点。"
+    },
+    {
+      "start": 629,
+      "end": 632.38,
+      "text": "But then when you review it with the agent, it's actually versus the main branch.",
+      "zh": "但和 agent 一起审查时，你看的其实又是相对于主分支的变化。"
+    },
+    {
+      "start": 636.26,
+      "end": 637.46,
+      "text": "Yeah, I think so.",
+      "zh": "对，我想是这样。"
+    },
+    {
+      "start": 637.88,
+      "end": 639.2,
+      "text": "When I started working on Pi,",
+      "zh": "我刚开始做 Pi 的时候，"
+    },
+    {
+      "start": 639.34,
+      "end": 643.94,
+      "text": "my realization was that all the models back then were pretty much RL'd on the same trajectories apparently",
+      "zh": "发现那时所有模型似乎都在非常相似的轨迹上接受强化学习训练，"
+    },
+    {
+      "start": 643.94,
+      "end": 645.94,
+      "text": "because they assumed the base set of tools.",
+      "zh": "因为它们都预期会有一组基础工具。"
+    },
+    {
+      "start": 646.12,
+      "end": 649.36,
+      "text": "And with those, they could really work well, which was read, write, edit, bash.",
+      "zh": "有了这些就能很好地工作，也就是 read、write、edit、Bash。"
+    },
+    {
+      "start": 649.36,
+      "end": 651.72,
+      "text": "And I guess the times are changing now.",
+      "zh": "现在时代可能变了。"
+    },
+    {
+      "start": 652.08,
+      "end": 655.48,
+      "text": "And the RL is now geared towards you only need bash.",
+      "zh": "强化学习正在朝“只需要 Bash”这个方向发展。"
+    },
+    {
+      "start": 655.94,
+      "end": 659.6800000000001,
+      "text": "GPT models started doing that already last year, I think,",
+      "zh": "我记得 GPT 模型去年就开始这样了，"
+    },
+    {
+      "start": 660.1,
+      "end": 662.64,
+      "text": "when they came out with the first five point whatever.",
+      "zh": "大概是第一个 5 点几版本出来的时候。"
+    },
+    {
+      "start": 663.9,
+      "end": 665.04,
+      "text": "And now Claude does the same.",
+      "zh": "现在 Claude 也一样。"
+    },
+    {
+      "start": 665.12,
+      "end": 667.14,
+      "text": "And it stands to reason that other models would do the same.",
+      "zh": "其他模型也这么做，是很合理的推测。"
+    },
+    {
+      "start": 667.32,
+      "end": 669.48,
+      "text": "So along with these changes in RL,",
+      "zh": "这些强化学习方式的变化，"
+    },
+    {
+      "start": 669.96,
+      "end": 674.9200000000001,
+      "text": "the interesting part is that it has a large effect on UX of agentic engineering.",
+      "zh": "很有意思的一点是，它们对 agent 工程的用户体验影响很大。"
+    },
+    {
+      "start": 676.22,
+      "end": 678.98,
+      "text": "And we just need to adapt, man.",
+      "zh": "我们只能适应，兄弟。"
+    },
+    {
+      "start": 679.36,
+      "end": 682.08,
+      "text": "Let the RL flow over you.",
+      "zh": "让强化学习的浪潮从你身上流过去吧。"
+    },
+    {
+      "start": 682.94,
+      "end": 684.5,
+      "text": "Yeah, so I don't think like...",
+      "zh": "是啊，我觉得……"
+    },
+    {
+      "start": 684.5,
+      "end": 687.32,
+      "text": "We have been pretty good, I think, at not fighting the RL.",
+      "zh": "我们一直比较擅长不去对抗强化学习的方向。"
+    },
+    {
+      "start": 688.42,
+      "end": 690.5,
+      "text": "Or at least like projecting where it should go.",
+      "zh": "至少也比较擅长判断它会往哪里走。"
+    },
+    {
+      "start": 690.64,
+      "end": 695.46,
+      "text": "But I don't think we have been particularly good at being creative about what the UX around it should be.",
+      "zh": "但围绕它设计什么样的用户体验，我们还不够有创造力。"
+    },
+    {
+      "start": 696.28,
+      "end": 700.5,
+      "text": "It's like the UX in Pi is basically the thinnest layer over what the models are doing.",
+      "zh": "Pi 的用户体验基本上只是覆盖在模型行为之上的薄薄一层。"
+    },
+    {
+      "start": 700.5,
+      "end": 705.42,
+      "text": "Which probably has like a shelf life.",
+      "zh": "这种做法可能也有它的有效期。"
+    },
+    {
+      "start": 705.64,
+      "end": 707.1,
+      "text": "And we're sort of approaching.",
+      "zh": "我们正在接近那个期限。"
+    },
+    {
+      "start": 707.1,
+      "end": 713.32,
+      "text": "One, I think there are like two interesting things here.",
+      "zh": "这里我觉得有两件有意思的事。"
+    },
+    {
+      "start": 713.38,
+      "end": 715.86,
+      "text": "It's like if you had control over the LLM.",
+      "zh": "假如你能控制底层的大语言模型，"
+    },
+    {
+      "start": 716.24,
+      "end": 720,
+      "text": "In the sense that you are in fact OpenAI, Anthropic, or you run your own LLM.",
+      "zh": "比如你就是 OpenAI、Anthropic，或者自己运行模型，"
+    },
+    {
+      "start": 721.16,
+      "end": 725.0400000000001,
+      "text": "You increasingly are running more than one LLM simultaneously.",
+      "zh": "你就会越来越多地同时运行不止一个模型。"
+    },
+    {
+      "start": 725.0400000000001,
+      "end": 727.14,
+      "text": "So you're running your large model that does some stuff.",
+      "zh": "先运行一个大模型来做事，"
+    },
+    {
+      "start": 727.24,
+      "end": 729.5,
+      "text": "And then you run a smaller model for either predictive decoding.",
+      "zh": "再运行一个小模型，可能是为了预测式解码，"
+    },
+    {
+      "start": 729.5,
+      "end": 734.28,
+      "text": "Or because you, for instance, want to already truncate the reasoning output.",
+      "zh": "也可能是为了提前截断推理输出。"
+    },
+    {
+      "start": 734.62,
+      "end": 737.04,
+      "text": "It's like on their side, they're already doing this.",
+      "zh": "它们内部已经在这么做了。"
+    },
+    {
+      "start": 738.5,
+      "end": 745.52,
+      "text": "So basically like there's an almost natural idea now.",
+      "zh": "所以现在有个几乎顺理成章的想法："
+    },
+    {
+      "start": 745.66,
+      "end": 748.92,
+      "text": "That in addition to the tool call, you might get some commentary around.",
+      "zh": "在工具调用之外，再给出一些过程说明。"
+    },
+    {
+      "start": 749.64,
+      "end": 751.48,
+      "text": "And it's very little today is being done.",
+      "zh": "现在这方面做得还很少。"
+    },
+    {
+      "start": 751.72,
+      "end": 755.1,
+      "text": "A little bit is coming up with some of the ChatGPT models.",
+      "zh": "一些 ChatGPT 模型开始出现一点这样的功能。"
+    },
+    {
+      "start": 755.1,
+      "end": 756.4200000000001,
+      "text": "They have this commentary channel.",
+      "zh": "它们有一个 commentary 通道。"
+    },
+    {
+      "start": 757.0600000000001,
+      "end": 760.44,
+      "text": "I think it's mainly used now for like this.",
+      "zh": "我觉得目前主要是用来"
+    },
+    {
+      "start": 760.88,
+      "end": 763.8000000000001,
+      "text": "Ambigating the assistant message that comes at the end.",
+      "zh": "区分最终给出的助手消息"
+    },
+    {
+      "start": 763.86,
+      "end": 765.22,
+      "text": "From the assistant message that comes in between.",
+      "zh": "和执行过程中给出的助手消息。"
+    },
+    {
+      "start": 766.5,
+      "end": 769.72,
+      "text": "But if you were to run your own inference stack.",
+      "zh": "但如果你自己运行推理系统，"
+    },
+    {
+      "start": 769.84,
+      "end": 771.4,
+      "text": "Then theoretically you could actually.",
+      "zh": "理论上你就能做到："
+    },
+    {
+      "start": 771.66,
+      "end": 774.02,
+      "text": "So like this is a short summary of the description.",
+      "zh": "这里是一段简短的操作说明。"
+    },
+    {
+      "start": 774.44,
+      "end": 776.4,
+      "text": "You could invest some extra tokens to summarize it.",
+      "zh": "你可以多花一些 token 来概括它。"
+    },
+    {
+      "start": 776.48,
+      "end": 777.98,
+      "text": "But that's tricky as it streams in.",
+      "zh": "不过，在流式输出过程中这么做会比较棘手。"
+    },
+    {
+      "start": 778.6,
+      "end": 780.08,
+      "text": "But then you could also run Chef on it.",
+      "zh": "也可以让 Jev 来处理［原文名称转写待核］，"
+    },
+    {
+      "start": 780.1600000000001,
+      "end": 781.86,
+      "text": "To sort of classify what's going on.",
+      "zh": "对正在发生的事情做分类。"
+    },
+    {
+      "start": 782.48,
+      "end": 783.52,
+      "text": "So I don't know.",
+      "zh": "所以我也不知道。"
+    },
+    {
+      "start": 783.52,
+      "end": 784.36,
+      "text": "It's...",
+      "zh": "这个……"
+    },
+    {
+      "start": 785.1,
+      "end": 788.1800000000001,
+      "text": "There's probably going to be some experimentation.",
+      "zh": "可能会有人想做一些实验，"
+    },
+    {
+      "start": 788.1800000000001,
+      "end": 790.26,
+      "text": "That people might want to run around.",
+      "zh": "试试看"
+    },
+    {
+      "start": 790.78,
+      "end": 793.22,
+      "text": "How to visualize these tool calls in a transcript.",
+      "zh": "该如何在执行记录中展示这些工具调用。"
+    },
+    {
+      "start": 795.26,
+      "end": 795.98,
+      "text": "So yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 796.0600000000001,
+      "end": 796.4200000000001,
+      "text": "I don't know.",
+      "zh": "我也说不好。"
+    },
+    {
+      "start": 796.9200000000001,
+      "end": 799.52,
+      "text": "I think that the simplest trick at the moment.",
+      "zh": "我觉得现在最简单的办法，"
+    },
+    {
+      "start": 799.62,
+      "end": 801.2,
+      "text": "That works across many models is just.",
+      "zh": "而且对很多模型都管用，就是："
+    },
+    {
+      "start": 801.66,
+      "end": 803.5400000000001,
+      "text": "You have your tool definition.",
+      "zh": "在工具定义里，"
+    },
+    {
+      "start": 804.0600000000001,
+      "end": 806.4200000000001,
+      "text": "And you add a description, summary.",
+      "zh": "加上 description、summary，"
+    },
+    {
+      "start": 806.5400000000001,
+      "end": 808.72,
+      "text": "Whatever fields that the model has to fill out.",
+      "zh": "或者类似的、要求模型填写的字段。"
+    },
+    {
+      "start": 809.46,
+      "end": 810.9200000000001,
+      "text": "Make it the first parameter.",
+      "zh": "把它放在第一个参数，"
+    },
+    {
+      "start": 811.24,
+      "end": 813.82,
+      "text": "First field within the tool calls argument.",
+      "zh": "也就是工具调用参数对象的第一个字段。"
+    },
+    {
+      "start": 813.82,
+      "end": 816.84,
+      "text": "Then you get it as the first thing usually.",
+      "zh": "通常你就会最先收到它。"
+    },
+    {
+      "start": 818.24,
+      "end": 819.88,
+      "text": "We should experiment with that.",
+      "zh": "我们应该试试。"
+    },
+    {
+      "start": 819.98,
+      "end": 821.58,
+      "text": "I think that could work as a band-aid.",
+      "zh": "我觉得这能临时补一下。"
+    },
+    {
+      "start": 822.2600000000001,
+      "end": 825.5200000000001,
+      "text": "Ultimately I think we will have to give up on visualizing individual tool calls.",
+      "zh": "但最终，我们可能得放弃逐个展示工具调用。"
+    },
+    {
+      "start": 825.5200000000001,
+      "end": 829.22,
+      "text": "So that just leads us to the other thing.",
+      "zh": "这就引出了另一个问题："
+    },
+    {
+      "start": 829.22,
+      "end": 832.74,
+      "text": "Which is like why was it useful in the first place to have these separate tool calls?",
+      "zh": "最初为什么要把工具调用分成不同类型？"
+    },
+    {
+      "start": 832.74,
+      "end": 836.24,
+      "text": "And a big reason was the approval gates.",
+      "zh": "一个重要原因是审批关卡。"
+    },
+    {
+      "start": 836.24,
+      "end": 837.98,
+      "text": "Which Pi obviously never really had.",
+      "zh": "Pi 显然从来就没有真正做过这套。"
+    },
+    {
+      "start": 838.1800000000001,
+      "end": 843.24,
+      "text": "But for instance, in Claude it was used to...",
+      "zh": "但比如 Claude，会用它来……"
+    },
+    {
+      "start": 843.24,
+      "end": 845.74,
+      "text": "You can have this allow edits by default.",
+      "zh": "你可以设置默认允许编辑，"
+    },
+    {
+      "start": 845.9,
+      "end": 847.92,
+      "text": "Which was gated on it using the edit tool.",
+      "zh": "前提是它使用 edit 工具。"
+    },
+    {
+      "start": 847.92,
+      "end": 850.4799999999999,
+      "text": "And then it would ask for everything else.",
+      "zh": "其他操作则都要询问。"
+    },
+    {
+      "start": 850.64,
+      "end": 854.4,
+      "text": "But obviously like the whole thing now moved into a world where either nobody gives a shit anymore.",
+      "zh": "但现在要么大家已经根本不在乎了，"
+    },
+    {
+      "start": 854.4,
+      "end": 859.02,
+      "text": "Or alternatively they run a second LLM to check the approval.",
+      "zh": "要么就再运行一个大模型来做审批，"
+    },
+    {
+      "start": 862.02,
+      "end": 863.8,
+      "text": "To see like should you run this or not.",
+      "zh": "判断这个操作该不该执行。"
+    },
+    {
+      "start": 863.86,
+      "end": 864.9799999999999,
+      "text": "So this is this auto mode.",
+      "zh": "也就是所谓的 auto mode。"
+    },
+    {
+      "start": 866.52,
+      "end": 869,
+      "text": "And what do you think about that?",
+      "zh": "你怎么看这个？"
+    },
+    {
+      "start": 869,
+      "end": 875.24,
+      "text": "Like the idea of running a second classifier or model to make",
+      "zh": "就是再运行一个分类器或模型，"
+    },
+    {
+      "start": 875.24,
+      "end": 876.92,
+      "text": "some determinations here.",
+      "zh": "来做这些判断。"
+    },
+    {
+      "start": 877.5,
+      "end": 879.84,
+      "text": "So first of all the approval gates were always bullshit.",
+      "zh": "首先，审批关卡一直就很扯。"
+    },
+    {
+      "start": 880.78,
+      "end": 884.66,
+      "text": "I don't know a single engineer who is actually using that.",
+      "zh": "我不认识任何真正会用它的工程师。"
+    },
+    {
+      "start": 884.92,
+      "end": 889,
+      "text": "It's like a checkbox that your harness needs to have to become enterprise ready or something.",
+      "zh": "它就像是 harness 为了标榜“企业级可用”而必须勾选的一个功能。"
+    },
+    {
+      "start": 889.1,
+      "end": 890.36,
+      "text": "But nobody is actually using that.",
+      "zh": "但其实没人在用。"
+    },
+    {
+      "start": 892.02,
+      "end": 894.74,
+      "text": "So those went away anyways.",
+      "zh": "所以无论如何，这些东西都在消失。"
+    },
+    {
+      "start": 894.74,
+      "end": 899.9,
+      "text": "Because even if like having a second model judge whether a tool call is good or not is",
+      "zh": "因为即便让第二个模型判断工具调用好不好，"
+    },
+    {
+      "start": 899.9,
+      "end": 901.92,
+      "text": "highly problematic.",
+      "zh": "仍然存在很大的问题。"
+    },
+    {
+      "start": 902.7,
+      "end": 903.84,
+      "text": "Still in my opinion.",
+      "zh": "至少我还是这么认为。"
+    },
+    {
+      "start": 904.78,
+      "end": 907.96,
+      "text": "Because for that the model doesn't just have to look at the tool call usually.",
+      "zh": "要做这个判断，模型通常不能只看工具调用本身，"
+    },
+    {
+      "start": 908.16,
+      "end": 909.6800000000001,
+      "text": "It also has to look at the full context.",
+      "zh": "还得看完整上下文，"
+    },
+    {
+      "start": 911.26,
+      "end": 913.02,
+      "text": "For it to actually make sense.",
+      "zh": "判断才有意义。"
+    },
+    {
+      "start": 913.34,
+      "end": 917.8,
+      "text": "Like I can just have a haiku or a terra or lunar model.",
+      "zh": "我总不能随便让一个 Haiku、Terra 或 Luna 模型，"
+    },
+    {
+      "start": 918.46,
+      "end": 921.4,
+      "text": "Look at the single bash call and say yeah this is not dangerous.",
+      "zh": "只看一条 Bash 调用，就说“没事，不危险”，"
+    },
+    {
+      "start": 921.4,
+      "end": 924.6999999999999,
+      "text": "Or this is not destructive in a way that we don't want it to be destructive.",
+      "zh": "或者“它不会造成我们不希望出现的破坏”。"
+    },
+    {
+      "start": 925.88,
+      "end": 926.88,
+      "text": "I don't know man.",
+      "zh": "我也不知道，兄弟。"
+    },
+    {
+      "start": 927.1,
+      "end": 929.36,
+      "text": "It's just put your fucking agent in a sandbox.",
+      "zh": "直接把你的 agent 关进沙箱就行了。"
+    },
+    {
+      "start": 929.9,
+      "end": 930.48,
+      "text": "Call it a day.",
+      "zh": "事情就解决了。"
+    },
+    {
+      "start": 931.9599999999999,
+      "end": 932.36,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 932.9399999999999,
+      "end": 939.3,
+      "text": "So I think like we're definitely most likely now reaching the point where the coding agent",
+      "zh": "我觉得，我们很可能正在走到这样一个节点：编程 agent"
+    },
+    {
+      "start": 939.3,
+      "end": 943.22,
+      "text": "has fully subsumed every other agent format.",
+      "zh": "已经完全涵盖了其他所有形式的 agent。"
+    },
+    {
+      "start": 943.22,
+      "end": 948.36,
+      "text": "So if you do want to use it in a non-coding environment.",
+      "zh": "所以，就算你想在非编程环境里使用它，"
+    },
+    {
+      "start": 949.4,
+      "end": 952.44,
+      "text": "You're probably going to give it a programming language.",
+      "zh": "你大概也会给它一门编程语言。"
+    },
+    {
+      "start": 952.7,
+      "end": 953.78,
+      "text": "Which is Turing complete.",
+      "zh": "而它是图灵完备的。"
+    },
+    {
+      "start": 953.98,
+      "end": 954.6,
+      "text": "Where good luck.",
+      "zh": "那就祝你好运了。"
+    },
+    {
+      "start": 955.8000000000001,
+      "end": 960.5600000000001,
+      "text": "So you gotta constrain everything around it.",
+      "zh": "所以，你得约束它周围的所有东西。"
+    },
+    {
+      "start": 962.44,
+      "end": 969.22,
+      "text": "Did you say something like there's a code mode implementation in one harness that actually gives the model also bash fully unsiccured?",
+      "zh": "你是不是说过，有个 harness 的 code mode 实现，还给了模型完全不受保护的 Bash？"
+    },
+    {
+      "start": 969.22,
+      "end": 975.5400000000001,
+      "text": "I mean this is basically for the most part like code mode now is it exposes all the tools that the agent has.",
+      "zh": "基本上，现在大多数 code mode 都会把 agent 拥有的所有工具暴露出来。"
+    },
+    {
+      "start": 975.6600000000001,
+      "end": 975.76,
+      "text": "Right.",
+      "zh": "对。"
+    },
+    {
+      "start": 975.94,
+      "end": 981.86,
+      "text": "So code mode in itself might be tightly sandboxed but then you can",
+      "zh": "所以，code mode 本身可能被严格限制在沙箱里，但你又能"
+    },
+    {
+      "start": 981.86,
+      "end": 985.26,
+      "text": "call bash in codex via code mode.",
+      "zh": "通过 code mode 调用 Codex 的 Bash。"
+    },
+    {
+      "start": 985.26,
+      "end": 988.24,
+      "text": "So then you need to separately sandbox the whole thing anyways.",
+      "zh": "那你还是得另外把整个环境放进沙箱。"
+    },
+    {
+      "start": 988.24,
+      "end": 994.54,
+      "text": "So you have like one sandbox and another sandbox which sort of makes sense I guess because like code mode theoretically runs where the harness",
+      "zh": "于是就成了一个沙箱加另一个沙箱。我想这也有道理，因为 code mode 理论上运行在 harness"
+    },
+    {
+      "start": 994.54,
+      "end": 995.72,
+      "text": "runs which is more trusted.",
+      "zh": "所在的、更加可信的环境里。"
+    },
+    {
+      "start": 996.5600000000001,
+      "end": 1002.92,
+      "text": "And then the bash runs where you're sort of exe.dev or oversell workers or like",
+      "zh": "而 Bash 则运行在 exe.dev，或另一个 worker 平台［名称转写不清］，"
+    },
+    {
+      "start": 1002.92,
+      "end": 1004.88,
+      "text": "cloudflare durable object sandbox kind of sits.",
+      "zh": "或者 Cloudflare Durable Object 的沙箱环境里。"
+    },
+    {
+      "start": 1004.88,
+      "end": 1010.14,
+      "text": "But it is all basically in a way really",
+      "zh": "但从某种意义上说，这一切就是："
+    },
+    {
+      "start": 1010.14,
+      "end": 1013.34,
+      "text": "like we have now fully committed to this code thing.",
+      "zh": "我们已经全面投入了以代码来完成任务这条路。"
+    },
+    {
+      "start": 1013.46,
+      "end": 1013.6,
+      "text": "Right.",
+      "zh": "对。"
+    },
+    {
+      "start": 1013.7,
+      "end": 1019.9,
+      "text": "I think like at this point we just better get these sandboxes really tightly controlled but like within the",
+      "zh": "所以现在我们最好把这些沙箱控制好。但在沙箱"
+    },
+    {
+      "start": 1019.9,
+      "end": 1022,
+      "text": "capabilities of that sandbox.",
+      "zh": "允许的能力范围内，"
+    },
+    {
+      "start": 1023.28,
+      "end": 1025.78,
+      "text": "The harness basically at this point no longer plays a role.",
+      "zh": "harness 基本上已经不起什么作用了。"
+    },
+    {
+      "start": 1025.78,
+      "end": 1030.66,
+      "text": "Or at the very least it has so little control because the models are so",
+      "zh": "或者至少，它的控制能力非常有限，因为模型已经如此深地"
+    },
+    {
+      "start": 1030.66,
+      "end": 1034.26,
+      "text": "yeah programming language slash bash trained.",
+      "zh": "接受了编程语言和 Bash 方面的训练。"
+    },
+    {
+      "start": 1035.94,
+      "end": 1042.16,
+      "text": "I think the question is just I think within Pi for the most part is like how do we make it so that people can",
+      "zh": "我觉得对 Pi 来说，主要问题就是：如何让人们"
+    },
+    {
+      "start": 1042.16,
+      "end": 1044.84,
+      "text": "experiment with how they want to see the transcript?",
+      "zh": "自由尝试自己想要的执行记录展示方式？"
+    },
+    {
+      "start": 1045.02,
+      "end": 1049.22,
+      "text": "Like do we have enough permittives right now to tinker with it?",
+      "zh": "我们现在提供了足够的基础能力，让大家去折腾吗？"
+    },
+    {
+      "start": 1049.22,
+      "end": 1056.14,
+      "text": "And then for someone who builds an agent that is supposed to be self-running a durable object or something similar,",
+      "zh": "还有，如果有人要做一个自行运行的 agent，比如放在 Durable Object 里，"
+    },
+    {
+      "start": 1056.14,
+      "end": 1060.16,
+      "text": "how should one structure that?",
+      "zh": "应该怎样组织它？"
+    },
+    {
+      "start": 1060.38,
+      "end": 1064.28,
+      "text": "Do we have enough primitives within Pi to make it acceptable?",
+      "zh": "Pi 里的基础能力够不够，让这种做法可行？"
+    },
+    {
+      "start": 1066.72,
+      "end": 1069.44,
+      "text": "I think that is going to be a lot of interesting.",
+      "zh": "我觉得这里会有很多有趣的东西。"
+    },
+    {
+      "start": 1069.7,
+      "end": 1073.08,
+      "text": "Like if someone has thoughts up there, I think we would love to hear.",
+      "zh": "如果有人有想法，我们很想听听。"
+    },
+    {
+      "start": 1073.08,
+      "end": 1079.84,
+      "text": "But yeah, in a way it's the end of custom tools in many ways.",
+      "zh": "但某种意义上说，很多自定义工具可能要走到尽头了。"
+    },
+    {
+      "start": 1080.4399999999998,
+      "end": 1080.62,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 1081.8,
+      "end": 1087.6599999999999,
+      "text": "I do have to say that custom tools have historically been not very helpful to my workflows at least.",
+      "zh": "我得说，至少对我的工作流，自定义工具历来都没有特别大的帮助。"
+    },
+    {
+      "start": 1087.9399999999998,
+      "end": 1094.14,
+      "text": "So I just recently built a new tool called Pi History Handoff,",
+      "zh": "我最近做了一个新工具，叫 Pi History Handoff，"
+    },
+    {
+      "start": 1094.14,
+      "end": 1098.12,
+      "text": "which is sort of kind of like the new codex experimental feature.",
+      "zh": "有点像 Codex 新出的实验功能。"
+    },
+    {
+      "start": 1098.12,
+      "end": 1105.3,
+      "text": "Well, the LLM decides it wants to basically clear the context and just leave a summary of itself there.",
+      "zh": "由模型自己决定清空上下文，只给自己留下一份摘要。"
+    },
+    {
+      "start": 1105.4799999999998,
+      "end": 1113.08,
+      "text": "It's a fancy form of compaction plus a tool to give you to give the LLM a way to search in the compacted history.",
+      "zh": "它相当于更精致的上下文压缩，再加一个让模型搜索已压缩历史的工具。"
+    },
+    {
+      "start": 1114.34,
+      "end": 1118.8,
+      "text": "That's the only thing recently that I built that makes sense for my workflows.",
+      "zh": "这是我最近唯一做出来、确实适合自己工作流的工具。"
+    },
+    {
+      "start": 1118.9599999999998,
+      "end": 1122.02,
+      "text": "But other than that, I don't really have many custom tools.",
+      "zh": "除此之外，我没有多少自定义工具。"
+    },
+    {
+      "start": 1122.02,
+      "end": 1128.12,
+      "text": "I think one thing is super interesting right now is like we're simultaneously seeing a full commitment to bash.",
+      "zh": "现在特别有意思的一点是，我们一方面看到大家全面转向 Bash，"
+    },
+    {
+      "start": 1128.94,
+      "end": 1131.58,
+      "text": "At the same time, we see a full resurgence of MCP.",
+      "zh": "另一方面，MCP 又全面回潮了。"
+    },
+    {
+      "start": 1133.26,
+      "end": 1139.54,
+      "text": "And I still don't really fully know how to put these things together because I think MCP",
+      "zh": "我还没完全想明白，这两件事该怎么结合，因为我觉得 MCP"
+    },
+    {
+      "start": 1139.54,
+      "end": 1142.44,
+      "text": "solves the off thing, which is important.",
+      "zh": "解决了鉴权问题，这很重要。"
+    },
+    {
+      "start": 1142.44,
+      "end": 1146.66,
+      "text": "It does set some constraints on the tool execution,",
+      "zh": "它也对工具执行设置了一些约束，"
+    },
+    {
+      "start": 1146.66,
+      "end": 1150.0800000000002,
+      "text": "but then the way we wire it together is like a code mode.",
+      "zh": "但我们把它们连接起来的方式，又是 code mode。"
+    },
+    {
+      "start": 1151.06,
+      "end": 1154.04,
+      "text": "So it is interesting.",
+      "zh": "所以这很有意思。"
+    },
+    {
+      "start": 1154.22,
+      "end": 1156.1200000000001,
+      "text": "I would say like where this all lands today.",
+      "zh": "这些东西如今会落在哪里？"
+    },
+    {
+      "start": 1156.6200000000001,
+      "end": 1156.76,
+      "text": "Yeah.",
+      "zh": "是啊。"
+    },
+    {
+      "start": 1157.3600000000001,
+      "end": 1160.6000000000001,
+      "text": "So I think you looked into MCP a little bit more recently.",
+      "zh": "你最近应该又深入研究了一些 MCP。"
+    },
+    {
+      "start": 1160.6000000000001,
+      "end": 1167.08,
+      "text": "And my understanding is that the input schema must be defined",
+      "zh": "我的理解是，MCP 工具必须定义输入 schema，"
+    },
+    {
+      "start": 1167.08,
+      "end": 1173.9199999999998,
+      "text": "for an MCP tool, but the output schema can be, but it's optional.",
+      "zh": "但输出 schema 可以定义，也可以不定义。"
+    },
+    {
+      "start": 1174.3799999999999,
+      "end": 1177.62,
+      "text": "And for the most part, like you actually need two channels, right?",
+      "zh": "而多数情况下，你其实需要两个通道，对吧？"
+    },
+    {
+      "start": 1177.6599999999999,
+      "end": 1182.7199999999998,
+      "text": "You need one channel that goes to the LLM, which is likely unstructured to conserve some tokens.",
+      "zh": "一个给大模型看，为了节省 token，可能是非结构化的。"
+    },
+    {
+      "start": 1182.72,
+      "end": 1189.2,
+      "text": "And you would need a second channel that is structured so you can use an MCP tool as part of code mode, for example.",
+      "zh": "另一个则需要结构化，比如让 MCP 工具能被 code mode 调用。"
+    },
+    {
+      "start": 1189.72,
+      "end": 1190.58,
+      "text": "What's the state of that?",
+      "zh": "现在这方面是什么情况？"
+    },
+    {
+      "start": 1190.9,
+      "end": 1194.1200000000001,
+      "text": "Like, do we actually have those two channels for the output or is that just one channel?",
+      "zh": "我们到底有这两个输出通道，还是只有一个？"
+    },
+    {
+      "start": 1196.02,
+      "end": 1198.08,
+      "text": "For the most part, there's just one channel.",
+      "zh": "大多数情况下，只有一个通道。"
+    },
+    {
+      "start": 1199.28,
+      "end": 1202.92,
+      "text": "I think it's what is interesting is like, so we, when we built radius,",
+      "zh": "有意思的是，我们在做 Radius 的时候，"
+    },
+    {
+      "start": 1202.92,
+      "end": 1207.3,
+      "text": "we wanted to be so that you can talk to the agent and reconfigures radius.",
+      "zh": "希望你能和 agent 对话，让它重新配置 Radius。"
+    },
+    {
+      "start": 1207.58,
+      "end": 1208.84,
+      "text": "And we tried a bunch of things.",
+      "zh": "我们尝试了很多方案。"
+    },
+    {
+      "start": 1208.84,
+      "end": 1213.6999999999998,
+      "text": "And what we actually found to work the best today with these models is OpenAPI.",
+      "zh": "实际发现，对现在这些模型最有效的是 OpenAPI。"
+    },
+    {
+      "start": 1214.48,
+      "end": 1221.6999999999998,
+      "text": "So we actually, so we added an endpoint where you can describe your task and what you get back is a rack filtered.",
+      "zh": "所以我们加了一个端点，你可以描述任务，返回的是经过检索筛选的结果："
+    },
+    {
+      "start": 1222.28,
+      "end": 1224.86,
+      "text": "These are the endpoints that you might want to use plus the OpenAPI schema.",
+      "zh": "这些是你可能想使用的端点，以及对应的 OpenAPI schema。"
+    },
+    {
+      "start": 1225.34,
+      "end": 1227.48,
+      "text": "And you can actually expose that via MCP.",
+      "zh": "你也可以通过 MCP 暴露它。"
+    },
+    {
+      "start": 1227.6399999999999,
+      "end": 1231.24,
+      "text": "So like it is actually very possible to use this pattern against MCP.",
+      "zh": "所以，这种模式完全可以套到 MCP 上。"
+    },
+    {
+      "start": 1232.24,
+      "end": 1237.4199999999998,
+      "text": "The only problem is like MCP actually at that point really only does off.",
+      "zh": "唯一的问题是，这时候 MCP 实际上只负责鉴权。"
+    },
+    {
+      "start": 1237.42,
+      "end": 1242.54,
+      "text": "It's like it's RPC plus off, which is a very, very narrow way of using MCP.",
+      "zh": "相当于 RPC 加鉴权，这是对 MCP 非常狭窄的一种用法。"
+    },
+    {
+      "start": 1243.14,
+      "end": 1246.98,
+      "text": "And if you were to build a server that works like this, you don't really,",
+      "zh": "如果你按这种方式构建服务器，"
+    },
+    {
+      "start": 1246.98,
+      "end": 1251.26,
+      "text": "you would only output structured output, which MCP is not.",
+      "zh": "它只会输出结构化数据，而 MCP 通常不是这样用的。"
+    },
+    {
+      "start": 1251.8400000000001,
+      "end": 1258.28,
+      "text": "Like if you, if you were to put this in a traditional MCP, where like you take the entire output and stash it into the context,",
+      "zh": "如果你把它放进传统 MCP 用法中，把所有输出直接塞进上下文，"
+    },
+    {
+      "start": 1258.28,
+      "end": 1260.68,
+      "text": "that doesn't really work.",
+      "zh": "那就不太行。"
+    },
+    {
+      "start": 1260.68,
+      "end": 1266.78,
+      "text": "So like there's an in-between field now where you could actually use MCP almost like an RPC",
+      "zh": "所以现在出现了一个中间地带：你几乎可以把 MCP 当成 RPC"
+    },
+    {
+      "start": 1266.78,
+      "end": 1270.0800000000002,
+      "text": "system, which only outputs structured data.",
+      "zh": "系统，只输出结构化数据。"
+    },
+    {
+      "start": 1270.92,
+      "end": 1277.1,
+      "text": "And then your code mode hopefully has enough utility in it to sort of do filtering",
+      "zh": "然后希望 code mode 有足够的辅助能力，完成筛选、"
+    },
+    {
+      "start": 1277.1,
+      "end": 1278.3200000000002,
+      "text": "and post-processing, whatever.",
+      "zh": "后处理之类的工作。"
+    },
+    {
+      "start": 1279.44,
+      "end": 1281.5800000000002,
+      "text": "But most MCP servers don't work like this today.",
+      "zh": "但目前大多数 MCP 服务器不是这样工作的。"
+    },
+    {
+      "start": 1281.7,
+      "end": 1284.68,
+      "text": "Like most MCP servers output like various compressed markdown.",
+      "zh": "它们大多输出各种压缩过的 Markdown。"
+    },
+    {
+      "start": 1285.3,
+      "end": 1286.26,
+      "text": "Plain text, whatever, yeah.",
+      "zh": "或者纯文本，诸如此类。"
+    },
+    {
+      "start": 1286.26,
+      "end": 1289.06,
+      "text": "So the protocol is actually really useful now.",
+      "zh": "所以这个协议现在确实很有用。"
+    },
+    {
+      "start": 1289.3,
+      "end": 1293.42,
+      "text": "The servers are like not sure if they should target one versus the other.",
+      "zh": "但服务器还不太确定应该面向哪一种用法。"
+    },
+    {
+      "start": 1295.42,
+      "end": 1296.7,
+      "text": "Yeah, it's interesting.",
+      "zh": "对，很有意思。"
+    },
+    {
+      "start": 1297.12,
+      "end": 1302.82,
+      "text": "So I guess the takeaway for future MCP server authors and existing MCP server maintainers is",
+      "zh": "所以，对未来的 MCP 服务器作者和现有维护者来说，结论可能就是："
+    },
+    {
+      "start": 1302.82,
+      "end": 1306.3,
+      "text": "provide structured output because we're going to go full code mode.",
+      "zh": "请提供结构化输出，因为我们正在全面走向 code mode。"
+    },
+    {
+      "start": 1307.08,
+      "end": 1307.66,
+      "text": "I think so.",
+      "zh": "我想是这样。"
+    },
+    {
+      "start": 1307.66,
+      "end": 1310.5400000000002,
+      "text": "I think, I think that this is probably what's going to happen.",
+      "zh": "我觉得很可能会这样发展。"
+    },
+    {
+      "start": 1312.64,
+      "end": 1313.1200000000001,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 1313.18,
+      "end": 1313.8600000000001,
+      "text": "Yeah, that kind of makes sense.",
+      "zh": "是的，这说得通。"
+    },
+    {
+      "start": 1313.92,
+      "end": 1320.18,
+      "text": "I still would like, like in Pi, the difference between what the model sees and what harness or",
+      "zh": "我还是想说，在 Pi 里，模型看到的内容和 harness、"
+    },
+    {
+      "start": 1320.18,
+      "end": 1325.16,
+      "text": "consumer of events sees has mostly always been there.",
+      "zh": "或者事件消费者看到的内容，基本上一直是有区别的。"
+    },
+    {
+      "start": 1326.64,
+      "end": 1331.24,
+      "text": "Including for tools and for entries in the transcript.",
+      "zh": "工具以及执行记录里的条目都是如此。"
+    },
+    {
+      "start": 1331.24,
+      "end": 1331.28,
+      "text": "Right.",
+      "zh": "对。"
+    },
+    {
+      "start": 1332.06,
+      "end": 1332.44,
+      "text": "And I think this.",
+      "zh": "我觉得这……"
+    },
+    {
+      "start": 1332.44,
+      "end": 1335.96,
+      "text": "And you have to say, like if you are bash only, there's only one output, right?",
+      "zh": "不过也得说，如果只有 Bash，那就只有一个输出，对吧？"
+    },
+    {
+      "start": 1336.08,
+      "end": 1336.32,
+      "text": "Sure.",
+      "zh": "当然。"
+    },
+    {
+      "start": 1336.72,
+      "end": 1336.96,
+      "text": "Sure.",
+      "zh": "当然。"
+    },
+    {
+      "start": 1337.04,
+      "end": 1340.52,
+      "text": "If you're bash only, you're kind of, you're kind of, yeah, full part.",
+      "zh": "如果只有 Bash，那你就……［此处表达转写不清，待回听］。"
+    },
+    {
+      "start": 1340.68,
+      "end": 1345.36,
+      "text": "But I think a future will be composed via MCP plus code mode.",
+      "zh": "但我觉得未来会通过 MCP 加 code mode 来组合这些能力。"
+    },
+    {
+      "start": 1345.56,
+      "end": 1346.6200000000001,
+      "text": "That kind of makes sense.",
+      "zh": "这挺合理。"
+    },
+    {
+      "start": 1346.98,
+      "end": 1350.06,
+      "text": "I worry though that the models aren't as trained on that just yet.",
+      "zh": "不过我担心，目前模型在这方面的训练还不够充分。"
+    },
+    {
+      "start": 1351.34,
+      "end": 1354.24,
+      "text": "I mean, I analyzed a lot of codex transcripts.",
+      "zh": "我分析过很多 Codex 的执行记录。"
+    },
+    {
+      "start": 1354.24,
+      "end": 1360.68,
+      "text": "So when, when Astra released, I, I did a whole bunch of like work just in the codex harness",
+      "zh": "Astra 发布时，我专门在 Codex harness 里做了不少工作，"
+    },
+    {
+      "start": 1360.68,
+      "end": 1362.54,
+      "text": "so that I can see how it behaves.",
+      "zh": "就是为了观察它的行为。"
+    },
+    {
+      "start": 1363.46,
+      "end": 1370.46,
+      "text": "And, um, I can see that Astra loves to use code mode, even for situations where it wouldn't have to.",
+      "zh": "我发现 Astra 很喜欢用 code mode，哪怕有些场景根本不需要。"
+    },
+    {
+      "start": 1370.52,
+      "end": 1375.38,
+      "text": "Like I've seen it uses code mode to apply patch, which is like, why would you do that?",
+      "zh": "比如我见过它用 code mode 来调用 apply_patch，你为什么要这么做呢？"
+    },
+    {
+      "start": 1375.5,
+      "end": 1378.14,
+      "text": "It's just like a level of interaction that was not really necessary.",
+      "zh": "这只是多了一层没什么必要的间接调用。"
+    },
+    {
+      "start": 1378.14,
+      "end": 1383.92,
+      "text": "Um, but there are differences in how code mode works in the different models.",
+      "zh": "而且，不同模型使用 code mode 的方式也有差异。"
+    },
+    {
+      "start": 1384.2800000000002,
+      "end": 1384.44,
+      "text": "Right.",
+      "zh": "对。"
+    },
+    {
+      "start": 1384.5800000000002,
+      "end": 1390.86,
+      "text": "And so, um, and the, the surface, the surface area of code mode is obviously much bigger than the surface area of,",
+      "zh": "code mode 暴露的能力范围，显然比"
+    },
+    {
+      "start": 1390.86,
+      "end": 1392.6000000000001,
+      "text": "of just a regular tool code channel.",
+      "zh": "普通的工具调用通道大得多。"
+    },
+    {
+      "start": 1393.7,
+      "end": 1399.1,
+      "text": "Um, so I think this requires a lot of testing and evaluation and",
+      "zh": "所以我觉得，这需要大量测试和评估，"
+    },
+    {
+      "start": 1399.1,
+      "end": 1402,
+      "text": "it's unclear where it's going.",
+      "zh": "未来会怎么走还不清楚。"
+    },
+    {
+      "start": 1402,
+      "end": 1407.8400000000001,
+      "text": "Um, there's also some tension with local models because I guarantee you that local models will",
+      "zh": "它和本地模型之间也有些矛盾，因为我敢保证，本地模型"
+    },
+    {
+      "start": 1407.8400000000001,
+      "end": 1409.12,
+      "text": "suck at code mode.",
+      "zh": "在 code mode 上会表现得很差。"
+    },
+    {
+      "start": 1409.4599999999998,
+      "end": 1411.56,
+      "text": "So yeah.",
+      "zh": "所以，是啊。"
+    },
+    {
+      "start": 1412.32,
+      "end": 1417.6599999999999,
+      "text": "I think the interesting use case why I really want to get code mode into PI is not even MCP.",
+      "zh": "我很想把 code mode 加进 Pi，最感兴趣的用途其实还不是 MCP。"
+    },
+    {
+      "start": 1417.8999999999999,
+      "end": 1421.88,
+      "text": "It is actually Jev because for Jev to make sense,",
+      "zh": "而是 Jev。要让 Jev 发挥作用，"
+    },
+    {
+      "start": 1421.88,
+      "end": 1427.32,
+      "text": "you need step one, generate some code that then Jev can evaluate over and over.",
+      "zh": "第一步得先生成一些代码，然后 Jev 才能反复对它进行评估。"
+    },
+    {
+      "start": 1427.32,
+      "end": 1432.04,
+      "text": "So it's like you basically create like a state machine or like a workflow where on every iteration,",
+      "zh": "也就是说，你基本上是在创建一个状态机或工作流，每次迭代时，"
+    },
+    {
+      "start": 1432.04,
+      "end": 1434.82,
+      "text": "Jev makes the determination of like which path to go down to.",
+      "zh": "由 Jev 决定该沿着哪条路径继续。"
+    },
+    {
+      "start": 1434.82,
+      "end": 1440.4399999999998,
+      "text": "So, so it will become a really useful primitive, um, to have within PI harness.",
+      "zh": "所以，它会成为 Pi harness 里非常有用的一项基础能力。"
+    },
+    {
+      "start": 1443.08,
+      "end": 1449.56,
+      "text": "I'm actually more convinced that it's useful for Jev and less convinced that it's useful for MCP right now, unless the MCP servers are changing.",
+      "zh": "相比用于 MCP，我现在更相信它对 Jev 有用，除非 MCP 服务器也发生变化。"
+    },
+    {
+      "start": 1450.1599999999999,
+      "end": 1451.46,
+      "text": "Um, but we'll see.",
+      "zh": "不过，拭目以待吧。"
+    },
+    {
+      "start": 1452.1399999999999,
+      "end": 1452.52,
+      "text": "Nice.",
+      "zh": "不错。"
+    },
+    {
+      "start": 1453.6799999999998,
+      "end": 1455.1599999999999,
+      "text": "Well, interesting times.",
+      "zh": "真是有意思的时代。"
+    },
+    {
+      "start": 1455.1599999999999,
+      "end": 1457.8999999999999,
+      "text": "Should we go back to our beds and die off man flu?",
+      "zh": "我们是不是该回床上，被这场“男人流感”打倒了？"
+    },
+    {
+      "start": 1458.72,
+      "end": 1459.56,
+      "text": "Like the babies we are?",
+      "zh": "像两个大宝宝一样？"
+    },
+    {
+      "start": 1459.56,
+      "end": 1460.1,
+      "text": "I think so.",
+      "zh": "我想是的。"
+    },
+    {
+      "start": 1460.3799999999999,
+      "end": 1460.7,
+      "text": "Okay.",
+      "zh": "好。"
+    },
+    {
+      "start": 1460.96,
+      "end": 1461.32,
+      "text": "All right.",
+      "zh": "行。"
+    },
+    {
+      "start": 1462.04,
+      "end": 1462.86,
+      "text": "Happy Monday.",
+      "zh": "周一快乐。"
+    },
+    {
+      "start": 1463.22,
+      "end": 1463.8,
+      "text": "Happy Monday.",
+      "zh": "周一快乐。"
+    },
+    {
+      "start": 1463.8,
+      "end": 1463.96,
+      "text": "Okay.",
+      "zh": "好。"
+    },
+    {
+      "start": 1464.82,
+      "end": 1465.82,
+      "text": "Happy Monday.",
+      "zh": "周一快乐。"
+    }
+  ],
+  "uploadedAt": "2026-09-28T09:56:19Z"
+}

@@ -1,0 +1,345 @@
+{
+  "slug": "harness-and-workflow",
+  "sourceId": "2096561549356007547",
+  "date": "2026-09-06",
+  "title": {
+    "zh": "改变 harness，保留你的工作方式",
+    "en": "Change the harness, keep your workflow"
+  },
+  "source": "https://x.com/pidotdev/status/2096561549356007547",
+  "video": "https://video.twimg.com/amplify_video/2096541993413554176/vid/avc1/1920x1080/xrjSoKFsV3bArcSC.mp4?tag=29",
+  "poster": "/talks/harness-and-workflow.jpg",
+  "duration": 140.992,
+  "portrait": false,
+  "series": "Sunday Meditations",
+  "tags": [
+    "Harness",
+    "Workflow"
+  ],
+  "sourceText": "Good morning from Vienna People of Pi🌞\n\nSunday meditations today from @badlogicgames and @mitsuhiko \n\n- change the harness, not your workflow \n- harness, know thyself \n- agency to build the features you need when you need them \n\n*clip from February with our friends @syntaxfm",
+  "summary": {
+    "zh": [
+      {
+        "start": 0,
+        "title": "让工具适应个人工作方式",
+        "text": "两人以不同的工作习惯为出发点，讨论可定制的 harness。Pi 的扩展可以在当前会话中编写、重载，再通过即时反馈继续调整。"
+      },
+      {
+        "start": 30,
+        "title": "让 agent 知道如何扩展自己",
+        "text": "Armin 强调，Pi 的系统提示会引导 agent 阅读自身文档和示例，因此用户可以直接提出需求，让它创建可热重载的工具。"
+      },
+      {
+        "start": 59.9,
+        "title": "把反复操作变成专属界面",
+        "text": "自定义代码审查命令可以弹出界面，让用户选择未提交修改、单个提交或相对主分支的审查范围。频繁重复的操作可以继续沉淀成扩展。"
+      },
+      {
+        "start": 101.3,
+        "title": "需要什么，就构建什么",
+        "text": "两人以待办工具扩展为例，说明用户可以借助文档、示例和 API 自己补齐工作流所需功能，而不必完全依赖供应商的发布节奏。"
+      }
+    ],
+    "en": [
+      {
+        "start": 0,
+        "title": "Adapt the harness to the person",
+        "text": "Different working habits motivate a customizable harness. Pi extensions can be written and reloaded in the current session, with immediate feedback guiding the next revision."
+      },
+      {
+        "start": 30,
+        "title": "An agent that knows how to extend itself",
+        "text": "Armin describes how Pi directs the agent to its own documentation and examples, helping it create tools that support hot reloading from a user’s request."
+      },
+      {
+        "start": 59.9,
+        "title": "Turn repeated tasks into a custom interface",
+        "text": "A review command can present choices for uncommitted changes, a single commit or changes against the main branch. Repeated interactions can become tailored extensions."
+      },
+      {
+        "start": 101.3,
+        "title": "Build the features your workflow needs",
+        "text": "A to-do extension illustrates how documentation, examples and APIs let users add capabilities themselves instead of depending entirely on a vendor’s release schedule."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 2.52,
+      "text": "That's also how I think a coding harness should be.",
+      "zh": "我认为编程 harness 也应该是这样。"
+    },
+    {
+      "start": 3.02,
+      "end": 5.08,
+      "text": "Like, he has a different workflow than I have.",
+      "zh": "比如，他的工作流就跟我的不一样。"
+    },
+    {
+      "start": 5.5200000000000005,
+      "end": 11.620000000000001,
+      "text": "And I want my coding harness with my agent, so to speak, to work according to his workflow.",
+      "zh": "我可不希望自己的编程 harness 和 agent 非得按他的工作流来运作。"
+    },
+    {
+      "start": 11.74,
+      "end": 13.38,
+      "text": "Because that would be terrible. I hate his workflow.",
+      "zh": "那太糟糕了。我讨厌他的工作流。"
+    },
+    {
+      "start": 14.280000000000001,
+      "end": 20.72,
+      "text": "So Pi is also a self-modifying, self-healing kind of harness, where the agent can write me ad hoc tools,",
+      "zh": "所以 Pi 也是一种能自我修改、自我修复的 harness，agent 可以按需帮我写工具。"
+    },
+    {
+      "start": 20.72,
+      "end": 27.06,
+      "text": "and in the same session I can reload the updated version of that, and it sees if it fixed it or if it wrote it the correct",
+      "zh": "在同一个会话里，我就能重载更新后的版本，让它检查有没有修好、写得对不对，"
+    },
+    {
+      "start": 27.06,
+      "end": 27.76,
+      "text": "way and so on.",
+      "zh": "诸如此类。"
+    },
+    {
+      "start": 27.78,
+      "end": 29.28,
+      "text": "And I can give feedback immediately.",
+      "zh": "我也能马上给出反馈。"
+    },
+    {
+      "start": 29.42,
+      "end": 29.98,
+      "text": "And I...",
+      "zh": "而且我……"
+    },
+    {
+      "start": 30,
+      "end": 35.74,
+      "text": "What I think is, like, what is really fascinating to see, like, how Pi works is that the system prompt is tiny.",
+      "zh": "我觉得 Pi 特别有意思的一点，是它的系统提示词非常短。"
+    },
+    {
+      "start": 36.26,
+      "end": 38.4,
+      "text": "I think it's under 1,000 tokens. I'm actually not sure.",
+      "zh": "我记得不到 1,000 token，不过不太确定。"
+    },
+    {
+      "start": 38.66,
+      "end": 44.120000000000005,
+      "text": "And 25%, I guess, of the system prompt is the manual for Pi to read its own manual.",
+      "zh": "其中大概有四分之一，是在告诉 Pi 如何阅读自己的使用手册。"
+    },
+    {
+      "start": 44.64,
+      "end": 50.92,
+      "text": "And so when I tell it, like, hey, we need to build this thing, it, like, I don't have to tell it what Pi is.",
+      "zh": "所以我跟它说“我们要做这个东西”时，不用先解释 Pi 是什么。"
+    },
+    {
+      "start": 50.96,
+      "end": 52.980000000000004,
+      "text": "It's sort of like, oh, here are some examples to read this, right?",
+      "zh": "它就会知道：“哦，这里有些例子，可以先读一下。”"
+    },
+    {
+      "start": 53.019999999999996,
+      "end": 58.16,
+      "text": "And so it's building its own tools, and it understands how to build these tools to be hot reloadable too.",
+      "zh": "它会自己构建工具，也知道怎样让这些工具支持热重载。"
+    },
+    {
+      "start": 58.16,
+      "end": 59.519999999999996,
+      "text": "It's just really interesting.",
+      "zh": "这真的很有意思。"
+    },
+    {
+      "start": 59.9,
+      "end": 62.04,
+      "text": "A Pi extension can bring up UI, right?",
+      "zh": "Pi 扩展还可以调出界面，对吧？"
+    },
+    {
+      "start": 62.12,
+      "end": 66.17999999999999,
+      "text": "And so I have a custom review command that works exactly like I want the review to be.",
+      "zh": "我有个自定义审查命令，完全按我想要的方式做代码审查。"
+    },
+    {
+      "start": 66.24,
+      "end": 67.97999999999999,
+      "text": "Like, it looks exactly for the things that I want.",
+      "zh": "它只检查我关心的那些东西。"
+    },
+    {
+      "start": 68.34,
+      "end": 71.94,
+      "text": "But I don't have to tell it, like, hey, please review the change versus the main branch.",
+      "zh": "而且不用每次都跟它说：“请审查相对于主分支的修改。”"
+    },
+    {
+      "start": 72.28,
+      "end": 73.2,
+      "text": "It's kind of like, hey, review.",
+      "zh": "我只要说：“审查一下。”"
+    },
+    {
+      "start": 73.38,
+      "end": 76.08,
+      "text": "And then it comes up a menu that's like, okay, how do you want me to review it?",
+      "zh": "它就弹出一个菜单，问：“你想让我怎么审查？”"
+    },
+    {
+      "start": 76.08,
+      "end": 78.02,
+      "text": "Is it, like, uncommitted changes?",
+      "zh": "看还没提交的修改？"
+    },
+    {
+      "start": 78.32,
+      "end": 79.78,
+      "text": "Is it as a single commit?",
+      "zh": "还是看某一次提交？"
+    },
+    {
+      "start": 79.98,
+      "end": 81.4,
+      "text": "Is it a commit against the main thing?",
+      "zh": "还是跟主分支比较？"
+    },
+    {
+      "start": 82.02,
+      "end": 84.48,
+      "text": "And it's UI that sort of auto-populates.",
+      "zh": "这些选项会自动填到界面里。"
+    },
+    {
+      "start": 84.84,
+      "end": 90.24,
+      "text": "And if I don't like how it behaves, then I go to Pi and say, like, hey, actually, I keep doing this and this.",
+      "zh": "如果我不喜欢它的行为，就跟 Pi 说：“我总是在重复这些操作。”"
+    },
+    {
+      "start": 90.32,
+      "end": 92.03999999999999,
+      "text": "Can we have a custom UI component for it?",
+      "zh": "能不能专门做个界面组件？"
+    },
+    {
+      "start": 92.08,
+      "end": 94.03999999999999,
+      "text": "And it will just appear magically in the thing.",
+      "zh": "然后它就像变魔术一样出现在里面了。"
+    },
+    {
+      "start": 94.66,
+      "end": 96.18,
+      "text": "And that, to me, is really the interesting part.",
+      "zh": "对我来说，这才是最有意思的部分。"
+    },
+    {
+      "start": 96.28,
+      "end": 101.34,
+      "text": "It's like it becomes super malleable and adjusts to that without me having to jump for hoops.",
+      "zh": "它变得特别容易定制，能适应我的需要，不用我绕一大圈。"
+    },
+    {
+      "start": 101.34,
+      "end": 107.26,
+      "text": "Like, the Claude Code team has released a new to-do tool, like, a couple of days ago.",
+      "zh": "比如，Claude Code 团队前几天刚发布了一个新的待办工具。"
+    },
+    {
+      "start": 108.28,
+      "end": 112.94,
+      "text": "Armin rebuilt that as an extension to buy Pi in, what was it?",
+      "zh": "Armin 把它重新做成了 Pi 扩展，花了多久来着？"
+    },
+    {
+      "start": 113.02000000000001,
+      "end": 113.34,
+      "text": "I don't know.",
+      "zh": "我也说不准。"
+    },
+    {
+      "start": 113.76,
+      "end": 114.54,
+      "text": "An hour?",
+      "zh": "一个小时？"
+    },
+    {
+      "start": 115.02000000000001,
+      "end": 115.2,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 115.2,
+      "end": 115.4,
+      "text": "Something.",
+      "zh": "差不多吧。"
+    },
+    {
+      "start": 115.94,
+      "end": 122.12,
+      "text": "So I don't have to wait for my coding harness producer or vendor to add a feature I need for my workflow.",
+      "zh": "所以，我不用等编程 harness 的厂商把我工作流需要的功能加进来。"
+    },
+    {
+      "start": 122.26,
+      "end": 123.44,
+      "text": "I just tell Pi, build me this.",
+      "zh": "我直接跟 Pi 说：“帮我做这个。”"
+    },
+    {
+      "start": 123.44,
+      "end": 124.2,
+      "text": "You just add it.",
+      "zh": "直接加上就行。"
+    },
+    {
+      "start": 124.94,
+      "end": 129.94,
+      "text": "It reads for documentation, which is just marked on files with examples and API descriptions.",
+      "zh": "它会读文档，也就是包含示例和 API 说明的 Markdown 文件。"
+    },
+    {
+      "start": 129.94,
+      "end": 131.76,
+      "text": "And then it builds the thing for me.",
+      "zh": "然后帮我把东西做出来。"
+    },
+    {
+      "start": 132.56,
+      "end": 135.16,
+      "text": "And I think that has value, at least as an experiment.",
+      "zh": "我觉得这有价值，至少作为一种实验是这样。"
+    },
+    {
+      "start": 136.1,
+      "end": 136.78,
+      "text": "Yeah, yeah.",
+      "zh": "对，对。"
+    },
+    {
+      "start": 137.16,
+      "end": 139.78,
+      "text": "Also, I got Doom running that way, so that's nice.",
+      "zh": "而且，我还用这种方式把 Doom 跑起来了，挺好。"
+    },
+    {
+      "start": 139.78,
+      "end": 139.9,
+      "text": "Yeah.",
+      "zh": "对。"
+    }
+  ],
+  "uploadedAt": "2026-09-06T11:30:00Z"
+}
