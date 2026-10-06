@@ -70,6 +70,7 @@ export function initializeTalkPlayer(doc: Document, options?: TalkPlayerOptions)
       },
       onTick: listener => { if (clock) clock.onTick(listener); else queuedTicks.add(listener); },
       whenReady: fn => { if (clock) clock.whenReady(fn); else queuedReady.push(fn); },
+      playing: () => clock?.playing?.() ?? false,
     };
   })();
 
@@ -102,6 +103,17 @@ export function initializeTalkPlayer(doc: Document, options?: TalkPlayerOptions)
         else await frame.requestFullscreen();
       });
     } else if (fullscreen) fullscreen.hidden = true;
+    if (youtubeFrame && frame) {
+      // Raise the caption overlay only while YouTube's own controls are likely
+      // visible. Pointer boundary events do not reach us across the cross-origin
+      // iframe, so this tracks playback state: controls show whenever not playing.
+      const updateControls = () => {
+        if (media.playing?.()) frame.removeAttribute('data-controls');
+        else frame.setAttribute('data-controls', '');
+      };
+      media.onTick(updateControls);
+      updateControls();
+    }
     if (video) {
       video.addEventListener('loadedmetadata', updateCaptionMode);
       video.textTracks.addEventListener('addtrack', updateCaptionMode);

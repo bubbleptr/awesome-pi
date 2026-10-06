@@ -26,6 +26,9 @@
 .talk-video-portrait { max-height: 620px; }
 .talk-source { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 16px 0 28px; color: var(--muted); font-size: .75rem; }
 .talk-source a { text-decoration: underline; text-underline-offset: 3px; }
+.talk-source-links { display: inline-flex; align-items: center; gap: 12px; }
+.talk-source [data-captions-toggle] { margin-block: -12px; min-height: 44px; padding: 0 2px; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.talk-source [data-captions-toggle][aria-pressed="false"] { text-decoration: line-through; text-underline-offset: 3px; }
 .talk-error { border: 1px solid var(--line); border-radius: 6px; padding: 16px; line-height: 1.6; }
 .talk-watch-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: stretch; }
 .talk-screen { min-width: 0; }
@@ -37,6 +40,13 @@
 .summary-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
 .talk-video video::cue { background: rgb(0 0 0 / 78%); color: white; font-size: 1rem; font-weight: 700; }
 .video-captions { position: absolute; inset: auto 4% 56px; text-align: center; pointer-events: none; line-height: 1.5; }
+/* YouTube draws its own bottom control row; the overlay lifts clear of it only
+   while those controls are likely visible (paused or pointer over the video). */
+.talk-video-youtube .video-captions { transition: bottom .2s ease-out; }
+.talk-video-youtube[data-controls] .video-captions { bottom: max(96px, 24%); }
+@media (prefers-reduced-motion: reduce) {
+  .talk-video-youtube .video-captions { transition: none; }
+}
 .video-captions span { background: rgb(0 0 0 / 78%); color: white; border-radius: 0; padding: 2px 6px; font-size: clamp(14px, 1.5vw, 20px); font-weight: 700; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .caption-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; }
 .caption-controls button { min-width: 44px; min-height: 44px; border: 0; border-radius: 4px; background: rgb(0 0 0 / 70%); color: white; font-size: .8rem; }

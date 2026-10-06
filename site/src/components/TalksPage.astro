@@ -72,7 +72,7 @@ const schema = talk ? {
         <div data-talk-player>
           <div class="talk-watch-layout">
           <div class="talk-screen">
-          <div class:list={['talk-video', { 'talk-video-portrait': talk.portrait }]}>
+          <div class:list={['talk-video', { 'talk-video-portrait': talk.portrait, 'talk-video-youtube': talk.youtube }]}>
             {talk.youtube ? (
               <iframe data-youtube={talk.youtube} src={`https://www.youtube-nocookie.com/embed/${talk.youtube}?enablejsapi=1&rel=0&playsinline=1&iv_load_policy=3`} title={talk.title[locale]} referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
             ) : (
@@ -83,9 +83,9 @@ const schema = talk ? {
               </video>
             )}
             <div class="video-captions" data-video-captions hidden aria-hidden="true"><span lang={zh ? "zh-CN" : "en"}></span></div>
-            <div class="caption-controls" data-caption-controls hidden><button type="button" data-captions-toggle aria-pressed="true">{zh ? '字幕' : 'Captions'}</button><button type="button" data-player-fullscreen aria-label={zh ? '切换全屏' : 'Toggle fullscreen'}>⛶</button></div>
+            {!talk.youtube && <div class="caption-controls" data-caption-controls hidden><button type="button" data-captions-toggle aria-pressed="true">{zh ? '字幕' : 'Captions'}</button><button type="button" data-player-fullscreen aria-label={zh ? '切换全屏' : 'Toggle fullscreen'}>⛶</button></div>}
           </div>
-          <div class="talk-source"><span>{zh ? '来源' : 'Source'} <a href={talk.source} target="_blank" rel="noopener noreferrer">@pidotdev ↗</a>{talk.slug === 'harness-and-workflow' && <span> · Syntax.fm {zh ? '访谈剪辑' : 'interview excerpt'}</span>}</span><a href={talk.youtube ? `https://www.youtube.com/watch?v=${talk.youtube}` : talk.video} target="_blank" rel="noopener noreferrer">{talk.youtube ? (zh ? '在 YouTube 上观看' : 'Watch on YouTube') : (zh ? '打开原视频' : 'Open original video')} ↗</a></div>
+          <div class="talk-source"><span>{zh ? '来源' : 'Source'} <a href={talk.source} target="_blank" rel="noopener noreferrer">@pidotdev ↗</a>{talk.slug === 'harness-and-workflow' && <span> · Syntax.fm {zh ? '访谈剪辑' : 'interview excerpt'}</span>}</span><span class="talk-source-links">{talk.youtube && <span data-caption-controls hidden><button type="button" data-captions-toggle aria-pressed="true">{zh ? '字幕' : 'Captions'}</button></span>}<a href={talk.youtube ? `https://www.youtube.com/watch?v=${talk.youtube}` : talk.video} target="_blank" rel="noopener noreferrer">{talk.youtube ? (zh ? '在 YouTube 上观看' : 'Watch on YouTube') : (zh ? '打开原视频' : 'Open original video')} ↗</a></span></div>
           <p class="talk-error" role="status" data-video-error hidden>{zh ? '视频暂时无法加载，请通过上方链接打开原视频或 X 原帖。' : 'The video could not load. Open the original video or the X post using the links above.'}</p>
           </div>
           <aside class="transcript-aside">

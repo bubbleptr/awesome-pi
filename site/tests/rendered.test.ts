@@ -235,11 +235,18 @@ describe('conversation pages', () => {
           expect(embed?.getAttribute('src')).toStartWith(`https://www.youtube-nocookie.com/embed/${data.youtube}?`);
           expect(embed?.getAttribute('referrerpolicy')).toBe('strict-origin-when-cross-origin');
           expect(win.document.querySelector(`.talk-source a[href="https://www.youtube.com/watch?v=${data.youtube}"]`)).not.toBeNull();
+          // YouTube draws its own top-right controls, so our overlay buttons
+          // move out of the video: no fullscreen button, captions toggle below.
+          expect(win.document.querySelector('[data-player-fullscreen]')).toBeNull();
+          expect(win.document.querySelector('.talk-video [data-captions-toggle]')).toBeNull();
+          expect(win.document.querySelector('.talk-source [data-caption-controls] [data-captions-toggle]')).not.toBeNull();
         } else {
           expect(win.document.querySelector('video source')?.getAttribute('src')).toStartWith('https://video.twimg.com/');
           expect(win.document.querySelector('track')?.getAttribute('src')).toBe(`${base}${slug}.vtt`);
           expect(win.document.querySelector('track')?.hasAttribute('default')).toBe(true);
           expect(win.document.querySelector('track')?.getAttribute('srclang')).toBe(locale === 'zh' ? 'zh-CN' : 'en');
+          expect(win.document.querySelector('.talk-video [data-captions-toggle]')).not.toBeNull();
+          expect(win.document.querySelector('.talk-video [data-player-fullscreen]')).not.toBeNull();
         }
         const firstCue = data.segments[0];
         const caption = locale === 'zh' ? firstCue.zh : firstCue.text;
