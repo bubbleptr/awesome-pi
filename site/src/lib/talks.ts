@@ -11,6 +11,7 @@ export type Talk = {
   title: Record<Locale, string>;
   source: string;
   video: string;
+  youtube?: string;
   poster: string;
   duration: number;
   portrait: boolean;

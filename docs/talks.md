@@ -23,6 +23,12 @@
 
 已有 Whisper JSON 时，可运行 `bun site/scripts/import-talk-transcript.ts <slug> <whisper-json>` 导入。导入器会限制结尾到实际视频时长、消除相邻时间重叠，并对无效时间与空文本报错。原有总结不自动改写，应在更新字幕后重新核对。
 
+## YouTube 播放
+
+`changing-models` 与 `pi-durable` 两期已由 @pidotdev 官方上传至 YouTube 且允许嵌入，这两期改用 YouTube 嵌入播放器，不再依赖 twimg 防盗链放行；其余三期仍走 twimg `<video>` 直链。数据层在对应 JSON 增加 `youtube` 字段（11 位视频 ID），`video` 字段保留用于开发代理校验。新增官方上传的一期时只需在其 JSON 写入 `youtube`。
+
+嵌入 iframe 显式声明 `referrerpolicy="strict-origin-when-cross-origin"`：页面为 twimg 设置了 `no-referrer`，而 YouTube 嵌入无 Referer 会拒绝播放（Error 153），iframe 上的策略覆盖页面默认值，只发送源站。播放器通过 IFrame API 接入 `MediaClock` 抽象，与 `<video>` 共用同一套转写交互。时间点跳转在播放器未开始播放时调用 `cueVideoById` 定位以保持暂停状态（`seekTo` 会自动开始播放）；已开始播放后仍用 `seekTo`。时间戳沿用既有转写数据，两期官方上传时长与数据时长相差 0.5 秒以内，未单独回听核对音频对齐。
+
 ## 开发环境视频播放
 
 开发页面使用 `/__talk-media/<slug>.mp4` 同源地址，由 Vite 转发到该期原始 MP4。代理仅匹配五期数据中的固定路径，保留 Range 请求与 206 响应，支持跳转；不向视频 CDN 转发浏览器 Cookie、Authorization、Origin 或 Referer。无需下载整段视频或把视频加入 Git。生产静态构建仍使用原始 CDN URL；这个代理只在 `bun run dev` 时运行。
