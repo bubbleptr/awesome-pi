@@ -140,8 +140,10 @@ function fakeYouTubeApi() {
     cueVideoById: [] as { videoId: string; startSeconds?: number }[],
     seekTo: [] as [number, boolean][],
     playVideo: 0,
+    unloadModule: [] as string[],
+    setOption: [] as unknown[],
   };
-  const player: FakeYouTubePlayer = {
+  const player: FakeYouTubePlayer & { unloadModule(name: string): void; setOption(...args: unknown[]): void } = {
     state: -1,
     currentTime: 0,
     duration: 120,
@@ -153,6 +155,8 @@ function fakeYouTubeApi() {
     playVideo() { calls.playVideo += 1; },
     pauseVideo() {},
     mute() {},
+    unloadModule(name) { calls.unloadModule.push(name); },
+    setOption(...args) { calls.setOption.push(args); },
   };
   let events: {
     onReady?: () => void;
@@ -169,8 +173,10 @@ function fakeYouTubeApi() {
 }
 
 const youtubePageMarkup = (captions = false) => `<div data-talk-player><div class="talk-video"><iframe data-youtube="dQw4w9WgXcQ"></iframe>${captions
-  ? '<div data-video-captions hidden><span></span></div><div data-caption-controls hidden><button data-captions-toggle aria-pressed="true">Captions</button></div>'
-  : ''}</div><p data-video-error hidden></p><input type="checkbox" data-follow checked><div class="transcript-scroll"><button data-start="0" data-end="5"><span lang="en">First.</span></button><button data-start="7" data-end="12"><span lang="en">Second.</span></button></div><button data-seek="8">Summary</button></div>`;
+  ? '<div data-video-captions hidden><span></span></div>'
+  : ''}</div>${captions
+  ? '<div class="talk-source"><span data-caption-controls hidden><button data-captions-toggle aria-pressed="true">Captions</button></span></div>'
+  : ''}<p data-video-error hidden></p><input type="checkbox" data-follow checked><div class="transcript-scroll"><button data-start="0" data-end="5"><span lang="en">First.</span></button><button data-start="7" data-end="12"><span lang="en">Second.</span></button></div><button data-seek="8">Summary</button></div>`;
 
 function stubTimers(win: Window) {
   const intervals: (() => void)[] = [];
@@ -277,5 +283,85 @@ test('YouTube player errors surface the fallback message', async () => {
     await Promise.resolve();
     fake.events().onError?.({ data: 150 });
     expect(doc.querySelector<HTMLElement>('[data-video-error]')!.hidden).toBe(false);
+  } finally { win.happyDOM.abort(); }
+});
+
+test('YouTube captions toggle hides and restores the overlay', async () => {
+  const win = new Window({ url: 'https://piindex.dev/talks/example/' });
+  try {
+    win.document.write(youtubePageMarkup(true));
+    const doc = win.document;
+    const fake = fakeYouTubeApi();
+    const intervals = stubTimers(win);
+    initializeTalkPlayer(doc as unknown as Document, { loadYouTube: () => Promise.resolve(fake.YT as unknown as YouTubeApi) });
+    await Promise.resolve();
+    fake.events().onReady?.();
+    fake.player.state = 1;
+    fake.events().onStateChange?.({ data: 1 });
+    fake.player.currentTime = 1;
+    intervals[0]();
+    const overlay = doc.querySelector<HTMLElement>('[data-video-captions]')!;
+    const toggle = doc.querySelector<HTMLButtonElement>('.talk-source [data-captions-toggle]')!;
+    expect(toggle).not.toBeNull();
+    expect(overlay.hidden).toBe(false);
+    toggle.click();
+    expect(overlay.hidden).toBe(true);
+    expect(toggle.getAttribute('aria-pressed')).toBe('false');
+    toggle.click();
+    expect(overlay.hidden).toBe(false);
+    expect(toggle.getAttribute('aria-pressed')).toBe('true');
+  } finally { win.happyDOM.abort(); }
+});
+
+test('YouTube overlay rises only while player controls are likely visible', async () => {
+  const win = new Window({ url: 'https://piindex.dev/talks/example/' });
+  try {
+    win.document.write(youtubePageMarkup(true));
+    const doc = win.document;
+    const fake = fakeYouTubeApi();
+    const intervals = stubTimers(win);
+    initializeTalkPlayer(doc as unknown as Document, { loadYouTube: () => Promise.resolve(fake.YT as unknown as YouTubeApi) });
+    await Promise.resolve();
+    const frame = doc.querySelector<HTMLElement>('.talk-video')!;
+    expect(frame.hasAttribute('data-controls')).toBe(true);
+    fake.events().onReady?.();
+    expect(frame.hasAttribute('data-controls')).toBe(true);
+    fake.player.state = 1;
+    fake.events().onStateChange?.({ data: 1 });
+    expect(frame.hasAttribute('data-controls')).toBe(false);
+    frame.dispatchEvent(new win.Event('pointerenter'));
+    // Pointer events do not cross the embedded iframe boundary in real
+    // browsers, so hover never reaches this code path.
+    expect(frame.hasAttribute('data-controls')).toBe(false);
+    frame.dispatchEvent(new win.Event('pointerleave'));
+    expect(frame.hasAttribute('data-controls')).toBe(false);
+    fake.player.currentTime = 1;
+    intervals[0]();
+    expect(frame.hasAttribute('data-controls')).toBe(false);
+    fake.player.state = 2;
+    fake.events().onStateChange?.({ data: 2 });
+    expect(frame.hasAttribute('data-controls')).toBe(true);
+  } finally { win.happyDOM.abort(); }
+});
+
+test('YouTube clears its captions module once on the first play', async () => {
+  const win = new Window({ url: 'https://piindex.dev/talks/example/' });
+  try {
+    win.document.write(youtubePageMarkup(true));
+    const doc = win.document;
+    const fake = fakeYouTubeApi();
+    stubTimers(win);
+    initializeTalkPlayer(doc as unknown as Document, { loadYouTube: () => Promise.resolve(fake.YT as unknown as YouTubeApi) });
+    await Promise.resolve();
+    fake.events().onReady?.();
+    expect(fake.calls.unloadModule).toHaveLength(0);
+    fake.player.state = 1;
+    fake.events().onStateChange?.({ data: 1 });
+    expect(fake.calls.unloadModule).toEqual(['captions']);
+    fake.player.state = 2;
+    fake.events().onStateChange?.({ data: 2 });
+    fake.player.state = 1;
+    fake.events().onStateChange?.({ data: 1 });
+    expect(fake.calls.unloadModule).toHaveLength(1);
   } finally { win.happyDOM.abort(); }
 });

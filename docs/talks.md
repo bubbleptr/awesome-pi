@@ -29,6 +29,8 @@
 
 嵌入 iframe 显式声明 `referrerpolicy="strict-origin-when-cross-origin"`：页面为 twimg 设置了 `no-referrer`，而 YouTube 嵌入无 Referer 会拒绝播放（Error 153），iframe 上的策略覆盖页面默认值，只发送源站。播放器通过 IFrame API 接入 `MediaClock` 抽象，与 `<video>` 共用同一套转写交互。时间点跳转在播放器未开始播放时调用 `cueVideoById` 定位以保持暂停状态（`seekTo` 会自动开始播放）；已开始播放后仍用 `seekTo`。时间戳沿用既有转写数据，两期官方上传时长与数据时长相差 0.5 秒以内，未单独回听核对音频对齐。
 
+YouTube 期不渲染自定义全屏按钮，全屏用 YouTube 自带按钮（此时不显示网站字幕层）；字幕开关移到视频下方 `.talk-source` 行内，避免遮挡 YouTube 顶部控制区。播放器首次进入播放状态时调用 `unloadModule('captions')` 关闭 YouTube 自带 CC（用户仍可用其 CC 按钮重新打开），避免与网站字幕层重复。字幕条仅在 YouTube 控制栏可能显示时——暂停或未播放状态——通过 `data-controls` 上移避开进度条与控制栏；跨域 iframe 不会向父页面派发指针边界事件，悬停检测无法实现，故播放中悬停时字幕条保持低位。twimg 期的视频内控件不变。
+
 ## 开发环境视频播放
 
 开发页面使用 `/__talk-media/<slug>.mp4` 同源地址，由 Vite 转发到该期原始 MP4。代理仅匹配五期数据中的固定路径，保留 Range 请求与 206 响应，支持跳转；不向视频 CDN 转发浏览器 Cookie、Authorization、Origin 或 Referer。无需下载整段视频或把视频加入 Git。生产静态构建仍使用原始 CDN URL；这个代理只在 `bun run dev` 时运行。

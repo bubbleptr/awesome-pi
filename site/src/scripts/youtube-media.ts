@@ -4,6 +4,7 @@ export type MediaClock = {
   seek(time: number): void;
   onTick(listener: () => void): void;
   whenReady(fn: () => void): void;
+  playing?(): boolean;
 };
 
 export type YouTubePlayer = {
@@ -15,6 +16,7 @@ export type YouTubePlayer = {
   playVideo(): void;
   pauseVideo(): void;
   mute(): void;
+  unloadModule?(name: string): void;
 };
 
 export type YouTubeApi = {
@@ -73,6 +75,9 @@ export function createYouTubeMedia(
   // reported currentTime catches up after a seek.
   let pending: number | null = null;
   let timer: number | null = null;
+  // The captions module only exists once playback starts; turn it off on the
+  // first PLAYING transition so a user re-enabling CC later is not overridden.
+  let captionsCleared = false;
 
   const notify = () => { for (const listener of listeners) listener(); };
   const stopTicking = () => {
@@ -89,6 +94,10 @@ export function createYouTubeMedia(
       onStateChange: event => {
         if (event.data === PLAYING) {
           pending = null;
+          if (!captionsCleared) {
+            captionsCleared = true;
+            player.unloadModule?.('captions');
+          }
           if (timer === null) {
             timer = win.setInterval(() => { pending = null; notify(); }, 250);
           }
@@ -125,5 +134,6 @@ export function createYouTubeMedia(
     },
     onTick: listener => { listeners.add(listener); },
     whenReady: fn => { if (ready) fn(); else readyCallbacks.push(fn); },
+    playing: () => ready && player.getPlayerState() === PLAYING,
   };
 }
