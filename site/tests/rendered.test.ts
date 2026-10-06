@@ -199,6 +199,9 @@ describe('published editorial pages', () => {
 
 describe('conversation pages', () => {
   const slugs = ['pi-durable', 'changing-models', 'agent-frustrations', 'slippery-slop', 'harness-and-workflow'];
+  // happy-dom would otherwise fetch the YouTube embed page over the network and keep
+  // loading its stylesheets after abort(), failing the run with errors between tests.
+  const offline = { settings: { disableIframePageLoading: true } };
   for (const locale of ['en', 'zh']) {
     const base = locale === 'zh' ? '/zh/talks/' : '/talks/';
     test(`${base} lists all five conversations`, () => {
@@ -211,7 +214,7 @@ describe('conversation pages', () => {
     });
     test(`${base} pages suppress the Referer header so twimg videos play`, () => {
       for (const path of [base, ...slugs.map(slug => `${base}${slug}/`)]) {
-        const win = new Window();
+        const win = new Window(offline);
         try {
           win.document.write(readFileSync(new URL(`../dist${path}index.html`, import.meta.url), 'utf8'));
           expect(win.document.querySelector('meta[name="referrer"]')?.getAttribute('content')).toBe('no-referrer');
@@ -219,7 +222,7 @@ describe('conversation pages', () => {
       }
     });
     for (const slug of slugs) test(`${base}${slug}/ serves captions and summaries without client rendering`, () => {
-      const win = new Window();
+      const win = new Window(offline);
       try {
         win.document.write(readFileSync(new URL(`../dist${base}${slug}/index.html`, import.meta.url), 'utf8'));
         expect(win.document.querySelectorAll('h1')).toHaveLength(1);
