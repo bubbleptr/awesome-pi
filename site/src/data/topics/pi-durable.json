@@ -1,0 +1,408 @@
+{
+  "slug": "pi-durable",
+  "title": {
+    "en": "Built on Pi Durable: Apps, Bots & Storage Backends | Pi Index",
+    "zh": "基于 Pi Durable 的项目：应用、机器人与存储后端 | Pi Index"
+  },
+  "description": {
+    "en": "Community projects that run on Pi Durable, Earendil's experimental durable harness: multiplayer web and iOS clients, chat bots, Home Assistant, Pi extensions, Cloudflare and PostgreSQL backends. Source-reviewed with pinned commits.",
+    "zh": "基于 Earendil 实验性 durable harness Pi Durable 的社区项目：多人 Web 与 iOS 客户端、聊天机器人、Home Assistant、Pi 扩展，以及 Cloudflare 与 PostgreSQL 后端。均按固定提交核验源码。"
+  },
+  "intro": {
+    "en": [
+      "Earendil released Pi Durable on October 1, 2026, alongside Pi 1.0. It is a framework for long-running agents rather than a replacement for the Pi coding agent: each run step is checkpointed as a task, unfinished tasks resume after a crash, and conversations can fork at any point. The package is experimental and its API may still change.",
+      "This page was compiled on October 7, 2026. GitHub code search found about 75 public repositories whose package.json references @earendil-works/pi-durable; we kept projects whose non-test source code actually imports it, then picked nine across different uses. All entries are source-reviewed at a pinned commit. We did not install or run them."
+    ],
+    "zh": [
+      "Earendil 于 2026 年 10 月 1 日随 Pi 1.0 发布 Pi Durable。它是构建长期运行 Agent 的框架，并不取代 Pi Coding Agent：每个运行步骤都作为任务记录检查点，崩溃后可恢复未完成的任务，会话也能在任意位置分叉。该包仍属实验性质，API 可能变化。",
+      "本页于 2026 年 10 月 7 日整理。GitHub 代码搜索找到约 75 个 package.json 引用 @earendil-works/pi-durable 的公开仓库；我们只保留非测试源码确实导入它的项目，再按用途挑出九项。全部按固定提交做了源码核验，未安装或运行。"
+    ]
+  },
+  "officialLinks": [
+    { "label": { "en": "Pi Durable announcement ↗", "zh": "Pi Durable 官方介绍 ↗" }, "url": "https://earendil.com/posts/pi-durable/" },
+    { "label": { "en": "packages/durable source ↗", "zh": "packages/durable 源码 ↗" }, "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/durable" },
+    { "label": { "en": "Talk: why not Temporal or Effect", "zh": "访谈：为什么不用 Temporal 或 Effect" }, "path": "/talks/pi-durable/" }
+  ],
+  "sections": [
+    {
+      "id": "choose",
+      "title": {
+        "en": "Choose by what you want to run",
+        "zh": "按要运行的场景选择"
+      },
+      "paragraphs": {
+        "en": [
+          "To reach a coding agent from your phone, try pi-pocket in a browser or oppi on iPhone and iPad. pi-imessage, mikan and Hearth Pi are resident assistants for iMessage, team chat and Home Assistant. Inside the Pi CLI, pi-fabric runs its workers on Pi Durable by default, and webfox ships its web tools as a Durable extension for custom hosts.",
+          "If you are building your own host, the Cloudflare Agents SDK runs Pi Durable inside Durable Objects, and the PostgreSQL backend keeps agent state in an existing database. More implementations at the end of this page cover Cloudflare multi-tenancy, PR review and Durable subagents."
+        ],
+        "zh": [
+          "想用手机连接 Coding Agent，可在浏览器使用 pi-pocket，或在 iPhone、iPad 上使用 oppi。pi-imessage、mikan 和 Hearth Pi 分别是 iMessage、团队聊天和 Home Assistant 中的常驻助手。在 Pi CLI 中，pi-fabric 默认用 Pi Durable 运行其 worker；webfox 则为自建宿主提供 Durable 扩展形式的联网工具。",
+          "自建宿主时，Cloudflare Agents SDK 可在 Durable Object 中运行 Pi Durable，PostgreSQL 后端则把 Agent 状态存进已有数据库。页尾的更多实现还包括 Cloudflare 多租户运行时、PR 审查和 Durable 子代理。"
+        ]
+      }
+    },
+    {
+      "id": "recovery",
+      "title": {
+        "en": "Durable state does not make side effects safe to repeat",
+        "zh": "状态可恢复，不代表副作用可以重放"
+      },
+      "paragraphs": {
+        "en": [
+          "Pi Durable records what the harness was doing. Files, deployments, payments and devices keep their own state. Several projects here therefore refuse to replay interrupted work: Hearth Pi leaves an interrupted device action as unknown until a person resolves it, and webfox does not repeat interrupted provider requests because they may be billed.",
+          "When you evaluate a project, check how its tools behave after a restart, not only whether the conversation resumes. Model calls can be repeated during recovery and consume usage again."
+        ],
+        "zh": [
+          "Pi Durable 记录的是 harness 执行到哪里；文件、部署、支付和设备仍各有自己的状态。因此本页多个项目不会自动重放中断的工作：Hearth Pi 将中断的设备操作标记为结果未知，等待人工处理；webfox 也不重发被中断的服务商请求，因为这些请求可能已经计费。",
+          "评估项目时，除了会话能否恢复，还要看工具在重启后的行为。恢复过程中模型请求可能再次发送，并再次产生用量。"
+        ]
+      }
+    },
+    {
+      "id": "versions",
+      "title": {
+        "en": "Versions and installation sources",
+        "zh": "版本与安装来源"
+      },
+      "paragraphs": {
+        "en": [
+          "Pi Durable reached 1.0.4 on npm on October 5. Projects pin different 1.0.x releases, often exactly; the PostgreSQL backend asks you to install Pi Durable, Chord and pi-ai at 1.0.3 together. When combining libraries in one host, align these versions first.",
+          "Check that the version you install contains the Durable code. The current npm releases of pi-imessage (0.0.43) and @rivet-dev/pi (0.1.0) do not depend on Pi Durable; the Durable versions are in their repositories. oppi-server includes it, but durable sessions stay off until you enable the server experiment."
+        ],
+        "zh": [
+          "10 月 5 日，npm 上的 Pi Durable 已更新到 1.0.4。各项目固定的 1.0.x 版本不同，且常常精确锁定；PostgreSQL 后端要求同时安装 1.0.3 版的 Pi Durable、Chord 和 pi-ai。在同一宿主中组合多个库时，应先统一这些版本。",
+          "还要确认所装版本确实包含 Durable 代码。pi-imessage（0.0.43）与 @rivet-dev/pi（0.1.0）当前的 npm 版本并不依赖 Pi Durable，Durable 实现只在各自仓库中；oppi-server 已包含它，但在开启服务端实验选项前不会启用 durable 会话。"
+        ]
+      },
+      "code": "npm install @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord"
+    },
+    {
+      "id": "selection",
+      "title": {
+        "en": "What we left out",
+        "zh": "未收录的项目"
+      },
+      "paragraphs": {
+        "en": [
+          "Some popular repositories carry Pi Durable only inside a vendored copy of the Pi monorepo, an experimental probe or an optional development backend; their own product code does not import it. pi-dispatch describes a durable queue but does not use Pi Durable. These are not listed here.",
+          "Stars were recorded on October 7 and only indicate attention. Most projects are days old, so treat this page as a snapshot and check each repository for changes."
+        ],
+        "zh": [
+          "部分热门仓库只在内置的 Pi monorepo 副本、实验性探针或可选的开发后端里包含 Pi Durable，自身产品代码并不导入它；pi-dispatch 提到的 durable 队列也与 Pi Durable 无关。这些项目未在本页列出。",
+          "Stars 记录于 10 月 7 日，只代表关注度。多数项目创建不过数日，请把本页视为快照，并留意各仓库的后续变化。"
+        ]
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "pi-pocket",
+      "summary": {
+        "en": "A self-hosted web app for using Pi from a phone, with shared live sessions for several people.",
+        "zh": "自托管 Web 应用，可在手机上使用 Pi，并支持多人共享实时会话。"
+      },
+      "mechanism": {
+        "en": "One Pi Durable harness stores every session, model call, tool call and subagent in a single SQLite file. Schedules, goals, the guard, the built-in browser and subagents are Durable extensions.",
+        "zh": "一个 Pi Durable harness 将所有会话、模型请求、工具调用和子代理存进同一个 SQLite 文件；定时任务、目标、安全防护、内置浏览器和子代理均以 Durable 扩展实现。"
+      },
+      "prerequisites": {
+        "en": "Node.js 22.19+ and a Pi provider login (pi, then /login) or a provider key. Install from a Git checkout with npm install and npm start; it is not published to npm. Pins Pi Durable 1.0.2.",
+        "zh": "需要 Node.js 22.19+，并用 Pi 登录服务商（pi 后执行 /login）或提供服务商 Key。从 Git 仓库检出后执行 npm install 与 npm start，未发布到 npm。固定使用 Pi Durable 1.0.2。"
+      },
+      "dataSent": {
+        "en": "Conversation and tool context go to the configured model provider. Remote access is your choice: LAN mode serves plain HTTP, and the optional Cloudflare quick tunnel exposes the server publicly.",
+        "zh": "会话与工具上下文发送给所配置的模型服务商。远程访问方式由你选择：局域网模式使用明文 HTTP，可选的 Cloudflare 快速隧道会将服务公开到互联网。"
+      },
+      "limitations": {
+        "en": "The sign-in link is the owner's key. Invitees who can steer a session gain shell-equivalent access, as the README warns. On Android/Termux the Lancet Guard ONNX model may not load.",
+        "zh": "登录链接即所有者密钥。README 明确提示，能操控会话的受邀者相当于获得 shell 权限。在 Android/Termux 上，Lancet Guard 的 ONNX 模型可能无法加载。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "reviewed source 3e6046612db4358b599da302d5c96bd407d9de5c (2026-10-05) · Git install, not on npm",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "README / quick start / features", "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/README.md" },
+          { "label": "Harness, SQLite storage and CodingTools", "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/src/server/app.ts#L30" },
+          { "label": "Pinned Pi Durable dependency", "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/package.json" }
+        ]
+      }
+    },
+    {
+      "name": "oppi",
+      "summary": {
+        "en": "A native iPhone and iPad client for Pi with a server you run yourself; Durable sessions are an opt-in experiment.",
+        "zh": "原生 iPhone、iPad Pi 客户端，配合自托管服务端使用；Durable 会话是需要手动开启的实验功能。"
+      },
+      "mechanism": {
+        "en": "Each session chooses an engine: classic Pi or durable. The durable engine runs on a Pi Durable harness and projects events, threads and history into the iOS interface.",
+        "zh": "每个会话选择一种引擎：经典 Pi 或 durable。durable 引擎运行在 Pi Durable harness 上，并将事件、线程与历史投射到 iOS 界面。"
+      },
+      "prerequisites": {
+        "en": "npm oppi-server (0.51.0 depends on Pi Durable 1.0.4) and Node.js 22.19+. Run oppi config set experimental.serverDurable true and restart, then enable Settings → Experiments → Durable Sessions on the device. Sandboxed workspaces need Node.js 23.6+ and QEMU.",
+        "zh": "需要 npm 包 oppi-server（0.51.0 依赖 Pi Durable 1.0.4）与 Node.js 22.19+。执行 oppi config set experimental.serverDurable true 并重启服务端，再在设备上开启「设置 → 实验 → Durable Sessions」。沙箱工作区还需要 Node.js 23.6+ 与 QEMU。"
+      },
+      "dataSent": {
+        "en": "The app talks to your oppi-server over authenticated HTTPS/WSS on your LAN, Tailscale or a public host. Model requests go to your configured Pi provider.",
+        "zh": "App 通过经过认证的 HTTPS/WSS 连接你的 oppi-server，可经局域网、Tailscale 或公网主机访问；模型请求发往你配置的 Pi 服务商。"
+      },
+      "limitations": {
+        "en": "Durable is off by default and never converts existing sessions. Saved Agents cannot start durable sessions yet. The reviewed source is newer than the commit behind the npm release.",
+        "zh": "Durable 默认关闭，开启后也不会转换已有会话。已保存的 Agent 暂时不能启动 durable 会话。核验的源码比 npm 发行版对应的提交更新。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "npm oppi-server 0.51.0 · reviewed source 844e6d170aeca52885d7b284878e64f214bfbd7d (2026-10-06)",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "Durable Sessions experiment (usage docs)", "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/docs/usage.md#durable-sessions-experiment" },
+          { "label": "Engine selection: classic by default", "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/server/src/agent-launch-service.ts#L138-L155" },
+          { "label": "Durable backend", "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/server/src/durable-backend.ts" },
+          { "label": "npm oppi-server 0.51.0", "url": "https://registry.npmjs.org/oppi-server/0.51.0" }
+        ]
+      }
+    },
+    {
+      "name": "pi-imessage",
+      "summary": {
+        "en": "A self-hosted iMessage bot for a Mac, with a separate durable conversation for each chat.",
+        "zh": "运行在 Mac 上的自托管 iMessage 机器人，每个聊天各有一个 durable 会话。"
+      },
+      "mechanism": {
+        "en": "Reads Messages.app chats locally and replies through a Pi Durable harness with JSONL storage. Schedules and periodic compaction run as durable background tasks; a small web UI shows history, tasks and schedules.",
+        "zh": "在本机读取「信息」App 的聊天，通过使用 JSONL 存储的 Pi Durable harness 回复。定时任务与周期性压缩以 durable 后台任务运行，并提供查看历史、任务与日程的小型 Web 界面。"
+      },
+      "prerequisites": {
+        "en": "macOS with Messages.app, Node.js 22.22.2+, Python 3, Full Disk Access for the terminal and a signed-in Pi. The npm release @kingcrab/pi-imessage 0.0.43 (August 2026) predates the Durable migration; build from the repository for the Durable version.",
+        "zh": "需要带「信息」App 的 macOS、Node.js 22.22.2+、Python 3、为终端授予完全磁盘访问权限，以及已登录的 Pi。npm 包 @kingcrab/pi-imessage 0.0.43（2026 年 8 月）早于 Durable 迁移，Durable 版本需从仓库源码构建。"
+      },
+      "dataSent": {
+        "en": "Reads the local Messages database. Chat context goes to the configured model provider; optional web search and page fetch tools contact external sites.",
+        "zh": "读取本机信息数据库。聊天上下文发送给所配置的模型服务商；可选的网页搜索与抓取工具会访问外部网站。"
+      },
+      "limitations": {
+        "en": "macOS only. It replies only to chats on a configured allowlist.",
+        "zh": "仅支持 macOS，只回复配置在允许列表中的聊天。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "reviewed source ebdf5c290e01b9d97964952c1531bb9c249fb8ba (2026-10-06) · npm 0.0.43 predates Pi Durable",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "README / requirements", "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/README.md" },
+          { "label": "Harness and JSONL storage", "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/src/agent/harness.ts#L5" },
+          { "label": "Durable scheduling", "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/src/agent/scheduling.ts#L13" },
+          { "label": "npm 0.0.43 dependencies (Pi 0.84.1, no Pi Durable)", "url": "https://registry.npmjs.org/@kingcrab/pi-imessage/0.0.43" }
+        ]
+      }
+    },
+    {
+      "name": "@geminixiang/mikan",
+      "summary": {
+        "en": "A self-hosted team agent for Slack, Telegram, Discord and GitHub, where each channel or DM gets its own workspace.",
+        "zh": "面向 Slack、Telegram、Discord 与 GitHub 的自托管团队 Agent，每个频道或私信都有独立工作区。"
+      },
+      "mechanism": {
+        "en": "Every conversation runs as a Pi Durable session stored in SQLite. A custom execution environment sends tool calls to the host or to a Docker sandbox.",
+        "zh": "每个对话作为存储在 SQLite 中的 Pi Durable 会话运行；自定义执行环境将工具调用交给宿主机或 Docker 沙箱执行。"
+      },
+      "prerequisites": {
+        "en": "npm @geminixiang/mikan 1.0.0 and Node.js 24.15+; run mikan onboard. Docker is needed for sandboxed runs. Platform tokens such as SLACK_BOT_TOKEN, TELEGRAM_BOT_TOKEN or DISCORD_BOT_TOKEN depend on the channels you enable.",
+        "zh": "需要 npm 包 @geminixiang/mikan 1.0.0 与 Node.js 24.15+，并执行 mikan onboard。沙箱运行需要 Docker；SLACK_BOT_TOKEN、TELEGRAM_BOT_TOKEN、DISCORD_BOT_TOKEN 等平台 Token 视启用的渠道而定。"
+      },
+      "dataSent": {
+        "en": "Connects to the chat platform APIs you configure and sends conversation context to any pi-ai provider. The sandbox image is pulled from ghcr.io.",
+        "zh": "连接你配置的聊天平台 API，并将对话上下文发送给所选 pi-ai 服务商；沙箱镜像从 ghcr.io 拉取。"
+      },
+      "limitations": {
+        "en": "The GitHub adapter is marked experimental. GitHub reports the license as unrecognized, although the README shows an MIT badge.",
+        "zh": "GitHub 适配器标记为实验性。README 显示 MIT 徽章，但 GitHub 未能识别仓库许可证。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "npm 1.0.0 · gitHead matches reviewed source c95f3701119cfa8ac6abf7af86cd884470e87502 (2026-10-07)",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "README / onboarding", "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/README.md" },
+          { "label": "Durable session store", "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/src/sessions/session-store.ts#L31" },
+          { "label": "Sandboxed execution environment", "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/src/harness/execution-env.ts#L17" },
+          { "label": "npm 1.0.0 / Pi Durable 1.0.2", "url": "https://registry.npmjs.org/@geminixiang/mikan/1.0.0" }
+        ]
+      }
+    },
+    {
+      "name": "ha-pi-durable (Hearth Pi)",
+      "summary": {
+        "en": "An experimental Home Assistant app that explores durable execution with strict approval boundaries.",
+        "zh": "实验性 Home Assistant App，探索带严格审批边界的 durable 执行。"
+      },
+      "mechanism": {
+        "en": "A Pi Durable harness persists inputs, task checkpoints and transcripts to SQLite. Home mode reads only explicitly scoped entities and proposes light or switch actions that need exact human approval. An optional code mode runs in a separate confined worker.",
+        "zh": "Pi Durable harness 将输入、任务检查点与会话记录持久化到 SQLite。Home 模式只读取明确授权的实体，灯光或开关操作需人工逐项批准；可选的代码模式运行在独立受限的 worker 中。"
+      },
+      "prerequisites": {
+        "en": "Node 24.21 LTS. Add the repository to the Home Assistant app store, or run the local demo with an offline provider. Online providers are OpenAI (API key) or OpenAI Codex (ChatGPT sign-in).",
+        "zh": "需要 Node 24.21 LTS。可将仓库添加到 Home Assistant 应用商店，或用离线 provider 运行本地演示。在线 provider 支持 OpenAI（API Key）或 OpenAI Codex（ChatGPT 登录）。"
+      },
+      "dataSent": {
+        "en": "With an online provider, input, conversation context and tool output go to that provider. Home Assistant is reached through a scoped proxy. No telemetry, per the README.",
+        "zh": "使用在线 provider 时，输入、会话上下文与工具输出发送给该服务商；Home Assistant 通过受限代理访问。README 说明不收集遥测。"
+      },
+      "failure": {
+        "en": "Interrupted coding calls are not replayed. An interrupted device dispatch is recorded as unknown and never retried automatically. Model work may repeat after recovery.",
+        "zh": "中断的编码调用不会重放；中断的设备指令记为结果未知，不会自动重试。恢复后模型请求可能重复发送。"
+      },
+      "limitations": {
+        "en": "Labelled a technical preview, not a production recommendation. Actions are off by default, a service receipt does not prove the physical device changed, and general Pi extensions or MCP servers cannot be loaded.",
+        "zh": "作者标明为技术预览，不建议用于生产。操作默认关闭；服务调用成功不代表设备已实际变化；不能加载一般 Pi 扩展或 MCP 服务。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "reviewed source bde4eedea875f83d1b608e266198e6dc3d170fe8 (2026-10-04) · no npm release",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "README / boundaries / recovery", "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/README.md" },
+          { "label": "SQLite storage runtime", "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/hearth_pi/src/runtime.ts#L12" },
+          { "label": "Validation evidence and remaining gates", "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/docs/validation.md" }
+        ]
+      }
+    },
+    {
+      "name": "pi-fabric",
+      "summary": {
+        "en": "A Pi extension whose spawned agents and actors run on Pi Durable by default.",
+        "zh": "Pi 扩展，其派生的 agent 与 actor 默认运行在 Pi Durable 上。"
+      },
+      "mechanism": {
+        "en": "Gives Pi one programmable tool, fabric_exec. Programs it runs can start workers, resident agents and actors; the default agents.runner is pi-durable, an isolated Pi SDK process backed by a Durable harness with JSONL storage. The outer Pi session is unchanged.",
+        "zh": "为 Pi 提供一个可编程工具 fabric_exec。它运行的程序可以启动 worker、常驻 agent 与 actor；默认 agents.runner 为 pi-durable，即由 Durable harness 与 JSONL 存储支撑的独立 Pi SDK 进程。外层 Pi 会话保持不变。"
+      },
+      "prerequisites": {
+        "en": "Pi 1.0.0+ and Node.js 24+. Install with pi install npm:pi-fabric; Pi Durable ships as a pinned dependency. Set agents.runner to pi to use the previous Pi CLI worker.",
+        "zh": "需要 Pi 1.0.0+ 与 Node.js 24+。用 pi install npm:pi-fabric 安装，Pi Durable 作为固定版本依赖随包提供。将 agents.runner 设为 pi 可改回原先的 Pi CLI worker。"
+      },
+      "limitations": {
+        "en": "Releases move fast and the configuration surface is large. The reviewed source matches 0.108.1; npm had moved to 0.109.0 by the review date.",
+        "zh": "版本更新很快，配置项较多。核验源码对应 0.108.1，核验当日 npm 已更新到 0.109.0。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "reviewed source b9e40f9f35af5ce0e7739de48a66b0aadef037e9 (2026-10-06, v0.108.1) · npm latest 0.109.0",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "Durable Pi runner documentation", "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/docs/durable-pi.md" },
+          { "label": "Durable agent runtime", "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/src/durable/agent.ts#L8" },
+          { "label": "README", "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/README.md" }
+        ]
+      }
+    },
+    {
+      "name": "webfox",
+      "summary": {
+        "en": "A web search and research toolkit that also ships its tools as a Pi Durable extension.",
+        "zh": "联网搜索与研究工具集，同时以 Pi Durable 扩展的形式提供这些工具。"
+      },
+      "mechanism": {
+        "en": "Besides the CLI, library and regular Pi extension, the webfox/durable entry exports createWebfoxExtension for a custom Durable host. Each call runs in the conversation's execution environment and saves large results to private files.",
+        "zh": "除 CLI、库和常规 Pi 扩展外，webfox/durable 入口导出 createWebfoxExtension，供自建 Durable 宿主安装。每次调用都在会话的执行环境中运行，较大的结果保存为私有文件。"
+      },
+      "prerequisites": {
+        "en": "Node.js 22+ and an API key for each provider you use, such as BRAVE_SEARCH_API_KEY. pi install npm:webfox installs the regular Pi extension; the Durable entry needs Pi Durable 1.0 as a peer dependency.",
+        "zh": "需要 Node.js 22+，以及所用服务商各自的 API Key，例如 BRAVE_SEARCH_API_KEY。pi install npm:webfox 安装常规 Pi 扩展；Durable 入口需要以 peer 依赖形式提供 Pi Durable 1.0。"
+      },
+      "dataSent": {
+        "en": "Queries and documents go to the web or LLM provider you select.",
+        "zh": "查询与文档发送给你选择的网页或 LLM 服务商。"
+      },
+      "failure": {
+        "en": "Interrupted requests are not replayed because providers may charge for them. Cancelling may not stop a provider job that is already running.",
+        "zh": "中断的请求不会重放，因为服务商可能已计费；取消请求未必能停止服务商侧已经开始的任务。"
+      },
+      "limitations": {
+        "en": "The Durable adapter does not install the CLI, register standard Pi renderers or provide codemode's structured results.",
+        "zh": "Durable 适配器不安装 CLI，不注册标准 Pi 渲染器，也不提供 codemode 的结构化结果接口。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "npm 4.7.0 · gitHead matches reviewed source 2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010 (2026-10-03)",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "README: Use with Pi Durable", "url": "https://github.com/mavam/webfox/blob/2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010/README.md#-use-with-pi-durable" },
+          { "label": "Durable extension entry", "url": "https://github.com/mavam/webfox/blob/2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010/src/durable.ts#L9" },
+          { "label": "npm 4.7.0 / peer dependency", "url": "https://registry.npmjs.org/webfox/4.7.0" }
+        ]
+      }
+    },
+    {
+      "name": "Cloudflare Agents SDK",
+      "summary": {
+        "en": "Cloudflare's Agents SDK includes an adapter for hosting Pi Durable inside Durable Objects.",
+        "zh": "Cloudflare Agents SDK 内含适配器，可在 Durable Object 中托管 Pi Durable。"
+      },
+      "mechanism": {
+        "en": "The agents/harness/pi export provides PiHarness, which stores Pi Durable state in Durable Object SQLite and wakes the harness after eviction. The repository also contains a Pi harness example and a channels example.",
+        "zh": "agents/harness/pi 导出 PiHarness：它把 Pi Durable 状态存进 Durable Object 的 SQLite，并在对象被驱逐后重新唤醒 harness。仓库还提供 Pi harness 与 channels 示例。"
+      },
+      "prerequisites": {
+        "en": "A Cloudflare account with Workers and Durable Objects. Install agents (0.26.0 at review) and Pi Durable yourself, since it is a peer dependency. Model credentials depend on the example.",
+        "zh": "需要可使用 Workers 与 Durable Objects 的 Cloudflare 账号。安装 agents（核验时为 0.26.0），并自行安装作为 peer 依赖的 Pi Durable；模型凭据视示例而定。"
+      },
+      "limitations": {
+        "en": "Pi is one harness adapter in a large SDK, not its core runtime. pi-on-cf and gitorange build on this adapter.",
+        "zh": "Pi 只是这个大型 SDK 中的一个 harness 适配器，并非其核心运行时。pi-on-cf 与 gitorange 都基于此适配器构建。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "npm agents 0.26.0 · reviewed source 92d1770de7d4f0b2c643e23f4ac867950bae69fc (2026-10-06)",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "PiHarness", "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/packages/agents/src/harness/pi/harness.ts#L15" },
+          { "label": "Durable Object SQLite session store", "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/packages/agents/src/harness/pi/session-store.ts#L7" },
+          { "label": "Example: Pi harness server", "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/examples/next/harnesses/pi/src/server.ts#L6" },
+          { "label": "npm agents 0.26.0 / peer dependency", "url": "https://registry.npmjs.org/agents/0.26.0" }
+        ]
+      }
+    },
+    {
+      "name": "@netzlabor/pi-durable-postgres",
+      "summary": {
+        "en": "A PostgreSQL storage backend for Pi Durable, for hosts that already run and back up Postgres.",
+        "zh": "Pi Durable 的 PostgreSQL 存储后端，适合已有 Postgres 运维与备份的宿主。"
+      },
+      "mechanism": {
+        "en": "Implements the Pi Durable Storage interface over one PostgreSQL connection and uses an advisory lock so a single writer owns each schema. It runs the upstream storage conformance suite and adds a transactional helper for deleting conversations.",
+        "zh": "基于单个 PostgreSQL 连接实现 Pi Durable 的 Storage 接口，并用 advisory lock 保证每个 schema 只有一个写入者。它通过上游存储一致性测试，并提供删除会话的事务化维护工具。"
+      },
+      "prerequisites": {
+        "en": "Node.js 22.19+, PostgreSQL (17 tested) and DATABASE_URL. Install @netzlabor/pi-durable-postgres with Pi Durable, Chord and pi-ai pinned to 1.0.3.",
+        "zh": "需要 Node.js 22.19+、PostgreSQL（已测试 17）与 DATABASE_URL。安装 @netzlabor/pi-durable-postgres 时，需将 Pi Durable、Chord 与 pi-ai 固定为 1.0.3。"
+      },
+      "limitations": {
+        "en": "Alpha. Deleting live conversations is not implemented, PgBouncer transaction pooling is unsupported, and unprefixed table names need a dedicated schema. The reviewed source is newer than the npm release.",
+        "zh": "处于 Alpha 阶段。尚不支持删除运行中的会话，不支持 PgBouncer 事务池；表名不带前缀，需要使用专用 schema。核验源码比 npm 发行版更新。"
+      },
+      "verification": {
+        "date": "2026-10-07",
+        "revision": "npm 0.1.1 · reviewed source d10b637aae29bb8fcf16c1280372b2f74060ead3 (2026-10-05)",
+        "status": "source-reviewed",
+        "sources": [
+          { "label": "README / status / limitations", "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/README.md" },
+          { "label": "Storage implementation", "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/src/storage.ts#L3" },
+          { "label": "Upstream conformance suite", "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/test/conformance.test.ts#L1" },
+          { "label": "npm 0.1.1 / peer Pi Durable 1.0.3", "url": "https://registry.npmjs.org/@netzlabor/pi-durable-postgres/0.1.1" }
+        ]
+      }
+    }
+  ],
+  "alternatives": ["@rivet-dev/pi", "roamgate", "pi-on-cf", "antiproton", "sift", "pi-durable-subagents", "pi-durabletask-mcp"],
+  "sources": [
+    { "label": "Earendil: Pi Durable (2026-10-01)", "url": "https://earendil.com/posts/pi-durable/" },
+    { "label": "packages/durable README (earendil-works/pi 36a686e)", "url": "https://github.com/earendil-works/pi/blob/36a686ee8dd73afe8242011db387040890e24093/packages/durable/README.md" },
+    { "label": "npm @earendil-works/pi-durable", "url": "https://www.npmjs.com/package/@earendil-works/pi-durable" },
+    { "label": "Official example: small coding agent on Pi Durable", "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/coding-agent/src/experimental/durable" },
+    { "label": "Official example: vacation planning agent", "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/coding-agent/src/experimental/vacation" },
+    { "label": "Pi: Monday Meditations on Pi Durable (2026-10-05)", "url": "https://x.com/pidotdev/status/2107033061905104941" }
+  ]
+,
+  "navLabel": { "en": "Built on Pi Durable", "zh": "Pi Durable 生态" }
+}

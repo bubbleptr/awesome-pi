@@ -487,5 +487,25 @@
       "label": "zhouluobo: broader Jev project list (2026-09-19 UTC)",
       "url": "https://x.com/zhouluobo/status/2101452286270792061"
     }
-  ]
+  ],
+  "officialLinks": [
+    {
+      "label": {
+        "en": "TypeSafe AI ↗",
+        "zh": "TypeSafe AI ↗"
+      },
+      "url": "https://typesafe.ai/"
+    },
+    {
+      "label": {
+        "en": "Introducing Jev ↗",
+        "zh": "Jev 官方介绍 ↗"
+      },
+      "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev"
+    }
+  ],
+  "navLabel": {
+    "en": "TypeSafe AI / Jev",
+    "zh": "TypeSafe AI / Jev"
+  }
 }

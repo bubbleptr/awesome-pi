@@ -11,7 +11,7 @@
 - 资源卡片上的 GitHub Star 数与 npm 周下载量来自统计快照 `site/src/data/stats.json`（纳入版本控制）。快照由独立脚本 `bun run stats` 调用 GitHub 与 npm 公开 API 生成，`.github/workflows/stats.yml` 每周定时刷新并提交；构建只读取本地快照。
 - 使用“名称 + 项目链接”识别资源。同一资源在不同分类出现时合并分类与介绍；同一仓库中的不同扩展保留为独立资源。
 - 两种语言的名称、项目链接、分类及安装命令必须对应。除已发布包整条记录缺失可由归档补齐外，翻译冲突、重复行、安装命令不一致或无法解析的资源行会阻止构建，避免静默丢失内容。
-- `Editor Integration` 兼容现有的三级标题。编辑器集成、主题、扩展和独立发行版分别展示。
+- `Editor Integration` 兼容现有的三级标题。编辑器集成、主题、扩展、基于 Pi Durable 的项目和独立发行版分别展示；`Built on Pi Durable` 是独立类型（`durable`），与 Packages 下同名同链接的 Pi Package（如 pi-fabric、webfox）不冲突，后者仍留在 Packages 下。
 - 资源链接须使用 HTTP 或 HTTPS。安装命令可省略；有命令时原样展示，网站只复制文本，不执行命令。
 - 新增功能分类时，英文标题会自动成为分类；可在 `site/src/lib/i18n.ts` 中补充中文分类标签。
 
