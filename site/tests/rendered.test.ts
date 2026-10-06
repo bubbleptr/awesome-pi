@@ -4,6 +4,7 @@ import { Window, type HTMLAnchorElement, type HTMLInputElement } from 'happy-dom
 import { loadStats, statsFor } from '../src/lib/stats';
 import { initializeDirectory } from '../src/scripts/directory';
 import { loadPublishedCatalog as loadCatalog, getPublishedSlugs, packagePath, publishedRoutes, resolvePublishedResource, routePath, type RouteKind } from '../src/lib/published-routes';
+import { getEditorial } from '../src/lib/editorial';
 
 
 describe('generated static pages', () => {
@@ -97,9 +98,17 @@ describe('published editorial pages', () => {
         expect(win.document.querySelector('[data-interactions]')?.getAttribute('data-surface')).toBe(kind === 'packages' ? 'detail' : kind === 'topics' ? 'topic' : 'category');
         expect(win.document.querySelectorAll('[data-repo-link]').length).toBeGreaterThan(0);
         expect(win.document.querySelectorAll('[data-copy][data-package]').length).toBeGreaterThan(0);
-        if (kind === 'topics') {
+        if (slug === 'jev') {
           expect(win.document.title).toContain('TypeSafe AI');
           expect(win.document.title).toContain('Jev');
+        }
+        const officialLinks = [...win.document.querySelectorAll<HTMLAnchorElement>('.official-links a[href]')];
+        const declared = getEditorial(kind, slug).officialLinks ?? [];
+        expect(officialLinks).toHaveLength(declared.length);
+        for (const [index, link] of officialLinks.entries()) {
+          const href = link.getAttribute('href')!;
+          const expected = declared[index].url ?? `${locale === 'zh' ? '/zh' : ''}${declared[index].path}`;
+          expect(href).toBe(expected);
         }
         for (const button of win.document.querySelectorAll('[data-copy][data-package]')) {
           const catalog = loadCatalog();
@@ -118,6 +127,7 @@ describe('published editorial pages', () => {
     try {
       win.document.write(readFileSync(new URL(`../dist/${locale === 'zh' ? 'zh/' : ''}index.html`, import.meta.url), 'utf8'));
       for (const slug of getPublishedSlugs('topics')) expect(win.document.querySelector(`.topic-link[href="${routePath('topics', slug, locale)}"]`)).not.toBeNull();
+      for (const slug of getPublishedSlugs('topics')) expect(win.document.querySelector(`.guide-card-link[data-guide="${slug}"]`)?.getAttribute('href')).toBe(routePath('topics', slug, locale));
       if (publishedRoutes.packages['pi-mcp-adapter']?.status === 'active') expect(win.document.querySelector(`.package-link[href="${routePath('packages', 'pi-mcp-adapter', locale)}"]`)).not.toBeNull();
       for (const slug of getPublishedSlugs('categories')) expect(win.document.querySelector(`.guide-link[href="${routePath('categories', slug, locale)}"]`)).not.toBeNull();
       expect(win.document.querySelectorAll('.guide-link[data-category], .package-link[data-category], .topic-link[data-category]')).toHaveLength(0);

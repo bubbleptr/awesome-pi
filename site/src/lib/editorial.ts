@@ -1,6 +1,7 @@
 import type { Catalog, Locale, Resource } from './catalog';
 import { publishedRoutes, resolvePublishedResource, type RouteKind } from './published-routes';
 import jev from '../data/topics/jev.json';
+import piDurable from '../data/topics/pi-durable.json';
 import subagents from '../data/categories/subagents.json';
 import webAccess from '../data/categories/web-access-search.json';
 import webPackage from '../data/packages/pi-web-access.json';
@@ -14,14 +15,16 @@ export type ResourceReview = {
   name: string; summary: Localized; mechanism: Localized; prerequisites: Localized;
   dataSent?: Localized; failure?: Localized; limitations: Localized; verification: Evidence;
 };
+export type OfficialLink = { label: Localized } & ({ url: string; path?: never } | { path: string; url?: never });
 export type Editorial = {
   slug: string; title: Localized; description: Localized; intro: Localized<string[]>;
   sections: { id: string; title: Localized; paragraphs: Localized<string[]>; code?: string }[];
   resources: ResourceReview[]; sources: Source[]; alternatives?: string[];
+  officialLinks?: OfficialLink[];
 };
 
 const content: Record<RouteKind, Record<string, Editorial>> = {
-  topics: { jev: jev as Editorial },
+  topics: { jev: jev as Editorial, 'pi-durable': piDurable as Editorial },
   categories: { subagents: subagents as Editorial, 'web-access-search': webAccess as Editorial },
   packages: { 'pi-web-access': webPackage as Editorial, 'tintinweb-pi-subagents': subagentsPackage as Editorial, 'pi-mcp-adapter': mcpPackage as Editorial },
 };

@@ -14,7 +14,7 @@ export function filterResources<T extends SearchableResource>(resources: T[], fi
 export function readFilters(search: string, categories: string[]): Filters {
   const params = new URLSearchParams(search);
   const candidate = params.get('category') ?? 'all';
-  return { q: (params.get('q') ?? '').trim(), category: ['all', 'packages', 'themes', 'integrations', 'distributions', ...categories].includes(candidate) ? candidate : 'all' };
+  return { q: (params.get('q') ?? '').trim(), category: ['all', 'packages', 'themes', 'integrations', 'durable', 'distributions', ...categories].includes(candidate) ? candidate : 'all' };
 }
 
 export function writeFilters(filters: Filters): string {

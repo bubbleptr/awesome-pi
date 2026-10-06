@@ -59,6 +59,18 @@ describe('README catalog', () => {
     expect(() => parseReadme('## Packages\n### Utilities\n- [bad](javascript:alert) - Unsafe link.')).toThrow(/URL|protocol/i);
   });
 
+  test('parses Built on Pi Durable entries as the durable kind without conflicting with same-name packages', () => {
+    const markdown = `## Packages\n### Subagents\n${entry('pi-fabric', 'Extension runtime.')}\n## Built on Pi Durable\n\nIntro paragraph.\n\n> Note line.\n\n- [pi-pocket](https://github.com/example/pocket) - Multiplayer app.\n## Alternative Distributions\n${entry('fork', 'Standalone.', 'curl -fsSL https://example.com/install | sh')}`;
+    const records = parseReadme(markdown);
+    expect(records.find(record => record.name === 'pi-pocket')).toMatchObject({ kind: 'durable', category: 'built-on-pi-durable' });
+    const { resources } = createCatalog({ en: markdown, zh: markdown });
+    expect(resources.find(resource => resource.name === 'pi-pocket')?.kind).toBe('durable');
+    expect(resources.find(resource => resource.name === 'pi-fabric')?.kind).toBe('packages');
+    // Same name + URL across kinds is a hard catalog error, so packages stay single-kind.
+    const conflicted = markdown.replace('- [pi-pocket](https://github.com/example/pocket) - Multiplayer app.', '- [pi-fabric](https://github.com/example/collection) - Also durable. `pi install npm:pi-fabric`');
+    expect(() => createCatalog({ en: conflicted, zh: conflicted })).toThrow(/conflicting/i);
+  });
+
   test('indexes every existing resource, preserves install commands, and separates resource types', () => {
     const en = readFileSync(new URL('../../README.en.md', import.meta.url), 'utf8');
     const zh = readFileSync(new URL('../../README.md', import.meta.url), 'utf8');

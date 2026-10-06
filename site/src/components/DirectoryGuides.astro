@@ -9,6 +9,13 @@ const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 const guides = Object.entries(publishedRoutes.categories).filter(([, route]) => route.status === 'active');
 const jevPublished = publishedRoutes.topics.jev?.status === 'active';
+const topics = Object.entries(publishedRoutes.topics).filter(([slug, route]) => route.status === 'active' && slug !== 'jev');
+const topicCopy: Record<string, { title: string; description: string }> = {
+  'pi-durable': {
+    title: zh ? 'Pi Durable 生态' : 'Built on Pi Durable',
+    description: zh ? '多人 Web、iOS、聊天机器人与存储后端，按用途比较。' : 'Multiplayer web, iOS, chat bots and storage backends, compared by use.',
+  },
+};
 const copy: Record<string, { title: string; description: string; illustration: 'subagents' | 'web' }> = {
   subagents: {
     title: zh ? '多 Agent 协作' : 'Working with subagents',
@@ -23,7 +30,7 @@ const copy: Record<string, { title: string; description: string; illustration: '
 };
 ---
 
-{(guides.length > 0 || jevPublished) && <section class="directory-guides" aria-labelledby="guides-heading">
+{(guides.length > 0 || jevPublished || topics.length > 0) && <section class="directory-guides" aria-labelledby="guides-heading">
   <header class="guides-heading">
     <div>
       <h2 id="guides-heading">{zh ? '热门扩展选型指南' : 'Guides to popular extensions'}</h2>
@@ -41,6 +48,17 @@ const copy: Record<string, { title: string; description: string; illustration: '
       </div>
       <div class="guide-art guide-art--jev"><GuideIllustration variant="jev" locale={locale} /></div>
     </article>}
+    {topics.map(([slug]) => {
+      const page = getEditorial('topics', slug);
+      const title = topicCopy[slug]?.title ?? page.title[locale];
+      return <article class="guide-card guide-card--compact">
+        <div class="guide-card-copy">
+          <h3>{title}</h3>
+          <p>{topicCopy[slug]?.description ?? page.description[locale]}</p>
+          <a class="topic-link guide-card-link" data-guide={slug} data-placement="home_bento" href={routePath('topics', slug, locale)} aria-label={zh ? `查看专题：${title}` : `Explore the guide: ${title}`}>{zh ? '查看专题' : 'Explore the guide'}<span aria-hidden="true">↗</span></a>
+        </div>
+      </article>;
+    })}
     {guides.map(([slug]) => {
       const card = copy[slug];
       const page = getEditorial('categories', slug);

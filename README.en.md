@@ -54,6 +54,7 @@ pi list
   - [Featured Themes](#featured-themes)
   - [Theme Tools](#theme-tools)
 - [Editor Integration](#editor-integration)
+- [Built on Pi Durable](#built-on-pi-durable)
 - [Alternative Distributions](#alternative-distributions)
 
 ---
@@ -77,6 +78,7 @@ Web search and content fetching packages that give Pi access to internet informa
 - [@narumitw/pi-firecrawl](https://github.com/narumiruna/pi-extensions) - Firecrawl-powered web scraping, crawling, URL discovery, and web search. `pi install npm:@narumitw/pi-firecrawl`
 - [@code-yeongyu/pi-webfetch](https://github.com/code-yeongyu/pi-webfetch) - URL content fetching with markdown/plain text/raw HTML support. `pi install git:github.com/code-yeongyu/pi-webfetch`
 - [@code-yeongyu/pi-websearch](https://github.com/code-yeongyu/pi-websearch) - Provider-backed web search with configuration gating and TUI status. `pi install git:github.com/code-yeongyu/pi-websearch`
+- [webfox](https://github.com/mavam/webfox) - Multi-provider web search, page extraction, grounded answers and deep research as a CLI, library and Pi extension; the webfox/durable entry installs the same tools in a Pi Durable host. `pi install npm:webfox`
 
 ---
 
@@ -395,6 +397,28 @@ Editor integration packages for embedding Pi into IDEs.
 - [pi-vscode-extension](https://github.com/Zetaphor/pi-vscode-extension) - Embeds Pi as a VS Code extension. `pi install git:github.com/Zetaphor/pi-vscode-extension`
 
 > Zed editor natively supports Pi via the ACP Registry: configure `"agent_servers": { "pi-acp": { "type": "registry" } }`.
+
+
+## Built on Pi Durable
+
+Projects whose own source code runs on [Pi Durable](https://earendil.com/posts/pi-durable/), Earendil's experimental durable harness. Most are standalone apps or libraries rather than Pi packages. See the [Pi Durable topic](https://piindex.dev/topics/pi-durable/) for setup notes and data boundaries.
+
+> pi-fabric (Subagents) and webfox (Web Access & Search) also run on Pi Durable and are listed under Packages.
+
+- [pi-pocket](https://github.com/TannerMidd/pi-pocket) - Self-hosted, mobile-first multiplayer web app for Pi agents: shared live sessions, steering and queues, forks into git worktrees, schedules and approvals. One Pi Durable harness keeps every session in a single SQLite file. Install from a Git checkout.
+- [oppi](https://github.com/duh17/oppi) - iPhone and iPad client for Pi with a self-hosted server. Durable sessions are an experiment: enable experimental.serverDurable on the server, then turn them on in the app's experiments settings. `npm install -g oppi-server`
+- [pi-imessage](https://github.com/daya0576/pi-imessage) - Self-hosted iMessage bot for macOS with a Durable conversation per chat, scheduled tasks, memory and a small web UI. The npm release 0.0.43 predates the Pi Durable migration; build from source for the Durable version.
+- [@geminixiang/mikan](https://github.com/geminixiang/mikan) - Self-hosted team agent for Slack, Telegram, Discord and GitHub: each channel or DM gets its own sandboxed workspace and every conversation runs as a Durable session. `npm install -g @geminixiang/mikan`
+- [ha-pi-durable (Hearth Pi)](https://github.com/cosmyo/ha-pi-durable) - Experimental Home Assistant app: a Durable agent that reads only scoped entities, needs human approval for light and switch actions, and never replays interrupted calls after a crash. Technical preview.
+- [Cloudflare Agents SDK](https://github.com/cloudflare/agents) - The agents/harness/pi adapter runs Pi Durable inside Durable Objects and stores its state in Durable Object SQLite; Pi Durable is a peer dependency. `npm install agents`
+- [@netzlabor/pi-durable-postgres](https://github.com/j-koester/pi-durable-postgres) - PostgreSQL storage backend for Pi Durable, tested against the upstream storage conformance suite. Alpha; pins Pi Durable 1.0.3. `npm install @netzlabor/pi-durable-postgres`
+- [@rivet-dev/pi](https://github.com/rivet-dev/agents) - Runs Pi as a durable Rivet Actor. The Pi Durable version (0.5.0) is only in the repository so far; npm 0.1.0 does not use Pi Durable yet.
+- [roamgate](https://github.com/powerfooI/roamgate) - Desktop and mobile client for Herdr: control terminals, monitor coding agents and review diffs. Its built-in assistant runs on Pi Durable with SQLite storage.
+- [pi-on-cf](https://github.com/harshil1712/pi-on-cf) - Experimental single-user coding agent on Cloudflare, with one Durable Object and one container workspace per session. It has no authentication; protect it with Cloudflare Access.
+- [antiproton](https://github.com/botiverse/antiproton) - Multi-tenant agent runtime on Cloudflare: one Durable Object per tenant and agent, and a tool gateway that keeps credentials out of the model context. Pi Durable runs the agent inside each object.
+- [sift](https://github.com/timReynolds/sift) - Multi-agent PR review as a GitHub Action: a lead reviewer and specialists inspect code in Docker workspaces, with a SQLite snapshot per PR. Trusted repositories only; fork PRs are skipped.
+- [pi-durable-subagents](https://github.com/anasalqoyyum/pi-durable-subagents) - Pi extension for background subagents you can inspect, steer and recover after a restart, optionally isolated in git worktrees. `pi install git:github.com/anasalqoyyum/pi-durable-subagents`
+- [pi-durabletask-mcp](https://github.com/Nyarlathoteppppp/pi-durabletask-mcp) - MCP server that delegates tasks to Durable subagents with background execution, steering and crash recovery. Requires a global Pi install; no Windows support. `npm install -g pi-durabletask-mcp`
 
 
 ## Alternative Distributions

@@ -66,3 +66,4 @@
 @media (prefers-reduced-motion: reduce) {
   .directory-guides *, .directory-guides *::before, .directory-guides *::after { animation: none !important; transition: none !important; }
 }
+.guide-card--compact .guide-card-copy:only-child { grid-column: 1 / -1; }

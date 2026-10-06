@@ -54,6 +54,7 @@ pi list
   - [Featured Themes](#featured-themes)
   - [Theme Tools](#theme-tools)
 - [Editor Integration](#editor-integration)
+- [Built on Pi Durable](#built-on-pi-durable)
 - [Alternative Distributions](#alternative-distributions)
 
 ---
@@ -77,6 +78,7 @@ Web 搜索和内容获取 Package，让 Pi 能够访问互联网信息。
 - [@narumitw/pi-firecrawl](https://github.com/narumiruna/pi-extensions) - Firecrawl 驱动的网页抓取、爬取、URL 发现和 Web 搜索。`pi install npm:@narumitw/pi-firecrawl`
 - [@code-yeongyu/pi-webfetch](https://github.com/code-yeongyu/pi-webfetch) - URL 内容获取，支持 markdown/plain text/raw HTML。`pi install git:github.com/code-yeongyu/pi-webfetch`
 - [@code-yeongyu/pi-websearch](https://github.com/code-yeongyu/pi-websearch) - Provider-backed Web 搜索，带配置门控和 TUI 状态。`pi install git:github.com/code-yeongyu/pi-websearch`
+- [webfox](https://github.com/mavam/webfox) - 多服务商联网搜索、网页提取、带来源回答与深度研究，提供 CLI、库与 Pi 扩展；webfox/durable 入口可将同一套工具装进 Pi Durable 宿主。`pi install npm:webfox`
 
 ---
 
@@ -395,6 +397,28 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [pi-vscode-extension](https://github.com/Zetaphor/pi-vscode-extension) - 将 Pi 嵌入为 VS Code 扩展。`pi install git:github.com/Zetaphor/pi-vscode-extension`
 
 > Zed 编辑器通过 ACP Registry 原生支持 Pi：配置 `"agent_servers": { "pi-acp": { "type": "registry" } }` 即可使用。
+
+
+## Built on Pi Durable
+
+源码直接运行在 [Pi Durable](https://earendil.com/posts/pi-durable/)（Earendil 的实验性 durable harness）上的项目，多数是独立应用或库，而不是 Pi Package。安装说明与数据边界见 [Pi Durable 专题](https://piindex.dev/zh/topics/pi-durable/)。
+
+> pi-fabric（Subagents）与 webfox（Web Access & Search）同样基于 Pi Durable，收录在 Packages 下。
+
+- [pi-pocket](https://github.com/TannerMidd/pi-pocket) - 自托管、移动优先的多人 Pi Web 应用：共享实时会话、中途引导与排队、分叉到 git worktree、定时任务与审批。所有会话由一个 Pi Durable harness 存进同一个 SQLite 文件。从 Git 仓库安装。
+- [oppi](https://github.com/duh17/oppi) - iPhone、iPad Pi 客户端，配合自托管服务端使用。Durable 会话为实验功能：先在服务端开启 experimental.serverDurable，再在 App 的实验设置中打开。`npm install -g oppi-server`
+- [pi-imessage](https://github.com/daya0576/pi-imessage) - macOS 自托管 iMessage 机器人：每个聊天一个 Durable 会话，支持定时任务、记忆与小型 Web 界面。npm 版 0.0.43 早于 Pi Durable 迁移，Durable 版本需从源码构建。
+- [@geminixiang/mikan](https://github.com/geminixiang/mikan) - 面向 Slack、Telegram、Discord 与 GitHub 的自托管团队 Agent：每个频道或私信都有独立的沙箱工作区，每个对话作为一个 Durable 会话运行。`npm install -g @geminixiang/mikan`
+- [ha-pi-durable (Hearth Pi)](https://github.com/cosmyo/ha-pi-durable) - 实验性 Home Assistant App：Durable Agent 只读取授权实体，灯光与开关操作需人工批准，崩溃恢复时不重放中断的调用。技术预览。
+- [Cloudflare Agents SDK](https://github.com/cloudflare/agents) - agents/harness/pi 适配器在 Durable Object 中运行 Pi Durable，并将状态存进 Durable Object 的 SQLite；Pi Durable 为 peer 依赖。`npm install agents`
+- [@netzlabor/pi-durable-postgres](https://github.com/j-koester/pi-durable-postgres) - Pi Durable 的 PostgreSQL 存储后端，通过上游存储一致性测试。Alpha 阶段，固定 Pi Durable 1.0.3。`npm install @netzlabor/pi-durable-postgres`
+- [@rivet-dev/pi](https://github.com/rivet-dev/agents) - 将 Pi 作为 durable Rivet Actor 运行。基于 Pi Durable 的版本（0.5.0）目前只在仓库中，npm 0.1.0 尚未使用 Pi Durable。
+- [roamgate](https://github.com/powerfooI/roamgate) - Herdr 的桌面与移动客户端：控制终端、监控 Coding Agent、审阅 diff。内置助手运行在使用 SQLite 存储的 Pi Durable 上。
+- [pi-on-cf](https://github.com/harshil1712/pi-on-cf) - 实验性单用户 Cloudflare Coding Agent，每个会话一个 Durable Object 和一个容器工作区。没有认证，需用 Cloudflare Access 保护。
+- [antiproton](https://github.com/botiverse/antiproton) - Cloudflare 上的多租户 Agent 运行时：每个租户与 Agent 一个 Durable Object，工具网关让凭据不进入模型上下文；每个对象内由 Pi Durable 运行 Agent。
+- [sift](https://github.com/timReynolds/sift) - GitHub Action 形式的多 Agent PR 审查：主审与各专项审查者在 Docker 工作区中检查代码，每个 PR 保存一份 SQLite 快照。仅用于受信任仓库，跳过 fork PR。
+- [pi-durable-subagents](https://github.com/anasalqoyyum/pi-durable-subagents) - Pi 扩展：后台子代理可查看、引导，重启后可恢复，可选在 git worktree 中隔离。`pi install git:github.com/anasalqoyyum/pi-durable-subagents`
+- [pi-durabletask-mcp](https://github.com/Nyarlathoteppppp/pi-durabletask-mcp) - MCP 服务：将任务委托给 Durable 子代理，支持后台执行、中途引导与崩溃恢复。需要全局安装 Pi，不支持 Windows。`npm install -g pi-durabletask-mcp`
 
 
 ## Alternative Distributions
