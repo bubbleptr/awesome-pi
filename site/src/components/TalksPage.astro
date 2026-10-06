@@ -19,9 +19,10 @@ const image = new URL(talk?.poster ?? '/og-image-v4.png', Astro.site).href;
 const date = (value: string) => new Intl.DateTimeFormat(zh ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 const schema = talk ? {
   '@context': 'https://schema.org', '@type': 'VideoObject', name: talk.title[locale], description,
-  thumbnailUrl: image, contentUrl: talk.video, uploadDate: talk.uploadedAt,
+  thumbnailUrl: image, uploadDate: talk.uploadedAt,
   duration: `PT${Math.floor(talk.duration)}S`, inLanguage: 'en', url: canonical,
   isBasedOn: talk.source,
+  ...(talk.youtube ? { embedUrl: `https://www.youtube.com/embed/${talk.youtube}` } : { contentUrl: talk.video }),
 } : {
   '@context': 'https://schema.org', '@type': 'CollectionPage', name: heading, description, url: canonical,
 };
@@ -72,15 +73,19 @@ const schema = talk ? {
           <div class="talk-watch-layout">
           <div class="talk-screen">
           <div class:list={['talk-video', { 'talk-video-portrait': talk.portrait }]}>
-            <video controls playsinline preload="metadata" poster={talk.poster} aria-label={talk.title[locale]}>
-              <source src={import.meta.env.DEV ? `/__talk-media/${talk.slug}.mp4` : talk.video} type="video/mp4" />
-              <track kind="captions" src={`${zh ? "/zh" : ""}/talks/${talk.slug}.vtt`} srclang={zh ? "zh-CN" : "en"} label={zh ? "中文（AI 初译）" : "English (AI)"} default />
-              <a href={talk.source}>{zh ? '在 X 上观看原视频' : 'Watch the original on X'}</a>
-            </video>
+            {talk.youtube ? (
+              <iframe data-youtube={talk.youtube} src={`https://www.youtube-nocookie.com/embed/${talk.youtube}?enablejsapi=1&rel=0&playsinline=1&iv_load_policy=3`} title={talk.title[locale]} referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+            ) : (
+              <video controls playsinline preload="metadata" poster={talk.poster} aria-label={talk.title[locale]}>
+                <source src={import.meta.env.DEV ? `/__talk-media/${talk.slug}.mp4` : talk.video} type="video/mp4" />
+                <track kind="captions" src={`${zh ? "/zh" : ""}/talks/${talk.slug}.vtt`} srclang={zh ? "zh-CN" : "en"} label={zh ? "中文（AI 初译）" : "English (AI)"} default />
+                <a href={talk.source}>{zh ? '在 X 上观看原视频' : 'Watch the original on X'}</a>
+              </video>
+            )}
             <div class="video-captions" data-video-captions hidden aria-hidden="true"><span lang={zh ? "zh-CN" : "en"}></span></div>
             <div class="caption-controls" data-caption-controls hidden><button type="button" data-captions-toggle aria-pressed="true">{zh ? '字幕' : 'Captions'}</button><button type="button" data-player-fullscreen aria-label={zh ? '切换全屏' : 'Toggle fullscreen'}>⛶</button></div>
           </div>
-          <div class="talk-source"><span>{zh ? '来源' : 'Source'} <a href={talk.source} target="_blank" rel="noopener noreferrer">@pidotdev ↗</a>{talk.slug === 'harness-and-workflow' && <span> · Syntax.fm {zh ? '访谈剪辑' : 'interview excerpt'}</span>}</span><a href={talk.video} target="_blank" rel="noopener noreferrer">{zh ? '打开原视频' : 'Open original video'} ↗</a></div>
+          <div class="talk-source"><span>{zh ? '来源' : 'Source'} <a href={talk.source} target="_blank" rel="noopener noreferrer">@pidotdev ↗</a>{talk.slug === 'harness-and-workflow' && <span> · Syntax.fm {zh ? '访谈剪辑' : 'interview excerpt'}</span>}</span><a href={talk.youtube ? `https://www.youtube.com/watch?v=${talk.youtube}` : talk.video} target="_blank" rel="noopener noreferrer">{talk.youtube ? (zh ? '在 YouTube 上观看' : 'Watch on YouTube') : (zh ? '打开原视频' : 'Open original video')} ↗</a></div>
           <p class="talk-error" role="status" data-video-error hidden>{zh ? '视频暂时无法加载，请通过上方链接打开原视频或 X 原帖。' : 'The video could not load. Open the original video or the X post using the links above.'}</p>
           </div>
           <aside class="transcript-aside">

@@ -224,11 +224,20 @@ describe('conversation pages', () => {
         win.document.write(readFileSync(new URL(`../dist${base}${slug}/index.html`, import.meta.url), 'utf8'));
         expect(win.document.querySelectorAll('h1')).toHaveLength(1);
         expect(win.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`https://piindex.dev${base}${slug}/`);
-        expect(win.document.querySelector('video source')?.getAttribute('src')).toStartWith('https://video.twimg.com/');
-        expect(win.document.querySelector('track')?.getAttribute('src')).toBe(`${base}${slug}.vtt`);
-        expect(win.document.querySelector('track')?.hasAttribute('default')).toBe(true);
-        expect(win.document.querySelector('track')?.getAttribute('srclang')).toBe(locale === 'zh' ? 'zh-CN' : 'en');
         const data = JSON.parse(readFileSync(new URL(`../src/data/talks/${slug}.json`, import.meta.url), 'utf8'));
+        if (data.youtube) {
+          expect(win.document.querySelector('video')).toBeNull();
+          const embed = win.document.querySelector(`iframe[data-youtube="${data.youtube}"]`);
+          expect(embed).not.toBeNull();
+          expect(embed?.getAttribute('src')).toStartWith(`https://www.youtube-nocookie.com/embed/${data.youtube}?`);
+          expect(embed?.getAttribute('referrerpolicy')).toBe('strict-origin-when-cross-origin');
+          expect(win.document.querySelector(`.talk-source a[href="https://www.youtube.com/watch?v=${data.youtube}"]`)).not.toBeNull();
+        } else {
+          expect(win.document.querySelector('video source')?.getAttribute('src')).toStartWith('https://video.twimg.com/');
+          expect(win.document.querySelector('track')?.getAttribute('src')).toBe(`${base}${slug}.vtt`);
+          expect(win.document.querySelector('track')?.hasAttribute('default')).toBe(true);
+          expect(win.document.querySelector('track')?.getAttribute('srclang')).toBe(locale === 'zh' ? 'zh-CN' : 'en');
+        }
         const firstCue = data.segments[0];
         const caption = locale === 'zh' ? firstCue.zh : firstCue.text;
         expect(win.document.querySelector('.transcript-line [lang]')?.textContent).toBe(caption);

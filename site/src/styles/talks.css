@@ -22,6 +22,7 @@
 .talk-meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: .82rem; color: var(--muted); margin: 16px 0 0; }
 .talk-video { position: relative; overflow: hidden; border-radius: 10px; background: #101612; aspect-ratio: 16 / 9; }
 .talk-video video { display: block; width: 100%; height: 100%; object-fit: contain; }
+.talk-video iframe { display: block; width: 100%; height: 100%; border: 0; }
 .talk-video-portrait { max-height: 620px; }
 .talk-source { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 16px 0 28px; color: var(--muted); font-size: .75rem; }
 .talk-source a { text-decoration: underline; text-underline-offset: 3px; }
