@@ -209,6 +209,15 @@ describe('conversation pages', () => {
         for (const slug of slugs) expect(win.document.querySelector(`a[href="${base}${slug}/"]`)).not.toBeNull();
       } finally { win.happyDOM.abort(); }
     });
+    test(`${base} pages suppress the Referer header so twimg videos play`, () => {
+      for (const path of [base, ...slugs.map(slug => `${base}${slug}/`)]) {
+        const win = new Window();
+        try {
+          win.document.write(readFileSync(new URL(`../dist${path}index.html`, import.meta.url), 'utf8'));
+          expect(win.document.querySelector('meta[name="referrer"]')?.getAttribute('content')).toBe('no-referrer');
+        } finally { win.happyDOM.abort(); }
+      }
+    });
     for (const slug of slugs) test(`${base}${slug}/ serves captions and summaries without client rendering`, () => {
       const win = new Window();
       try {
@@ -234,4 +243,11 @@ describe('conversation pages', () => {
       } finally { win.happyDOM.abort(); }
     });
   }
+  test('non-talk pages keep the default referrer policy', () => {
+    const win = new Window();
+    try {
+      win.document.write(readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8'));
+      expect(win.document.querySelector('meta[name="referrer"]')).toBeNull();
+    } finally { win.happyDOM.abort(); }
+  });
 });
