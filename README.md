@@ -87,6 +87,7 @@ Web 搜索和内容获取 Package，让 Pi 能够访问互联网信息。
 MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 - 🔥 [pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) - 按需发现与调用 MCP 工具，支持惰性启动、元数据缓存和可选直接工具。作者估计代理定义约 200 Token，不含发现结果及调用内容。`pi install npm:pi-mcp-adapter`
+- [pi-durabletask-mcp](https://github.com/Nyarlathoteppppp/pi-durabletask-mcp) - Nyarlathoteppppp 维护的外部 MCP 桥接，让 Claude/Codex 委派 Pi，支持 steer、同会话 follow_up 和可选 SQLite 重启恢复；需已配置的全局 Pi，非 Pi 扩展。`npm install -g pi-durabletask-mcp`
 
 > MCP 生态对接：[Bright Data Web MCP](https://github.com/earendil-works/pi/discussions/76), [Scrapeless MCP](https://github.com/earendil-works/pi/discussions/74)，以及任何兼容 MCP 的服务器。
 
