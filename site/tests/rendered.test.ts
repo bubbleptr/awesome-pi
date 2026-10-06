@@ -147,6 +147,18 @@ describe('published editorial pages', () => {
     } finally { win.happyDOM.abort(); }
   });
 
+  test.each(['en', 'zh'] as const)('%s home bento features the Pi Durable topic', locale => {
+    const win = new Window();
+    try {
+      win.document.write(readFileSync(new URL(`../dist/${locale === 'zh' ? 'zh/' : ''}index.html`, import.meta.url), 'utf8'));
+      const featured = win.document.querySelector('.guide-card--featured');
+      expect(featured).not.toBeNull();
+      const link = featured!.querySelector<HTMLAnchorElement>('.guide-card-link');
+      expect(link?.getAttribute('data-guide')).toBe('pi-durable');
+      expect(link?.getAttribute('href')).toBe(routePath('topics', 'pi-durable', locale));
+    } finally { win.happyDOM.abort(); }
+  });
+
   test.each(['en', 'zh'] as const)('%s Bento tracks only guide activation and preserves native navigation and filters', locale => {
     const win = new Window({ url: `https://example.com/${locale === 'zh' ? 'zh/' : ''}?q=Brave&category=web-access-search` });
     try {
