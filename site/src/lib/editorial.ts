@@ -17,7 +17,7 @@ export type ResourceReview = {
 };
 export type OfficialLink = { label: Localized } & ({ url: string; path?: never } | { path: string; url?: never });
 export type Editorial = {
-  slug: string; title: Localized; description: Localized; intro: Localized<string[]>;
+  slug: string; title: Localized; navLabel?: Localized; description: Localized; intro: Localized<string[]>;
   sections: { id: string; title: Localized; paragraphs: Localized<string[]>; code?: string }[];
   resources: ResourceReview[]; sources: Source[]; alternatives?: string[];
   officialLinks?: OfficialLink[];

@@ -19,9 +19,27 @@
     ]
   },
   "officialLinks": [
-    { "label": { "en": "Pi Durable announcement ↗", "zh": "Pi Durable 官方介绍 ↗" }, "url": "https://earendil.com/posts/pi-durable/" },
-    { "label": { "en": "packages/durable source ↗", "zh": "packages/durable 源码 ↗" }, "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/durable" },
-    { "label": { "en": "Talk: why not Temporal or Effect", "zh": "访谈：为什么不用 Temporal 或 Effect" }, "path": "/talks/pi-durable/" }
+    {
+      "label": {
+        "en": "Pi Durable announcement ↗",
+        "zh": "Pi Durable 官方介绍 ↗"
+      },
+      "url": "https://earendil.com/posts/pi-durable/"
+    },
+    {
+      "label": {
+        "en": "packages/durable source ↗",
+        "zh": "packages/durable 源码 ↗"
+      },
+      "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/durable"
+    },
+    {
+      "label": {
+        "en": "Talk: why not Temporal or Effect",
+        "zh": "访谈：为什么不用 Temporal 或 Effect"
+      },
+      "path": "/talks/pi-durable/"
+    }
   ],
   "sections": [
     {
@@ -122,9 +140,18 @@
         "revision": "reviewed source 3e6046612db4358b599da302d5c96bd407d9de5c (2026-10-05) · Git install, not on npm",
         "status": "source-reviewed",
         "sources": [
-          { "label": "README / quick start / features", "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/README.md" },
-          { "label": "Harness, SQLite storage and CodingTools", "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/src/server/app.ts#L30" },
-          { "label": "Pinned Pi Durable dependency", "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/package.json" }
+          {
+            "label": "README / quick start / features",
+            "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/README.md"
+          },
+          {
+            "label": "Harness, SQLite storage and CodingTools",
+            "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/src/server/app.ts#L30"
+          },
+          {
+            "label": "Pinned Pi Durable dependency",
+            "url": "https://github.com/TannerMidd/pi-pocket/blob/3e6046612db4358b599da302d5c96bd407d9de5c/package.json"
+          }
         ]
       }
     },
@@ -155,10 +182,22 @@
         "revision": "npm oppi-server 0.51.0 · reviewed source 844e6d170aeca52885d7b284878e64f214bfbd7d (2026-10-06)",
         "status": "source-reviewed",
         "sources": [
-          { "label": "Durable Sessions experiment (usage docs)", "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/docs/usage.md#durable-sessions-experiment" },
-          { "label": "Engine selection: classic by default", "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/server/src/agent-launch-service.ts#L138-L155" },
-          { "label": "Durable backend", "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/server/src/durable-backend.ts" },
-          { "label": "npm oppi-server 0.51.0", "url": "https://registry.npmjs.org/oppi-server/0.51.0" }
+          {
+            "label": "Durable Sessions experiment (usage docs)",
+            "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/docs/usage.md#durable-sessions-experiment"
+          },
+          {
+            "label": "Engine selection: classic by default",
+            "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/server/src/agent-launch-service.ts#L138-L155"
+          },
+          {
+            "label": "Durable backend",
+            "url": "https://github.com/duh17/oppi/blob/844e6d170aeca52885d7b284878e64f214bfbd7d/server/src/durable-backend.ts"
+          },
+          {
+            "label": "npm oppi-server 0.51.0",
+            "url": "https://registry.npmjs.org/oppi-server/0.51.0"
+          }
         ]
       }
     },
@@ -189,10 +228,22 @@
         "revision": "reviewed source ebdf5c290e01b9d97964952c1531bb9c249fb8ba (2026-10-06) · npm 0.0.43 predates Pi Durable",
         "status": "source-reviewed",
         "sources": [
-          { "label": "README / requirements", "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/README.md" },
-          { "label": "Harness and JSONL storage", "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/src/agent/harness.ts#L5" },
-          { "label": "Durable scheduling", "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/src/agent/scheduling.ts#L13" },
-          { "label": "npm 0.0.43 dependencies (Pi 0.84.1, no Pi Durable)", "url": "https://registry.npmjs.org/@kingcrab/pi-imessage/0.0.43" }
+          {
+            "label": "README / requirements",
+            "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/README.md"
+          },
+          {
+            "label": "Harness and JSONL storage",
+            "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/src/agent/harness.ts#L5"
+          },
+          {
+            "label": "Durable scheduling",
+            "url": "https://github.com/daya0576/pi-imessage/blob/ebdf5c290e01b9d97964952c1531bb9c249fb8ba/src/agent/scheduling.ts#L13"
+          },
+          {
+            "label": "npm 0.0.43 dependencies (Pi 0.84.1, no Pi Durable)",
+            "url": "https://registry.npmjs.org/@kingcrab/pi-imessage/0.0.43"
+          }
         ]
       }
     },
@@ -223,10 +274,22 @@
         "revision": "npm 1.0.0 · gitHead matches reviewed source c95f3701119cfa8ac6abf7af86cd884470e87502 (2026-10-07)",
         "status": "source-reviewed",
         "sources": [
-          { "label": "README / onboarding", "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/README.md" },
-          { "label": "Durable session store", "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/src/sessions/session-store.ts#L31" },
-          { "label": "Sandboxed execution environment", "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/src/harness/execution-env.ts#L17" },
-          { "label": "npm 1.0.0 / Pi Durable 1.0.2", "url": "https://registry.npmjs.org/@geminixiang/mikan/1.0.0" }
+          {
+            "label": "README / onboarding",
+            "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/README.md"
+          },
+          {
+            "label": "Durable session store",
+            "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/src/sessions/session-store.ts#L31"
+          },
+          {
+            "label": "Sandboxed execution environment",
+            "url": "https://github.com/geminixiang/mikan/blob/c95f3701119cfa8ac6abf7af86cd884470e87502/src/harness/execution-env.ts#L17"
+          },
+          {
+            "label": "npm 1.0.0 / Pi Durable 1.0.2",
+            "url": "https://registry.npmjs.org/@geminixiang/mikan/1.0.0"
+          }
         ]
       }
     },
@@ -261,9 +324,18 @@
         "revision": "reviewed source bde4eedea875f83d1b608e266198e6dc3d170fe8 (2026-10-04) · no npm release",
         "status": "source-reviewed",
         "sources": [
-          { "label": "README / boundaries / recovery", "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/README.md" },
-          { "label": "SQLite storage runtime", "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/hearth_pi/src/runtime.ts#L12" },
-          { "label": "Validation evidence and remaining gates", "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/docs/validation.md" }
+          {
+            "label": "README / boundaries / recovery",
+            "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/README.md"
+          },
+          {
+            "label": "SQLite storage runtime",
+            "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/hearth_pi/src/runtime.ts#L12"
+          },
+          {
+            "label": "Validation evidence and remaining gates",
+            "url": "https://github.com/cosmyo/ha-pi-durable/blob/bde4eedea875f83d1b608e266198e6dc3d170fe8/docs/validation.md"
+          }
         ]
       }
     },
@@ -290,9 +362,18 @@
         "revision": "reviewed source b9e40f9f35af5ce0e7739de48a66b0aadef037e9 (2026-10-06, v0.108.1) · npm latest 0.109.0",
         "status": "source-reviewed",
         "sources": [
-          { "label": "Durable Pi runner documentation", "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/docs/durable-pi.md" },
-          { "label": "Durable agent runtime", "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/src/durable/agent.ts#L8" },
-          { "label": "README", "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/README.md" }
+          {
+            "label": "Durable Pi runner documentation",
+            "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/docs/durable-pi.md"
+          },
+          {
+            "label": "Durable agent runtime",
+            "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/src/durable/agent.ts#L8"
+          },
+          {
+            "label": "README",
+            "url": "https://github.com/fabric-runtime/pi-fabric/blob/b9e40f9f35af5ce0e7739de48a66b0aadef037e9/README.md"
+          }
         ]
       }
     },
@@ -327,9 +408,18 @@
         "revision": "npm 4.7.0 · gitHead matches reviewed source 2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010 (2026-10-03)",
         "status": "source-reviewed",
         "sources": [
-          { "label": "README: Use with Pi Durable", "url": "https://github.com/mavam/webfox/blob/2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010/README.md#-use-with-pi-durable" },
-          { "label": "Durable extension entry", "url": "https://github.com/mavam/webfox/blob/2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010/src/durable.ts#L9" },
-          { "label": "npm 4.7.0 / peer dependency", "url": "https://registry.npmjs.org/webfox/4.7.0" }
+          {
+            "label": "README: Use with Pi Durable",
+            "url": "https://github.com/mavam/webfox/blob/2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010/README.md#-use-with-pi-durable"
+          },
+          {
+            "label": "Durable extension entry",
+            "url": "https://github.com/mavam/webfox/blob/2fcc7d99d8e0bdbd644c53cc27a99d7f1f93d010/src/durable.ts#L9"
+          },
+          {
+            "label": "npm 4.7.0 / peer dependency",
+            "url": "https://registry.npmjs.org/webfox/4.7.0"
+          }
         ]
       }
     },
@@ -356,10 +446,22 @@
         "revision": "npm agents 0.26.0 · reviewed source 92d1770de7d4f0b2c643e23f4ac867950bae69fc (2026-10-06)",
         "status": "source-reviewed",
         "sources": [
-          { "label": "PiHarness", "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/packages/agents/src/harness/pi/harness.ts#L15" },
-          { "label": "Durable Object SQLite session store", "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/packages/agents/src/harness/pi/session-store.ts#L7" },
-          { "label": "Example: Pi harness server", "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/examples/next/harnesses/pi/src/server.ts#L6" },
-          { "label": "npm agents 0.26.0 / peer dependency", "url": "https://registry.npmjs.org/agents/0.26.0" }
+          {
+            "label": "PiHarness",
+            "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/packages/agents/src/harness/pi/harness.ts#L15"
+          },
+          {
+            "label": "Durable Object SQLite session store",
+            "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/packages/agents/src/harness/pi/session-store.ts#L7"
+          },
+          {
+            "label": "Example: Pi harness server",
+            "url": "https://github.com/cloudflare/agents/blob/92d1770de7d4f0b2c643e23f4ac867950bae69fc/examples/next/harnesses/pi/src/server.ts#L6"
+          },
+          {
+            "label": "npm agents 0.26.0 / peer dependency",
+            "url": "https://registry.npmjs.org/agents/0.26.0"
+          }
         ]
       }
     },
@@ -386,21 +488,63 @@
         "revision": "npm 0.1.1 · reviewed source d10b637aae29bb8fcf16c1280372b2f74060ead3 (2026-10-05)",
         "status": "source-reviewed",
         "sources": [
-          { "label": "README / status / limitations", "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/README.md" },
-          { "label": "Storage implementation", "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/src/storage.ts#L3" },
-          { "label": "Upstream conformance suite", "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/test/conformance.test.ts#L1" },
-          { "label": "npm 0.1.1 / peer Pi Durable 1.0.3", "url": "https://registry.npmjs.org/@netzlabor/pi-durable-postgres/0.1.1" }
+          {
+            "label": "README / status / limitations",
+            "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/README.md"
+          },
+          {
+            "label": "Storage implementation",
+            "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/src/storage.ts#L3"
+          },
+          {
+            "label": "Upstream conformance suite",
+            "url": "https://github.com/j-koester/pi-durable-postgres/blob/d10b637aae29bb8fcf16c1280372b2f74060ead3/test/conformance.test.ts#L1"
+          },
+          {
+            "label": "npm 0.1.1 / peer Pi Durable 1.0.3",
+            "url": "https://registry.npmjs.org/@netzlabor/pi-durable-postgres/0.1.1"
+          }
         ]
       }
     }
   ],
-  "alternatives": ["@rivet-dev/pi", "roamgate", "pi-on-cf", "antiproton", "sift", "pi-durable-subagents", "pi-durabletask-mcp"],
+  "alternatives": [
+    "@rivet-dev/pi",
+    "roamgate",
+    "pi-on-cf",
+    "antiproton",
+    "sift",
+    "pi-durable-subagents",
+    "pi-durabletask-mcp"
+  ],
   "sources": [
-    { "label": "Earendil: Pi Durable (2026-10-01)", "url": "https://earendil.com/posts/pi-durable/" },
-    { "label": "packages/durable README (earendil-works/pi 36a686e)", "url": "https://github.com/earendil-works/pi/blob/36a686ee8dd73afe8242011db387040890e24093/packages/durable/README.md" },
-    { "label": "npm @earendil-works/pi-durable", "url": "https://www.npmjs.com/package/@earendil-works/pi-durable" },
-    { "label": "Official example: small coding agent on Pi Durable", "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/coding-agent/src/experimental/durable" },
-    { "label": "Official example: vacation planning agent", "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/coding-agent/src/experimental/vacation" },
-    { "label": "Pi: Monday Meditations on Pi Durable (2026-10-05)", "url": "https://x.com/pidotdev/status/2107033061905104941" }
-  ]
+    {
+      "label": "Earendil: Pi Durable (2026-10-01)",
+      "url": "https://earendil.com/posts/pi-durable/"
+    },
+    {
+      "label": "packages/durable README (earendil-works/pi 36a686e)",
+      "url": "https://github.com/earendil-works/pi/blob/36a686ee8dd73afe8242011db387040890e24093/packages/durable/README.md"
+    },
+    {
+      "label": "npm @earendil-works/pi-durable",
+      "url": "https://www.npmjs.com/package/@earendil-works/pi-durable"
+    },
+    {
+      "label": "Official example: small coding agent on Pi Durable",
+      "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/coding-agent/src/experimental/durable"
+    },
+    {
+      "label": "Official example: vacation planning agent",
+      "url": "https://github.com/earendil-works/pi/tree/36a686ee8dd73afe8242011db387040890e24093/packages/coding-agent/src/experimental/vacation"
+    },
+    {
+      "label": "Pi: Monday Meditations on Pi Durable (2026-10-05)",
+      "url": "https://x.com/pidotdev/status/2107033061905104941"
+    }
+  ],
+  "navLabel": {
+    "en": "Built on Pi Durable",
+    "zh": "Pi Durable 生态"
+  }
 }

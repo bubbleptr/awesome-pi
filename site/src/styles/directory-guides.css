@@ -27,6 +27,7 @@
 .guide-card-link:active { opacity: .7; }
 .guide-card:focus-within { border-color: var(--accent); }
 .guide-card--compact { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: 12px; align-items: center; padding: 23px 22px 19px 28px; }
+.guide-card--wide { grid-column: 1 / -1; }
 .guide-art { pointer-events: none; min-width: 0; color: var(--guide-art-ink); }
 .guide-art svg { display: block; width: 100%; height: auto; }
 .guide-art--jev { width: min(100%, 460px); align-self: center; margin-top: auto; padding-top: 6px; }

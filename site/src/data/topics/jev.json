@@ -503,5 +503,9 @@
       },
       "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev"
     }
-  ]
+  ],
+  "navLabel": {
+    "en": "TypeSafe AI / Jev",
+    "zh": "TypeSafe AI / Jev"
+  }
 }
