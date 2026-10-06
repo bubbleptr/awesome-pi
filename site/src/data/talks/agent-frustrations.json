@@ -1,0 +1,541 @@
+{
+  "slug": "agent-frustrations",
+  "sourceId": "2101672600237646305",
+  "date": "2026-09-20",
+  "title": {
+    "zh": "Agent 工程为什么比看起来更难",
+    "en": "Why agent engineering is harder than it looks"
+  },
+  "source": "https://x.com/pidotdev/status/2101672600237646305",
+  "video": "https://video.twimg.com/amplify_video/2101672446218649600/vid/avc1/1080x1920/3XzsxYGnQzRX_TGw.mp4?tag=29",
+  "poster": "/talks/agent-frustrations.jpg",
+  "duration": 374.27,
+  "portrait": true,
+  "series": "Sunday Meditations",
+  "tags": [
+    "Engineering",
+    "Workflow"
+  ],
+  "sourceText": "Good afternoon from Vienna People of Pi ☀️\n\nSome slightly different Sunday meditations today in which @mitsuhiko talks about some shared frustrations with agentic software engineering.\n\nRemember that you're not alone in finding it harder than it looks!",
+  "summary": {
+    "zh": [
+      {
+        "start": 19,
+        "title": "更强的模型没有消除工程难题",
+        "text": "Armin 反思使用 agent 工具一年半后的体验：模型能力确实提高了，但团队仍然面对信任、质量与理解上的老问题。"
+      },
+      {
+        "start": 67,
+        "title": "生成速度超过审查能力",
+        "text": "代码和 PR 的产量增加，团队却很难同步提高审查能力。Armin 担心，持续追求更快交付会消耗维护质量所需的精力。"
+      },
+      {
+        "start": 130,
+        "title": "完成任务不等于写出好代码",
+        "text": "他认为模型训练更奖励任务成功，而未必奖励可读、易审查的实现；一些工具调用和修改方式也让人更难跟踪模型在做什么。"
+      },
+      {
+        "start": 197,
+        "title": "失去理解，会在故障时付出代价",
+        "text": "Armin 描述一种令人担忧的情形：事故发生后，团队不断向机器提问，却缺乏对已提交代码的直接理解。他主张认真对待这种知识流失。"
+      },
+      {
+        "start": 247,
+        "title": "挫败感是共同经历",
+        "text": "他同时表达了对这些工具的喜爱与失望，并呼吁改变工程实践。偶尔惊艳的结果并不能抵消长期返工，也不能说明困难只是用户不会写提示词。"
+      }
+    ],
+    "en": [
+      {
+        "start": 19,
+        "title": "Stronger models have not removed the hard parts",
+        "text": "Armin reflects on eighteen months of agent tools: model capabilities have improved, while trust, quality and understanding remain difficult engineering problems."
+      },
+      {
+        "start": 67,
+        "title": "Generation outpaces review",
+        "text": "Growing volumes of code and pull requests strain a team’s ability to review. Armin worries that pressure to ship faster drains the energy needed to maintain standards."
+      },
+      {
+        "start": 130,
+        "title": "Task success is not the same as good code",
+        "text": "He argues that training rewards successful outcomes without necessarily rewarding readable, reviewable implementations. Some editing and tool-use patterns also make changes harder to follow."
+      },
+      {
+        "start": 197,
+        "title": "Lost understanding becomes an incident risk",
+        "text": "He describes teams responding to incidents by repeatedly consulting machines while lacking direct understanding of the committed code, and calls for taking that loss of knowledge seriously."
+      },
+      {
+        "start": 247,
+        "title": "The frustration is shared",
+        "text": "He expresses both enthusiasm and frustration, and calls for changes in engineering practice. Occasional impressive results do not erase prolonged rework or prove that every difficulty is a prompting failure."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 6,
+      "text": "Hello, today it's just me. I want to talk with you a little bit about what's hard about AI software engineering.",
+      "zh": "大家好，今天只有我。我想聊聊 AI 软件工程到底难在哪里。"
+    },
+    {
+      "start": 8,
+      "end": 13.68,
+      "text": "And this is in part because I got some really lovely emails recently where people shared their experiences,",
+      "zh": "一方面，最近我收到一些很真诚的邮件，大家分享了自己的经历；"
+    },
+    {
+      "start": 13.68,
+      "end": 18,
+      "text": "but also because I asked on Twitter and I actually got a ton of responses.",
+      "zh": "另一方面，我也在 Twitter 上问了这个问题，收到了很多回应。"
+    },
+    {
+      "start": 19,
+      "end": 22.58,
+      "text": "And really the question that I have sometimes is,",
+      "zh": "我有时真的会想："
+    },
+    {
+      "start": 22.58,
+      "end": 28,
+      "text": "how is it that after 18 months of using agentic software engineering tools like Claude Code,",
+      "zh": "用了 Claude Code 这类 agent 软件工程工具十八个月，"
+    },
+    {
+      "start": 28,
+      "end": 31,
+      "text": "nothing really improved.",
+      "zh": "怎么感觉什么都没改善？"
+    },
+    {
+      "start": 32,
+      "end": 38.16,
+      "text": "And I know this is a little bit not true because clearly the models are way more capable,",
+      "zh": "我知道这么说不完全对，模型显然强了很多，"
+    },
+    {
+      "start": 38.16,
+      "end": 45,
+      "text": "but it didn't really feel like the hard problems are solved.",
+      "zh": "但那些真正棘手的问题，似乎并没有解决。"
+    },
+    {
+      "start": 46,
+      "end": 48,
+      "text": "And in some ways things got worse.",
+      "zh": "有些方面反而更糟了。"
+    },
+    {
+      "start": 48,
+      "end": 54.5,
+      "text": "And I think most consistently the problem that I",
+      "zh": "我觉得最常见的问题，"
+    },
+    {
+      "start": 54.5,
+      "end": 60.22,
+      "text": "see that we have working ourselves with agentic tools,",
+      "zh": "无论是我们自己使用 agent 工具时遇到的，"
+    },
+    {
+      "start": 60.22,
+      "end": 66,
+      "text": "as well as what I see other people report is really that because we haven't solved some of those fundamental problems.",
+      "zh": "还是别人反馈的，归根结底都是一些基础问题还没有解决。"
+    },
+    {
+      "start": 67.08,
+      "end": 68.08,
+      "text": "Speed is now becoming",
+      "zh": "现在，速度本身"
+    },
+    {
+      "start": 68.08,
+      "end": 69.36,
+      "text": "a new problem.",
+      "zh": "成了一个新问题。"
+    },
+    {
+      "start": 70,
+      "end": 77,
+      "text": "It generates so many more pieces of code that our capacity to keeping up is going down and down.",
+      "zh": "它生成的代码越来越多，我们却越来越跟不上。"
+    },
+    {
+      "start": 78,
+      "end": 84.34,
+      "text": "And it wouldn't be so",
+      "zh": "其实这本来也不会"
+    },
+    {
+      "start": 84.34,
+      "end": 90,
+      "text": "bad if we just were willing to slow down, but we're not.",
+      "zh": "那么糟，只要我们愿意慢下来。可我们不愿意。"
+    },
+    {
+      "start": 90,
+      "end": 94,
+      "text": "We're committing ourselves to being faster and faster.",
+      "zh": "我们要求自己越来越快。"
+    },
+    {
+      "start": 94,
+      "end": 96,
+      "text": "And that's because we're no longer doing this alone.",
+      "zh": "因为现在已经不是一个人在用这些工具了，"
+    },
+    {
+      "start": 96,
+      "end": 97,
+      "text": "We're doing this in teams.",
+      "zh": "而是整个团队都在用。"
+    },
+    {
+      "start": 97,
+      "end": 103.24,
+      "text": "And I can't tell you how many of you have expressed",
+      "zh": "不知道有多少人跟我表达过这种"
+    },
+    {
+      "start": 103.24,
+      "end": 109.4,
+      "text": "frustration about the fact that other people are sending you slop and other people are sending you",
+      "zh": "挫败感：别人不断把粗制滥造的代码发过来，"
+    },
+    {
+      "start": 109.4,
+      "end": 111,
+      "text": "pull requests at their volume they just can't keep up with.",
+      "zh": "PR 的数量多到根本看不过来。"
+    },
+    {
+      "start": 111,
+      "end": 116.84,
+      "text": "And so we have this unfortunate situation where the models are both",
+      "zh": "于是我们陷入了一种很尴尬的局面：模型"
+    },
+    {
+      "start": 116.84,
+      "end": 123,
+      "text": "getting really, really good, but not good enough that we still can't trust them.",
+      "zh": "变得非常强，却还没有强到可以让我们放心信任。"
+    },
+    {
+      "start": 124,
+      "end": 129,
+      "text": "And this gap doesn't seem to be improving meaningfully.",
+      "zh": "而这段差距，似乎没有明显缩小。"
+    },
+    {
+      "start": 130,
+      "end": 137,
+      "text": "And it's actually for me a huge problem right now on a very personal level, because I mean, I wrote about this before.",
+      "zh": "对现在的我而言，这在个人层面上也是一个大问题。我以前也写过。"
+    },
+    {
+      "start": 137,
+      "end": 143.34,
+      "text": "I don't trust Astra and increasingly I don't trust Fable to be",
+      "zh": "我不相信 Astra 能当好软件工程师，现在对 Fable 也越来越不信任，"
+    },
+    {
+      "start": 143.34,
+      "end": 149.5,
+      "text": "good software engineers, because what's happening in their training processes is that these models are",
+      "zh": "因为在训练过程中，这些模型"
+    },
+    {
+      "start": 149.5,
+      "end": 153,
+      "text": "rewarded for succeeding, but not for writing code that I like.",
+      "zh": "获得奖励是因为把任务完成了，而不是因为写出了我喜欢的代码。"
+    },
+    {
+      "start": 154,
+      "end": 159,
+      "text": "And in many ways, some of the behaviors you get out of these models now are counterproductive.",
+      "zh": "它们现在的一些行为，在很多方面反而适得其反。"
+    },
+    {
+      "start": 159,
+      "end": 162.54,
+      "text": "They are,",
+      "zh": "比如，"
+    },
+    {
+      "start": 162.54,
+      "end": 169.0,
+      "text": "for instance, no longer willing to use edit tools as much as they used to, which means that as I'm watching the edits fly by in",
+      "zh": "它们不像以前那样愿意使用编辑工具了。这意味着，当我在"
+    },
+    {
+      "start": 169.0,
+      "end": 172.92,
+      "text": "Pi, very often I can't even understand what the model is doing,",
+      "zh": "Pi 里看着修改不断刷过时，常常连模型在做什么都看不明白，"
+    },
+    {
+      "start": 172.92,
+      "end": 174,
+      "text": "let alone which tools it's invoking.",
+      "zh": "更别说知道它在调用哪些工具了。"
+    },
+    {
+      "start": 174,
+      "end": 178,
+      "text": "And so as all of this is going on and on, we're shipping faster.",
+      "zh": "这些事情不断发生，而我们的交付速度越来越快。"
+    },
+    {
+      "start": 178,
+      "end": 180,
+      "text": "The quality of the code is deteriorating very quickly.",
+      "zh": "代码质量却在迅速下降。"
+    },
+    {
+      "start": 181,
+      "end": 186.84,
+      "text": "And our",
+      "zh": "而我们"
+    },
+    {
+      "start": 186.84,
+      "end": 192.98,
+      "text": "tenacity and energy is just not there anymore to",
+      "zh": "已经没有那么多毅力和精力，"
+    },
+    {
+      "start": 192.98,
+      "end": 197,
+      "text": "apply the same kind of rigor and quality standards to it as we used to have.",
+      "zh": "再像以前一样坚持同样严格的质量标准。"
+    },
+    {
+      "start": 197,
+      "end": 201,
+      "text": "And then we're increasingly losing understanding.",
+      "zh": "我们对代码的理解也在不断流失。"
+    },
+    {
+      "start": 201,
+      "end": 207.24,
+      "text": "And I think one of the more devious parts about this is",
+      "zh": "我觉得其中更隐蔽的危险在于："
+    },
+    {
+      "start": 207.24,
+      "end": 210.3,
+      "text": "that in situations where my understanding is really,",
+      "zh": "当某个场景真的非常需要"
+    },
+    {
+      "start": 210.3,
+      "end": 215,
+      "text": "really necessary, there are too many cases where seemingly nobody has it anymore.",
+      "zh": "我们理解代码时，却常常发现似乎已经没人懂了。"
+    },
+    {
+      "start": 215,
+      "end": 220,
+      "text": "And I heard this story from friends I used to work with.",
+      "zh": "以前一起工作的朋友跟我讲过这样的事。"
+    },
+    {
+      "start": 220,
+      "end": 225.98,
+      "text": "I had heard stories like this from people talking about it on Twitter that",
+      "zh": "我也在 Twitter 上听人讲过类似的经历："
+    },
+    {
+      "start": 225.98,
+      "end": 232.38,
+      "text": "you can now end up in an incident where a bunch of people",
+      "zh": "出了故障，一群人"
+    },
+    {
+      "start": 232.38,
+      "end": 234,
+      "text": "are huddling in a Slack room trying to figure out what's going on.",
+      "zh": "挤在 Slack 频道里，试图弄清楚发生了什么。"
+    },
+    {
+      "start": 234,
+      "end": 241,
+      "text": "And it's just all talking with the machines because nobody actually really wants to understand anymore, let alone understand the code that was committed.",
+      "zh": "结果大家都只是在跟机器聊天，因为已经没人真想去理解了，更别说理解提交进去的代码。"
+    },
+    {
+      "start": 241,
+      "end": 247,
+      "text": "And that's not a situation that I think we should be encouraging.",
+      "zh": "我觉得我们不应该鼓励这种局面。"
+    },
+    {
+      "start": 247,
+      "end": 253.28,
+      "text": "But I do want to let you know,",
+      "zh": "但我想告诉大家，"
+    },
+    {
+      "start": 253.28,
+      "end": 255,
+      "text": "a lot of us are feeling like this right now.",
+      "zh": "现在很多人都有这样的感受。"
+    },
+    {
+      "start": 255,
+      "end": 260.9,
+      "text": "And I think we owe it to us and our industry",
+      "zh": "为了我们自己，也为了这个行业，"
+    },
+    {
+      "start": 260.9,
+      "end": 264.92,
+      "text": "to find solutions to this problem and not just",
+      "zh": "我们有责任想办法解决这个问题，不能只是"
+    },
+    {
+      "start": 264.92,
+      "end": 271,
+      "text": "let it happen and not push back against this.",
+      "zh": "任由它发生，什么抵抗都不做。"
+    },
+    {
+      "start": 271,
+      "end": 274,
+      "text": "This is a very shared experience.",
+      "zh": "这是一种非常普遍的经历。"
+    },
+    {
+      "start": 274,
+      "end": 278,
+      "text": "And don't get me wrong.",
+      "zh": "别误会，"
+    },
+    {
+      "start": 278,
+      "end": 279,
+      "text": "I love those tools.",
+      "zh": "我喜欢这些工具。"
+    },
+    {
+      "start": 279,
+      "end": 282,
+      "text": "I think they're absolutely fascinating.",
+      "zh": "它们确实非常迷人。"
+    },
+    {
+      "start": 282,
+      "end": 289,
+      "text": "And it is so many times just such a magical experience to work with them.",
+      "zh": "很多时候，用它们的体验简直像魔法一样。"
+    },
+    {
+      "start": 289,
+      "end": 293,
+      "text": "But they are also deeply frustrating.",
+      "zh": "但它们也让人非常沮丧。"
+    },
+    {
+      "start": 293,
+      "end": 300,
+      "text": "They're little machines where sometimes they produce an amazing result.",
+      "zh": "这些小机器有时会给出惊人的结果，"
+    },
+    {
+      "start": 300,
+      "end": 305.52,
+      "text": "And then you're spending two weeks trying to massage one pull request into a shape that you like",
+      "zh": "可接下来，你又得花两个星期反复调整一个 PR，想把它改成满意的样子，"
+    },
+    {
+      "start": 305.52,
+      "end": 309,
+      "text": "with no feeling of forward progress.",
+      "zh": "却完全感觉不到在往前推进。"
+    },
+    {
+      "start": 309,
+      "end": 314,
+      "text": "And it seems to be random.",
+      "zh": "而且这似乎是随机的。"
+    },
+    {
+      "start": 314,
+      "end": 320.26,
+      "text": "I don't know if it's just if me and my little community around us are just not the best",
+      "zh": "我不知道，是不是我和身边这个小圈子的人都不太擅长"
+    },
+    {
+      "start": 320.26,
+      "end": 325,
+      "text": "prompters because I've heard that some people express that we're all just prompting wrong.",
+      "zh": "写提示词。毕竟有人说，只是我们提示词写错了。"
+    },
+    {
+      "start": 325,
+      "end": 327,
+      "text": "But I think it's just hard.",
+      "zh": "但我觉得，这件事本来就很难。"
+    },
+    {
+      "start": 327,
+      "end": 333.46,
+      "text": "And I just really felt like because",
+      "zh": "我真的觉得，既然"
+    },
+    {
+      "start": 333.46,
+      "end": 338.5,
+      "text": "we're all, maybe not all of us, but because I think a lot of us struggling with this,",
+      "zh": "我们——也许不是所有人，但至少很多人——都在为此挣扎，"
+    },
+    {
+      "start": 338.5,
+      "end": 342,
+      "text": "I think it's just good to let you know that you're not alone.",
+      "zh": "那就应该让你知道：你不是一个人。"
+    },
+    {
+      "start": 342,
+      "end": 348.22,
+      "text": "And I think we probably need to do some changes here in how we approach certain",
+      "zh": "我想，我们可能需要改变处理某些"
+    },
+    {
+      "start": 348.22,
+      "end": 352,
+      "text": "problems and how we engineer to actually really get to the bottom of it.",
+      "zh": "问题的方式，改变工程实践，才能真正追到问题根源。"
+    },
+    {
+      "start": 352,
+      "end": 356.6,
+      "text": "Because better models and more capable models,",
+      "zh": "因为更好、更强的模型，"
+    },
+    {
+      "start": 356.6,
+      "end": 363.06,
+      "text": "if anything, right now are making it a little bit worse by writing code that",
+      "zh": "眼下反倒让情况更糟了一点：它们写出的代码"
+    },
+    {
+      "start": 363.06,
+      "end": 368,
+      "text": "is a lot less pleasant to look at and a lot harder to understand.",
+      "zh": "看着难受得多，也难懂得多。"
+    },
+    {
+      "start": 368,
+      "end": 373,
+      "text": "So that's it for today. Have a nice weekend.",
+      "zh": "今天就聊到这里。周末愉快。"
+    }
+  ],
+  "uploadedAt": "2026-09-20T13:59:29Z"
+}

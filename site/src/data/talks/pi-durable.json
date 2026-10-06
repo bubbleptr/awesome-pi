@@ -1,0 +1,3556 @@
+{
+  "slug": "pi-durable",
+  "sourceId": "2107033061905104941",
+  "date": "2026-10-05",
+  "title": {
+    "zh": "Pi Durable：为什么不用 Temporal 或 Effect？",
+    "en": "Pi Durable: why not Temporal or Effect?"
+  },
+  "source": "https://x.com/pidotdev/status/2107033061905104941",
+  "video": "https://video.twimg.com/amplify_video/2107019854444105728/vid/avc1/1920x1080/e3D_PEsyOuREeNzs.mp4?tag=29",
+  "poster": "/talks/pi-durable.jpg",
+  "duration": 1646.416,
+  "portrait": false,
+  "series": "Monday Meditations",
+  "tags": [
+    "Pi Durable",
+    "Temporal",
+    "Effect"
+  ],
+  "sourceText": "Welcome to our Monday Meditations! 🌞\n\nToday @badlogicgames and @mitsuhiko are talking why we built Pi Durable, a harness build around a small task-based workflow engine so long-running, multiplayer agents can suspend and resume anywhere. Also: why not Temporal or Effect.ts.",
+  "summary": {
+    "zh": [
+      {
+        "start": 0,
+        "title": "从单人会话走向长期、多人的 agent",
+        "text": "Pi Coding Agent 的会话模型适合一个人与 agent 的短期交互。两人介绍 Pi Durable 的动机：让长期运行、多人参与、包含并行分支的 agent 能在不同运行环境中暂停和恢复。"
+      },
+      {
+        "start": 420,
+        "title": "把执行拆成可恢复的任务",
+        "text": "核心思路是分别持久化任务意图与执行结果，把模型请求、工具调用和子 agent 纳入任务图。恢复时可以知道执行停在哪里，但工具是否可以安全重放仍需要明确声明。"
+      },
+      {
+        "start": 600,
+        "title": "持久化 harness 不等于持久化整个世界",
+        "text": "文件系统、部署和外部服务仍有自己的状态。两人强调还需要快照、幂等操作或适当的存储设计；仅仅引入一个工作流引擎，并不能自动解决所有恢复问题。"
+      },
+      {
+        "start": 750,
+        "title": "把执行与状态存储放在同一设计里",
+        "text": "需要一起恢复的状态必须能够原子地持久化。Pi Durable 内置任务调度，让应用也能加入任务与状态；较大的数据可以放在外部存储，在 harness 中保存引用。"
+      },
+      {
+        "start": 840,
+        "title": "为何不直接套用 Temporal 式抽象",
+        "text": "他们希望检查点、名称和版本更显式，便于 agent 修改自身代码时理解持久化数据。讨论中对比了通过重放恢复函数调用栈与恢复自包含任务树的取舍。"
+      },
+      {
+        "start": 1230,
+        "title": "为何没有选择 Effect",
+        "text": "两人肯定 Effect 的结构化并发、错误和服务组合能力，但认为这些能力本身不等于跨进程恢复。引入其工作流方案还会带来整套生态与可移植性的取舍，因此选择保持底层自包含。"
+      },
+      {
+        "start": 1510,
+        "title": "先验证底层数据模型，再增加抽象",
+        "text": "他们邀请使用者尝试仓库中的示例，反馈数据与状态模型是否满足实际需求。更高层的状态管理封装仍在探索，团队也计划用自己的产品和实际应用检验这套基础。"
+      }
+    ],
+    "en": [
+      {
+        "start": 0,
+        "title": "Beyond short-lived, single-user sessions",
+        "text": "Pi Coding Agent’s session model suits a person working with an agent. Pi Durable targets long-running, multiplayer agents with parallel branches that can suspend and resume across different execution environments."
+      },
+      {
+        "start": 420,
+        "title": "Break execution into recoverable tasks",
+        "text": "The design persists task intent and results, bringing model requests, tools and subagents into a task graph. Recovery can identify where execution stopped, while tools still need to declare whether replay is safe."
+      },
+      {
+        "start": 600,
+        "title": "A durable harness does not make the outside world durable",
+        "text": "Filesystems, deployments and external services retain their own state. Snapshots, idempotent operations or appropriate storage design are still necessary; adding a workflow engine cannot solve every recovery problem."
+      },
+      {
+        "start": 750,
+        "title": "Design execution and state persistence together",
+        "text": "State that must recover together needs atomic persistence. Built-in task scheduling lets applications participate in execution and storage; large data can live elsewhere with references stored in the harness."
+      },
+      {
+        "start": 840,
+        "title": "Why not simply adopt a Temporal-style abstraction?",
+        "text": "They favor explicit checkpoints, names and versions so an agent changing its own code can reason about persisted data. They contrast replaying a function call stack with restoring a tree of self-contained tasks."
+      },
+      {
+        "start": 1230,
+        "title": "Why they did not choose Effect",
+        "text": "They value Effect’s concurrency, errors and service composition, but distinguish those features from recovery across process restarts. Adopting its workflow solution also brings ecosystem and portability tradeoffs, motivating a self-contained foundation."
+      },
+      {
+        "start": 1510,
+        "title": "Validate the data model before adding abstractions",
+        "text": "They invite users to try the repository’s examples and assess the state model against real needs. Higher-level state abstractions remain open, and the team plans to test the foundation through its own products and applications."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 2.04,
+      "text": "Why Durable?",
+      "zh": "为什么要做 Durable？"
+    },
+    {
+      "start": 2.04,
+      "end": 8.58,
+      "text": "So Pi, the coding agent, has historically been you are a single human,",
+      "zh": "Pi 这个编程 agent，过去的典型用法是：你一个人，"
+    },
+    {
+      "start": 8.58,
+      "end": 12.64,
+      "text": "you sit in front of a computer or you have a remote machine and you SSH into it.",
+      "zh": "坐在电脑前，或者通过 SSH 连到一台远程机器。"
+    },
+    {
+      "start": 12.64,
+      "end": 18.6,
+      "text": "And you start your Pi session, you do a thing and you stop the Pi session and then you usually don't care about the session anymore.",
+      "zh": "启动 Pi 会话，做点事情，然后结束会话，通常之后就不再关心这个会话了。"
+    },
+    {
+      "start": 18.6,
+      "end": 22.62,
+      "text": "So it's more like a one-to-one relationship, the sessions are ephemeral,",
+      "zh": "所以它更像是一对一的关系，会话基本上是临时的，"
+    },
+    {
+      "start": 22.62,
+      "end": 28.68,
+      "text": "more or less, and everything fits snugly into memory as well because Pi",
+      "zh": "而且所有东西都能轻松放进内存，因为 Pi"
+    },
+    {
+      "start": 28.68,
+      "end": 35.58,
+      "text": "historically loads the entire session into memory just to do a bunch of things.",
+      "zh": "一直以来都会把整个会话加载到内存里，再做各种操作。"
+    },
+    {
+      "start": 36.02,
+      "end": 42.54,
+      "text": "It's not entirely necessary, it's just a historical artifact stemming from the fact that it's a one-on-one ephemeral session,",
+      "zh": "这并不是完全必要的，只是历史原因：它本来就是一对一的临时会话，"
+    },
+    {
+      "start": 42.54,
+      "end": 44.24,
+      "text": "usually not super long, right?",
+      "zh": "通常也不会特别长，对吧？"
+    },
+    {
+      "start": 44.24,
+      "end": 49.48,
+      "text": "However, does that fit all agentic applications?",
+      "zh": "但这适合所有 agent 应用吗？"
+    },
+    {
+      "start": 49.48,
+      "end": 51.400000000000006,
+      "text": "I guess the answer is no.",
+      "zh": "我想答案是否定的。"
+    },
+    {
+      "start": 52.620000000000005,
+      "end": 58.9,
+      "text": "If you want to have a Slack bot that stays with you for years and years and can answer multiple",
+      "zh": "如果你想要一个陪你运行很多年、能同时回答多个"
+    },
+    {
+      "start": 58.9,
+      "end": 63.48,
+      "text": "people in parallel or have threads and answer there,",
+      "zh": "用户，或者在线程里回复的 Slack 机器人，"
+    },
+    {
+      "start": 63.48,
+      "end": 64.92,
+      "text": "Pi is not your best option.",
+      "zh": "Pi 就不是最佳选择了。"
+    },
+    {
+      "start": 64.92,
+      "end": 69.14,
+      "text": "It can be done and we have like Piedolf, our Discord bot,",
+      "zh": "当然也能做，比如我们有一个 Discord 机器人 Piedolf，"
+    },
+    {
+      "start": 69.14,
+      "end": 73.14,
+      "text": "who's been asleep for a couple of months because it was not so useful.",
+      "zh": "不过它已经休眠了几个月，因为没那么有用。"
+    },
+    {
+      "start": 74.24,
+      "end": 78.74,
+      "text": "But it's kind of not what Pi the coding agent was built for.",
+      "zh": "但这种场景确实不是 Pi 编程 agent 最初的设计目标。"
+    },
+    {
+      "start": 79.78,
+      "end": 84.58,
+      "text": "So earlier this summer we decided we needed a different kind of substrate,",
+      "zh": "所以今年夏天早些时候，我们决定需要一种不同的底层基础，"
+    },
+    {
+      "start": 84.58,
+      "end": 87.36,
+      "text": "a different kind of framework or library or whatever you want to call it,",
+      "zh": "一种不同的框架、库，随便你怎么称呼，"
+    },
+    {
+      "start": 88.19999999999999,
+      "end": 93.82,
+      "text": "that allows you to model this kind of agent or agentic application as well.",
+      "zh": "让你也能构建这类 agent 或 agent 应用。"
+    },
+    {
+      "start": 93.82,
+      "end": 99.48,
+      "text": "Long-running agents, multiplayer, there's multiple users or other agents can interact",
+      "zh": "长期运行的 agent、多人协作、多个用户或者其他 agent"
+    },
+    {
+      "start": 99.48,
+      "end": 100.83999999999999,
+      "text": "with each other.",
+      "zh": "相互交互。"
+    },
+    {
+      "start": 102.74,
+      "end": 106.46,
+      "text": "And not everything should be in RAM, in memory in total.",
+      "zh": "而且不应该把所有东西都完整地放在内存里。"
+    },
+    {
+      "start": 107.13999999999999,
+      "end": 108.88,
+      "text": "And it should be able to run anywhere.",
+      "zh": "它还应该能在任何地方运行。"
+    },
+    {
+      "start": 109.19999999999999,
+      "end": 113.5,
+      "text": "Like Pi is obviously mostly bound to a computer-like system.",
+      "zh": "Pi 显然主要依赖于类似完整计算机的系统。"
+    },
+    {
+      "start": 113.5,
+      "end": 117.32,
+      "text": "We also want to run on Vercel, on Cloudflare,",
+      "zh": "我们也想让它运行在 Vercel、Cloudflare、"
+    },
+    {
+      "start": 117.32,
+      "end": 120.52,
+      "text": "on E2B, on whatever you can come up with,",
+      "zh": "E2B，或者你能想到的其他平台上，"
+    },
+    {
+      "start": 121.06,
+      "end": 127.7,
+      "text": "where the computing substrate is potentially different than a process in an operating system.",
+      "zh": "这些平台的计算环境可能并不是操作系统里的一个进程。"
+    },
+    {
+      "start": 127.84,
+      "end": 134.1,
+      "text": "For example, Cloudflare, Durable Objects, it's an entirely different execution model than what you have in a process in Node",
+      "zh": "比如 Cloudflare Durable Objects，它的执行模型就完全不同于"
+    },
+    {
+      "start": 134.1,
+      "end": 135.94,
+      "text": "on your Mac or Windows machine.",
+      "zh": "你在 Mac 或 Windows 机器上运行的 Node 进程。"
+    },
+    {
+      "start": 136.86,
+      "end": 139.08,
+      "text": "So yeah, and that was how Durable was born.",
+      "zh": "Durable 就是这样诞生的。"
+    },
+    {
+      "start": 139.08,
+      "end": 145.38,
+      "text": "And I think it's also kind of useful to just point out what maybe some of the",
+      "zh": "我觉得也有必要指出，"
+    },
+    {
+      "start": 145.38,
+      "end": 148.9,
+      "text": "classical limitations are of Pi's existing session model.",
+      "zh": "Pi 现有的会话模型有哪些典型限制。"
+    },
+    {
+      "start": 149.46,
+      "end": 154.64000000000001,
+      "text": "And why it works quite well for the Pi coding agent, but like why it shows some limits.",
+      "zh": "为什么它很适合 Pi 编程 agent，却也会显露出局限。"
+    },
+    {
+      "start": 154.88000000000002,
+      "end": 159.52,
+      "text": "And actually I think like to a large degree, those limitations are also shared with a lot of other agents.",
+      "zh": "其实我觉得，很大程度上其他很多 agent 也有这些限制。"
+    },
+    {
+      "start": 161.28,
+      "end": 164.92000000000002,
+      "text": "So for a start, it writes JSON-L files.",
+      "zh": "首先，它写入的是 JSONL 文件。"
+    },
+    {
+      "start": 165.46,
+      "end": 166.48000000000002,
+      "text": "And they're definitely useful.",
+      "zh": "它们当然很有用。"
+    },
+    {
+      "start": 166.98000000000002,
+      "end": 168.44,
+      "text": "There's nothing fundamentally wrong with them.",
+      "zh": "本身并没有什么根本性问题。"
+    },
+    {
+      "start": 168.44,
+      "end": 173.26,
+      "text": "But they're append, right?",
+      "zh": "但它们采用追加写入，对吧？"
+    },
+    {
+      "start": 173.34,
+      "end": 177.26,
+      "text": "So it's like it's not very easy to rewrite those files.",
+      "zh": "所以要重写这些文件并不容易。"
+    },
+    {
+      "start": 178.28,
+      "end": 184.62,
+      "text": "And as you're putting larger and larger workloads into them, they're accumulating a lot of intermediary",
+      "zh": "随着你往里面放越来越大的工作负载，它们可能会积累大量"
+    },
+    {
+      "start": 184.62,
+      "end": 186.48,
+      "text": "results potentially.",
+      "zh": "中间结果，"
+    },
+    {
+      "start": 188.66,
+      "end": 192.76,
+      "text": "That, yeah, are potentially wasteful.",
+      "zh": "而这些东西可能很浪费。"
+    },
+    {
+      "start": 192.76,
+      "end": 196.84,
+      "text": "But the second thing is also that if you are going to have sub-agents,",
+      "zh": "第二，如果你要加入子 agent，"
+    },
+    {
+      "start": 196.84,
+      "end": 201.44,
+      "text": "you would actually have to split that across dependent sessions.",
+      "zh": "实际上得把它们拆到相互依赖的不同会话里。"
+    },
+    {
+      "start": 202.28,
+      "end": 205.46,
+      "text": "So Pi's tree works really,",
+      "zh": "Pi 的树状结构确实"
+    },
+    {
+      "start": 205.46,
+      "end": 209.72,
+      "text": "really well, particularly if you are a single writer, single user.",
+      "zh": "非常好用，尤其是在单一写入者、单一用户的情况下。"
+    },
+    {
+      "start": 209.89999999999998,
+      "end": 212.7,
+      "text": "You can navigate to different parts of the tree, rewind the session, do some stuff.",
+      "zh": "你可以跳到树的不同位置，回退会话，再做些操作。"
+    },
+    {
+      "start": 212.7,
+      "end": 216.94,
+      "text": "But modeling sub-agents into a single session",
+      "zh": "但如果把子 agent 都放进一个会话，"
+    },
+    {
+      "start": 216.94,
+      "end": 221.34,
+      "text": "would interleave lines,",
+      "zh": "记录行就会交错，"
+    },
+    {
+      "start": 221.34,
+      "end": 224.16,
+      "text": "would require some locking that doesn't exist today.",
+      "zh": "还需要一些现在并不存在的锁机制。"
+    },
+    {
+      "start": 224.16,
+      "end": 230.24,
+      "text": "So like the entire tree system as it exists is very cool,",
+      "zh": "所以现有的整套树状系统很酷，"
+    },
+    {
+      "start": 230.24,
+      "end": 233.2,
+      "text": "but has some limitations, let's say.",
+      "zh": "但也有一些限制。"
+    },
+    {
+      "start": 233.2,
+      "end": 238.88,
+      "text": "So a lot of the work towards durable started,",
+      "zh": "因此，Durable 的很多工作，"
+    },
+    {
+      "start": 238.88,
+      "end": 244.29999999999998,
+      "text": "I think, in some way or another by figuring out how to make this stuff work with a database.",
+      "zh": "某种程度上是从研究如何让这些东西配合数据库开始的。"
+    },
+    {
+      "start": 244.3,
+      "end": 248.66000000000003,
+      "text": "And really, I think there are multiple things.",
+      "zh": "这里其实涉及好几件事。"
+    },
+    {
+      "start": 248.8,
+      "end": 251.74,
+      "text": "Like durable means you should be able to stop and start it again.",
+      "zh": "持久化执行意味着，你应该能够停止它，再重新启动。"
+    },
+    {
+      "start": 252,
+      "end": 254.3,
+      "text": "So it's like it suspends and picks up work.",
+      "zh": "也就是可以挂起，然后接着工作。"
+    },
+    {
+      "start": 255.24,
+      "end": 260.58000000000004,
+      "text": "And that if you were to have sub-agents in it or you were to have multiple parallel things in it,",
+      "zh": "如果其中有子 agent，或者同时进行的多个任务，"
+    },
+    {
+      "start": 260.6,
+      "end": 265.1,
+      "text": "it would extend to all the branches which are active at any point in time.",
+      "zh": "这种能力就应该覆盖当时所有活跃的分支。"
+    },
+    {
+      "start": 265.1,
+      "end": 271.44,
+      "text": "And then the second part is that while",
+      "zh": "第二点是，虽然"
+    },
+    {
+      "start": 271.44,
+      "end": 274.20000000000005,
+      "text": "Pi is quite durable even today,",
+      "zh": "现在的 Pi 已经有相当程度的持久性，"
+    },
+    {
+      "start": 275.14000000000004,
+      "end": 281.64,
+      "text": "it is very easy to build stuff with it where you",
+      "zh": "但你仍然很容易用它做出一些"
+    },
+    {
+      "start": 281.64,
+      "end": 282.86,
+      "text": "cannot pick up the work.",
+      "zh": "无法接着运行的东西。"
+    },
+    {
+      "start": 283.06,
+      "end": 289.1,
+      "text": "And even the core agent look that we have today, if you were to continue, it could not continue on its own.",
+      "zh": "甚至现有的核心 agent 循环，也不能自己恢复执行。"
+    },
+    {
+      "start": 289.1,
+      "end": 295.84000000000003,
+      "text": "So like if you were to shut down and you bring it up, you would have to write continue or something into it to actually continue to work.",
+      "zh": "如果你关掉再启动，必须输入“继续”之类的话，它才会继续工作。"
+    },
+    {
+      "start": 296.66,
+      "end": 303.14,
+      "text": "And there are a lot of features that you might want to put into Pi that require extra state to be",
+      "zh": "而很多你可能想加进 Pi 的功能，都需要在过程中"
+    },
+    {
+      "start": 303.14,
+      "end": 304.32000000000005,
+      "text": "persisted along the way.",
+      "zh": "持久化额外的状态。"
+    },
+    {
+      "start": 304.58000000000004,
+      "end": 310.24,
+      "text": "So the classic example would be if you interrupt a tool execute",
+      "zh": "典型例子就是，打断一次工具执行，"
+    },
+    {
+      "start": 310.24,
+      "end": 314.86,
+      "text": "in order to ask the user for approval,",
+      "zh": "向用户请求批准。"
+    },
+    {
+      "start": 314.86,
+      "end": 321.16,
+      "text": "which again, not really the most useful case right now because I think tool",
+      "zh": "当然，现在这不算特别有用的例子，因为我觉得工具"
+    },
+    {
+      "start": 321.16,
+      "end": 322.2,
+      "text": "approvals are largely gone.",
+      "zh": "审批基本已经退出舞台了。"
+    },
+    {
+      "start": 322.58000000000004,
+      "end": 325.40000000000003,
+      "text": "But you could not really suspend the agent at this point in time and say like,",
+      "zh": "但你确实无法在这个时间点挂起 agent，说："
+    },
+    {
+      "start": 325.46000000000004,
+      "end": 330.14,
+      "text": "hey, we need to figure out if we can go ahead or not and then continue from there.",
+      "zh": "我们先确认能不能继续，然后再从这里恢复。"
+    },
+    {
+      "start": 330.28000000000003,
+      "end": 335.8,
+      "text": "So it's like the system is quite limited in being able to suspend at points where we didn't intend",
+      "zh": "所以，如果我们之前没有专门设计过某个挂起点，"
+    },
+    {
+      "start": 335.8,
+      "end": 337.8,
+      "text": "it unsuspending before.",
+      "zh": "系统就很难在那里挂起并恢复。"
+    },
+    {
+      "start": 338.48,
+      "end": 344.72,
+      "text": "Yeah, I think we should probably just go through what durable means because we throw it around.",
+      "zh": "对，我们应该解释一下 durable 到底是什么意思，因为一直在说这个词。"
+    },
+    {
+      "start": 344.86,
+      "end": 349.54,
+      "text": "But not a lot of people are actually very familiar with the concept.",
+      "zh": "但很多人其实不太熟悉这个概念。"
+    },
+    {
+      "start": 349.84000000000003,
+      "end": 353.68,
+      "text": "So in old Pi, not old Pi, in Pi coding agent,",
+      "zh": "在旧 Pi——不该说旧 Pi，是 Pi 编程 agent——里面，"
+    },
+    {
+      "start": 353.68,
+      "end": 358.48,
+      "text": "you start a session, you let the agent do something, your machine dies.",
+      "zh": "你启动一个会话，让 agent 做事，结果机器挂了。"
+    },
+    {
+      "start": 358.90000000000003,
+      "end": 363.44,
+      "text": "You spin up Pi again, the same session, and that Armin said you have to write continue.",
+      "zh": "你重新启动 Pi，打开同一个会话，就像 Armin 说的，还得输入“继续”。"
+    },
+    {
+      "start": 364,
+      "end": 371.26,
+      "text": "If there was an extension that did something in the background, that extension needs to be written in such a way that it actually spins up the background work again.",
+      "zh": "如果某个扩展在后台做事，它就必须自己实现重新启动后台工作的逻辑。"
+    },
+    {
+      "start": 371.82,
+      "end": 374.78000000000003,
+      "text": "And Pi coding agent didn't help the extension with that at all.",
+      "zh": "Pi 编程 agent 完全不会帮扩展处理这些。"
+    },
+    {
+      "start": 374.86,
+      "end": 377.52000000000004,
+      "text": "Like everybody had to reinvent how to do that.",
+      "zh": "每个人都得重新发明一遍。"
+    },
+    {
+      "start": 377.92,
+      "end": 383.84,
+      "text": "If you had a tool that was being executed when the process crashed,",
+      "zh": "如果进程崩溃时有个工具正在执行，"
+    },
+    {
+      "start": 383.84,
+      "end": 386.54,
+      "text": "that tool is just aborted and not run again.",
+      "zh": "这个工具就被中止了，不会自动重新运行。"
+    },
+    {
+      "start": 386.54,
+      "end": 392.26,
+      "text": "And the agent has to figure out if it should run it again and if so how and if the tool execution was a",
+      "zh": "agent 得自己判断要不要重跑、怎么重跑，以及这次工具执行"
+    },
+    {
+      "start": 392.26,
+      "end": 395.56,
+      "text": "destructive thing or not and so on and so forth.",
+      "zh": "是不是破坏性的操作，等等。"
+    },
+    {
+      "start": 395.56,
+      "end": 401.06,
+      "text": "And then Pi doesn't have real concurrency,",
+      "zh": "而且 Pi 没有真正的并发，"
+    },
+    {
+      "start": 401.06,
+      "end": 405.68,
+      "text": "meaning you always have a single agent loop.",
+      "zh": "也就是说，始终只有一个 agent 循环。"
+    },
+    {
+      "start": 406.64,
+      "end": 411.46,
+      "text": "And if the process dies, we do not recover within that agent loop.",
+      "zh": "如果进程挂了，我们不会恢复到那个循环内部。"
+    },
+    {
+      "start": 411.46,
+      "end": 414.7,
+      "text": "So an agent loop is basically get the user input,",
+      "zh": "agent 循环基本上就是：获取用户输入，"
+    },
+    {
+      "start": 414.7,
+      "end": 419.26,
+      "text": "send it to the LLM, get the response back, check if there's tool calls,",
+      "zh": "发给大模型，拿到回复，检查是否有工具调用，"
+    },
+    {
+      "start": 419.26,
+      "end": 422.73999999999995,
+      "text": "execute the tools, and then do that in a loop until the LLM says I'm done.",
+      "zh": "执行工具，再继续循环，直到模型说“我完成了”。"
+    },
+    {
+      "start": 422.74,
+      "end": 426.74,
+      "text": "In Pi coding agent, that just goes away.",
+      "zh": "在 Pi 编程 agent 里，这些执行中的信息就丢了。"
+    },
+    {
+      "start": 426.88,
+      "end": 431.02,
+      "text": "We do not keep track of where we are in that loop basically, right?",
+      "zh": "我们基本上不会记录循环执行到了哪里，对吧？"
+    },
+    {
+      "start": 431.02,
+      "end": 437.68,
+      "text": "So with Pi durable, we introduced a bunch of things that make this automatic basically.",
+      "zh": "Pi Durable 引入了一些机制，让这些事情基本上自动完成。"
+    },
+    {
+      "start": 438.09999999999997,
+      "end": 441.38,
+      "text": "So it kind of forces you into a durable way of thinking.",
+      "zh": "它会促使你用持久化执行的方式思考。"
+    },
+    {
+      "start": 441.38,
+      "end": 447.18,
+      "text": "So first of all, that loop I just described, that is actually decomposed into what we call tasks.",
+      "zh": "首先，我刚才描述的循环，会被拆成我们称为 task 的任务。"
+    },
+    {
+      "start": 447.46,
+      "end": 451.2,
+      "text": "And the task is basically just saying I intend to do a thing.",
+      "zh": "一个任务基本上就是声明：我打算做一件事。"
+    },
+    {
+      "start": 451.52,
+      "end": 455.04,
+      "text": "I store this in a storage so I can remember it later.",
+      "zh": "先把这个意图存起来，以后还能记住。"
+    },
+    {
+      "start": 455.34,
+      "end": 461.04,
+      "text": "I do the thing and then I store the result of the thing I did, right?",
+      "zh": "执行这件事，再把执行结果存起来。"
+    },
+    {
+      "start": 461.04,
+      "end": 466.14,
+      "text": "So this gives me kind of like a sandwich and I can resume at any point here.",
+      "zh": "这就像一个三明治，我能从其中任意位置恢复。"
+    },
+    {
+      "start": 466.26,
+      "end": 470.32,
+      "text": "I can resume in between intent and execution of what we call the effect.",
+      "zh": "可以在意图记录之后、执行我们所说的 effect 之前恢复，"
+    },
+    {
+      "start": 470.32,
+      "end": 477.26,
+      "text": "And in between the effect and the final result and after the result, right?",
+      "zh": "也可以在 effect 执行后、最终结果记录前，或者结果记录后恢复。"
+    },
+    {
+      "start": 477.82,
+      "end": 482.7,
+      "text": "And this is very nice because now you just write the thing that says I'm about to do the thing.",
+      "zh": "这样很好，因为你只需要写：我准备做这件事，"
+    },
+    {
+      "start": 482.82,
+      "end": 483.71999999999997,
+      "text": "I am doing the thing.",
+      "zh": "我正在做这件事，"
+    },
+    {
+      "start": 483.86,
+      "end": 484.56,
+      "text": "I did the thing.",
+      "zh": "我做完了。"
+    },
+    {
+      "start": 485.28,
+      "end": 490.2,
+      "text": "And if you resume, we know exactly where in this sandwich you were and can resume from there.",
+      "zh": "恢复的时候，我们就知道你停在这个“三明治”的哪一层，并从那里继续。"
+    },
+    {
+      "start": 490.5,
+      "end": 492.1,
+      "text": "And this extends to everything.",
+      "zh": "这适用于所有操作。"
+    },
+    {
+      "start": 492.26,
+      "end": 493.56,
+      "text": "This extends to the request.",
+      "zh": "也包括请求，"
+    },
+    {
+      "start": 493.65999999999997,
+      "end": 495.56,
+      "text": "It's being made to the LLM provider.",
+      "zh": "也就是发给大模型服务商的请求。"
+    },
+    {
+      "start": 495.56,
+      "end": 501.22,
+      "text": "This extends to tools which can now mark themselves as replay safe.",
+      "zh": "工具也一样，现在工具可以把自己标记为可安全重放。"
+    },
+    {
+      "start": 501.72,
+      "end": 504.34,
+      "text": "For example, a read tool is replay safe.",
+      "zh": "例如，读取工具可以安全重放。"
+    },
+    {
+      "start": 504.58,
+      "end": 507.6,
+      "text": "You can just call it again and you get whatever.",
+      "zh": "你再调用一次，拿到结果就行。"
+    },
+    {
+      "start": 508.36,
+      "end": 514.7,
+      "text": "A sub-agent tool is also replay safe because that same agent runs the same",
+      "zh": "子 agent 工具也可以安全重放，因为子 agent 和主 agent"
+    },
+    {
+      "start": 514.7,
+      "end": 516.06,
+      "text": "tasks as the main agent.",
+      "zh": "运行的是同一套任务机制。"
+    },
+    {
+      "start": 516.06,
+      "end": 520.4,
+      "text": "So all of this durability of the execution graph applies to it as well.",
+      "zh": "所以，执行图的持久化能力同样适用于它。"
+    },
+    {
+      "start": 520.6199999999999,
+      "end": 524.3,
+      "text": "So that agent can just be spun up again and be told,",
+      "zh": "子 agent 可以重新启动，再告诉它——"
+    },
+    {
+      "start": 524.3,
+      "end": 528.1999999999999,
+      "text": "not even be told, it automatically does continuous from where it left off.",
+      "zh": "甚至不用告诉，它会自动从上次停下的地方继续。"
+    },
+    {
+      "start": 529.66,
+      "end": 533.3599999999999,
+      "text": "And so this is probably the biggest selling point of Pi Durable.",
+      "zh": "这大概是 Pi Durable 最大的卖点。"
+    },
+    {
+      "start": 533.9,
+      "end": 539.3199999999999,
+      "text": "We took some inspiration from structured concurrency.",
+      "zh": "我们借鉴了一些结构化并发的思想。"
+    },
+    {
+      "start": 539.32,
+      "end": 544.94,
+      "text": "It doesn't cleanly apply to everything in an agent, which to me was a very interesting observation.",
+      "zh": "不过它并不能完全套用于 agent 的所有场景，这个发现对我来说很有意思。"
+    },
+    {
+      "start": 545.1,
+      "end": 550.74,
+      "text": "So structured concurrency is basically something owns another thing that does something.",
+      "zh": "结构化并发基本上就是，一个执行单元拥有另一个执行单元，后者去做一些事情。"
+    },
+    {
+      "start": 551.24,
+      "end": 556.3000000000001,
+      "text": "And this other thing is not allowed to survive past the lifetime of this.",
+      "zh": "后者的生命周期不能超过前者。"
+    },
+    {
+      "start": 556.88,
+      "end": 559.6400000000001,
+      "text": "This works for like 90% of tasks inside Pi Durable.",
+      "zh": "Pi Durable 中大约 90% 的任务都适用。"
+    },
+    {
+      "start": 559.6400000000001,
+      "end": 565.68,
+      "text": "But there's a handful of things that need this child execution to survive",
+      "zh": "但有少数情况，子执行单元需要"
+    },
+    {
+      "start": 565.68,
+      "end": 567.36,
+      "text": "the lifetime of the parent.",
+      "zh": "比父执行单元活得更久。"
+    },
+    {
+      "start": 567.36,
+      "end": 572.4,
+      "text": "So it's not 100% structured concurrency, but it's very close to that.",
+      "zh": "所以它不是百分之百的结构化并发，但已经非常接近。"
+    },
+    {
+      "start": 572.5,
+      "end": 574.58,
+      "text": "And it gives you an escape hatch if you don't need it.",
+      "zh": "而且在你不需要这种约束时，也提供了跳出机制。"
+    },
+    {
+      "start": 576.0600000000001,
+      "end": 577.2,
+      "text": "Yeah, and that's durability.",
+      "zh": "对，这就是持久化执行。"
+    },
+    {
+      "start": 577.42,
+      "end": 578.4,
+      "text": "I hope any of that makes sense.",
+      "zh": "希望我讲清楚了。"
+    },
+    {
+      "start": 578.42,
+      "end": 580.4,
+      "text": "And I think there's another thing we're mentioning.",
+      "zh": "还有一件事值得提一下。"
+    },
+    {
+      "start": 580.66,
+      "end": 585.24,
+      "text": "So if you go to the earendil works GitHub repository, you will find that there's a project called Absurd,",
+      "zh": "如果你去看 earendil-works 的 GitHub 仓库，会发现一个叫 Absurd 的项目，"
+    },
+    {
+      "start": 586.26,
+      "end": 589.58,
+      "text": "which is a durable workflow engine sitting on top of Postgres.",
+      "zh": "它是构建在 Postgres 之上的持久化工作流引擎。"
+    },
+    {
+      "start": 589.58,
+      "end": 595.5,
+      "text": "And we built that originally to support a Pi-driven agent,",
+      "zh": "我们最初做它，是为了支持一个由 Pi 驱动的 agent，"
+    },
+    {
+      "start": 595.5,
+      "end": 596.96,
+      "text": "which is called Levos,",
+      "zh": "叫 Levos，"
+    },
+    {
+      "start": 597.88,
+      "end": 604.8000000000001,
+      "text": "to basically continue and suspend across basically a cloud deployment.",
+      "zh": "让它能在云端部署过程中挂起和恢复。"
+    },
+    {
+      "start": 605.26,
+      "end": 609.36,
+      "text": "So when we built this originally, the assumption was, well, sandbox are quite expensive.",
+      "zh": "最初的考虑是，沙箱挺贵的。"
+    },
+    {
+      "start": 609.74,
+      "end": 614.9200000000001,
+      "text": "So we want to build the agent in a way where you just distribute it to any worker that wants to work on it",
+      "zh": "所以我们想把 agent 设计成：任何愿意接手的 worker 都能分配到它，"
+    },
+    {
+      "start": 614.9200000000001,
+      "end": 616.4399999999999,
+      "text": "and continue work doing there.",
+      "zh": "并在那里继续工作。"
+    },
+    {
+      "start": 617.38,
+      "end": 622.4,
+      "text": "And unsurprisingly, the problem that we ran into quite early on,",
+      "zh": "不出所料，我们很早就遇到了一个问题，"
+    },
+    {
+      "start": 622.4399999999999,
+      "end": 627.12,
+      "text": "I think a lot of people ran into it, is that there's a lot of states that's not just the agent state.",
+      "zh": "我觉得很多人都遇到过：状态不只有 agent 自身的状态。"
+    },
+    {
+      "start": 628.24,
+      "end": 633.4799999999999,
+      "text": "So initially just transmitting the session transcript around was obviously not enough.",
+      "zh": "所以，光在各处传递会话记录，显然不够。"
+    },
+    {
+      "start": 633.9599999999999,
+      "end": 635.9,
+      "text": "Agents love to write to the file system and so forth.",
+      "zh": "agent 很喜欢往文件系统写东西，等等。"
+    },
+    {
+      "start": 635.9,
+      "end": 643.24,
+      "text": "And so you very quickly discover that durable workflow engines are great,",
+      "zh": "你很快就会发现，持久化工作流引擎很好，"
+    },
+    {
+      "start": 643.6,
+      "end": 649.9599999999999,
+      "text": "but unless the agent harness actually really supports them well, that's not enough.",
+      "zh": "但如果 agent harness 没有真正支持它，光有引擎是不够的。"
+    },
+    {
+      "start": 650.0799999999999,
+      "end": 652,
+      "text": "So like the agent harness in itself needs to be durable.",
+      "zh": "也就是说，agent harness 本身也得支持持久化执行。"
+    },
+    {
+      "start": 653.36,
+      "end": 656.52,
+      "text": "Now, that doesn't mean that everything becomes durable, right?",
+      "zh": "但这不意味着所有东西都会自动持久化，对吧？"
+    },
+    {
+      "start": 656.5799999999999,
+      "end": 660.38,
+      "text": "So it's like if the file system now holds on to really important data,",
+      "zh": "如果文件系统里存着非常重要的数据，"
+    },
+    {
+      "start": 660.9,
+      "end": 662.72,
+      "text": "you also need to find a way to either snapshot that,",
+      "zh": "你也得想办法给它做快照，"
+    },
+    {
+      "start": 662.72,
+      "end": 665.06,
+      "text": "or you build the agent around in a way that it can go away.",
+      "zh": "或者把 agent 设计成即使这些数据消失也能运作。"
+    },
+    {
+      "start": 666.9,
+      "end": 670.14,
+      "text": "And so I think for someone who is looking at this and saying like,",
+      "zh": "所以，有人可能看着这套东西说："
+    },
+    {
+      "start": 670.22,
+      "end": 672.64,
+      "text": "hey, we have a Dora workflow engine, all of our problems are gone,",
+      "zh": "我们有了持久化工作流引擎，所有问题都解决了。"
+    },
+    {
+      "start": 672.72,
+      "end": 675.4,
+      "text": "it's like you might still want to use it because it might still be useful.",
+      "zh": "它确实可能有用，你也可能仍然想用它。"
+    },
+    {
+      "start": 676.26,
+      "end": 681.06,
+      "text": "But just having that did not actually make your agent durable.",
+      "zh": "但仅仅拥有它，并不会让你的 agent 自动具备持久化执行能力。"
+    },
+    {
+      "start": 682.88,
+      "end": 689.04,
+      "text": "And in fact, there's still a chance that the agent will not come out particularly durable out of the box",
+      "zh": "实际上，agent 开箱即用时仍然可能缺乏这种能力，"
+    },
+    {
+      "start": 689.04,
+      "end": 695.3,
+      "text": "if you let the agent just write files to file systems that you never bring back or stuff like this.",
+      "zh": "比如你让它把文件写到再也无法恢复的文件系统里。"
+    },
+    {
+      "start": 695.9,
+      "end": 700.1,
+      "text": "So there's things inside the harness that can all be durable,",
+      "zh": "harness 内部的东西可以持久化，"
+    },
+    {
+      "start": 700.48,
+      "end": 703.36,
+      "text": "but the harness also operates on an external environment.",
+      "zh": "但 harness 还会操作外部环境。"
+    },
+    {
+      "start": 703.98,
+      "end": 706.5,
+      "text": "And in the effect sandwich, which I described earlier,",
+      "zh": "在我之前说的 effect“三明治”里，"
+    },
+    {
+      "start": 706.76,
+      "end": 708.84,
+      "text": "the intent is the durable part inside the harness,",
+      "zh": "意图是 harness 内部可以持久化的部分；"
+    },
+    {
+      "start": 708.9599999999999,
+      "end": 713.72,
+      "text": "the effect, which is write to a file, execute bash, call some service, deploy something, blah, blah.",
+      "zh": "effect 则是写文件、执行 Bash、调用服务、部署东西，等等。"
+    },
+    {
+      "start": 714.12,
+      "end": 716.8199999999999,
+      "text": "That is the external system and you do not have control over that.",
+      "zh": "那属于外部系统，你无法控制它。"
+    },
+    {
+      "start": 716.82,
+      "end": 718.1600000000001,
+      "text": "Well, usually.",
+      "zh": "通常是这样。"
+    },
+    {
+      "start": 718.7800000000001,
+      "end": 722.7800000000001,
+      "text": "So the only way to make this part durable as well is to have some kind of,",
+      "zh": "所以，要让这一部分也支持持久化执行，就需要某种——"
+    },
+    {
+      "start": 722.82,
+      "end": 724.7,
+      "text": "and I can't pronounce the fucking word,",
+      "zh": "那个该死的词我念不出来——"
+    },
+    {
+      "start": 724.94,
+      "end": 731.7800000000001,
+      "text": "basically, if I say deploy with the ID, blah, blah, blah,",
+      "zh": "比如，我说用某个 ID 执行部署，"
+    },
+    {
+      "start": 731.7800000000001,
+      "end": 735.8000000000001,
+      "text": "and I call this again and the deploy for that ID is already running,",
+      "zh": "再次调用时，如果这个 ID 对应的部署已经在运行，"
+    },
+    {
+      "start": 736.0200000000001,
+      "end": 737.1400000000001,
+      "text": "it shouldn't trigger again.",
+      "zh": "就不应该再触发一遍。"
+    },
+    {
+      "start": 737.3000000000001,
+      "end": 738.2800000000001,
+      "text": "That's what I'm saying.",
+      "zh": "我想说的就是这个。"
+    },
+    {
+      "start": 738.2800000000001,
+      "end": 740.3399999999999,
+      "text": "So if your external system works like this, great.",
+      "zh": "如果你的外部系统支持这种方式，那很好。"
+    },
+    {
+      "start": 740.4599999999999,
+      "end": 744.38,
+      "text": "File systems don't work like this unless you have like a snapshotting file system.",
+      "zh": "文件系统并不这样工作，除非它支持快照之类的机制。"
+    },
+    {
+      "start": 745.12,
+      "end": 751.5799999999999,
+      "text": "But yeah, the thing with durability is you can have a workflow engine like temporal or absurd",
+      "zh": "不过，关于持久化执行，你可以有 Temporal、Absurd"
+    },
+    {
+      "start": 751.5799999999999,
+      "end": 754.4,
+      "text": "or I don't know what other stuff exists out there.",
+      "zh": "或者其他什么持久化工作流引擎，"
+    },
+    {
+      "start": 755.28,
+      "end": 757.28,
+      "text": "But then you run into issues of atomicity.",
+      "zh": "但随后就会遇到原子性的问题。"
+    },
+    {
+      "start": 758.26,
+      "end": 762.9599999999999,
+      "text": "Like for durability to work, everything that needs to be durable in one step",
+      "zh": "为了实现持久化执行，同一步中所有需要持久化的内容，"
+    },
+    {
+      "start": 762.9599999999999,
+      "end": 765.28,
+      "text": "needs to be atomically persisted.",
+      "zh": "必须原子地保存下来。"
+    },
+    {
+      "start": 765.28,
+      "end": 769.8,
+      "text": "And if you have this outside of the agent,",
+      "zh": "如果这个机制在 agent 外部，"
+    },
+    {
+      "start": 770,
+      "end": 774.64,
+      "text": "then anything inside of the agent that needs atomic persistence for durability",
+      "zh": "那么 agent 内部所有需要原子持久化才能保证恢复的东西，"
+    },
+    {
+      "start": 774.64,
+      "end": 777.22,
+      "text": "needs to be shoehorned into that somehow.",
+      "zh": "就得想办法硬塞进那套机制。"
+    },
+    {
+      "start": 777.4,
+      "end": 779.1999999999999,
+      "text": "And that really doesn't quite work.",
+      "zh": "这其实不太行得通。"
+    },
+    {
+      "start": 779.28,
+      "end": 783.92,
+      "text": "So that's why we decided for Pi Durable to actually make it a durable workflow engine itself,",
+      "zh": "所以我们决定，让 Pi Durable 本身就是一个持久化工作流引擎。"
+    },
+    {
+      "start": 784.36,
+      "end": 789.22,
+      "text": "which solves a lot of problems because it also allows you to build your own tasks",
+      "zh": "这解决了很多问题，因为你也可以为自己的应用构建任务，"
+    },
+    {
+      "start": 789.22,
+      "end": 794.54,
+      "text": "that run inside this scheduler and durable scheduler for your own application.",
+      "zh": "让它们运行在这个持久化调度器里面。"
+    },
+    {
+      "start": 794.54,
+      "end": 797.88,
+      "text": "And it also allows you, and that's the second part of durability,",
+      "zh": "而且它还支持持久化的另一部分："
+    },
+    {
+      "start": 798.62,
+      "end": 802.64,
+      "text": "persistence of state, not only of the harness, but also of your application.",
+      "zh": "状态持久化，不仅包括 harness，也包括你的应用。"
+    },
+    {
+      "start": 803.16,
+      "end": 809.4599999999999,
+      "text": "Now, obviously, you do not want to stuff every application state you have into the harness storage.",
+      "zh": "当然，你不会想把所有应用状态都塞进 harness 的存储。"
+    },
+    {
+      "start": 810.24,
+      "end": 816.66,
+      "text": "But what you can do is you persist large blobs, for example, into your own storage.",
+      "zh": "但你可以把大块数据存到自己的存储里，"
+    },
+    {
+      "start": 817.02,
+      "end": 820.92,
+      "text": "And then inside the harness storage, you persist a pointer to that persisted blob.",
+      "zh": "再在 harness 存储里保存一个指向那块数据的引用。"
+    },
+    {
+      "start": 820.92,
+      "end": 827.56,
+      "text": "And with that, it's very easy to have durable execution and durable storage of state.",
+      "zh": "这样就很容易同时获得持久化执行和状态持久化。"
+    },
+    {
+      "start": 827.56,
+      "end": 833.72,
+      "text": "I think another thing worth remembering here is",
+      "zh": "还有一点值得记住，"
+    },
+    {
+      "start": 833.72,
+      "end": 837.3199999999999,
+      "text": "so absurd, like temporal,",
+      "zh": "Absurd 和 Temporal，"
+    },
+    {
+      "start": 837.9399999999999,
+      "end": 842.38,
+      "text": "and I think that gazillions of other durable workflow execution engines out there,",
+      "zh": "以及其他无数持久化工作流执行引擎，"
+    },
+    {
+      "start": 842.9799999999999,
+      "end": 849.06,
+      "text": "they were actually largely built on one premise that is now quickly being invalidated.",
+      "zh": "大多建立在一个如今正在迅速失效的前提上。"
+    },
+    {
+      "start": 849.18,
+      "end": 854.66,
+      "text": "And that premise was that you can actually cheat on durability quite a bit",
+      "zh": "这个前提是，你可以在持久化执行上偷不少懒，"
+    },
+    {
+      "start": 854.66,
+      "end": 861.76,
+      "text": "by assuming that the code that is durable is sort of maintained by an expert programmer.",
+      "zh": "只要假设这些代码是由专业程序员维护的。"
+    },
+    {
+      "start": 862.5799999999999,
+      "end": 868.4,
+      "text": "And I'm saying this because the way almost all durable workflow engines work today",
+      "zh": "我这么说，是因为如今几乎所有持久化工作流引擎，"
+    },
+    {
+      "start": 868.4,
+      "end": 875.24,
+      "text": "is they either say like your code has to be fully deterministic on the workflow orchestration part,",
+      "zh": "都会要求工作流编排部分的代码完全确定，"
+    },
+    {
+      "start": 875.3,
+      "end": 879.66,
+      "text": "so that if I suspend for like a week and I come back in a week later,",
+      "zh": "这样即使挂起一周，一周后再回来，"
+    },
+    {
+      "start": 879.66,
+      "end": 883.4599999999999,
+      "text": "the code is the same, so I just run through all the checkpoints,",
+      "zh": "代码还是一样，就可以依次走过所有检查点，"
+    },
+    {
+      "start": 883.64,
+      "end": 886.28,
+      "text": "I'm pulling the data as it was written into durable storage,",
+      "zh": "取回当时写进持久化存储的数据，"
+    },
+    {
+      "start": 886.86,
+      "end": 888.12,
+      "text": "and I'm continuing from there.",
+      "zh": "然后从那里继续。"
+    },
+    {
+      "start": 889.62,
+      "end": 892.7199999999999,
+      "text": "Or it has to be written in a way that is maybe non-deterministic,",
+      "zh": "或者，代码可以不是完全确定的，"
+    },
+    {
+      "start": 893.2199999999999,
+      "end": 898,
+      "text": "but all the branches that you were taking on the durable information is still compatible",
+      "zh": "但根据持久化信息选择的所有分支，仍然必须兼容，"
+    },
+    {
+      "start": 898,
+      "end": 900.14,
+      "text": "or has like explicit code in it for upgrades.",
+      "zh": "或者明确写好升级逻辑。"
+    },
+    {
+      "start": 900.14,
+      "end": 906.64,
+      "text": "And the problem with this with LLMs is that we are",
+      "zh": "大模型带来的问题是，我们"
+    },
+    {
+      "start": 906.64,
+      "end": 908.18,
+      "text": "now living in a world",
+      "zh": "如今生活在一个"
+    },
+    {
+      "start": 908.18,
+      "end": 909.88,
+      "text": "where the agents are writing their own code.",
+      "zh": "agent 会自己写代码的世界里。"
+    },
+    {
+      "start": 910,
+      "end": 911.8,
+      "text": "And it's not that the agents cannot be expert programmers,",
+      "zh": "不是说 agent 不能成为专业程序员，"
+    },
+    {
+      "start": 912.4399999999999,
+      "end": 918.08,
+      "text": "but the agents, it is very hard for them to basically maintain",
+      "zh": "而是它们很难始终"
+    },
+    {
+      "start": 918.08,
+      "end": 922.66,
+      "text": "like a perfect understanding of all the possible tasks",
+      "zh": "完整理解所有可能再次遇到的任务，"
+    },
+    {
+      "start": 922.66,
+      "end": 924.6,
+      "text": "that will ever come by again in this durable state.",
+      "zh": "以及这些任务处于什么持久化状态。"
+    },
+    {
+      "start": 925.24,
+      "end": 927.9,
+      "text": "And so this, I would say like this is an unsolvable problem,",
+      "zh": "我觉得这个问题是无法彻底解决的。"
+    },
+    {
+      "start": 927.9,
+      "end": 931.5799999999999,
+      "text": "but the trade-off now is less to make it friendly for a programmer",
+      "zh": "但如今的取舍，不再是靠抽象把细节藏起来，让程序员用得舒服，"
+    },
+    {
+      "start": 931.5799999999999,
+      "end": 935.04,
+      "text": "by abstracting it away, but to make it a lot more explicit.",
+      "zh": "而是把这些细节变得更加显式。"
+    },
+    {
+      "start": 935.9,
+      "end": 938.02,
+      "text": "Because if it's explicit, then the agent can see it.",
+      "zh": "因为只有显式呈现出来，agent 才看得见。"
+    },
+    {
+      "start": 938.0799999999999,
+      "end": 940.04,
+      "text": "It's like, oh, I wrote this durable information away",
+      "zh": "它才能知道：哦，我把这些持久化信息写出去了，"
+    },
+    {
+      "start": 940.04,
+      "end": 941.12,
+      "text": "and we need to load it again.",
+      "zh": "现在需要重新加载。"
+    },
+    {
+      "start": 941.54,
+      "end": 945.38,
+      "text": "So the trade-off actually now is sort of almost entirely inverse",
+      "zh": "所以，这个取舍几乎完全反转了，"
+    },
+    {
+      "start": 945.38,
+      "end": 946.4399999999999,
+      "text": "to what we did with Absurd,",
+      "zh": "和我们做 Absurd 时正好相反。"
+    },
+    {
+      "start": 946.9599999999999,
+      "end": 949.34,
+      "text": "where we tried to make it as friendly for a human programmer to do.",
+      "zh": "当时我们尽量让人类程序员用起来方便。"
+    },
+    {
+      "start": 949.84,
+      "end": 952.24,
+      "text": "And now it's like S in your face.",
+      "zh": "而现在，我们要把这些信息直接摆出来，"
+    },
+    {
+      "start": 953.4,
+      "end": 954.38,
+      "text": "So did the LLM.",
+      "zh": "让大模型看见。"
+    },
+    {
+      "start": 955.1,
+      "end": 956.5,
+      "text": "There's going to be a little bit more code,",
+      "zh": "代码会稍微多一点，"
+    },
+    {
+      "start": 956.5,
+      "end": 960.76,
+      "text": "but the LLM is going to be explicitly going through checkpoints.",
+      "zh": "但大模型会显式地经过每一个检查点。"
+    },
+    {
+      "start": 960.92,
+      "end": 965.92,
+      "text": "So like as an example, state suspension in Absurd was like,",
+      "zh": "比如，在 Absurd 中挂起状态时，"
+    },
+    {
+      "start": 966.3,
+      "end": 968.02,
+      "text": "yeah, like every time you went to a step,",
+      "zh": "每走到一个步骤，"
+    },
+    {
+      "start": 968.44,
+      "end": 969.52,
+      "text": "we would increment the counter.",
+      "zh": "我们都会递增计数器。"
+    },
+    {
+      "start": 969.84,
+      "end": 972.28,
+      "text": "And so like if you, if a loop for this four times,",
+      "zh": "所以，如果你在循环里执行四次，"
+    },
+    {
+      "start": 972.4,
+      "end": 975.68,
+      "text": "then there's a hidden like first time, second time,",
+      "zh": "就会隐含地记录第一次、第二次、"
+    },
+    {
+      "start": 975.76,
+      "end": 976.56,
+      "text": "third time and so forth.",
+      "zh": "第三次，以此类推。"
+    },
+    {
+      "start": 977.56,
+      "end": 980.16,
+      "text": "In Pi Durable, what is just a memo function,",
+      "zh": "而在 Pi Durable 里，只是一个 memo 函数，"
+    },
+    {
+      "start": 980.82,
+      "end": 984.24,
+      "text": "where you give it a name and that's the name.",
+      "zh": "你给它一个名字，就用这个名字。"
+    },
+    {
+      "start": 984.24,
+      "end": 986.16,
+      "text": "And if you want to version it, you version it.",
+      "zh": "想做版本管理，就自己明确标版本。"
+    },
+    {
+      "start": 987.54,
+      "end": 990.82,
+      "text": "So there's a lot less hidden magic in durable",
+      "zh": "所以 Durable 里隐藏的魔法，"
+    },
+    {
+      "start": 990.82,
+      "end": 992.7,
+      "text": "than there is in temporal or Absurd.",
+      "zh": "比 Temporal 或 Absurd 少得多。"
+    },
+    {
+      "start": 993.16,
+      "end": 993.62,
+      "text": "Yeah, definitely.",
+      "zh": "对，确实如此。"
+    },
+    {
+      "start": 993.8,
+      "end": 999,
+      "text": "Like the workflow scheduler is like 1,200 lines of code",
+      "zh": "工作流调度器大概只有 1,200 行代码，"
+    },
+    {
+      "start": 999,
+      "end": 1000.6800000000001,
+      "text": "that you can actually read and understand.",
+      "zh": "你真的可以读懂它。"
+    },
+    {
+      "start": 1001.24,
+      "end": 1004.6800000000001,
+      "text": "And it's very easy to reason about the execution graph.",
+      "zh": "也很容易理解执行图的行为。"
+    },
+    {
+      "start": 1004.82,
+      "end": 1007.32,
+      "text": "And that is actually the difference to temporal or Absurd.",
+      "zh": "这正是它和 Temporal、Absurd 的区别。"
+    },
+    {
+      "start": 1007.9,
+      "end": 1009.42,
+      "text": "In temporal or Absurd,",
+      "zh": "在 Temporal 或 Absurd 里，"
+    },
+    {
+      "start": 1009.42,
+      "end": 1012.8399999999999,
+      "text": "you kind of pretend you're writing a box standard JavaScript program.",
+      "zh": "你仿佛只是在写一个普通的 JavaScript 程序，"
+    },
+    {
+      "start": 1013.16,
+      "end": 1016.38,
+      "text": "And it just will magically pick up from where you left off, right?",
+      "zh": "它就会神奇地从上次停下的地方继续，对吧？"
+    },
+    {
+      "start": 1016.52,
+      "end": 1018.8,
+      "text": "That's more true for temporal than Absurd, I think.",
+      "zh": "我觉得 Temporal 比 Absurd 更是如此。"
+    },
+    {
+      "start": 1020.02,
+      "end": 1023.06,
+      "text": "And that is, as you said, for humans, a great model",
+      "zh": "就像你说的，对人来说，这个模型很好，"
+    },
+    {
+      "start": 1023.06,
+      "end": 1024.58,
+      "text": "because you kind of sort of understand.",
+      "zh": "因为你大致能理解它。"
+    },
+    {
+      "start": 1024.58,
+      "end": 1027.1599999999999,
+      "text": "But then if you actually use it in anger,",
+      "zh": "但当你真正深入使用时，"
+    },
+    {
+      "start": 1027.26,
+      "end": 1028.12,
+      "text": "you figure out,",
+      "zh": "你会发现，"
+    },
+    {
+      "start": 1028.76,
+      "end": 1032.26,
+      "text": "they actually have to do a lot of shit to make this work.",
+      "zh": "为了让它运转，底下其实得做一大堆事情。"
+    },
+    {
+      "start": 1032.4199999999998,
+      "end": 1034.74,
+      "text": "Like something as simple as set timeout,",
+      "zh": "连 setTimeout 这么简单的东西，"
+    },
+    {
+      "start": 1034.84,
+      "end": 1038.32,
+      "text": "they have to kind of hook into",
+      "zh": "它们都得介入处理，"
+    },
+    {
+      "start": 1038.32,
+      "end": 1039.8999999999999,
+      "text": "and ensure that it works with this.",
+      "zh": "确保它能配合这套机制工作。"
+    },
+    {
+      "start": 1040.46,
+      "end": 1042.3999999999999,
+      "text": "And the biggest problem, actually,",
+      "zh": "而这类工作流引擎"
+    },
+    {
+      "start": 1042.46,
+      "end": 1043.72,
+      "text": "with these kinds of workflow engines",
+      "zh": "最大的问题，"
+    },
+    {
+      "start": 1043.72,
+      "end": 1045.9399999999998,
+      "text": "is that you have an execution graph.",
+      "zh": "其实在于你有一张执行图。"
+    },
+    {
+      "start": 1046.12,
+      "end": 1047.6599999999999,
+      "text": "Like function A calls function B,",
+      "zh": "比如函数 A 调用函数 B，"
+    },
+    {
+      "start": 1047.76,
+      "end": 1048.62,
+      "text": "calls function C.",
+      "zh": "函数 B 又调用函数 C。"
+    },
+    {
+      "start": 1049.1999999999998,
+      "end": 1050.9799999999998,
+      "text": "And then somewhere in there,",
+      "zh": "然后在其中某个地方，"
+    },
+    {
+      "start": 1051.32,
+      "end": 1054.2399999999998,
+      "text": "we stopped the process",
+      "zh": "我们停止了进程，"
+    },
+    {
+      "start": 1054.2399999999998,
+      "end": 1055.34,
+      "text": "and now we restart it.",
+      "zh": "现在又重新启动它。"
+    },
+    {
+      "start": 1055.36,
+      "end": 1058.1999999999998,
+      "text": "And now we have to reestablish the call stack, right?",
+      "zh": "于是必须重建调用栈，对吧？"
+    },
+    {
+      "start": 1058.34,
+      "end": 1060.6599999999999,
+      "text": "Function A, function B, function C.",
+      "zh": "函数 A、函数 B、函数 C。"
+    },
+    {
+      "start": 1060.9199999999998,
+      "end": 1061.82,
+      "text": "So how do you do this?",
+      "zh": "怎么做呢？"
+    },
+    {
+      "start": 1062.2199999999998,
+      "end": 1063.7199999999998,
+      "text": "You have to replay the fucking shit.",
+      "zh": "你得把这整套东西重放一遍。"
+    },
+    {
+      "start": 1064.4599999999998,
+      "end": 1065.6999999999998,
+      "text": "And the replay works like this.",
+      "zh": "重放的过程是这样的："
+    },
+    {
+      "start": 1065.7399999999998,
+      "end": 1067.2199999999998,
+      "text": "You go into function A again",
+      "zh": "再次进入函数 A，"
+    },
+    {
+      "start": 1067.2199999999998,
+      "end": 1069.28,
+      "text": "and function A calls something that says,",
+      "zh": "函数 A 调用一个操作，说，"
+    },
+    {
+      "start": 1069.4199999999998,
+      "end": 1070.2399999999998,
+      "text": "do the thing.",
+      "zh": "做这件事。"
+    },
+    {
+      "start": 1070.7199999999998,
+      "end": 1072.04,
+      "text": "And instead of actually doing the thing,",
+      "zh": "但它不会真的再做一次，"
+    },
+    {
+      "start": 1072.12,
+      "end": 1073.36,
+      "text": "it gives you the last result.",
+      "zh": "而是返回上一次的结果，"
+    },
+    {
+      "start": 1073.9399999999998,
+      "end": 1074.56,
+      "text": "The thing did.",
+      "zh": "也就是那个操作"
+    },
+    {
+      "start": 1074.84,
+      "end": 1076.08,
+      "text": "The last time you ran it.",
+      "zh": "上次运行时的结果。"
+    },
+    {
+      "start": 1076.34,
+      "end": 1077.12,
+      "text": "Then you take that",
+      "zh": "然后拿着这个结果，"
+    },
+    {
+      "start": 1077.12,
+      "end": 1078.6799999999998,
+      "text": "and you call function B with that.",
+      "zh": "调用函数 B。"
+    },
+    {
+      "start": 1078.8999999999999,
+      "end": 1079.9399999999998,
+      "text": "And that does the same thing.",
+      "zh": "函数 B 也做同样的事。"
+    },
+    {
+      "start": 1080,
+      "end": 1080.6,
+      "text": "And then you take that",
+      "zh": "再拿着它的结果，"
+    },
+    {
+      "start": 1080.6,
+      "end": 1081.3999999999999,
+      "text": "and call function C.",
+      "zh": "调用函数 C。"
+    },
+    {
+      "start": 1081.6999999999998,
+      "end": 1083.4199999999998,
+      "text": "And it's a terrible model, actually,",
+      "zh": "仔细想想，"
+    },
+    {
+      "start": 1083.58,
+      "end": 1084.4399999999998,
+      "text": "if you think about it.",
+      "zh": "这个模型其实挺糟糕的。"
+    },
+    {
+      "start": 1084.4799999999998,
+      "end": 1086.4799999999998,
+      "text": "Because it requires a journal of everything",
+      "zh": "因为它要求记录所有操作的日志，"
+    },
+    {
+      "start": 1086.4799999999998,
+      "end": 1089.04,
+      "text": "and it reruns the entire code.",
+      "zh": "还要重新执行整段代码。"
+    },
+    {
+      "start": 1089.3799999999999,
+      "end": 1090.7399999999998,
+      "text": "And if anything, as Armin said,",
+      "zh": "而且，就像 Armin 说的，只要"
+    },
+    {
+      "start": 1090.86,
+      "end": 1092.82,
+      "text": "changes in any of these functions,",
+      "zh": "其中任何一个函数发生变化，"
+    },
+    {
+      "start": 1093.2399999999998,
+      "end": 1094.08,
+      "text": "you are fucked.",
+      "zh": "你就麻烦大了。"
+    },
+    {
+      "start": 1094.32,
+      "end": 1096.4399999999998,
+      "text": "One of the biggest criticisms of Temporal",
+      "zh": "对 Temporal 最常见的批评之一，"
+    },
+    {
+      "start": 1096.4399999999998,
+      "end": 1098.08,
+      "text": "is that versioning is just terrible.",
+      "zh": "就是版本管理非常糟糕。"
+    },
+    {
+      "start": 1098.6399999999999,
+      "end": 1101.26,
+      "text": "So what does Pi Durable actually do?",
+      "zh": "那么 Pi Durable 到底怎么做？"
+    },
+    {
+      "start": 1101.78,
+      "end": 1103.02,
+      "text": "Pi Durable doesn't give you",
+      "zh": "Pi Durable 提供的，"
+    },
+    {
+      "start": 1103.02,
+      "end": 1105.8799999999999,
+      "text": "a classic call stack of JavaScript functions.",
+      "zh": "并不是传统的 JavaScript 函数调用栈。"
+    },
+    {
+      "start": 1105.88,
+      "end": 1109.8600000000001,
+      "text": "Pi Durable gives you a tree of tasks.",
+      "zh": "它提供的是一棵任务树。"
+    },
+    {
+      "start": 1110.38,
+      "end": 1111.9,
+      "text": "And each task is self-contained.",
+      "zh": "每个任务都是独立完整的。"
+    },
+    {
+      "start": 1112.38,
+      "end": 1114.8400000000001,
+      "text": "It can call other tasks and wait for them.",
+      "zh": "它可以调用其他任务，并等待它们。"
+    },
+    {
+      "start": 1115.96,
+      "end": 1118.38,
+      "text": "And that's trivial to reestablish",
+      "zh": "相比普通的 JavaScript 函数调用图，"
+    },
+    {
+      "start": 1118.38,
+      "end": 1122.72,
+      "text": "compared to a normal JavaScript function call graph.",
+      "zh": "这种结构很容易重建。"
+    },
+    {
+      "start": 1123.14,
+      "end": 1124.42,
+      "text": "And that's the big difference here.",
+      "zh": "这就是最大的区别。"
+    },
+    {
+      "start": 1124.8000000000002,
+      "end": 1126.46,
+      "text": "The units of work are very small,",
+      "zh": "工作单元非常小，"
+    },
+    {
+      "start": 1126.74,
+      "end": 1127.3200000000002,
+      "text": "are very easy.",
+      "zh": "也非常简单。"
+    },
+    {
+      "start": 1127.46,
+      "end": 1132.7,
+      "text": "The intent, effect, storage kind of model.",
+      "zh": "就是意图、effect、存储这样的模型。"
+    },
+    {
+      "start": 1132.7,
+      "end": 1135.74,
+      "text": "And if you want to do more things in parallel,",
+      "zh": "如果你想并行做更多事情，"
+    },
+    {
+      "start": 1135.92,
+      "end": 1136.3,
+      "text": "you can.",
+      "zh": "当然可以。"
+    },
+    {
+      "start": 1136.38,
+      "end": 1136.8600000000001,
+      "text": "It's very easy.",
+      "zh": "非常容易。"
+    },
+    {
+      "start": 1136.96,
+      "end": 1137.92,
+      "text": "You just create a new task",
+      "zh": "只需要创建一个新任务，"
+    },
+    {
+      "start": 1137.92,
+      "end": 1139.44,
+      "text": "and other tasks can wait for that.",
+      "zh": "其他任务就可以等待它。"
+    },
+    {
+      "start": 1139.56,
+      "end": 1140.04,
+      "text": "And that's it.",
+      "zh": "就这么简单。"
+    },
+    {
+      "start": 1140.2,
+      "end": 1142.78,
+      "text": "And it's very super easy to kind of rewind,",
+      "zh": "要回退，"
+    },
+    {
+      "start": 1143.1200000000001,
+      "end": 1146.22,
+      "text": "to kind of reestablish that virtual call graph,",
+      "zh": "或者说重建这张虚拟调用图，"
+    },
+    {
+      "start": 1146.3600000000001,
+      "end": 1147.18,
+      "text": "if you want to call that.",
+      "zh": "也是非常容易的。"
+    },
+    {
+      "start": 1148.0800000000002,
+      "end": 1149.3400000000001,
+      "text": "So since we already talked about the effects.",
+      "zh": "既然已经聊到了 effect，"
+    },
+    {
+      "start": 1149.8,
+      "end": 1150.14,
+      "text": "Oh, yeah.",
+      "zh": "哦，对。"
+    },
+    {
+      "start": 1150.14,
+      "end": 1154.2,
+      "text": "We should maybe talk about the other elephant in the room,",
+      "zh": "我们或许该谈谈另一个绕不开的问题，"
+    },
+    {
+      "start": 1154.3200000000002,
+      "end": 1155.8000000000002,
+      "text": "which is effect.js.",
+      "zh": "也就是 Effect.js。"
+    },
+    {
+      "start": 1156.8000000000002,
+      "end": 1158.26,
+      "text": "And before we talk about effect.js,",
+      "zh": "不过在聊 Effect.js 之前，"
+    },
+    {
+      "start": 1158.5600000000002,
+      "end": 1162.8200000000002,
+      "text": "I also made a little side note here",
+      "zh": "我还想顺带提一句，"
+    },
+    {
+      "start": 1162.8200000000002,
+      "end": 1166.46,
+      "text": "on the sort of constantly implied elephant in the room,",
+      "zh": "另一个始终隐含在讨论里的问题，"
+    },
+    {
+      "start": 1166.5400000000002,
+      "end": 1167.68,
+      "text": "which is JavaScript in the first place.",
+      "zh": "就是为什么首先要用 JavaScript。"
+    },
+    {
+      "start": 1167.68,
+      "end": 1171.3400000000001,
+      "text": "And I think this, again, is TypeScript.",
+      "zh": "我想，这里用的还是 TypeScript。"
+    },
+    {
+      "start": 1172.24,
+      "end": 1174.3400000000001,
+      "text": "And it's TypeScript because we really like",
+      "zh": "之所以选 TypeScript，是因为我们很喜欢"
+    },
+    {
+      "start": 1174.3400000000001,
+      "end": 1176.3600000000001,
+      "text": "the idea of agents extending themselves.",
+      "zh": "让 agent 扩展自身能力这个想法。"
+    },
+    {
+      "start": 1176.5,
+      "end": 1177.22,
+      "text": "So it's like right now,",
+      "zh": "而就目前来说，"
+    },
+    {
+      "start": 1177.28,
+      "end": 1178.68,
+      "text": "JavaScript seems like a good environment.",
+      "zh": "JavaScript 看起来是一个不错的环境。"
+    },
+    {
+      "start": 1180.18,
+      "end": 1181.24,
+      "text": "But I also want to say,",
+      "zh": "但我也想说，"
+    },
+    {
+      "start": 1181.3600000000001,
+      "end": 1183.38,
+      "text": "in many ways,",
+      "zh": "从很多方面来看，"
+    },
+    {
+      "start": 1183.44,
+      "end": 1184.54,
+      "text": "what we are trying to do here",
+      "zh": "我们现在想做的，"
+    },
+    {
+      "start": 1184.54,
+      "end": 1185.78,
+      "text": "is we're trying to build",
+      "zh": "其实是构建"
+    },
+    {
+      "start": 1185.78,
+      "end": 1187.8200000000002,
+      "text": "almost like",
+      "zh": "这样一种"
+    },
+    {
+      "start": 1187.8200000000002,
+      "end": 1190.74,
+      "text": "a way of building an agent",
+      "zh": "创建 agent 的方式，"
+    },
+    {
+      "start": 1190.74,
+      "end": 1192.94,
+      "text": "and that stores itself durably.",
+      "zh": "让它能够持久化保存自身。"
+    },
+    {
+      "start": 1193.5600000000002,
+      "end": 1194.5600000000002,
+      "text": "Durable storage means",
+      "zh": "持久化存储意味着，"
+    },
+    {
+      "start": 1194.5600000000002,
+      "end": 1197.74,
+      "text": "commitment to some stable system",
+      "zh": "你得遵循某个稳定的系统约定，"
+    },
+    {
+      "start": 1197.74,
+      "end": 1200.2,
+      "text": "that you should be able to describe",
+      "zh": "而且应该能把它描述清楚，"
+    },
+    {
+      "start": 1200.2,
+      "end": 1201.34,
+      "text": "in a way where you could rebuild",
+      "zh": "让别人可以用另一种语言"
+    },
+    {
+      "start": 1201.34,
+      "end": 1202.3799999999999,
+      "text": "in a different language, right?",
+      "zh": "重新实现，对吧？"
+    },
+    {
+      "start": 1202.44,
+      "end": 1202.82,
+      "text": "So it's like,",
+      "zh": "所以，"
+    },
+    {
+      "start": 1203.56,
+      "end": 1204.48,
+      "text": "keep in mind,",
+      "zh": "要记住，"
+    },
+    {
+      "start": 1204.56,
+      "end": 1206.26,
+      "text": "it's like this is for sure JavaScript right now",
+      "zh": "虽然现在它确实是 JavaScript，"
+    },
+    {
+      "start": 1206.26,
+      "end": 1207.62,
+      "text": "and might even be JavaScript",
+      "zh": "也可能在"
+    },
+    {
+      "start": 1207.62,
+      "end": 1208.76,
+      "text": "for a very, very long time.",
+      "zh": "很长很长的时间里一直是 JavaScript，"
+    },
+    {
+      "start": 1209.3,
+      "end": 1212.1399999999999,
+      "text": "But the goal is that the system in itself is so,",
+      "zh": "但目标是让系统本身做到："
+    },
+    {
+      "start": 1213.04,
+      "end": 1213.2,
+      "text": "like,",
+      "zh": "就是说，"
+    },
+    {
+      "start": 1213.7,
+      "end": 1215.6,
+      "text": "you should be able to write an agent in this",
+      "zh": "你应该能够用它写一个 agent，"
+    },
+    {
+      "start": 1215.6,
+      "end": 1218.12,
+      "text": "that maintains a two-year-old Slack channel",
+      "zh": "维护一个已经运行两年的 Slack 频道，"
+    },
+    {
+      "start": 1218.12,
+      "end": 1220.02,
+      "text": "and then you eventually want to rewrite it in TypeScript,",
+      "zh": "然后最终想用 TypeScript 重写它时，"
+    },
+    {
+      "start": 1220.1399999999999,
+      "end": 1221.6,
+      "text": "but you can pick up the data as it was.",
+      "zh": "仍然可以接着使用原有的数据。"
+    },
+    {
+      "start": 1222.1,
+      "end": 1222.1799999999998,
+      "text": "Right?",
+      "zh": "对吧？"
+    },
+    {
+      "start": 1222.22,
+      "end": 1223.5,
+      "text": "So the idea here is like",
+      "zh": "所以这里的想法是，"
+    },
+    {
+      "start": 1223.5,
+      "end": 1224.78,
+      "text": "that the underlying system",
+      "zh": "底层系统"
+    },
+    {
+      "start": 1224.78,
+      "end": 1229.7,
+      "text": "is a trustworthy foundation to build on.",
+      "zh": "应该是一个值得信赖的基础。"
+    },
+    {
+      "start": 1230.74,
+      "end": 1232.92,
+      "text": "So why did we not use Effect.js?",
+      "zh": "那我们为什么没有用 Effect.js？"
+    },
+    {
+      "start": 1234.36,
+      "end": 1236.36,
+      "text": "Because it didn't solve any of our issues.",
+      "zh": "因为它没有解决我们的问题。"
+    },
+    {
+      "start": 1236.82,
+      "end": 1237.74,
+      "text": "So out-of-the-box,",
+      "zh": "开箱即用的"
+    },
+    {
+      "start": 1237.82,
+      "end": 1240.4,
+      "text": "Effect.js is great for in-memory,",
+      "zh": "Effect.js 很擅长处理内存中的、"
+    },
+    {
+      "start": 1240.5,
+      "end": 1240.98,
+      "text": "in-process,",
+      "zh": "进程内的"
+    },
+    {
+      "start": 1241.18,
+      "end": 1242.04,
+      "text": "structured concurrency,",
+      "zh": "结构化并发，"
+    },
+    {
+      "start": 1242.16,
+      "end": 1242.58,
+      "text": "for example,",
+      "zh": "比如这一类事情。"
+    },
+    {
+      "start": 1242.72,
+      "end": 1244.78,
+      "text": "along with a metric ton of other stuff",
+      "zh": "此外还有一大堆功能，"
+    },
+    {
+      "start": 1244.78,
+      "end": 1246.08,
+      "text": "like structured errors,",
+      "zh": "比如结构化错误、"
+    },
+    {
+      "start": 1246.42,
+      "end": 1247.3,
+      "text": "dependency injection,",
+      "zh": "依赖注入、"
+    },
+    {
+      "start": 1248.12,
+      "end": 1249.34,
+      "text": "cancellation and logging",
+      "zh": "取消和日志，"
+    },
+    {
+      "start": 1249.34,
+      "end": 1250.64,
+      "text": "or telemetry traces",
+      "zh": "或者遥测追踪，"
+    },
+    {
+      "start": 1250.64,
+      "end": 1251.2,
+      "text": "and all of that.",
+      "zh": "以及类似的东西。"
+    },
+    {
+      "start": 1251.28,
+      "end": 1252.12,
+      "text": "It's fantastic.",
+      "zh": "它非常棒。"
+    },
+    {
+      "start": 1252.12,
+      "end": 1253.3799999999999,
+      "text": "Truly fantastic.",
+      "zh": "真的非常棒。"
+    },
+    {
+      "start": 1253.8,
+      "end": 1254.58,
+      "text": "Although I have to say",
+      "zh": "不过我得说，"
+    },
+    {
+      "start": 1254.58,
+      "end": 1256.8999999999999,
+      "text": "that one of the maintainers recently said",
+      "zh": "最近有位维护者说，"
+    },
+    {
+      "start": 1256.8999999999999,
+      "end": 1258.8,
+      "text": "he found out",
+      "zh": "他发现"
+    },
+    {
+      "start": 1258.8,
+      "end": 1261.54,
+      "text": "he can no longer write Effect.js himself.",
+      "zh": "自己已经没法亲手写 Effect.js 代码了。"
+    },
+    {
+      "start": 1263.4599999999998,
+      "end": 1264.4799999999998,
+      "text": "But it's not a problem",
+      "zh": "但这不是问题，"
+    },
+    {
+      "start": 1264.4799999999998,
+      "end": 1265.6999999999998,
+      "text": "because agents understand it.",
+      "zh": "因为 agent 能理解它。"
+    },
+    {
+      "start": 1268.26,
+      "end": 1269.04,
+      "text": "So again,",
+      "zh": "所以，再说一次，"
+    },
+    {
+      "start": 1269.2399999999998,
+      "end": 1270.28,
+      "text": "we love Effect.js",
+      "zh": "我们喜欢 Effect.js，"
+    },
+    {
+      "start": 1270.28,
+      "end": 1271.62,
+      "text": "and I think it's the right solution",
+      "zh": "而且觉得它对"
+    },
+    {
+      "start": 1271.62,
+      "end": 1272.6799999999998,
+      "text": "for many, many problems.",
+      "zh": "很多很多问题都是正确的解决方案。"
+    },
+    {
+      "start": 1272.82,
+      "end": 1273.36,
+      "text": "But for us,",
+      "zh": "但对我们来说，"
+    },
+    {
+      "start": 1273.4399999999998,
+      "end": 1274.3999999999999,
+      "text": "it didn't solve a problem",
+      "zh": "它没有解决问题，"
+    },
+    {
+      "start": 1274.4,
+      "end": 1276.3400000000001,
+      "text": "because Effect.js are out-of-the-box.",
+      "zh": "因为开箱即用的 Effect.js"
+    },
+    {
+      "start": 1276.8200000000002,
+      "end": 1278.46,
+      "text": "That's exactly zero",
+      "zh": "对持久化执行的支持，"
+    },
+    {
+      "start": 1278.46,
+      "end": 1279.8200000000002,
+      "text": "for durable execution.",
+      "zh": "恰好是零。"
+    },
+    {
+      "start": 1280.96,
+      "end": 1282.5,
+      "text": "So the function A,",
+      "zh": "也就是函数 A、"
+    },
+    {
+      "start": 1282.5600000000002,
+      "end": 1282.96,
+      "text": "function B,",
+      "zh": "函数 B、"
+    },
+    {
+      "start": 1283.0800000000002,
+      "end": 1284.0400000000002,
+      "text": "function C thing,",
+      "zh": "函数 C 那一套，"
+    },
+    {
+      "start": 1284.76,
+      "end": 1287.5400000000002,
+      "text": "that works great in memory,",
+      "zh": "在内存里工作得很好，"
+    },
+    {
+      "start": 1288.22,
+      "end": 1290.44,
+      "text": "but Effect.js doesn't give you any primitives",
+      "zh": "但 Effect.js 没有提供基础机制，"
+    },
+    {
+      "start": 1290.44,
+      "end": 1292.3000000000002,
+      "text": "to reestablish that call graph",
+      "zh": "让你在恢复进程时"
+    },
+    {
+      "start": 1292.3000000000002,
+      "end": 1294.66,
+      "text": "if you have to resume the process.",
+      "zh": "重建这张调用图。"
+    },
+    {
+      "start": 1295.5800000000002,
+      "end": 1297.4,
+      "text": "So then the question is,",
+      "zh": "所以接下来的问题是："
+    },
+    {
+      "start": 1298.0400000000002,
+      "end": 1298.3000000000002,
+      "text": "okay,",
+      "zh": "好吧，"
+    },
+    {
+      "start": 1298.3400000000001,
+      "end": 1299.7800000000002,
+      "text": "if it doesn't help us with durability,",
+      "zh": "如果它帮不了我们实现持久化执行，"
+    },
+    {
+      "start": 1299.7800000000002,
+      "end": 1302.1399999999999,
+      "text": "can we get anything else out of it",
+      "zh": "那我们还能从中得到什么？"
+    },
+    {
+      "start": 1302.1399999999999,
+      "end": 1303.26,
+      "text": "and how hard would it be",
+      "zh": "而且，要给它加上"
+    },
+    {
+      "start": 1303.26,
+      "end": 1304.72,
+      "text": "to add durability to this?",
+      "zh": "持久化执行能力有多难？"
+    },
+    {
+      "start": 1305.08,
+      "end": 1305.8799999999999,
+      "text": "And it turns out",
+      "zh": "结果发现，"
+    },
+    {
+      "start": 1305.8799999999999,
+      "end": 1307.26,
+      "text": "adding durability to this",
+      "zh": "给它加入持久化执行能力，"
+    },
+    {
+      "start": 1307.26,
+      "end": 1309.42,
+      "text": "basically ends up",
+      "zh": "最后基本上"
+    },
+    {
+      "start": 1309.42,
+      "end": 1310.68,
+      "text": "looking like what we have.",
+      "zh": "就会变成我们现在做的东西："
+    },
+    {
+      "start": 1311.46,
+      "end": 1313.78,
+      "text": "A task-based workflow engine.",
+      "zh": "一个基于任务的工作流引擎。"
+    },
+    {
+      "start": 1314.26,
+      "end": 1315.72,
+      "text": "There's Effect.js workflow,",
+      "zh": "有个 Effect.js workflow"
+    },
+    {
+      "start": 1315.94,
+      "end": 1316.66,
+      "text": "the package,",
+      "zh": "软件包，"
+    },
+    {
+      "start": 1316.84,
+      "end": 1317.22,
+      "text": "or effect",
+      "zh": "或者叫 Effect"
+    },
+    {
+      "start": 1317.22,
+      "end": 1318.8799999999999,
+      "text": "slash workflow,",
+      "zh": "/workflow，"
+    },
+    {
+      "start": 1319.48,
+      "end": 1320.36,
+      "text": "and it's basically that.",
+      "zh": "它基本上就是这样。"
+    },
+    {
+      "start": 1320.44,
+      "end": 1321.52,
+      "text": "They call tasks activities",
+      "zh": "它们把 task 叫作 activity，"
+    },
+    {
+      "start": 1321.52,
+      "end": 1323.18,
+      "text": "and it's basically",
+      "zh": "本质上"
+    },
+    {
+      "start": 1323.18,
+      "end": 1324.8,
+      "text": "the same thing,",
+      "zh": "是同一回事。"
+    },
+    {
+      "start": 1325.22,
+      "end": 1327.66,
+      "text": "except you also inherit all of Effect.js",
+      "zh": "只是你还得同时引入整套 Effect.js，"
+    },
+    {
+      "start": 1327.66,
+      "end": 1329.28,
+      "text": "and we didn't want to make that.",
+      "zh": "我们不想这么做。"
+    },
+    {
+      "start": 1329.46,
+      "end": 1330.08,
+      "text": "It's not a bet",
+      "zh": "这并不是说它是不可靠的选择，"
+    },
+    {
+      "start": 1330.08,
+      "end": 1332.04,
+      "text": "because a lot of people build on Effect.js,",
+      "zh": "毕竟很多人都在用 Effect.js 构建项目。"
+    },
+    {
+      "start": 1332.34,
+      "end": 1334.56,
+      "text": "but we want it to be self-contained",
+      "zh": "但我们希望自己的实现是独立完整的。"
+    },
+    {
+      "start": 1334.56,
+      "end": 1335.9,
+      "text": "and in terms of portability,",
+      "zh": "而且从可移植性来说，"
+    },
+    {
+      "start": 1336.76,
+      "end": 1338.96,
+      "text": "it's actually very easy to port",
+      "zh": "要把 Pi Durable"
+    },
+    {
+      "start": 1338.96,
+      "end": 1340.76,
+      "text": "Pi Durable to something else.",
+      "zh": "移植到别的环境，其实很容易。"
+    },
+    {
+      "start": 1340.94,
+      "end": 1341.68,
+      "text": "Ask me how I know.",
+      "zh": "别问我是怎么知道的。"
+    },
+    {
+      "start": 1344.42,
+      "end": 1345.78,
+      "text": "It's less trivial",
+      "zh": "相比之下，"
+    },
+    {
+      "start": 1345.78,
+      "end": 1347.12,
+      "text": "to port Effect.js",
+      "zh": "要移植 Effect.js"
+    },
+    {
+      "start": 1347.12,
+      "end": 1351.02,
+      "text": "and its generator-based semantics to something else.",
+      "zh": "以及它基于生成器的语义，就没那么简单了。"
+    },
+    {
+      "start": 1351.78,
+      "end": 1352.7,
+      "text": "So ultimately,",
+      "zh": "所以最终，"
+    },
+    {
+      "start": 1352.86,
+      "end": 1354.54,
+      "text": "that's why we decided against Effect.js.",
+      "zh": "这就是我们没有选择 Effect.js 的原因。"
+    },
+    {
+      "start": 1355.24,
+      "end": 1355.96,
+      "text": "And I also think",
+      "zh": "而且我也觉得，"
+    },
+    {
+      "start": 1355.96,
+      "end": 1357.28,
+      "text": "a useful,",
+      "zh": "它很有用，"
+    },
+    {
+      "start": 1357.72,
+      "end": 1358.5,
+      "text": "so I actually think",
+      "zh": "其实我确实觉得"
+    },
+    {
+      "start": 1358.5,
+      "end": 1359.4,
+      "text": "Effect is quite useful.",
+      "zh": "Effect 相当有用。"
+    },
+    {
+      "start": 1359.72,
+      "end": 1361.8,
+      "text": "I don't actually think it's particularly useful for Durable",
+      "zh": "只是出于一些原因，我不认为"
+    },
+    {
+      "start": 1361.8,
+      "end": 1362.52,
+      "text": "for a bunch of reasons,",
+      "zh": "它特别适合 Durable。"
+    },
+    {
+      "start": 1362.66,
+      "end": 1363.58,
+      "text": "but I did",
+      "zh": "但我确实"
+    },
+    {
+      "start": 1363.58,
+      "end": 1364.9,
+      "text": "in an attempt",
+      "zh": "尝试过，"
+    },
+    {
+      "start": 1364.9,
+      "end": 1367.06,
+      "text": "to use what we built and also to,",
+      "zh": "一方面是为了使用我们构建的东西，另一方面，"
+    },
+    {
+      "start": 1369.1,
+      "end": 1370.78,
+      "text": "like a lot of the side projects that I'm doing",
+      "zh": "我做的很多业余项目，"
+    },
+    {
+      "start": 1370.78,
+      "end": 1373.1,
+      "text": "just to figure out how to build a software factory",
+      "zh": "比如为了弄清楚怎么构建软件工厂，"
+    },
+    {
+      "start": 1373.1,
+      "end": 1374.06,
+      "text": "and things like that",
+      "zh": "以及类似的项目，"
+    },
+    {
+      "start": 1374.06,
+      "end": 1376.44,
+      "text": "are in fact based on Effect.",
+      "zh": "实际上都是基于 Effect 的。"
+    },
+    {
+      "start": 1377.44,
+      "end": 1378.08,
+      "text": "And the reason",
+      "zh": "之所以"
+    },
+    {
+      "start": 1378.08,
+      "end": 1378.78,
+      "text": "they're based on Effect",
+      "zh": "基于 Effect，"
+    },
+    {
+      "start": 1378.78,
+      "end": 1379.4,
+      "text": "is because I think",
+      "zh": "是因为我觉得"
+    },
+    {
+      "start": 1379.4,
+      "end": 1380.92,
+      "text": "Effect does actually",
+      "zh": "Effect 确实"
+    },
+    {
+      "start": 1380.92,
+      "end": 1384.4,
+      "text": "solve some of the guardrail problems today because like,",
+      "zh": "能解决目前的一些约束问题。比如说，"
+    },
+    {
+      "start": 1384.54,
+      "end": 1384.94,
+      "text": "for instance,",
+      "zh": "举个例子，"
+    },
+    {
+      "start": 1385.52,
+      "end": 1386.5600000000002,
+      "text": "it strongly encourages",
+      "zh": "它强烈鼓励"
+    },
+    {
+      "start": 1386.5600000000002,
+      "end": 1387.64,
+      "text": "you not to throw exceptions.",
+      "zh": "你不要直接抛出异常。"
+    },
+    {
+      "start": 1388,
+      "end": 1389.3400000000001,
+      "text": "It strongly encourages",
+      "zh": "也强烈鼓励"
+    },
+    {
+      "start": 1389.3400000000001,
+      "end": 1390.38,
+      "text": "you to compose services.",
+      "zh": "你通过组合来组织服务。"
+    },
+    {
+      "start": 1391.1000000000001,
+      "end": 1394.76,
+      "text": "So it is a pretty useful crutch almost",
+      "zh": "所以它几乎像一根很有用的拐杖，"
+    },
+    {
+      "start": 1394.76,
+      "end": 1396.8200000000002,
+      "text": "to get a little bit",
+      "zh": "能帮你给"
+    },
+    {
+      "start": 1396.8200000000002,
+      "end": 1398.72,
+      "text": "of structure",
+      "zh": "TypeScript 项目"
+    },
+    {
+      "start": 1398.72,
+      "end": 1399.92,
+      "text": "into a TypeScript project",
+      "zh": "增加一些结构。"
+    },
+    {
+      "start": 1399.92,
+      "end": 1400.88,
+      "text": "where it would otherwise",
+      "zh": "否则，"
+    },
+    {
+      "start": 1400.88,
+      "end": 1401.8000000000002,
+      "text": "not have a lot of it",
+      "zh": "当你把项目交给 agent 时，"
+    },
+    {
+      "start": 1401.8000000000002,
+      "end": 1403.4,
+      "text": "when you leave an agent to it.",
+      "zh": "它可能不会有多少结构。"
+    },
+    {
+      "start": 1403.4,
+      "end": 1405.5400000000002,
+      "text": "But simultaneously,",
+      "zh": "但与此同时，"
+    },
+    {
+      "start": 1406.8000000000002,
+      "end": 1409.2800000000002,
+      "text": "if I then start the same project",
+      "zh": "如果我重新做同一个项目，"
+    },
+    {
+      "start": 1409.2800000000002,
+      "end": 1410.8400000000001,
+      "text": "without Effect,",
+      "zh": "不用 Effect，"
+    },
+    {
+      "start": 1410.98,
+      "end": 1411.5800000000002,
+      "text": "like I did this",
+      "zh": "我现在已经这样试过"
+    },
+    {
+      "start": 1411.5800000000002,
+      "end": 1412.22,
+      "text": "a bunch of times now,",
+      "zh": "好几次了，"
+    },
+    {
+      "start": 1412.3000000000002,
+      "end": 1413.0600000000002,
+      "text": "like build this with Effect,",
+      "zh": "一遍用 Effect 来做，"
+    },
+    {
+      "start": 1413.18,
+      "end": 1413.92,
+      "text": "build it without Effect,",
+      "zh": "一遍不用 Effect 来做，"
+    },
+    {
+      "start": 1414.5,
+      "end": 1415.88,
+      "text": "it's actually not entirely clear",
+      "zh": "其实还不能完全确定，"
+    },
+    {
+      "start": 1415.88,
+      "end": 1416.64,
+      "text": "that the Effect solution",
+      "zh": "Effect 方案"
+    },
+    {
+      "start": 1416.64,
+      "end": 1418.22,
+      "text": "is also definitely",
+      "zh": "也一定"
+    },
+    {
+      "start": 1418.22,
+      "end": 1419.1200000000001,
+      "text": "better for the agent",
+      "zh": "更适合 agent。"
+    },
+    {
+      "start": 1419.1200000000001,
+      "end": 1421.0600000000002,
+      "text": "because for the very least,",
+      "zh": "因为至少，"
+    },
+    {
+      "start": 1421.1200000000001,
+      "end": 1422.0400000000002,
+      "text": "you actually do end up",
+      "zh": "有点讽刺的是，最后你通常"
+    },
+    {
+      "start": 1422.0400000000002,
+      "end": 1423.5600000000002,
+      "text": "ironically with more code usually.",
+      "zh": "反而会写出更多代码。"
+    },
+    {
+      "start": 1424.4,
+      "end": 1425.22,
+      "text": "And more code",
+      "zh": "而代码更多，"
+    },
+    {
+      "start": 1425.22,
+      "end": 1427.02,
+      "text": "is still a little bit of a challenge",
+      "zh": "对这种场景来说，"
+    },
+    {
+      "start": 1427.02,
+      "end": 1428.8400000000001,
+      "text": "for this.",
+      "zh": "仍然是个挑战。"
+    },
+    {
+      "start": 1429.5400000000002,
+      "end": 1430.96,
+      "text": "But I think the Effect people",
+      "zh": "但我觉得 Effect 团队"
+    },
+    {
+      "start": 1430.96,
+      "end": 1431.8200000000002,
+      "text": "are on the right track",
+      "zh": "总体上走在正确的方向，"
+    },
+    {
+      "start": 1431.8200000000002,
+      "end": 1434.34,
+      "text": "in general about expressing software like this.",
+      "zh": "用这样的方式来表达软件。"
+    },
+    {
+      "start": 1435.1399999999999,
+      "end": 1435.9199999999998,
+      "text": "And I already",
+      "zh": "我已经"
+    },
+    {
+      "start": 1435.9199999999998,
+      "end": 1437.74,
+      "text": "proposed to",
+      "zh": "向他们当中"
+    },
+    {
+      "start": 1437.74,
+      "end": 1439.5,
+      "text": "at least two of them,",
+      "zh": "至少两个人提议过，"
+    },
+    {
+      "start": 1439.74,
+      "end": 1441.48,
+      "text": "why not try to build",
+      "zh": "为什么不试着把它"
+    },
+    {
+      "start": 1441.48,
+      "end": 1444.3999999999999,
+      "text": "it into TypeScript,",
+      "zh": "直接做进 TypeScript 呢？"
+    },
+    {
+      "start": 1444.6799999999998,
+      "end": 1446.32,
+      "text": "have a version of TypeScript",
+      "zh": "做一个能够"
+    },
+    {
+      "start": 1446.32,
+      "end": 1448.28,
+      "text": "that expresses effects.",
+      "zh": "表达 effect 的 TypeScript 版本。"
+    },
+    {
+      "start": 1448.9199999999998,
+      "end": 1449.72,
+      "text": "Because then",
+      "zh": "因为这样，"
+    },
+    {
+      "start": 1449.72,
+      "end": 1451.1799999999998,
+      "text": "a lot of these hacks",
+      "zh": "目前的很多变通手段，"
+    },
+    {
+      "start": 1451.1799999999998,
+      "end": 1452.2,
+      "text": "that are currently there",
+      "zh": "比如现在用的"
+    },
+    {
+      "start": 1452.2,
+      "end": 1454.8,
+      "text": "with Effect Gen",
+      "zh": "Effect.gen，"
+    },
+    {
+      "start": 1454.8,
+      "end": 1458.12,
+      "text": "and the service declarations might actually become",
+      "zh": "以及服务声明，就有可能成为"
+    },
+    {
+      "start": 1458.12,
+      "end": 1460.36,
+      "text": "core permittives of a language.",
+      "zh": "语言本身的核心基础能力。"
+    },
+    {
+      "start": 1460.36,
+      "end": 1462.28,
+      "text": "I definitely want someone",
+      "zh": "我很希望有人"
+    },
+    {
+      "start": 1462.28,
+      "end": 1463.24,
+      "text": "to do some experiments",
+      "zh": "在这方面做些实验，"
+    },
+    {
+      "start": 1463.24,
+      "end": 1464.58,
+      "text": "there and see where it goes.",
+      "zh": "看看会走到哪里。"
+    },
+    {
+      "start": 1465.9599999999998,
+      "end": 1466.58,
+      "text": "But I think",
+      "zh": "不过我觉得，"
+    },
+    {
+      "start": 1466.58,
+      "end": 1469.1,
+      "text": "the portability part about it is a pretty",
+      "zh": "可移植性确实是一个"
+    },
+    {
+      "start": 1469.1,
+      "end": 1470.9399999999998,
+      "text": "big part.",
+      "zh": "很重要的因素。"
+    },
+    {
+      "start": 1471.12,
+      "end": 1472.08,
+      "text": "The Effect",
+      "zh": "Effect"
+    },
+    {
+      "start": 1472.08,
+      "end": 1475.4799999999998,
+      "text": "adds a lot of effect to the",
+      "zh": "会让你大量依赖"
+    },
+    {
+      "start": 1475.4799999999998,
+      "end": 1477.62,
+      "text": "effect ecosystem.",
+      "zh": "Effect 生态。"
+    },
+    {
+      "start": 1478.02,
+      "end": 1478.7199999999998,
+      "text": "It's viral,",
+      "zh": "基本上，它会不断蔓延，"
+    },
+    {
+      "start": 1478.86,
+      "end": 1479.1999999999998,
+      "text": "basically.",
+      "zh": "就是这样。"
+    },
+    {
+      "start": 1479.3799999999999,
+      "end": 1480.3799999999999,
+      "text": "It is very viral.",
+      "zh": "确实会。"
+    },
+    {
+      "start": 1480.78,
+      "end": 1483.3999999999999,
+      "text": "Even using a database usually goes through other effect libraries.",
+      "zh": "甚至使用数据库，通常也要经过其他 Effect 库。"
+    },
+    {
+      "start": 1483.6599999999999,
+      "end": 1483.9199999999998,
+      "text": "And so",
+      "zh": "所以，"
+    },
+    {
+      "start": 1483.9199999999998,
+      "end": 1487.3,
+      "text": "you inherit all of that,",
+      "zh": "你得一并接受这一切。"
+    },
+    {
+      "start": 1487.3,
+      "end": 1489.34,
+      "text": "which you might",
+      "zh": "如果是在"
+    },
+    {
+      "start": 1489.34,
+      "end": 1490.2,
+      "text": "individually want to do",
+      "zh": "构建自己的应用，"
+    },
+    {
+      "start": 1490.2,
+      "end": 1491.1,
+      "text": "if you build an application.",
+      "zh": "你可能愿意做这个选择。"
+    },
+    {
+      "start": 1491.52,
+      "end": 1493.24,
+      "text": "I think it's a much tougher sell",
+      "zh": "但如果你想做的是"
+    },
+    {
+      "start": 1493.24,
+      "end": 1494.3999999999999,
+      "text": "if you want to build",
+      "zh": "供其他人使用的"
+    },
+    {
+      "start": 1494.3999999999999,
+      "end": 1495.68,
+      "text": "a foundation framework",
+      "zh": "底层框架，"
+    },
+    {
+      "start": 1495.68,
+      "end": 1497.78,
+      "text": "that other people then use.",
+      "zh": "那就难以说服别人了。"
+    },
+    {
+      "start": 1498,
+      "end": 1499.3999999999999,
+      "text": "Because you would basically",
+      "zh": "因为这基本上意味着，"
+    },
+    {
+      "start": 1499.3999999999999,
+      "end": 1501.98,
+      "text": "force that choice onto the user.",
+      "zh": "你把这个选择强加给用户。"
+    },
+    {
+      "start": 1502.94,
+      "end": 1503.96,
+      "text": "Which is pretty tough.",
+      "zh": "这挺难的。"
+    },
+    {
+      "start": 1504.9199999999998,
+      "end": 1505.3999999999999,
+      "text": "Again,",
+      "zh": "再说一次，"
+    },
+    {
+      "start": 1505.6399999999999,
+      "end": 1508.08,
+      "text": "we are absolutely not dunking on Effect.",
+      "zh": "我们绝不是在贬低 Effect。"
+    },
+    {
+      "start": 1508.44,
+      "end": 1509.34,
+      "text": "We actually really,",
+      "zh": "我们真的"
+    },
+    {
+      "start": 1509.44,
+      "end": 1510.06,
+      "text": "really like it.",
+      "zh": "非常喜欢它。"
+    },
+    {
+      "start": 1510.18,
+      "end": 1511.48,
+      "text": "And if you're building applications,",
+      "zh": "如果你在构建应用，"
+    },
+    {
+      "start": 1511.6399999999999,
+      "end": 1512.74,
+      "text": "you should use it.",
+      "zh": "你应该考虑使用它，"
+    },
+    {
+      "start": 1513.1399999999999,
+      "end": 1514.62,
+      "text": "If you build applications with TypeScript.",
+      "zh": "尤其是用 TypeScript 构建应用的时候。"
+    },
+    {
+      "start": 1515.94,
+      "end": 1516.1,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 1517.86,
+      "end": 1518.26,
+      "text": "Yeah.",
+      "zh": "对。"
+    },
+    {
+      "start": 1518.68,
+      "end": 1519.92,
+      "text": "So that's what we have today.",
+      "zh": "这就是我们目前做出来的东西。"
+    },
+    {
+      "start": 1520.02,
+      "end": 1521.24,
+      "text": "I think one thing that",
+      "zh": "我觉得有一件事，"
+    },
+    {
+      "start": 1521.24,
+      "end": 1523.98,
+      "text": "we want people to do",
+      "zh": "我们希望大家去做，"
+    },
+    {
+      "start": 1523.98,
+      "end": 1525.98,
+      "text": "is to play with it and particularly",
+      "zh": "就是试用一下，尤其是"
+    },
+    {
+      "start": 1525.98,
+      "end": 1527.84,
+      "text": "see if the data model that we have makes sense.",
+      "zh": "看看这个数据模型是否合理。"
+    },
+    {
+      "start": 1529.6399999999999,
+      "end": 1531.12,
+      "text": "And I think the vacation",
+      "zh": "我觉得那个 vacation"
+    },
+    {
+      "start": 1531.12,
+      "end": 1532.42,
+      "text": "example that we have",
+      "zh": "示例，"
+    },
+    {
+      "start": 1532.42,
+      "end": 1533.66,
+      "text": "in the repository",
+      "zh": "就在那个代码仓库里，"
+    },
+    {
+      "start": 1533.66,
+      "end": 1534.66,
+      "text": "is a good starting point.",
+      "zh": "是一个不错的起点。"
+    },
+    {
+      "start": 1535.68,
+      "end": 1537.8799999999999,
+      "text": "Because we would like to know",
+      "zh": "因为我们想先确认，"
+    },
+    {
+      "start": 1537.8799999999999,
+      "end": 1541.1,
+      "text": "that this solves your problems",
+      "zh": "它确实解决了你的问题，"
+    },
+    {
+      "start": 1541.1,
+      "end": 1544.54,
+      "text": "before we fully commit to it and then rewire the world",
+      "zh": "再彻底投入，并把所有东西"
+    },
+    {
+      "start": 1544.54,
+      "end": 1545.76,
+      "text": "on top of that.",
+      "zh": "都改造到它上面。"
+    },
+    {
+      "start": 1546.78,
+      "end": 1550.3,
+      "text": "But that you mean rewiring Pi Coding Agent?",
+      "zh": "你说的“改造所有东西”，是指改造 Pi Coding Agent 吗？"
+    },
+    {
+      "start": 1550.7199999999998,
+      "end": 1551.06,
+      "text": "For instance,",
+      "zh": "比如，"
+    },
+    {
+      "start": 1551.1799999999998,
+      "end": 1552.32,
+      "text": "the Pi Coding Agent on it",
+      "zh": "把 Pi Coding Agent 建立在它之上，"
+    },
+    {
+      "start": 1552.32,
+      "end": 1554.62,
+      "text": "or just to build more",
+      "zh": "或者再做一些"
+    },
+    {
+      "start": 1554.62,
+      "end": 1558.1,
+      "text": "functionality that people",
+      "zh": "大家可能需要的功能，"
+    },
+    {
+      "start": 1558.1,
+      "end": 1560.08,
+      "text": "might want to have because the core",
+      "zh": "因为这些能力"
+    },
+    {
+      "start": 1560.08,
+      "end": 1560.8999999999999,
+      "text": "doesn't support it yet.",
+      "zh": "核心目前还不支持。"
+    },
+    {
+      "start": 1561.7399999999998,
+      "end": 1562.4399999999998,
+      "text": "I know that",
+      "zh": "我知道，"
+    },
+    {
+      "start": 1562.4399999999998,
+      "end": 1563.86,
+      "text": "some of the people that were playing",
+      "zh": "有些已经开始"
+    },
+    {
+      "start": 1563.86,
+      "end": 1564.86,
+      "text": "with it already said like, hey,",
+      "zh": "试用的人说过，"
+    },
+    {
+      "start": 1564.9599999999998,
+      "end": 1568.6599999999999,
+      "text": "maybe there needs to be more abstraction over the state system.",
+      "zh": "也许需要在状态系统之上再加一层抽象。"
+    },
+    {
+      "start": 1569.84,
+      "end": 1571.62,
+      "text": "Whatever we would want to build",
+      "zh": "无论我们想在它之上"
+    },
+    {
+      "start": 1571.62,
+      "end": 1572.3799999999999,
+      "text": "on top of that",
+      "zh": "构建什么，"
+    },
+    {
+      "start": 1572.38,
+      "end": 1574.48,
+      "text": "even just to assist people to building with it.",
+      "zh": "哪怕只是为了帮助大家更容易地使用它，"
+    },
+    {
+      "start": 1576.1200000000001,
+      "end": 1576.6000000000001,
+      "text": "Ideally,",
+      "zh": "理想情况下，"
+    },
+    {
+      "start": 1576.7,
+      "end": 1578.1000000000001,
+      "text": "we'd know that the core",
+      "zh": "都应该先确认核心的"
+    },
+    {
+      "start": 1578.1000000000001,
+      "end": 1581.2800000000002,
+      "text": "data storage abstraction system works.",
+      "zh": "数据存储抽象是行得通的。"
+    },
+    {
+      "start": 1582.2800000000002,
+      "end": 1582.7600000000002,
+      "text": "So,",
+      "zh": "所以，"
+    },
+    {
+      "start": 1582.98,
+      "end": 1584.5,
+      "text": "I have high confidence that",
+      "zh": "我很有信心，"
+    },
+    {
+      "start": 1584.5,
+      "end": 1586.5400000000002,
+      "text": "this kind of low-level API",
+      "zh": "我们现在这种底层 API，"
+    },
+    {
+      "start": 1586.5400000000002,
+      "end": 1590.5600000000002,
+      "text": "that we now have is a good primitive pending some plus and minuses.",
+      "zh": "经过一些增减调整之后，会是很好的基础能力。"
+    },
+    {
+      "start": 1591.1000000000001,
+      "end": 1593.0200000000002,
+      "text": "But I do agree that, for example,",
+      "zh": "但我也同意，比如说，"
+    },
+    {
+      "start": 1593.5600000000002,
+      "end": 1595.0200000000002,
+      "text": "some sugar on top of it,",
+      "zh": "在上面加一点易用的封装，"
+    },
+    {
+      "start": 1595.24,
+      "end": 1596.98,
+      "text": "specifically with regards to state management,",
+      "zh": "尤其是在状态管理方面，"
+    },
+    {
+      "start": 1596.98,
+      "end": 1598.2800000000002,
+      "text": "is probably a good idea.",
+      "zh": "大概是个好主意。"
+    },
+    {
+      "start": 1598.4,
+      "end": 1600,
+      "text": "Not just for humans, but for agents as well.",
+      "zh": "不只是对人，对 agent 也一样。"
+    },
+    {
+      "start": 1600.66,
+      "end": 1601.72,
+      "text": "It's just unclear",
+      "zh": "只是我还不清楚，"
+    },
+    {
+      "start": 1601.72,
+      "end": 1605.4,
+      "text": "to me what a nice abstraction there would look like.",
+      "zh": "一个好的抽象应该长什么样。"
+    },
+    {
+      "start": 1605.94,
+      "end": 1606.52,
+      "text": "And also,",
+      "zh": "另外，"
+    },
+    {
+      "start": 1606.74,
+      "end": 1608.96,
+      "text": "we are not just relying on external builders using",
+      "zh": "我们也不只是依靠外部开发者使用"
+    },
+    {
+      "start": 1608.96,
+      "end": 1610.82,
+      "text": "Pi Durable to figure out what works and what doesn't.",
+      "zh": "Pi Durable，来判断什么可行、什么不可行。"
+    },
+    {
+      "start": 1611.08,
+      "end": 1612.4,
+      "text": "We are actually betting on this",
+      "zh": "我们其实已经决定，"
+    },
+    {
+      "start": 1612.4,
+      "end": 1615.4,
+      "text": "for all of our Earendil products going forward.",
+      "zh": "今后的 Earendil 产品都建立在它之上。"
+    },
+    {
+      "start": 1616.22,
+      "end": 1617.22,
+      "text": "And in the future,",
+      "zh": "而在未来，"
+    },
+    {
+      "start": 1617.4,
+      "end": 1617.98,
+      "text": "that means in the",
+      "zh": "也就是"
+    },
+    {
+      "start": 1617.98,
+      "end": 1618.64,
+      "text": "next couple of weeks,",
+      "zh": "接下来的几周，"
+    },
+    {
+      "start": 1618.8600000000001,
+      "end": 1620.3600000000001,
+      "text": "we have a bunch of team members who",
+      "zh": "会有几位团队成员"
+    },
+    {
+      "start": 1620.3600000000001,
+      "end": 1621.4,
+      "text": "will use it in",
+      "zh": "真正深入地使用它，"
+    },
+    {
+      "start": 1621.4,
+      "end": 1624.08,
+      "text": "anger, build some tools that we actually use in",
+      "zh": "构建一些我们实际会在"
+    },
+    {
+      "start": 1624.08,
+      "end": 1625.28,
+      "text": "production that are",
+      "zh": "生产环境里使用的工具。"
+    },
+    {
+      "start": 1625.28,
+      "end": 1632.1799999999998,
+      "text": "very focused on a specific task, and we will document our journey and what we learned and obviously also provide the code",
+      "zh": "这些工具会专注于具体任务。我们会记录整个过程和经验，也会提供"
+    },
+    {
+      "start": 1632.1799999999998,
+      "end": 1633.54,
+      "text": "that we created",
+      "zh": "过程中写出的代码，"
+    },
+    {
+      "start": 1633.54,
+      "end": 1637.4199999999998,
+      "text": "in a part of that process so other people can get inspired by that.",
+      "zh": "让其他人能够从中获得启发。"
+    },
+    {
+      "start": 1638.6599999999999,
+      "end": 1643.26,
+      "text": "Also, don't be surprised if there are some new faces coming up on these meditations in the future.",
+      "zh": "另外，以后这些 Meditations 对谈里，如果出现一些新面孔，也不要意外。"
+    },
+    {
+      "start": 1643.3999999999999,
+      "end": 1643.7,
+      "text": "That's all.",
+      "zh": "就这些。"
+    },
+    {
+      "start": 1643.82,
+      "end": 1644.24,
+      "text": "Bye!",
+      "zh": "拜拜！"
+    },
+    {
+      "start": 1644.84,
+      "end": 1645.22,
+      "text": "Bye-bye.",
+      "zh": "拜拜。"
+    }
+  ],
+  "uploadedAt": "2026-10-05T09:00:03Z"
+}

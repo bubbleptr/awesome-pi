@@ -1,0 +1,118 @@
+---
+import Analytics from './Analytics.astro';
+import Icon from './Icon.astro';
+import type { Locale } from '../lib/catalog';
+import { talks, talkPath, timestamp, type Talk } from '../lib/talks';
+import '../styles/global.css';
+import '../styles/talks.css';
+
+const { locale, talk } = Astro.props as { locale: Locale; talk?: Talk };
+const zh = locale === 'zh';
+const base = zh ? '/zh/' : '/';
+const heading = zh ? '和 Pi 的创造者聊聊' : 'Conversations with the people behind Pi';
+const title = `${talk ? talk.title[locale] : heading} | Pi Index`;
+const description = talk
+  ? (zh ? `观看 ${talk.date} 的 ${talk.series}：${talk.title.zh}。附中文滚动字幕、时间戳和 AI 总结。` : `Watch ${talk.series} from ${talk.date}: ${talk.title.en}. Includes a synchronized transcript, timestamps and an AI summary.`)
+  : (zh ? 'Mario Zechner 与 Armin Ronacher 聊 Pi、模型、代码质量和 agent 工程。五期播客，附中文字幕与 AI 总结。' : 'Mario Zechner and Armin Ronacher on Pi, models, code quality and agent engineering. Five conversations with transcripts and AI summaries.');
+const canonical = new URL(talkPath(locale, talk?.slug), Astro.site).href;
+const image = new URL(talk?.poster ?? '/og-image-v4.png', Astro.site).href;
+const date = (value: string) => new Intl.DateTimeFormat(zh ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
+const schema = talk ? {
+  '@context': 'https://schema.org', '@type': 'VideoObject', name: talk.title[locale], description,
+  thumbnailUrl: image, contentUrl: talk.video, uploadDate: talk.uploadedAt,
+  duration: `PT${Math.floor(talk.duration)}S`, inLanguage: 'en', url: canonical,
+  isBasedOn: talk.source,
+} : {
+  '@context': 'https://schema.org', '@type': 'CollectionPage', name: heading, description, url: canonical,
+};
+---
+<!doctype html>
+<html lang={zh ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={new URL(talkPath('en', talk?.slug), Astro.site)} />
+    <link rel="alternate" hreflang="zh-CN" href={new URL(talkPath('zh', talk?.slug), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(talkPath('en', talk?.slug), Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={talk ? 'video.other' : 'website'} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+    <Analytics />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">{zh ? '跳转到内容' : 'Skip to content'}</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href={base} aria-label="Pi Index"><span class="brand-mark" aria-hidden="true">π</span><span><span class="brand-muted">pi</span>index</span></a>
+        <nav class="header-links" aria-label={zh ? '主要导航' : 'Main navigation'}>
+          <a href={base}>{zh ? '资源目录' : 'Directory'}</a>
+          <a href={talkPath(locale)} aria-current={talk ? undefined : 'page'}>{zh ? '播客' : 'Talks'}</a>
+          <a class="language-link" href={talkPath(zh ? 'en' : 'zh', talk?.slug)} lang={zh ? 'en' : 'zh-CN'}><Icon name="globe" size={16} />{zh ? 'English' : '中文'}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="content" class="page-shell talks-shell">
+      {talk ? <>
+        <a class="talk-back" href={talkPath(locale)}>← {zh ? '全部播客' : 'All conversations'}</a>
+        <header class="talk-heading">
+          <p class="eyebrow">{talk.series} <span aria-hidden="true">/</span> <time datetime={talk.date}>{date(talk.date)}</time></p>
+          <h1>{talk.title[locale]}</h1>
+          <p class="talk-meta">{talk.slug === 'agent-frustrations' ? 'Armin Ronacher' : 'Mario Zechner & Armin Ronacher'} <span>·</span> {timestamp(talk.duration)} <span>·</span> {zh ? '英语原声' : 'English audio'}</p>
+        </header>
+        <div data-talk-player>
+          <div class="talk-watch-layout">
+          <div class="talk-screen">
+          <div class:list={['talk-video', { 'talk-video-portrait': talk.portrait }]}>
+            <video controls playsinline preload="metadata" poster={talk.poster} aria-label={talk.title[locale]}>
+              <source src={import.meta.env.DEV ? `/__talk-media/${talk.slug}.mp4` : talk.video} type="video/mp4" />
+              <track kind="captions" src={`${zh ? "/zh" : ""}/talks/${talk.slug}.vtt`} srclang={zh ? "zh-CN" : "en"} label={zh ? "中文（AI 初译）" : "English (AI)"} default />
+              <a href={talk.source}>{zh ? '在 X 上观看原视频' : 'Watch the original on X'}</a>
+            </video>
+            <div class="video-captions" data-video-captions hidden aria-hidden="true"><span lang={zh ? "zh-CN" : "en"}></span></div>
+            <div class="caption-controls" data-caption-controls hidden><button type="button" data-captions-toggle aria-pressed="true">{zh ? '字幕' : 'Captions'}</button><button type="button" data-player-fullscreen aria-label={zh ? '切换全屏' : 'Toggle fullscreen'}>⛶</button></div>
+          </div>
+          <div class="talk-source"><span>{zh ? '来源' : 'Source'} <a href={talk.source} target="_blank" rel="noopener noreferrer">@pidotdev ↗</a>{talk.slug === 'harness-and-workflow' && <span> · Syntax.fm {zh ? '访谈剪辑' : 'interview excerpt'}</span>}</span><a href={talk.video} target="_blank" rel="noopener noreferrer">{zh ? '打开原视频' : 'Open original video'} ↗</a></div>
+          <p class="talk-error" role="status" data-video-error hidden>{zh ? '视频暂时无法加载，请通过上方链接打开原视频或 X 原帖。' : 'The video could not load. Open the original video or the X post using the links above.'}</p>
+          </div>
+          <aside class="transcript-aside">
+            <section class="transcript-panel" aria-labelledby="transcript-heading">
+              <div class="reading-heading"><h2 id="transcript-heading">{zh ? '滚动字幕' : 'Transcript'} <span>{zh ? "ZH" : "EN"}</span></h2><label class="follow-control"><input type="checkbox" data-follow checked />{zh ? '跟随播放' : 'Follow playback'}</label></div>
+              <div class="transcript-scroll" tabindex="0" role="region" aria-label={zh ? '中文字幕' : 'English transcript'}>
+                {talk.segments.map(segment => <button type="button" class="transcript-line" data-start={segment.start} data-end={segment.end}>
+                  <span class="cue-time">{timestamp(segment.start)}</span><span lang={zh ? "zh-CN" : "en"}>{zh ? segment.zh : segment.text}</span>
+                </button>)}
+              </div>
+              <a class="transcript-download" href={`${zh ? "/zh" : ""}/talks/${talk.slug}.vtt`} download>{zh ? '下载字幕 .vtt ↓' : 'Download captions .vtt ↓'}</a>
+            </section>
+          </aside>
+          </div>
+            <section class="summary-panel" aria-labelledby="summary-heading">
+              <div class="reading-heading"><h2 id="summary-heading">{zh ? 'AI 总结' : 'AI summary'}</h2><span class="summary-label">{zh ? '阅读要点' : 'Reading notes'}</span></div>
+              <p class="reading-note">{zh ? '根据本期转写整理；点击时间戳回听原话。' : 'Based on this transcript. Use timestamps to check the original discussion.'}</p>
+              <ol class="summary-list">{talk.summary[locale].map(point => <li><button type="button" class="summary-time" data-seek={point.start} aria-label={`${zh ? '跳转到' : 'Seek to'} ${timestamp(point.start)}`}>{timestamp(point.start)} ↗</button><h3>{point.title}</h3><p>{point.text}</p></li>)}</ol>
+            </section>
+        </div>
+        <section class="more-talks"><h2>{zh ? '继续听' : 'Keep listening'}</h2><div class="talk-related">{talks.filter(item => item.slug !== talk.slug).map(item => <a href={talkPath(locale, item.slug)}><span>{date(item.date)} · {timestamp(item.duration)}</span><strong>{item.title[locale]} →</strong></a>)}</div></section>
+      </> : <>
+        <section class="talks-intro"><p class="eyebrow">PI CONVERSATIONS</p><h1>{heading}</h1><p>{zh ? '从 harness 到工作方式，从代码质量到模型变化。听 Mario 和 Armin 聊聊他们正在思考的问题。' : 'From harnesses and workflows to code quality and changing models. Listen to what Mario and Armin are thinking about.'}</p><div class="collection-meta"><span>{zh ? '5 期播客' : '5 conversations'}</span><span>{zh ? '约 74 分钟' : 'About 74 minutes'}</span><span>{zh ? '中文字幕 · AI 总结' : 'English transcripts · AI summaries'}</span></div></section>
+        <div class="talk-list">{talks.map((item, index) => <article class="talk-card">
+          <a class="talk-cover" href={talkPath(locale, item.slug)} aria-label={`${zh ? '观看' : 'Watch'}: ${item.title[locale]}`}><img src={item.poster} alt="" width="960" height="540" loading={index === 0 ? 'eager' : 'lazy'} /><span class="cover-play" aria-hidden="true">▶</span><span class="cover-duration">{timestamp(item.duration)}</span></a>
+          <div class="talk-card-copy"><p class="talk-card-date"><time datetime={item.date}>{date(item.date)}</time> · {item.series}</p><h2><a href={talkPath(locale, item.slug)}>{item.title[locale]}</a></h2><p>{item.summary[locale][0]?.text}</p><div class="talk-tags">{item.tags.map(tag => <span>{tag}</span>)}</div><a class="talk-watch" href={talkPath(locale, item.slug)}>{zh ? '观看播客' : 'Watch conversation'} →</a></div>
+        </article>)}</div>
+      </>}
+      <footer class="site-footer"><div><a class="footer-brand" href={base}><span>pi</span>index</a><p>{zh ? '社区整理。视频来自 @pidotdev，版权归原作者所有。' : 'Community curated. Videos from @pidotdev belong to their creators.'}</p></div><a href={base}>{zh ? '浏览资源目录' : 'Browse the directory'} →</a></footer>
+    </main>
+    <script>
+      import { initializeTalkPlayer } from '../scripts/talk-player';
+      initializeTalkPlayer(document);
+    </script>
+  </body>
+</html>

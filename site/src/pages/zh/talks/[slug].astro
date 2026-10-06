@@ -1,0 +1,6 @@
+---
+import TalksPage from '../../../components/TalksPage.astro';
+import { talks } from '../../../lib/talks';
+export const getStaticPaths = () => talks.map(talk => ({ params: { slug: talk.slug }, props: { talk } }));
+---
+<TalksPage locale="zh" talk={Astro.props.talk} />
