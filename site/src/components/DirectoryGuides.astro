@@ -8,12 +8,23 @@ import '../styles/directory-guides.css';
 const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 const guides = Object.entries(publishedRoutes.categories).filter(([, route]) => route.status === 'active');
-const jevPublished = publishedRoutes.topics.jev?.status === 'active';
-const topics = Object.entries(publishedRoutes.topics).filter(([slug, route]) => route.status === 'active' && slug !== 'jev');
-const topicCopy: Record<string, { description: string }> = {
+const topics = Object.entries(publishedRoutes.topics).filter(([, route]) => route.status === 'active');
+const featuredTopic = 'pi-durable';
+const featured = topics.some(([slug]) => slug === featuredTopic) ? featuredTopic : undefined;
+const wideTopics = topics.filter(([slug]) => slug !== featuredTopic);
+const topicCopy: Record<string, { title?: string; description: string }> = {
   'pi-durable': {
-    description: zh ? '多人 Web、iOS、聊天机器人与存储后端，按用途比较。' : 'Multiplayer web, iOS, chat bots and storage backends, compared by use.',
+    description: zh ? '在手机、团队聊天和 Home Assistant 中运行可恢复的 Agent。比较各项目的安装方式、版本与数据边界。' : 'Run recoverable agents from your phone, team chat or Home Assistant. Compare setup, versions and data boundaries for each project.',
   },
+  jev: {
+    title: zh ? 'Jev 决策层' : 'A decision layer with Jev',
+    description: zh ? '让 Jev 参与工具判定、技能选择与模型路由。比较不同集成的用途、配置与边界。' : 'Tool judgments, skill selection and model routing. Compare what each Jev integration does and how to set it up.',
+  },
+};
+const topicIllustration: Record<string, 'durable' | 'jev'> = { 'pi-durable': 'durable', jev: 'jev' };
+const topicTitle = (slug: string) => {
+  const page = getEditorial('topics', slug);
+  return topicCopy[slug]?.title ?? page.navLabel?.[locale] ?? page.title[locale].replace(/\s*\| Pi Index$/, '');
 };
 const copy: Record<string, { title: string; description: string; illustration: 'subagents' | 'web' }> = {
   subagents: {
@@ -29,7 +40,7 @@ const copy: Record<string, { title: string; description: string; illustration: '
 };
 ---
 
-{(guides.length > 0 || jevPublished || topics.length > 0) && <section class="directory-guides" aria-labelledby="guides-heading">
+{(guides.length > 0 || topics.length > 0) && <section class="directory-guides" aria-labelledby="guides-heading">
   <header class="guides-heading">
     <div>
       <h2 id="guides-heading">{zh ? '热门扩展选型指南' : 'Guides to popular extensions'}</h2>
@@ -38,14 +49,14 @@ const copy: Record<string, { title: string; description: string; illustration: '
     <a class="guides-directory-link" href="#resources">{zh ? '浏览全部资源' : 'Browse all resources'}<span aria-hidden="true">↓</span></a>
   </header>
   <nav class="guides-grid" aria-labelledby="guides-heading">
-    {jevPublished && <article class="guide-card guide-card--featured">
+    {featured && <article class="guide-card guide-card--featured">
       <div class="guide-card-copy">
         <span class="guide-kicker"><span aria-hidden="true"></span>{zh ? '热点专题' : 'In focus'}</span>
-        <h3>{zh ? 'Jev 决策层' : 'A decision layer with Jev'}</h3>
-        <p>{zh ? '让 Jev 参与工具判定、技能选择与模型路由。比较不同集成的用途、配置与边界。' : 'Tool judgments, skill selection and model routing. Compare what each Jev integration does and how to set it up.'}</p>
-        <a class="topic-link guide-card-link" data-guide="jev" data-placement="home_bento" href={routePath('topics', 'jev', locale)} aria-label={zh ? '查看专题：Jev' : 'Explore the guide: Jev'}>{zh ? '查看专题' : 'Explore the guide'}<span aria-hidden="true">↗</span></a>
+        <h3>{topicTitle(featured)}</h3>
+        <p>{topicCopy[featured]?.description ?? getEditorial('topics', featured).description[locale]}</p>
+        <a class="topic-link guide-card-link" data-guide={featured} data-placement="home_bento" href={routePath('topics', featured, locale)} aria-label={zh ? `查看专题：${topicTitle(featured)}` : `Explore the guide: ${topicTitle(featured)}`}>{zh ? '查看专题' : 'Explore the guide'}<span aria-hidden="true">↗</span></a>
       </div>
-      <div class="guide-art guide-art--jev"><GuideIllustration variant="jev" locale={locale} /></div>
+      {topicIllustration[featured] && <div class="guide-art guide-art--featured"><GuideIllustration variant={topicIllustration[featured]} locale={locale} /></div>}
     </article>}
     {guides.map(([slug]) => {
       const card = copy[slug];
@@ -60,9 +71,9 @@ const copy: Record<string, { title: string; description: string; illustration: '
         {card && <div class="guide-art guide-art--compact"><GuideIllustration variant={card.illustration} locale={locale} /></div>}
       </article>;
     })}
-    {topics.map(([slug]) => {
+    {wideTopics.map(([slug]) => {
       const page = getEditorial('topics', slug);
-      const title = page.navLabel?.[locale] ?? page.title[locale].replace(/\s*\| Pi Index$/, '');
+      const title = topicTitle(slug);
       return <article class="guide-card guide-card--compact guide-card--wide">
         <div class="guide-card-copy">
           <h3>{title}</h3>

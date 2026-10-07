@@ -1,14 +1,14 @@
 ---
 type Props = {
-  variant: 'jev' | 'subagents' | 'web';
+  variant: 'jev' | 'subagents' | 'web' | 'durable';
   locale?: 'en' | 'zh';
 };
 
 const { variant, locale = 'en' } = Astro.props;
 const labels = locale === 'zh'
-  ? { task: '任务', decide: '判定', tools: '工具', skills: '技能', models: '模型', search: '搜索来源' }
-  : { task: 'Task', decide: 'DECIDE', tools: 'Tools', skills: 'Skills', models: 'Models', search: 'Find sources' };
-const wide = variant === 'jev';
+  ? { task: '任务', decide: '判定', tools: '工具', skills: '技能', models: '模型', search: '搜索来源', tasks: '任务', resume: '可恢复', web: 'Web', ios: 'iOS', bots: '机器人' }
+  : { task: 'Task', decide: 'DECIDE', tools: 'Tools', skills: 'Skills', models: 'Models', search: 'Find sources', tasks: 'Tasks', resume: 'RESUME', web: 'Web', ios: 'iOS', bots: 'Bots' };
+const wide = variant === 'jev' || variant === 'durable';
 ---
 
 <svg
@@ -59,6 +59,48 @@ const wide = variant === 'jev';
         <text class="art-label" x="351" y="142">{labels.models}</text>
       </g>
       <circle class="art-signal art-accent-fill" cx="151" cy="90" r="3" />
+    </>
+  )}
+
+  {variant === 'durable' && (
+    <>
+      <g class="art-line">
+        <path d="M126 90h10m146 0h8m0-48v96m0-96h24m-24 48h24m-24 48h24" />
+        <path d="m132 86 4 4-4 4" />
+        <circle cx="290" cy="90" r="2.5" class="art-junction" />
+      </g>
+      <g>
+        <rect class="art-panel" x="20" y="52" width="106" height="76" rx="11" />
+        <text class="art-label" x="33" y="68">{labels.tasks}</text>
+        <path class="art-line" d="M44 80h48m-48 13h56m-56 13h42" />
+        <path class="task-check art-accent" d="m29.5 77.5 3 3 5-6" />
+        <path class="task-check art-accent" d="m29.5 90.5 3 3 5-6" />
+        <path class="art-ink" d="M33 100.5a5.4 5.4 0 1 0 .7 10.8m2.9-1.5-3.1 1.4.7-3.4" />
+      </g>
+      <g class="durable-core">
+        <rect class="art-panel art-accent" x="142" y="56" width="140" height="68" rx="17" />
+        <text class="art-wordmark" x="212" y="86" text-anchor="middle">Pi Durable</text>
+        <text class="art-caption" x="212" y="107" text-anchor="middle">{labels.resume}</text>
+      </g>
+      <g class="art-node art-node--first">
+        <rect class="art-panel" x="314" y="24" width="104" height="36" rx="9" />
+        <rect class="art-ink" x="326" y="32" width="17" height="13" rx="2.5" />
+        <path class="art-ink" d="M326 36h17m-15-2.5h2.5" />
+        <text class="art-label" x="352" y="46">{labels.web}</text>
+      </g>
+      <g class="art-node art-node--second">
+        <rect class="art-panel" x="314" y="72" width="104" height="36" rx="9" />
+        <rect class="art-ink" x="330" y="78" width="11" height="17" rx="2.5" />
+        <path class="art-ink" d="M332.5 81h2m-.5 11h4" />
+        <text class="art-label" x="352" y="94">{labels.ios}</text>
+      </g>
+      <g class="art-node art-node--third">
+        <rect class="art-panel" x="314" y="120" width="104" height="36" rx="9" />
+        <rect class="art-ink" x="326" y="126" width="17" height="12" rx="3" />
+        <path class="art-ink" d="M331 138v4l3.5-4M330 131h9" />
+        <text class="art-label" x="352" y="142">{labels.bots}</text>
+      </g>
+      <circle class="art-signal art-accent-fill" cx="134" cy="90" r="3" />
     </>
   )}
 
@@ -145,6 +187,7 @@ const wide = variant === 'jev';
   .web-scan { opacity: 0; }
 
   .jev-core,
+  .durable-core,
   .art-node,
   .task-check,
   .web-document {
@@ -161,7 +204,8 @@ const wide = variant === 'jev';
       animation: guide-signal 780ms cubic-bezier(0.65, 0, 0.35, 1) 1;
     }
 
-    :global(.guide-card:hover) .jev-core {
+    :global(.guide-card:hover) .jev-core,
+    :global(.guide-card:hover) .durable-core {
       animation: guide-decision 780ms cubic-bezier(0.65, 0, 0.35, 1) 1;
     }
 

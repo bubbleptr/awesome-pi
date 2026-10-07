@@ -30,7 +30,7 @@
 .guide-card--wide { grid-column: 1 / -1; }
 .guide-art { pointer-events: none; min-width: 0; color: var(--guide-art-ink); }
 .guide-art svg { display: block; width: 100%; height: auto; }
-.guide-art--jev { width: min(100%, 460px); align-self: center; margin-top: auto; padding-top: 6px; }
+.guide-art--featured { width: min(100%, 460px); align-self: center; margin-top: auto; padding-top: 6px; }
 .guide-art--compact { width: 100%; }
 .resource-guide-links { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 9px; color: var(--muted); font-size: .8rem; }
 .resource-guide-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; }
@@ -58,7 +58,7 @@
   .guide-card--featured { grid-row: auto; padding: 22px 22px 0; }
   .guide-card--featured h3 { font-size: 1.5rem; }
   .guide-card--featured p { max-width: 38ch; }
-  .guide-art--jev { width: min(100%, 390px); padding-top: 0; }
+  .guide-art--featured { width: min(100%, 390px); padding-top: 0; }
   .guide-card--compact { grid-template-columns: minmax(0, 1fr) 108px; gap: 8px; padding: 20px; }
   .guide-card--compact h3 { font-size: 1.08rem; }
   .guide-card--compact p { font-size: .8rem; }
