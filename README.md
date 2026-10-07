@@ -426,6 +426,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 Pi 的 fork/替代发行版，提供开箱即用的增强体验。
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - Pi 的增强 fork（约 25.8k★），集成 40+ provider、32 内置工具、LSP/DAP、Python 运行时、浏览器自动化。独立 CLI，非 Pi Package。不要和 npm 上无关的 `oh-my-pi`（acidsugarx）搞混。`curl -fsSL https://omp.sh/install | sh`
+- [mu](https://github.com/qybaihe/mu) - 基于 Pi 的编程 Agent，带判定内核：38 个决策点交给小而快的判定模型（Jev、本地模型或任意 LLM），比如工具输出哪些进上下文、被规则标记的命令是不是用户要的、网页和 MCP 输出里有没有冲着 AI 的指令、“做完了”有没有验证过。另有子 Agent、内置浏览器和桌面端。独立 CLI，非 Pi Package；Pi 自带的命令不变。`npm install -g mu-agent`
 
 
 ## Contributing
