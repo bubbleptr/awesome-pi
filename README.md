@@ -129,6 +129,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 
 安全与权限控制 Package。
 
+- [@thruwire/foreman-pi](https://github.com/thruwire/foreman/tree/main/integrations/pi) - 基于 Jev 的 Pi 与 Pi Durable Agent 监督器，检查工具活动、项目职责与任务完成情况。需要 `PATH` 中的 `foreman-core>=0.4.4`、`TYPESAFE_API_KEY` 和 Node 22.19+；已在 Pi/Pi Durable 1.0.4 上测试，Pi Durable 宿主需支持 Node 子进程。`pi install npm:@thruwire/foreman-pi`
 - [pi-jev (y0usaf)](https://github.com/y0usaf/pi-jev) - 用 Jev 判定工具调用与结果，并提供 `jev_ask` 工具。默认 shadow 观察模式；Jev 请求需要 `TYPESAFE_API_KEY`。`pi install npm:@y0usaf/pi-jev`
 - [pi-warden](https://github.com/DevMortimer/pi-warden) - 通过 TypeSafe Jev 或 OpenRouter 监督工具调用与项目规则，同时提供离线模式检查。需要 Node 22.19+；模型判定不是系统沙箱。`pi install npm:pi-warden`
 - 🔥 [@gotgenes/pi-permission-system](https://github.com/gotgenes/pi-packages) - 三层权限状态（allow/deny/ask），生命周期钩子集成、子代理权限转发、审计日志。`pi install npm:@gotgenes/pi-permission-system`

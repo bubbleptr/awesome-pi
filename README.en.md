@@ -129,6 +129,7 @@ Terminal UI enhancement packages for better interactive experience.
 
 Security and permission control packages.
 
+- [@thruwire/foreman-pi](https://github.com/thruwire/foreman/tree/main/integrations/pi) - Jev-powered agent supervisor for Pi and Pi Durable. Checks tool activity, project responsibilities, and completion. Requires `foreman-core>=0.4.4` on `PATH`, `TYPESAFE_API_KEY`, and Node 22.19+; tested with Pi/Pi Durable 1.0.4, with Pi Durable requiring a Node host that supports subprocesses. `pi install npm:@thruwire/foreman-pi`
 - [pi-jev (y0usaf)](https://github.com/y0usaf/pi-jev) - Jev judgments for tool calls and results, plus a `jev_ask` tool. Defaults to shadow observation mode; Jev requests require `TYPESAFE_API_KEY`. `pi install npm:@y0usaf/pi-jev`
 - [pi-warden](https://github.com/DevMortimer/pi-warden) - Tool-call and project-rule supervision with TypeSafe Jev or OpenRouter, plus offline pattern checks. Requires Node 22.19+; model judgments are not a sandbox. `pi install npm:pi-warden`
 - 🔥 [@gotgenes/pi-permission-system](https://github.com/gotgenes/pi-packages) - Three-tier permission states (allow/deny/ask), lifecycle hook integration, subagent permission forwarding, audit logs. `pi install npm:@gotgenes/pi-permission-system`
