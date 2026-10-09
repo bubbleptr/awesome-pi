@@ -172,6 +172,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [gentle-engram](https://pi.dev/packages/gentle-engram) - 跨会话、压缩和 MCP 代理共享的本地或云端大脑。`pi install npm:gentle-engram`
 - [@samfp/pi-memory](https://pi.dev/packages/@samfp/pi-memory) - 从会话中学习更正、偏好和模式，注入未来对话。`pi install npm:@samfp/pi-memory`
 - [pi-memory-honcho](https://github.com/acsezen/pi-memory-honcho) - Honcho 支持的持久记忆，跨工作空间记忆共享。`pi install npm:pi-memory-honcho`
+- [pi-mate-companion](https://github.com/m-rui001/pi-mate-companion) - 伴侣向持久记忆：记什么由模型自己调 `remember`/`ponder` 决定，不自动入库；强度按 ACT-R 随真实经过时间衰减、被召回加固、睡眠时选择性降尺度。MIT。`pi install npm:@m-rui/pi-mate-companion`
 
 ---
 
@@ -426,6 +427,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 Pi 的 fork/替代发行版，提供开箱即用的增强体验。
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - Pi 的增强 fork（约 25.8k★），集成 40+ provider、32 内置工具、LSP/DAP、Python 运行时、浏览器自动化。独立 CLI，非 Pi Package。不要和 npm 上无关的 `oh-my-pi`（acidsugarx）搞混。`curl -fsSL https://omp.sh/install | sh`
+- [Persisto Mate](https://github.com/m-rui001/Persisto-Mate) - Pi 的 fork（MIT），把编码代理改成本地运行的 AI 伴侣：生物钟从用户真实出现时间学出来、约 90 分钟睡眠周期并做梦、确定性情绪内核（Plutchik + 对手过程、OU 心境、8×8 复密度矩阵）、模型自己写的 ACT-R 记忆。独立 CLI `mate`，配置仍与 Pi 共用 `~/.pi`；另提供 pi 扩展形态。`curl -fsSL https://raw.githubusercontent.com/m-rui001/Persisto-Mate/main/scripts/install.sh | bash`
 
 
 ## Contributing
