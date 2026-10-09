@@ -172,6 +172,7 @@ Persistent memory packages for retaining information across sessions.
 - [gentle-engram](https://pi.dev/packages/gentle-engram) - Local or cloud-based brain shared across sessions, compactions, and MCP agents. `pi install npm:gentle-engram`
 - [@samfp/pi-memory](https://pi.dev/packages/@samfp/pi-memory) - Learns corrections, preferences, and patterns from sessions and injects them into future conversations. `pi install npm:@samfp/pi-memory`
 - [pi-memory-honcho](https://github.com/acsezen/pi-memory-honcho) - Honcho-backed persistent memory with cross-workspace memory sharing. `pi install npm:pi-memory-honcho`
+- [pi-mate-companion](https://github.com/m-rui001/pi-mate-companion) - Companion-style persistent memory where nothing is filed automatically: the model chooses what survives with `remember`/`ponder`, strength decays over real elapsed time per ACT-R, recall reinforces it, and sleep consolidates. MIT. `pi install npm:@m-rui/pi-mate-companion`
 
 ---
 
@@ -426,6 +427,7 @@ Projects whose own source code runs on [Pi Durable](https://earendil.com/posts/p
 Fork/alternative distributions of Pi with enhanced out-of-the-box experiences.
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - A feature-rich fork (~25.8k★) with 40+ providers, 32 built-in tools, LSP/DAP, Python runtime, and browser automation. Standalone CLI — not a Pi package. Do not confuse with the unrelated npm package `oh-my-pi` (acidsugarx). `curl -fsSL https://omp.sh/install | sh`
+- [Persisto Mate](https://github.com/m-rui001/Persisto-Mate) - A fork (MIT) that turns the coding agent into a local AI companion: a body clock learned from when the user actually shows up, ~90-minute sleep cycles with dreams, a deterministic affect kernel (Plutchik with opponent process, OU mood, an 8×8 complex density matrix), and model-authored ACT-R memory. Standalone `mate` CLI sharing `~/.pi` with Pi; also shipped as a Pi package. `curl -fsSL https://raw.githubusercontent.com/m-rui001/Persisto-Mate/main/scripts/install.sh | bash`
 
 
 ## Contributing
