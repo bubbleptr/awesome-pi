@@ -120,6 +120,7 @@ Terminal UI enhancement packages for better interactive experience.
 - [@narumitw/pi-caffeinate](https://github.com/narumiruna/pi-extensions) - Cross-platform sleep prevention, keeps system awake during long prompts. `pi install npm:@narumitw/pi-caffeinate`
 - [pi-ext](https://github.com/tomsej/pi-ext) - Comprehensive UI suite: leader-key floating panel, powerline footer, tool pill tags, telescope fuzzy finder. `pi install git:github.com/tomsej/pi-ext`
 - [@juicesharp/rpiv-btw](https://github.com/juicesharp/rpiv-mono) - Juicesharp's btw side conversation variant. `pi install npm:@juicesharp/rpiv-btw`
+- [pi-code-render](https://github.com/chengyayu/pi-code-render) - Renders fenced code blocks as theme-colored full-width cards with a `[COPY]` button at the end of the first line; click anywhere on a card to toggle between the card and the raw fenced markdown. Copies are confirmed briefly in the footer without polluting the conversation. `pi install npm:pi-code-render`
 
 ---
 
