@@ -427,7 +427,6 @@ Projects whose own source code runs on [Pi Durable](https://earendil.com/posts/p
 Fork/alternative distributions of Pi with enhanced out-of-the-box experiences.
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - A feature-rich fork (~25.8k★) with 40+ providers, 32 built-in tools, LSP/DAP, Python runtime, and browser automation. Standalone CLI — not a Pi package. Do not confuse with the unrelated npm package `oh-my-pi` (acidsugarx). `curl -fsSL https://omp.sh/install | sh`
-- [Persisto Mate](https://github.com/m-rui001/Persisto-Mate) - A fork (MIT) that turns the coding agent into a local AI companion: a body clock learned from when the user actually shows up, ~90-minute sleep cycles with dreams, a deterministic affect kernel (Plutchik with opponent process, OU mood, an 8×8 complex density matrix), and model-authored ACT-R memory. Standalone `mate` CLI sharing `~/.pi` with Pi; also shipped as a Pi package. `curl -fsSL https://raw.githubusercontent.com/m-rui001/Persisto-Mate/main/scripts/install.sh | bash`
 
 
 ## Contributing
