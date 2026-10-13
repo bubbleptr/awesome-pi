@@ -427,7 +427,6 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 Pi 的 fork/替代发行版，提供开箱即用的增强体验。
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - Pi 的增强 fork（约 25.8k★），集成 40+ provider、32 内置工具、LSP/DAP、Python 运行时、浏览器自动化。独立 CLI，非 Pi Package。不要和 npm 上无关的 `oh-my-pi`（acidsugarx）搞混。`curl -fsSL https://omp.sh/install | sh`
-- [Persisto Mate](https://github.com/m-rui001/Persisto-Mate) - Pi 的 fork（MIT），把编码代理改成本地运行的 AI 伴侣：生物钟从用户真实出现时间学出来、约 90 分钟睡眠周期并做梦、确定性情绪内核（Plutchik + 对手过程、OU 心境、8×8 复密度矩阵）、模型自己写的 ACT-R 记忆。独立 CLI `mate`，配置仍与 Pi 共用 `~/.pi`；另提供 pi 扩展形态。`curl -fsSL https://raw.githubusercontent.com/m-rui001/Persisto-Mate/main/scripts/install.sh | bash`
 
 
 ## Contributing
