@@ -117,6 +117,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - 🔥 [pi-powerline-footer](https://pi.dev/packages/pi-powerline-footer) - Powerline 风格的状态栏扩展。`pi install npm:pi-powerline-footer`
 - 🔥 [pi-btw](https://github.com/dbachelder/pi-btw) - `/btw` 侧边问题命令，不污染主对话。多版本可选（dbachelder 原版、juicesharp 版、Naru 版）。`pi install npm:pi-btw`
 - 🔥 [@juicesharp/rpiv-voice](https://github.com/juicesharp/rpiv-mono) - `/voice` 本机 Whisper 听写，无云、无 API key。`pi install npm:@juicesharp/rpiv-voice`
+- [@sfgartland/better-pi-voice](https://github.com/sfgartland/better-pi-voice) - 流式语音输入，云端 Deepgram 或本地 Parakeet 皆可；从仓库、会话与开发者术语中挖掘 keyterm 来偏置识别结果，并带回放与抢救式恢复，断线也不丢句子。`pi install npm:@sfgartland/better-pi-voice`
 - [pi-caveman](https://github.com/jonjonrankin/pi-caveman) - 让 Pi 像 caveman 一样说话，减少约 75% 输出 token。`pi install npm:pi-caveman`
 - [whimsical](https://github.com/mitsuhiko/agent-stuff) - 将 "thinking..." 替换为有趣随机短语（如 "Hiking through the headers..."）。`pi install git:github.com/mitsuhiko/agent-stuff`
 - [notify](https://github.com/mitsuhiko/agent-stuff) - 代理完成时桌面通知（OSC 777）。`pi install git:github.com/mitsuhiko/agent-stuff`

@@ -117,6 +117,7 @@ Terminal UI enhancement packages for better interactive experience.
 - 🔥 [pi-powerline-footer](https://pi.dev/packages/pi-powerline-footer) - Powerline-style status bar extension. `pi install npm:pi-powerline-footer`
 - 🔥 [pi-btw](https://github.com/dbachelder/pi-btw) - `/btw` side question command without polluting the main conversation. Multiple versions available (dbachelder, juicesharp, Naru). `pi install npm:pi-btw`
 - 🔥 [@juicesharp/rpiv-voice](https://github.com/juicesharp/rpiv-mono) - `/voice` on-device Whisper dictation — no cloud, no API key. `pi install npm:@juicesharp/rpiv-voice`
+- [@sfgartland/better-pi-voice](https://github.com/sfgartland/better-pi-voice) - Streaming dictation with Deepgram or local Parakeet, biased by keyterms mined from your repo and session, with replay/salvage recovery so a dropped socket never loses a sentence. `pi install npm:@sfgartland/better-pi-voice`
 - [pi-caveman](https://github.com/jonjonrankin/pi-caveman) - Makes Pi talk like a caveman, reducing output tokens by ~75%. `pi install npm:pi-caveman`
 - [whimsical](https://github.com/mitsuhiko/agent-stuff) - Replaces "thinking..." with fun random phrases (e.g., "Hiking through the headers..."). `pi install git:github.com/mitsuhiko/agent-stuff`
 - [notify](https://github.com/mitsuhiko/agent-stuff) - Desktop notification on agent completion (OSC 777). `pi install git:github.com/mitsuhiko/agent-stuff`
