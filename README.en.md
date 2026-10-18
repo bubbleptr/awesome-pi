@@ -145,6 +145,7 @@ Security and permission control packages.
 - [security](https://github.com/michalvavra/agents) - Blocks dangerous commands (e.g., sudo) requiring explicit user approval. `pi install git:github.com/michalvavra/agents`
 - [pi-vetter](https://github.com/jesset/pi-vetter) - On-demand supply-chain risk assessment for npm packages via `/vet` and `/vet-install`: OSV advisories, provenance verification, static patterns, and version diffs with ALLOW/ASK/DENY reports. A clean report does not prove safety. `pi install npm:pi-vetter`
 - [pi-verdict](https://github.com/jesset/pi-verdict) - Experimental tool-call permission gate with rules first, a context-aware model classifier for uncertain actions, and allow/ask/deny decisions. Model calls add latency and cost; not an OS-level sandbox. `pi install npm:pi-verdict`
+- [cc-safety-net](https://github.com/kenryu42/cc-safety-net) - Blocks destructive Git and filesystem commands, such as `git reset --hard` and `rm -rf`, and access to secrets such as SSH keys and `.env` files before a tool call runs. It checks what a command does, including commands inside `bash -c`. It is not a sandbox. `pi install npm:cc-safety-net`
 
 ---
 

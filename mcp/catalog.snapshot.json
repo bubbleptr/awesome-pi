@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 123,
+      "count": 124,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -89,7 +89,7 @@
       "name": "Security & Permission",
       "nameZh": "安全与权限",
       "kind": "packages",
-      "count": 13,
+      "count": 14,
       "piindexUrl": "https://piindex.dev/?category=security-permission",
       "guideUrl": null
     },
@@ -1828,6 +1828,37 @@
       "weeklyTrendPercent": -70,
       "piindexUrl": "https://piindex.dev/?q=pi-verdict",
       "directoryUrl": "https://piindex.dev/?q=pi-verdict",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "cc-safety-net-e7c4d87f",
+      "name": "cc-safety-net",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Blocks destructive Git and filesystem commands, such as git reset --hard and rm -rf, and access to secrets such as SSH keys and .env files before a tool call runs. It checks what a command does, including commands inside bash -c. It is not a sandbox."
+        ],
+        "zh": [
+          "在工具调用执行前拦截破坏性 Git 与文件系统命令，例如 git reset --hard 和 rm -rf，并阻止访问 SSH 密钥、.env 文件等机密。按命令的实际行为判断，bash -c 中的命令同样会被检查；本身不是沙箱。"
+        ]
+      },
+      "categories": [
+        "security-permission"
+      ],
+      "searchText": " cc-safety-net Blocks destructive Git and filesystem commands, such as git reset --hard and rm -rf, and access to secrets such as SSH keys and .env files before a tool call runs. It checks what a command does, including commands inside bash -c. It is not a sandbox. 在工具调用执行前拦截破坏性 Git 与文件系统命令，例如 git reset --hard 和 rm -rf，并阻止访问 SSH 密钥、.env 文件等机密。按命令的实际行为判断，bash -c 中的命令同样会被检查；本身不是沙箱。 Security & Permission packages pi install npm:cc-safety-net 安全与权限",
+      "projectUrl": "https://github.com/kenryu42/cc-safety-net",
+      "repoUrl": "https://github.com/kenryu42/cc-safety-net",
+      "npmPackage": "cc-safety-net",
+      "npmUrl": "https://www.npmjs.com/package/cc-safety-net",
+      "install": "pi install npm:cc-safety-net",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=cc-safety-net",
+      "directoryUrl": "https://piindex.dev/?q=cc-safety-net",
       "guideUrl": null,
       "guides": []
     },
