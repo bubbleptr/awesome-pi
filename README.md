@@ -438,6 +438,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 Pi 的 fork/替代发行版，提供开箱即用的增强体验。
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - Pi 的增强 fork（约 25.8k★），集成 40+ provider、32 内置工具、LSP/DAP、Python 运行时、浏览器自动化。独立 CLI，非 Pi Package。不要和 npm 上无关的 `oh-my-pi`（acidsugarx）搞混。`curl -fsSL https://omp.sh/install | sh`
+- [omp packages](https://omppackages.com) - oh-my-pi 的 npm 插件目录，附带用户报告：每个 Pi Package 在 omp 上能否运行；并提供可放入 package README 的状态徽章。网站，非 Pi Package。作者 [paymog](https://github.com/paymog/omp-packages)。
 
 
 ## Contributing
