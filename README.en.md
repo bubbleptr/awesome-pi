@@ -56,6 +56,7 @@ pi list
 - [Built on Pi Durable](#built-on-pi-durable)
 - [Clients & SDKs](#clients--sdks)
 - [Alternative Distributions](#alternative-distributions)
+- [Community Resources](#community-resources)
 
 ---
 
@@ -438,6 +439,12 @@ Projects that do not fork Pi's agent core. They run the Pi you already have inst
 Fork/alternative distributions of Pi with enhanced out-of-the-box experiences.
 
 - [oh-my-pi](https://github.com/can1357/oh-my-pi) - A feature-rich fork (~25.8k★) with 40+ providers, 32 built-in tools, LSP/DAP, Python runtime, and browser automation. Standalone CLI — not a Pi package. Do not confuse with the unrelated npm package `oh-my-pi` (acidsugarx). `curl -fsSL https://omp.sh/install | sh`
+
+
+## Community Resources
+
+Websites, catalogs, and other community resources that are not forks of Pi.
+
 - [omp packages](https://omppackages.com) - Catalog of oh-my-pi plugins on npm, with user reports on whether each Pi package works on omp and a status badge for package READMEs. Website, not a Pi package. By [paymog](https://github.com/paymog/omp-packages).
 
 
