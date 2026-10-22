@@ -6,7 +6,7 @@ import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 
 export type Locale = 'en' | 'zh';
-export type ResourceKind = 'packages' | 'themes' | 'integrations' | 'durable' | 'clients' | 'distributions';
+export type ResourceKind = 'packages' | 'themes' | 'integrations' | 'durable' | 'clients' | 'distributions' | 'community';
 export type RawRecord = {
   name: string; url: string; description: string; install: string | null;
   category: string; categoryName: string; kind: ResourceKind;
@@ -23,6 +23,7 @@ const sections: Record<string, ResourceKind> = {
   Packages: 'packages', Themes: 'themes',
   'Editor Integration': 'integrations', 'Built on Pi Durable': 'durable',
   'Clients & SDKs': 'clients', 'Alternative Distributions': 'distributions',
+  'Community Resources': 'community',
 };
 
 export function slug(value: string): string {
@@ -64,7 +65,7 @@ export function parseReadme(markdown: string): RawRecord[] {
       const heading = toString(node);
       if (sections[heading] && node.depth <= 3) {
         kind = sections[heading];
-        categoryName = ['integrations', 'durable', 'clients', 'distributions'].includes(kind) ? heading : '';
+        categoryName = ['integrations', 'durable', 'clients', 'distributions', 'community'].includes(kind) ? heading : '';
       } else if (node.depth <= 2) {
         kind = undefined;
         categoryName = '';

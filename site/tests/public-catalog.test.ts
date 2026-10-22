@@ -78,6 +78,18 @@ describe('public catalog document', () => {
     expect(doc.kinds.find(kind => kind.id === 'distributions')).toMatchObject({
       name: 'Distributions', nameZh: '替代发行版', piindexUrl: 'https://piindex.dev/?category=distributions',
     });
+    expect(doc.kinds.find(kind => kind.id === 'community')).toMatchObject({
+      name: 'Community Resources', nameZh: '社区资源', count: 1, piindexUrl: 'https://piindex.dev/?category=community',
+    });
+    expect(doc.categories.find(category => category.id === 'community-resources')).toMatchObject({
+      name: 'Community Resources', nameZh: '社区资源', kind: 'community', count: 1,
+      piindexUrl: 'https://piindex.dev/?category=community-resources', guideUrl: null,
+    });
+    expect(doc.packages.find(pkg => pkg.name === 'omp packages')).toMatchObject({
+      kind: 'community', kindName: 'Community Resources', kindNameZh: '社区资源',
+      install: null, npmPackage: null, projectUrl: 'https://omppackages.com',
+      categories: ['community-resources'],
+    });
     expect(doc.guides.find(guide => guide.kind === 'topic' && guide.slug === 'jev')).toMatchObject({
       piindexUrl: 'https://piindex.dev/topics/jev/',
     });

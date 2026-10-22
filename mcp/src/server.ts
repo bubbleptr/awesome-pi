@@ -6,7 +6,7 @@ import { directoryLink } from './filter.js';
 const annotations = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
 const limitField = z.number().int().min(1).max(50).optional().describe('Maximum packages to return. Defaults to 20. Maximum 50.');
 const offsetField = z.number().int().min(0).optional().describe('Number of matching packages to skip. Defaults to 0.');
-const categoryField = z.string().optional().describe('Category id (for example subagents or web-access-search) or a top-level kind: packages, themes, integrations, durable, clients, distributions. Same values as the directory ?category= filter. Omit, or pass all, to include every resource.');
+const categoryField = z.string().optional().describe('Category id (for example subagents or web-access-search) or a top-level kind: packages, themes, integrations, durable, clients, distributions, community. Same values as the directory ?category= filter. Omit, or pass all, to include every resource.');
 
 type ToolContent = { type: 'text'; text: string };
 

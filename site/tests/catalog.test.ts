@@ -67,6 +67,16 @@ describe('README catalog', () => {
     expect(records.find(record => record.name === 'fork')?.kind).toBe('distributions');
   });
 
+  test('parses Community Resources as its own kind and leaves forks in Alternative Distributions', () => {
+    const markdown = `## Alternative Distributions\n${entry('fork', 'Standalone.', 'curl -fsSL https://example.com/install | sh')}\n## Community Resources\n\nWebsites that are not forks.\n\n- [omp packages](https://omppackages.com) - Catalog website. By [paymog](https://github.com/paymog/omp-packages).`;
+    const records = parseReadme(markdown);
+    expect(records.find(record => record.name === 'omp packages')).toMatchObject({
+      kind: 'community', category: 'community-resources', install: null, url: 'https://omppackages.com',
+      description: 'Catalog website. By paymog.',
+    });
+    expect(records.find(record => record.name === 'fork')?.kind).toBe('distributions');
+  });
+
   test('parses Built on Pi Durable entries as the durable kind without conflicting with same-name packages', () => {
     const markdown = `## Packages\n### Subagents\n${entry('pi-fabric', 'Extension runtime.')}\n## Built on Pi Durable\n\nIntro paragraph.\n\n> Note line.\n\n- [pi-pocket](https://github.com/example/pocket) - Multiplayer app.\n## Alternative Distributions\n${entry('fork', 'Standalone.', 'curl -fsSL https://example.com/install | sh')}`;
     const records = parseReadme(markdown);
@@ -89,11 +99,18 @@ describe('README catalog', () => {
     expect(catalog.resources.find(resource => resource.name === 'pi-acp')?.kind).toBe('integrations');
     expect(catalog.resources.find(resource => resource.name === 'oh-my-pi')?.kind).toBe('distributions');
     expect(catalog.resources.find(resource => resource.name === 'oh-my-pi')?.categories).not.toContain('clients-sdks');
+    const omp = catalog.resources.find(resource => resource.name === 'omp packages');
+    expect(omp).toMatchObject({ kind: 'community', categories: ['community-resources'], install: null, url: 'https://omppackages.com' });
+    expect(omp?.descriptions.en.join(' ')).toContain('Catalog of oh-my-pi plugins');
+    expect(omp?.descriptions.zh.join(' ')).toContain('oh-my-pi 的 npm 插件目录');
+    expect(catalog.categories.find(category => category.id === 'community-resources')).toMatchObject({ name: 'Community Resources', kind: 'community', count: 1 });
     for (const name of ['@jmfederico/pi-web', 'pitago', 'Pace']) {
       expect(catalog.resources.find(resource => resource.name === name)?.kind).toBe('clients');
     }
     expect(catalog.categories.some(category => category.name === 'Web UI' || category.id === 'web-ui')).toBe(false);
     expect(readFilters('?category=clients', []).category).toBe('clients');
+    expect(readFilters('?category=community', []).category).toBe('community');
+    expect(readFilters('?category=community-resources', ['community-resources']).category).toBe('community-resources');
     for (const resource of catalog.resources) {
       expect(resource.descriptions.en.length).toBeGreaterThan(0);
       expect(resource.descriptions.zh.length).toBeGreaterThan(0);

@@ -100,11 +100,21 @@ describe('MCP tools against the real catalog', () => {
   test('lists categories, the packages in one category, and guides', async () => {
     const client = await connectMemory();
     const categories = body(await client.callTool({ name: 'list_categories', arguments: {} }) as ToolBody);
-    const kinds = categories.kinds as { id: string; piindexUrl: string; categories: { id: string; guideUrl: string | null; piindexUrl: string }[] }[];
+    const kinds = categories.kinds as { id: string; name: string; nameZh: string; piindexUrl: string; categories: { id: string; guideUrl: string | null; piindexUrl: string }[] }[];
     assert.ok(kinds.every(kind => kind.piindexUrl.startsWith('https://piindex.dev/')));
     const subagents = kinds.find(kind => kind.id === 'packages')!.categories.find(category => category.id === 'subagents')!;
     assert.equal(subagents.piindexUrl, 'https://piindex.dev/?category=subagents');
     assert.equal(subagents.guideUrl, 'https://piindex.dev/categories/subagents/');
+    const community = kinds.find(kind => kind.id === 'community')!;
+    assert.equal(community.name, 'Community Resources');
+    assert.equal(community.nameZh, '社区资源');
+    assert.equal(community.categories[0]?.id, 'community-resources');
+    const communityPackages = body(await client.callTool({ name: 'list_packages', arguments: { category: 'community' } }) as ToolBody);
+    assert.equal(communityPackages.directoryUrl, 'https://piindex.dev/?category=community');
+    const [omp] = packagesOf(communityPackages);
+    assert.equal(omp.name, 'omp packages');
+    assert.equal(omp.install, null);
+    assert.equal(omp.piindexUrl, 'https://piindex.dev/?q=omp+packages');
     const listed = body(await client.callTool({ name: 'list_packages', arguments: { category: 'web-access-search', limit: 50 } }) as ToolBody);
     assert.equal(listed.directoryUrl, 'https://piindex.dev/?category=web-access-search');
     assert.ok(packagesOf(listed).some(pkg => pkg.name === 'pi-web-access'));

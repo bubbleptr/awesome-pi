@@ -45,6 +45,13 @@
       "nameZh": "替代发行版",
       "count": 1,
       "piindexUrl": "https://piindex.dev/?category=distributions"
+    },
+    {
+      "id": "community",
+      "name": "Community Resources",
+      "nameZh": "社区资源",
+      "count": 1,
+      "piindexUrl": "https://piindex.dev/?category=community"
     }
   ],
   "categories": [
@@ -280,6 +287,15 @@
       "kind": "distributions",
       "count": 1,
       "piindexUrl": "https://piindex.dev/?category=alternative-distributions",
+      "guideUrl": null
+    },
+    {
+      "id": "community-resources",
+      "name": "Community Resources",
+      "nameZh": "社区资源",
+      "kind": "community",
+      "count": 1,
+      "piindexUrl": "https://piindex.dev/?category=community-resources",
       "guideUrl": null
     }
   ],
@@ -6247,6 +6263,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=oh-my-pi",
       "directoryUrl": "https://piindex.dev/?q=oh-my-pi",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "omp-packages-9073d508",
+      "name": "omp packages",
+      "kind": "community",
+      "kindName": "Community Resources",
+      "kindNameZh": "社区资源",
+      "descriptions": {
+        "en": [
+          "Catalog of oh-my-pi plugins on npm, with user reports on whether each Pi package works on omp and a status badge for package READMEs. Website, not a Pi package. By paymog."
+        ],
+        "zh": [
+          "oh-my-pi 的 npm 插件目录，附带用户报告：每个 Pi Package 在 omp 上能否运行；并提供可放入 package README 的状态徽章。网站，非 Pi Package。作者 paymog。"
+        ]
+      },
+      "categories": [
+        "community-resources"
+      ],
+      "searchText": " omp packages Catalog of oh-my-pi plugins on npm, with user reports on whether each Pi package works on omp and a status badge for package READMEs. Website, not a Pi package. By paymog. oh-my-pi 的 npm 插件目录，附带用户报告：每个 Pi Package 在 omp 上能否运行；并提供可放入 package README 的状态徽章。网站，非 Pi Package。作者 paymog。 Community Resources community  社区资源",
+      "projectUrl": "https://omppackages.com",
+      "repoUrl": null,
+      "npmPackage": null,
+      "npmUrl": null,
+      "install": null,
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=omp+packages",
+      "directoryUrl": "https://piindex.dev/?q=omp+packages",
       "guideUrl": null,
       "guides": []
     }
