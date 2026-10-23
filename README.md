@@ -75,6 +75,7 @@ Web 搜索和内容获取 Package，让 Pi 能够访问互联网信息。
 - 🔥 [pi-web-access](https://github.com/nicobailon/pi-web-access) - Web 搜索、URL 获取、PDF 提取与 YouTube 理解；默认免 Key 搜索使用 Exa MCP，按配置降级，DuckDuckGo 需显式选择。`pi install npm:pi-web-access`
 - 🔥 [@juicesharp/rpiv-web-tools](https://github.com/juicesharp/rpiv-mono) - 可插拔 Web 搜索（Brave, Tavily, Serper, Exa, Jina, Firecrawl, SearXNG, Ollama）。`pi install npm:@juicesharp/rpiv-web-tools`
 - 🔥 [@ollama/pi-web-search](https://pi.dev/packages/@ollama/pi-web-search) - 使用 Ollama Web 搜索和获取 API。`pi install npm:@ollama/pi-web-search`
+- [pi-better-web-search](https://github.com/zhexusun10/pi-better-web-search) - 单一 provider-native `web_search` 工具，原样返回服务商结果（不合并、不重排、不摘要），并在已认证服务商间自动降级；原生 DeepSeek Search/Fetch，支持 DeepSeek/Gemini/Ollama 的 URL 分析。`pi install npm:pi-better-web-search`
 - [pi-smart-fetch](https://github.com/Thinkscape/agent-smart-fetch) - 桌面浏览器 TLS 模拟，批量获取，多格式输出（markdown/html/text/json）。`pi install npm:pi-smart-fetch`
 - [@narumitw/pi-firecrawl](https://github.com/narumiruna/pi-extensions) - Firecrawl 驱动的网页抓取、爬取、URL 发现和 Web 搜索。`pi install npm:@narumitw/pi-firecrawl`
 - [@code-yeongyu/pi-webfetch](https://github.com/code-yeongyu/pi-webfetch) - URL 内容获取，支持 markdown/plain text/raw HTML。`pi install git:github.com/code-yeongyu/pi-webfetch`
