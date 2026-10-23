@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 127,
+      "count": 128,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -60,7 +60,7 @@
       "name": "Web Access & Search",
       "nameZh": "网页与搜索",
       "kind": "packages",
-      "count": 8,
+      "count": 9,
       "piindexUrl": "https://piindex.dev/?category=web-access-search",
       "guideUrl": "https://piindex.dev/categories/web-access-search/"
     },
@@ -520,6 +520,37 @@
           "piindexUrl": "https://piindex.dev/categories/web-access-search/"
         }
       ]
+    },
+    {
+      "id": "pi-better-web-search-af1cc017",
+      "name": "pi-better-web-search",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "One provider-native web_search tool that returns raw provider results (no dedup, re-ranking or summarization) and falls back across authenticated providers; native DeepSeek Search/Fetch and URL analysis via DeepSeek/Gemini/Ollama."
+        ],
+        "zh": [
+          "单一 provider-native web_search 工具，原样返回服务商结果（不合并、不重排、不摘要），并在已认证服务商间自动降级；原生 DeepSeek Search/Fetch，支持 DeepSeek/Gemini/Ollama 的 URL 分析。"
+        ]
+      },
+      "categories": [
+        "web-access-search"
+      ],
+      "searchText": " pi-better-web-search One provider-native web_search tool that returns raw provider results (no dedup, re-ranking or summarization) and falls back across authenticated providers; native DeepSeek Search/Fetch and URL analysis via DeepSeek/Gemini/Ollama. 单一 provider-native web_search 工具，原样返回服务商结果（不合并、不重排、不摘要），并在已认证服务商间自动降级；原生 DeepSeek Search/Fetch，支持 DeepSeek/Gemini/Ollama 的 URL 分析。 Web Access & Search packages pi install npm:pi-better-web-search 网页与搜索",
+      "projectUrl": "https://github.com/zhexusun10/pi-better-web-search",
+      "repoUrl": "https://github.com/zhexusun10/pi-better-web-search",
+      "npmPackage": "pi-better-web-search",
+      "npmUrl": "https://www.npmjs.com/package/pi-better-web-search",
+      "install": "pi install npm:pi-better-web-search",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-better-web-search",
+      "directoryUrl": "https://piindex.dev/?q=pi-better-web-search",
+      "guideUrl": null,
+      "guides": []
     },
     {
       "id": "pi-smart-fetch-cf960756",
