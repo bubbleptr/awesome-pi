@@ -130,6 +130,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-starline](https://github.com/Andy8647/pi-starline) - Starship 风格状态栏、Opencode 风格编辑器边框，以及全屏模式下的鼠标操作：拖选复制、点击展开单个工具框、点击定位光标；配色支持 `$ref` 复用。`pi install npm:pi-starline`
 - [pi-tidy](https://github.com/Andy8647/pi-tidy) - 工具调用折叠：一次回复的多个调用压成一行，点开看单条；编辑 diff 并排显示且限制高度，失败行和后台任务不会被折进去。`pi install npm:pi-tidy`
 - [pi-ghostty-tab](https://github.com/Andy8647/pi-ghostty-tab) - 把 Ghostty 标签页标题当状态提示用：spinner、任务摘要，跑完 / 失败 / 等待回答时换图标，标签页不在前台时发系统通知。`pi install npm:pi-ghostty-tab`
+- [pi-webman](https://github.com/steelburn/pi-webman) - 浏览器里的 Pi 驾驶舱：实时对话流、token 通量、上下文压力、模型核心、思考档位、工具负载、活动日志，以及 `/` 命令补全与键盘驱动的指令面板；本地回环 Web UI，零运行时依赖。`pi install npm:pi-webman`
 
 ---
 
