@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 128,
+      "count": 129,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -87,7 +87,7 @@
       "name": "UI Enhancement",
       "nameZh": "界面增强",
       "kind": "packages",
-      "count": 15,
+      "count": 16,
       "piindexUrl": "https://piindex.dev/?category=ui-enhancement",
       "guideUrl": null
     },
@@ -1551,6 +1551,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=pi-ghostty-tab",
       "directoryUrl": "https://piindex.dev/?q=pi-ghostty-tab",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "pi-webman-ddc0fe18",
+      "name": "pi-webman",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "A browser cockpit for the Pi session running in your terminal: live transcript, token flux, context pressure, model core, thinking level, tool loadout, activity log, plus / command completion and a keyboard-driven command palette. Loopback-only web UI, zero runtime dependencies."
+        ],
+        "zh": [
+          "浏览器里的 Pi 驾驶舱：实时对话流、token 通量、上下文压力、模型核心、思考档位、工具负载、活动日志，以及 / 命令补全与键盘驱动的指令面板；本地回环 Web UI，零运行时依赖。"
+        ]
+      },
+      "categories": [
+        "ui-enhancement"
+      ],
+      "searchText": " pi-webman A browser cockpit for the Pi session running in your terminal: live transcript, token flux, context pressure, model core, thinking level, tool loadout, activity log, plus / command completion and a keyboard-driven command palette. Loopback-only web UI, zero runtime dependencies. 浏览器里的 Pi 驾驶舱：实时对话流、token 通量、上下文压力、模型核心、思考档位、工具负载、活动日志，以及 / 命令补全与键盘驱动的指令面板；本地回环 Web UI，零运行时依赖。 UI Enhancement packages pi install npm:pi-webman 界面增强",
+      "projectUrl": "https://github.com/steelburn/pi-webman",
+      "repoUrl": "https://github.com/steelburn/pi-webman",
+      "npmPackage": "pi-webman",
+      "npmUrl": "https://www.npmjs.com/package/pi-webman",
+      "install": "pi install npm:pi-webman",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-webman",
+      "directoryUrl": "https://piindex.dev/?q=pi-webman",
       "guideUrl": null,
       "guides": []
     },
