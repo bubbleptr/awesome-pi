@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 128,
+      "count": 129,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -195,7 +195,7 @@
       "name": "Utilities",
       "nameZh": "实用工具",
       "kind": "packages",
-      "count": 16,
+      "count": 17,
       "piindexUrl": "https://piindex.dev/?category=utilities",
       "guideUrl": null
     },
@@ -3787,6 +3787,37 @@
       "weeklyTrendPercent": -92,
       "piindexUrl": "https://piindex.dev/?q=pi-jev-model-router",
       "directoryUrl": "https://piindex.dev/?q=pi-jev-model-router",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "tibo-rush-f5436512",
+      "name": "tibo-rush",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "One /tibo-rush command switches the model, thinking level and service tier of every connected session, and off restores each session's original setup. Also works in Oh My Pi; role and sub-agent routing are OMP-only."
+        ],
+        "zh": [
+          "一条 /tibo-rush 命令切换所有已接入会话的模型、思考强度和服务速度档，off 按会话恢复各自原来的设置。同样支持 Oh My Pi，角色与子代理路由仅在 OMP 中生效。"
+        ]
+      },
+      "categories": [
+        "utilities"
+      ],
+      "searchText": " tibo-rush One /tibo-rush command switches the model, thinking level and service tier of every connected session, and off restores each session's original setup. Also works in Oh My Pi; role and sub-agent routing are OMP-only. 一条 /tibo-rush 命令切换所有已接入会话的模型、思考强度和服务速度档，off 按会话恢复各自原来的设置。同样支持 Oh My Pi，角色与子代理路由仅在 OMP 中生效。 Utilities packages pi install npm:tibo-rush 实用工具",
+      "projectUrl": "https://github.com/happyfeetw/tibo-rush",
+      "repoUrl": "https://github.com/happyfeetw/tibo-rush",
+      "npmPackage": "tibo-rush",
+      "npmUrl": "https://www.npmjs.com/package/tibo-rush",
+      "install": "pi install npm:tibo-rush",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=tibo-rush",
+      "directoryUrl": "https://piindex.dev/?q=tibo-rush",
       "guideUrl": null,
       "guides": []
     },

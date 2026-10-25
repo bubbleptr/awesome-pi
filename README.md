@@ -285,6 +285,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 
 - [pi-jev-router (win4r)](https://github.com/win4r/pi-jev-router) - 按任务在已配置的 Pi 模型间路由。默认 shadow 仅记录建议，Jev 网络判定默认关闭；通过 `/route init` 配置模型，配置 TypeSafe Key 后用 `/route jev on` 启用 Jev。需要 Node 22.19+、Pi 0.84.2–0.86.x。`pi install git:github.com/win4r/pi-jev-router`
 - [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) - 根据 Jev 任务判定、预算策略和提示词缓存成本，在已授权的 Pi 模型间路由。需要 TypeSafe Key；预算额度只调整路由，不会停止消费。`pi install npm:pi-jev-model-router`
+- [tibo-rush](https://github.com/happyfeetw/tibo-rush) - 一条 `/tibo-rush` 命令切换所有已接入会话的模型、思考强度和服务速度档，`off` 按会话恢复各自原来的设置。同样支持 Oh My Pi，角色与子代理路由仅在 OMP 中生效。`pi install npm:tibo-rush`
 - 🔥 [@juicesharp/rpiv-ask-user-question](https://github.com/juicesharp/rpiv-mono) - 交互式 ask_user 工具，可搜索分割窗格选择 UI、多选、自由输入。`pi install npm:@juicesharp/rpiv-ask-user-question`
 - 🔥 [pi-markdown-preview](https://pi.dev/packages/pi-markdown-preview) - 渲染 markdown + LaTeX 预览，支持终端、浏览器和 PDF 输出。`pi install npm:pi-markdown-preview`
 - 🔥 [pi-studio](https://pi.dev/packages/pi-studio) - 双窗格浏览器工作空间，支持提示/响应编辑、注释、实时预览。`pi install npm:pi-studio`
