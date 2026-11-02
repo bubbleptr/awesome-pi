@@ -185,6 +185,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [@samfp/pi-memory](https://pi.dev/packages/@samfp/pi-memory) - 从会话中学习更正、偏好和模式，注入未来对话。`pi install npm:@samfp/pi-memory`
 - [pi-memory-honcho](https://github.com/acsezen/pi-memory-honcho) - Honcho 支持的持久记忆，跨工作空间记忆共享。`pi install npm:pi-memory-honcho`
 - [pi-mate-companion](https://github.com/m-rui001/pi-mate-companion) - 伴侣向持久记忆：记什么由模型自己调 `remember`/`ponder` 决定，不自动入库；强度按 ACT-R 随真实经过时间衰减、被召回加固、睡眠时选择性降尺度。MIT。`pi install npm:@m-rui/pi-mate-companion`
+- [pi-agent-journal](https://github.com/zirkelc/agent-journal) - 由 agent 自主写的工作日志：每个里程碑一个带 frontmatter 的小 markdown 文件，用 `ls` 和 `grep` 即可检索。完全本地运行，不发网络请求。MIT。`pi install npm:pi-agent-journal`
 
 ---
 

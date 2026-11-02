@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 130,
+      "count": 131,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -114,7 +114,7 @@
       "name": "Persistent Memory",
       "nameZh": "持久化记忆",
       "kind": "packages",
-      "count": 6,
+      "count": 7,
       "piindexUrl": "https://piindex.dev/?category=persistent-memory",
       "guideUrl": null
     },
@@ -2564,6 +2564,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=pi-mate-companion",
       "directoryUrl": "https://piindex.dev/?q=pi-mate-companion",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "pi-agent-journal-96fa8b89",
+      "name": "pi-agent-journal",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "A journal the agent writes on its own: one small markdown file with frontmatter per milestone, found again with ls and grep. Runs locally and makes no network requests. MIT."
+        ],
+        "zh": [
+          "由 agent 自主写的工作日志：每个里程碑一个带 frontmatter 的小 markdown 文件，用 ls 和 grep 即可检索。完全本地运行，不发网络请求。MIT。"
+        ]
+      },
+      "categories": [
+        "persistent-memory"
+      ],
+      "searchText": " pi-agent-journal A journal the agent writes on its own: one small markdown file with frontmatter per milestone, found again with ls and grep. Runs locally and makes no network requests. MIT. 由 agent 自主写的工作日志：每个里程碑一个带 frontmatter 的小 markdown 文件，用 ls 和 grep 即可检索。完全本地运行，不发网络请求。MIT。 Persistent Memory packages pi install npm:pi-agent-journal 持久化记忆",
+      "projectUrl": "https://github.com/zirkelc/agent-journal",
+      "repoUrl": "https://github.com/zirkelc/agent-journal",
+      "npmPackage": "pi-agent-journal",
+      "npmUrl": "https://www.npmjs.com/package/pi-agent-journal",
+      "install": "pi install npm:pi-agent-journal",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-agent-journal",
+      "directoryUrl": "https://piindex.dev/?q=pi-agent-journal",
       "guideUrl": null,
       "guides": []
     },
