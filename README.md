@@ -81,6 +81,7 @@ Web 搜索和内容获取 Package，让 Pi 能够访问互联网信息。
 - [@code-yeongyu/pi-webfetch](https://github.com/code-yeongyu/pi-webfetch) - URL 内容获取，支持 markdown/plain text/raw HTML。`pi install git:github.com/code-yeongyu/pi-webfetch`
 - [@code-yeongyu/pi-websearch](https://github.com/code-yeongyu/pi-websearch) - Provider-backed Web 搜索，带配置门控和 TUI 状态。`pi install git:github.com/code-yeongyu/pi-websearch`
 - [webfox](https://github.com/mavam/webfox) - 多服务商联网搜索、网页提取、带来源回答与深度研究，提供 CLI、库与 Pi 扩展；webfox/durable 入口可将同一套工具装进 Pi Durable 宿主。`pi install npm:webfox`
+- [@keenable/pi-search](https://pi.dev/packages/@keenable/pi-search) - Keenable 联网搜索与网页抓取（返回干净 Markdown），注册为原生工具 `keenable_search`、`keenable_fetch`；默认无需 API Key（公共额度按 IP 限流），设置 `KEENABLE_API_KEY` 可解除每小时上限。`pi install npm:@keenable/pi-search`
 
 ---
 
