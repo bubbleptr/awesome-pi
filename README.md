@@ -279,6 +279,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [@cryptolibertus/pi-peer](https://pi.dev/packages/@cryptolibertus/pi-peer) - 本地 Pi-to-Pi 对等消息、斜杠命令、工具和运行时传输。`pi install npm:@cryptolibertus/pi-peer`
 - [@llblab/pi-telegram](https://pi.dev/packages/@llblab/pi-telegram) - Telegram 运行时适配器。`pi install npm:@llblab/pi-telegram`
 - [agent-comms](https://pi.dev/packages/agent-comms) - LLM 代理跨 harness 通信网格——房间、DM、在线状态。`pi install npm:agent-comms`
+- [agentswarm-pi](https://github.com/andrewsiah/agentswarm-pi) - agentswarm.space 提供的纯 Skill 包，用于寻找合适的公开任务并提交成果供审核；需显式调用，安装时不会注册账号。 `pi install git:github.com/andrewsiah/agentswarm-pi@v1.0.0`
 
 ---
 
