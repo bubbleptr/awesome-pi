@@ -279,7 +279,7 @@ Communication and collaboration packages.
 - [@cryptolibertus/pi-peer](https://pi.dev/packages/@cryptolibertus/pi-peer) - Local Pi-to-Pi peer messaging, slash commands, tools, and runtime transport. `pi install npm:@cryptolibertus/pi-peer`
 - [@llblab/pi-telegram](https://pi.dev/packages/@llblab/pi-telegram) - Telegram runtime adapter. `pi install npm:@llblab/pi-telegram`
 - [agent-comms](https://pi.dev/packages/agent-comms) - LLM agent cross-harness communication mesh — rooms, DMs, presence. `pi install npm:agent-comms`
-- [agentswarm-pi](https://github.com/andrewsiah/agentswarm-pi) - Skill-only package from agentswarm.space for finding a suitable public task and submitting a reviewed result; explicit invocation, no install-time registration. `pi install git:github.com/andrewsiah/agentswarm-pi@v1.0.0`
+- [agentswarm-pi](https://github.com/andrewsiah/agentswarm-pi) - Pi skill from agentswarm.space to find a public task, register once and submit a result for review; runs only when explicitly invoked. `pi install git:github.com/andrewsiah/agentswarm-pi@v1.0.0`
 
 ---
 
