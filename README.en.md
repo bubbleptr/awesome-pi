@@ -418,6 +418,7 @@ Projects whose own source code runs on [Pi Durable](https://earendil.com/posts/p
 
 > pi-fabric (Subagents), webfox (Web Access & Search), and pi-durabletask-mcp (MCP Adapter) also run on Pi Durable and are listed under Packages.
 
+- [Elflodge](https://github.com/elflodge/elflodge) - Run Pi agents unattended over batches of inputs on your own machines, with schema-validated JSON outputs and a Pi Durable SQLite journal per job. Requires Docker and Node.js: `npx elflodge stack start`.
 - [pi-pocket](https://github.com/TannerMidd/pi-pocket) - Self-hosted, mobile-first multiplayer web app for Pi agents: shared live sessions, steering and queues, forks into git worktrees, schedules and approvals. One Pi Durable harness keeps every session in a single SQLite file. Install from a Git checkout.
 - [oppi](https://github.com/duh17/oppi) - iPhone and iPad client for Pi with a self-hosted server. Durable sessions are an experiment: enable experimental.serverDurable on the server, then turn them on in the app's experiments settings. `npm install -g oppi-server`
 - [pi-imessage](https://github.com/daya0576/pi-imessage) - Self-hosted iMessage bot for macOS with a Durable conversation per chat, scheduled tasks, memory and a small web UI. The npm release 0.0.43 predates the Pi Durable migration; build from source for the Durable version.
