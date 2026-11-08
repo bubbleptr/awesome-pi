@@ -431,6 +431,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [antiproton](https://github.com/botiverse/antiproton) - Cloudflare 上的多租户 Agent 运行时：每个租户与 Agent 一个 Durable Object，工具网关让凭据不进入模型上下文；每个对象内由 Pi Durable 运行 Agent。
 - [sift](https://github.com/timReynolds/sift) - GitHub Action 形式的多 Agent PR 审查：主审与各专项审查者在 Docker 工作区中检查代码，每个 PR 保存一份 SQLite 快照。仅用于受信任仓库，跳过 fork PR。
 - [pi-durable-subagents](https://github.com/anasalqoyyum/pi-durable-subagents) - Pi 扩展：后台子代理可查看、引导，重启后可恢复，可选在 git worktree 中隔离。`pi install git:github.com/anasalqoyyum/pi-durable-subagents`
+- [@usecontextlayer/pi-durable-assistant-ui](https://github.com/usecontextlayer/pi-durable-assistant-ui) - 将 Pi Durable 对话接入 Assistant UI（React）的社区适配器，附本地演示。由 ContextLayer 维护。`npm install @usecontextlayer/pi-durable-assistant-ui`
 
 
 ## Clients & SDKs
