@@ -418,7 +418,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 
 > pi-fabric（Subagents）、webfox（Web Access & Search）与 pi-durabletask-mcp（MCP Adapter）同样基于 Pi Durable，收录在 Packages 下。
 
-- [Elflodge](https://github.com/elflodge/elflodge) - 通过统一的任务 API，在自己的机器上无人值守地并行运行 Pi Agent，无需为每个任务单独配置容器。支持单个任务或批量提交、结构化结果，每个任务使用独立的 Pi Durable SQLite 日志。需要 Docker 和 Node.js：`npx elflodge stack start`。
+- [Elflodge](https://github.com/elflodge/elflodge) - 通过统一的任务 API，在自己的机器上，通过沙箱无人值守地并行运行 Pi Agent，无需为每个任务单独配置容器。支持单个任务或批量自动化、结构化结果，每个任务使用独立的 Pi Durable SQLite 日志。需要 Docker 和 Node.js：`npx elflodge stack start`。
 - [pi-pocket](https://github.com/TannerMidd/pi-pocket) - 自托管、移动优先的多人 Pi Web 应用：共享实时会话、中途引导与排队、分叉到 git worktree、定时任务与审批。所有会话由一个 Pi Durable harness 存进同一个 SQLite 文件。从 Git 仓库安装。
 - [oppi](https://github.com/duh17/oppi) - iPhone、iPad Pi 客户端，配合自托管服务端使用。Durable 会话为实验功能：先在服务端开启 experimental.serverDurable，再在 App 的实验设置中打开。`npm install -g oppi-server`
 - [pi-imessage](https://github.com/daya0576/pi-imessage) - macOS 自托管 iMessage 机器人：每个聊天一个 Durable 会话，支持定时任务、记忆与小型 Web 界面。npm 版 0.0.43 早于 Pi Durable 迁移，Durable 版本需从源码构建。
