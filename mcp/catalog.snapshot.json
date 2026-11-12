@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 132,
+      "count": 133,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -123,7 +123,7 @@
       "name": "Context Management",
       "nameZh": "上下文管理",
       "kind": "packages",
-      "count": 8,
+      "count": 9,
       "piindexUrl": "https://piindex.dev/?category=context-management",
       "guideUrl": null
     },
@@ -2788,6 +2788,37 @@
       "weeklyTrendPercent": 22,
       "piindexUrl": "https://piindex.dev/?q=pi-context-prune",
       "directoryUrl": "https://piindex.dev/?q=pi-context-prune",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "pi-context-kit-04ae8889",
+      "name": "pi-context-kit",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Above the compaction threshold, replaces stale file reads and prunes old tool outputs into one-line notices, prepares the handoff note in the background, and finds the original text again with recall. MIT."
+        ],
+        "zh": [
+          "超过压缩阈值时，将过期的文件读取和旧的工具输出替换为单行提示，在后台准备交接摘要，并可用 recall 找回原文。MIT。"
+        ]
+      },
+      "categories": [
+        "context-management"
+      ],
+      "searchText": " pi-context-kit Above the compaction threshold, replaces stale file reads and prunes old tool outputs into one-line notices, prepares the handoff note in the background, and finds the original text again with recall. MIT. 超过压缩阈值时，将过期的文件读取和旧的工具输出替换为单行提示，在后台准备交接摘要，并可用 recall 找回原文。MIT。 Context Management packages pi install npm:pi-context-kit 上下文管理",
+      "projectUrl": "https://github.com/HugoLopes45/pi-context-kit",
+      "repoUrl": "https://github.com/HugoLopes45/pi-context-kit",
+      "npmPackage": "pi-context-kit",
+      "npmUrl": "https://www.npmjs.com/package/pi-context-kit",
+      "install": "pi install npm:pi-context-kit",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-context-kit",
+      "directoryUrl": "https://piindex.dev/?q=pi-context-kit",
       "guideUrl": null,
       "guides": []
     },

@@ -199,6 +199,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - 🔥 [context-mode](https://pi.dev/packages/context-mode) - MCP 插件，节省 98% 上下文窗口，支持沙箱代码执行、FTS5 知识库。`pi install npm:context-mode`
 - [pi-trim](https://github.com/zhexusun10/pi-trim) - 在内存中移除系统消息中可识别的 Pi 身份介绍与文档样板，保留工具和项目指令。使用 `/pi-trim status` 与 `/pi-trim diff` 检查变化。作者：[zhexusun10](https://github.com/zhexusun10)。`pi install npm:pi-trim`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - 总结已完成的工具调用批次，从 LLM 上下文中修剪原始输出。5 种修剪模式。`pi install npm:pi-context-prune`
+- [pi-context-kit](https://github.com/HugoLopes45/pi-context-kit) - 超过压缩阈值时，将过期的文件读取和旧的工具输出替换为单行提示，在后台准备交接摘要，并可用 `recall` 找回原文。MIT。`pi install npm:pi-context-kit`
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Provider 前缀缓存命中/未命中的实时图形显示。`pi install npm:pi-cache-graph`
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - 通过 lean-ctx CLI 路由命令以节省 token。`pi install npm:pi-lean-ctx`
 - [@hypabolic/pi-hypa](https://github.com/Hypabolic/Hypa) - 本地确定性压缩嘈杂命令输出（git / docker / kubectl 等），再进上下文。`pi install npm:@hypabolic/pi-hypa`
