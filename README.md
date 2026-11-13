@@ -153,6 +153,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-vetter](https://github.com/jesset/pi-vetter) - npm 插件安装/更新前的供应链风险评估：通过 `/vet`、`/vet-install` 主动检查 OSV 漏洞、发布来源、静态模式与版本差异，报告 ALLOW/ASK/DENY；未发现风险不代表安全。`pi install npm:pi-vetter`
 - [pi-verdict](https://github.com/jesset/pi-verdict) - 实验性工具调用权限控制：规则优先，结合会话上下文的模型分类器处理不确定操作，支持 allow/ask/deny；模型调用会增加延迟和成本，不替代系统级沙箱。`pi install npm:pi-verdict`
 - [cc-safety-net](https://github.com/kenryu42/cc-safety-net) - 在工具调用执行前拦截破坏性 Git 与文件系统命令，例如 `git reset --hard` 和 `rm -rf`，并阻止访问 SSH 密钥、`.env` 文件等机密。按命令的实际行为判断，`bash -c` 中的命令同样会被检查；本身不是沙箱。`pi install npm:cc-safety-net`
+- [pi-github-app-auth](https://github.com/tonyputi/pi-github-app-auth) - 为 Pi Agent 的 `bash` 工具中的 `git` 和 `gh` 命令提供独立的 GitHub App 身份与短期安装令牌，不更改个人终端凭据。作者：[tonyputi](https://github.com/tonyputi)。`pi install npm:pi-github-app-auth`
 
 ---
 
@@ -268,6 +269,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - 🔥 [pi-agent-browser-native](https://github.com/fitchmultz/pi-agent-browser-native) - 将 agent-browser 作为原生工具暴露，紧凑页面快照、交互式引用、截图。`pi install npm:pi-agent-browser-native`
 - [@narumitw/pi-chrome-devtools](https://github.com/narumiruna/pi-extensions) - 原生 Chrome DevTools Protocol 工具。`pi install npm:@narumitw/pi-chrome-devtools`
 - [betterwright](https://github.com/BetterWright/betterwright) - 持久、策略守卫的 Playwright：网络策略、凭证保险库、证明截图。`pi install npm:betterwright`
+- [pi-lightpanda](https://github.com/tonyputi/pi-lightpanda) - 基于 Lightpanda 的 Pi 无头浏览器工具，支持 CDP 导航、页面交互与结构化提取。不支持图形渲染或截图。作者：[tonyputi](https://github.com/tonyputi)。`pi install npm:pi-lightpanda`
 
 ---
 

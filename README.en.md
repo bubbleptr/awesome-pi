@@ -153,6 +153,7 @@ Security and permission control packages.
 - [pi-vetter](https://github.com/jesset/pi-vetter) - On-demand supply-chain risk assessment for npm packages via `/vet` and `/vet-install`: OSV advisories, provenance verification, static patterns, and version diffs with ALLOW/ASK/DENY reports. A clean report does not prove safety. `pi install npm:pi-vetter`
 - [pi-verdict](https://github.com/jesset/pi-verdict) - Experimental tool-call permission gate with rules first, a context-aware model classifier for uncertain actions, and allow/ask/deny decisions. Model calls add latency and cost; not an OS-level sandbox. `pi install npm:pi-verdict`
 - [cc-safety-net](https://github.com/kenryu42/cc-safety-net) - Blocks destructive Git and filesystem commands, such as `git reset --hard` and `rm -rf`, and access to secrets such as SSH keys and `.env` files before a tool call runs. It checks what a command does, including commands inside `bash -c`. It is not a sandbox. `pi install npm:cc-safety-net`
+- [pi-github-app-auth](https://github.com/tonyputi/pi-github-app-auth) - Separate GitHub App identity with short-lived installation tokens for `git` and `gh` commands in Pi's agent `bash` tool, without changing personal terminal credentials. By [tonyputi](https://github.com/tonyputi). `pi install npm:pi-github-app-auth`
 
 ---
 
@@ -268,6 +269,7 @@ Browser automation packages.
 - 🔥 [pi-agent-browser-native](https://github.com/fitchmultz/pi-agent-browser-native) - Exposes agent-browser as native tools with compact page snapshots, interactive references, and screenshots. `pi install npm:pi-agent-browser-native`
 - [@narumitw/pi-chrome-devtools](https://github.com/narumiruna/pi-extensions) - Native Chrome DevTools Protocol tools. `pi install npm:@narumitw/pi-chrome-devtools`
 - [betterwright](https://github.com/BetterWright/betterwright) - Persistent, policy-guarded Playwright: network policy, credential vault, and attested screenshots. `pi install npm:betterwright`
+- [pi-lightpanda](https://github.com/tonyputi/pi-lightpanda) - Lightpanda-backed headless browser tools for Pi, with CDP navigation, page interaction, and structured extraction. No graphical rendering or screenshots. By [tonyputi](https://github.com/tonyputi). `pi install npm:pi-lightpanda`
 
 ---
 
