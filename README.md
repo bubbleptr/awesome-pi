@@ -443,6 +443,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - 🔥 [@jmfederico/pi-web](https://github.com/jmfederico/pi-web) - 浏览器监督真实工作区中的 Pi 会话，断线不杀进程。[pi-web.dev](https://pi-web.dev/) `pi install npm:@jmfederico/pi-web`
 - [pitago](https://github.com/cavaldos/pitago) - Pi 编程助手的精美终端 UI（TUI）前端：实时流式聊天、侧边栏会话/模型/token 统计、命令面板、主题、市场、图片视觉支持。独立 Go/Bubble Tea CLI，通过 `pi --mode rpc` 驱动，非 Pi Package。
 - [Pace](https://github.com/bubbleptr/pace) - Pi 编程助手的桌面 GUI（早期 0.y.z）：会话时间线与轨迹，每一轮的费用和 token 以 Pi 自己的日志为准。Electron + React；共享 `~/.pi/agent`，不 fork Pi，并内置 Pi 运行时。从 GitHub Releases 安装最新的 Apple Silicon DMG 或 Linux x64 AppImage/deb。
+- [Pi GPUI](https://github.com/bytesbay/pi-gpui) - Pi 编程助手的原生桌面应用，用 Rust 和 GPUI 编写（没有 Electron 或 webview），目前支持 macOS，Linux 在计划中。通过 RPC 运行你已安装的 Pi，每个打开的会话一个进程：带分叉的会话树、扩展提问直接在对话中回答、任意语言的插件。`pi-gpui` 包提供 `/gpui`，把终端会话转到应用里。`brew install --cask bytesbay/tap/pi-gpui` · `pi install npm:pi-gpui`
 - [pi-agent-python-sdk](https://github.com/cheenulabs/pi-agent-python-sdk) - 非官方社区 Python SDK：以 RPC 模式启动 Pi CLI，提供类型化的同步/异步 API，支持提示、流式事件、会话与 RPC 控制。`python -m pip install pi-agent-python-sdk` · [PyPI](https://pypi.org/project/pi-agent-python-sdk/)
 
 
