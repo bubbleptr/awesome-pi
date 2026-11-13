@@ -289,6 +289,7 @@ Communication and collaboration packages.
 
 Other utility packages.
 
+- [pi-gpt-instruct](https://github.com/TATnvn/pi-gpt-instruct) - Jailbreak extension for GPT models that uses gpt-instruct prompts to reduce refusal rates on certain tasks, supporting model matching, session toggles, and automatic updates. By [TATnvn](https://github.com/TATnvn). `pi install git:github.com/TATnvn/pi-gpt-instruct`
 - [pi-jev-router (win4r)](https://github.com/win4r/pi-jev-router) - Routes tasks across configured Pi models. Defaults to shadow mode that only records recommendations, with Jev network judgments disabled. Configure models with `/route init`, then configure a TypeSafe key and use `/route jev on` to enable Jev. Requires Node 22.19+ and Pi 0.84.2–0.86.x. `pi install git:github.com/win4r/pi-jev-router`
 - [pi-jev-model-router](https://github.com/da-vinci-noob/pi-jev-model-router) - Routes prompts across authenticated Pi models using Jev task judgments, budget policy, and cache-aware switching. Requires a TypeSafe key; budget caps change routing rather than stop spending. `pi install npm:pi-jev-model-router`
 - [tibo-rush](https://github.com/happyfeetw/tibo-rush) - One `/tibo-rush` command switches the model, thinking level and service tier of every connected session, and `off` restores each session's original setup. Also works in Oh My Pi; role and sub-agent routing are OMP-only. `pi install npm:tibo-rush`
