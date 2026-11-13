@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 133,
+      "count": 135,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -96,7 +96,7 @@
       "name": "Security & Permission",
       "nameZh": "安全与权限",
       "kind": "packages",
-      "count": 14,
+      "count": 15,
       "piindexUrl": "https://piindex.dev/?category=security-permission",
       "guideUrl": null
     },
@@ -177,7 +177,7 @@
       "name": "Browser Automation",
       "nameZh": "浏览器自动化",
       "kind": "packages",
-      "count": 4,
+      "count": 5,
       "piindexUrl": "https://piindex.dev/?category=browser-automation",
       "guideUrl": null
     },
@@ -2065,6 +2065,37 @@
       "guides": []
     },
     {
+      "id": "pi-github-app-auth-90709ad3",
+      "name": "pi-github-app-auth",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Separate GitHub App identity with short-lived installation tokens for git and gh commands in Pi's agent bash tool, without changing personal terminal credentials. By tonyputi."
+        ],
+        "zh": [
+          "为 Pi Agent 的 bash 工具中的 git 和 gh 命令提供独立的 GitHub App 身份与短期安装令牌，不更改个人终端凭据。作者：tonyputi。"
+        ]
+      },
+      "categories": [
+        "security-permission"
+      ],
+      "searchText": " pi-github-app-auth Separate GitHub App identity with short-lived installation tokens for git and gh commands in Pi's agent bash tool, without changing personal terminal credentials. By tonyputi. 为 Pi Agent 的 bash 工具中的 git 和 gh 命令提供独立的 GitHub App 身份与短期安装令牌，不更改个人终端凭据。作者：tonyputi。 Security & Permission packages pi install npm:pi-github-app-auth 安全与权限",
+      "projectUrl": "https://github.com/tonyputi/pi-github-app-auth",
+      "repoUrl": "https://github.com/tonyputi/pi-github-app-auth",
+      "npmPackage": "pi-github-app-auth",
+      "npmUrl": "https://www.npmjs.com/package/pi-github-app-auth",
+      "install": "pi install npm:pi-github-app-auth",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-github-app-auth",
+      "directoryUrl": "https://piindex.dev/?q=pi-github-app-auth",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
       "id": "pi-jev-theooliveira-27b9525e",
       "name": "pi-jev (TheoOliveira)",
       "kind": "packages",
@@ -3687,6 +3718,37 @@
       "weeklyTrendPercent": -3,
       "piindexUrl": "https://piindex.dev/?q=betterwright",
       "directoryUrl": "https://piindex.dev/?q=betterwright",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "pi-lightpanda-9564fd72",
+      "name": "pi-lightpanda",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Lightpanda-backed headless browser tools for Pi, with CDP navigation, page interaction, and structured extraction. No graphical rendering or screenshots. By tonyputi."
+        ],
+        "zh": [
+          "基于 Lightpanda 的 Pi 无头浏览器工具，支持 CDP 导航、页面交互与结构化提取。不支持图形渲染或截图。作者：tonyputi。"
+        ]
+      },
+      "categories": [
+        "browser-automation"
+      ],
+      "searchText": " pi-lightpanda Lightpanda-backed headless browser tools for Pi, with CDP navigation, page interaction, and structured extraction. No graphical rendering or screenshots. By tonyputi. 基于 Lightpanda 的 Pi 无头浏览器工具，支持 CDP 导航、页面交互与结构化提取。不支持图形渲染或截图。作者：tonyputi。 Browser Automation packages pi install npm:pi-lightpanda 浏览器自动化",
+      "projectUrl": "https://github.com/tonyputi/pi-lightpanda",
+      "repoUrl": "https://github.com/tonyputi/pi-lightpanda",
+      "npmPackage": "pi-lightpanda",
+      "npmUrl": "https://www.npmjs.com/package/pi-lightpanda",
+      "install": "pi install npm:pi-lightpanda",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-lightpanda",
+      "directoryUrl": "https://piindex.dev/?q=pi-lightpanda",
       "guideUrl": null,
       "guides": []
     },
