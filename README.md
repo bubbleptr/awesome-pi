@@ -154,6 +154,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-verdict](https://github.com/jesset/pi-verdict) - 实验性工具调用权限控制：规则优先，结合会话上下文的模型分类器处理不确定操作，支持 allow/ask/deny；模型调用会增加延迟和成本，不替代系统级沙箱。`pi install npm:pi-verdict`
 - [cc-safety-net](https://github.com/kenryu42/cc-safety-net) - 在工具调用执行前拦截破坏性 Git 与文件系统命令，例如 `git reset --hard` 和 `rm -rf`，并阻止访问 SSH 密钥、`.env` 文件等机密。按命令的实际行为判断，`bash -c` 中的命令同样会被检查；本身不是沙箱。`pi install npm:cc-safety-net`
 - [pi-github-app-auth](https://github.com/tonyputi/pi-github-app-auth) - 为 Pi Agent 的 `bash` 工具中的 `git` 和 `gh` 命令提供独立的 GitHub App 身份与短期安装令牌，不更改个人终端凭据。作者：[tonyputi](https://github.com/tonyputi)。`pi install npm:pi-github-app-auth`
+- [claude-bulkhead](https://github.com/dooly6276/claude-bulkhead) - 在工具调用执行前读取 bash 命令文本，拦截无法撤销的命令并给出原因和安全写法，例如变量可能为空的 `rm -rf $D/`、`rsync --delete`，以及 `pkill -f node` 误伤其他会话。无依赖，只检查命令文本，不检查脚本内部的删除，也不是沙箱。作者：[dooly6276](https://github.com/dooly6276)。`pi install npm:claude-bulkhead`
 
 ---
 

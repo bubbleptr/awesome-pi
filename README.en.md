@@ -154,6 +154,7 @@ Security and permission control packages.
 - [pi-verdict](https://github.com/jesset/pi-verdict) - Experimental tool-call permission gate with rules first, a context-aware model classifier for uncertain actions, and allow/ask/deny decisions. Model calls add latency and cost; not an OS-level sandbox. `pi install npm:pi-verdict`
 - [cc-safety-net](https://github.com/kenryu42/cc-safety-net) - Blocks destructive Git and filesystem commands, such as `git reset --hard` and `rm -rf`, and access to secrets such as SSH keys and `.env` files before a tool call runs. It checks what a command does, including commands inside `bash -c`. It is not a sandbox. `pi install npm:cc-safety-net`
 - [pi-github-app-auth](https://github.com/tonyputi/pi-github-app-auth) - Separate GitHub App identity with short-lived installation tokens for `git` and `gh` commands in Pi's agent `bash` tool, without changing personal terminal credentials. By [tonyputi](https://github.com/tonyputi). `pi install npm:pi-github-app-auth`
+- [claude-bulkhead](https://github.com/dooly6276/claude-bulkhead) - Reads the bash command text before a tool call runs and blocks commands that cannot be undone, with the reason and the safe form, for example `rm -rf $D/` and `rsync --delete` when the variable can be empty, or `pkill -f node` hitting other sessions. No dependencies. It only sees command text, not deletes inside a script, and is not a sandbox. By [dooly6276](https://github.com/dooly6276). `pi install npm:claude-bulkhead`
 
 ---
 
