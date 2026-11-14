@@ -434,6 +434,7 @@ Projects whose own source code runs on [Pi Durable](https://earendil.com/posts/p
 - [antiproton](https://github.com/botiverse/antiproton) - Multi-tenant agent runtime on Cloudflare: one Durable Object per tenant and agent, and a tool gateway that keeps credentials out of the model context. Pi Durable runs the agent inside each object.
 - [sift](https://github.com/timReynolds/sift) - Multi-agent PR review as a GitHub Action: a lead reviewer and specialists inspect code in Docker workspaces, with a SQLite snapshot per PR. Trusted repositories only; fork PRs are skipped.
 - [pi-durable-subagents](https://github.com/anasalqoyyum/pi-durable-subagents) - Pi extension for background subagents you can inspect, steer and recover after a restart, optionally isolated in git worktrees. `pi install git:github.com/anasalqoyyum/pi-durable-subagents`
+- [@usecontextlayer/pi-durable-assistant-ui](https://github.com/usecontextlayer/pi-durable-assistant-ui) - Community-maintained adapter connecting Pi Durable conversations to Assistant UI (React), with a local demo. By ContextLayer. `npm install @usecontextlayer/pi-durable-assistant-ui`
 
 
 ## Clients & SDKs
