@@ -82,6 +82,7 @@ Web search and content fetching packages that give Pi access to internet informa
 - [@code-yeongyu/pi-websearch](https://github.com/code-yeongyu/pi-websearch) - Provider-backed web search with configuration gating and TUI status. `pi install git:github.com/code-yeongyu/pi-websearch`
 - [webfox](https://github.com/mavam/webfox) - Multi-provider web search, page extraction, grounded answers and deep research as a CLI, library and Pi extension; the webfox/durable entry installs the same tools in a Pi Durable host. `pi install npm:webfox`
 - [@keenable/pi-search](https://pi.dev/packages/@keenable/pi-search) - Keenable web search and page fetch as native tools (`keenable_search`, `keenable_fetch`). Keyless by default on a rate-limited public tier; `KEENABLE_API_KEY` lifts the hourly cap. `pi install npm:@keenable/pi-search`
+- [youtube-transcript-skills](https://github.com/tubeagentkit/youtube-transcript-skills) - Agent skill that fetches YouTube video transcripts (available caption languages, optional timestamps) and searches videos and channels through the GetYouTubeTranscript API; needs an API key, 100 free credits on sign-up. `pi install git:github.com/tubeagentkit/youtube-transcript-skills`
 
 ---
 
