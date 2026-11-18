@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 135,
+      "count": 136,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -123,7 +123,7 @@
       "name": "Context Management",
       "nameZh": "上下文管理",
       "kind": "packages",
-      "count": 9,
+      "count": 10,
       "piindexUrl": "https://piindex.dev/?category=context-management",
       "guideUrl": null
     },
@@ -2850,6 +2850,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=pi-context-kit",
       "directoryUrl": "https://piindex.dev/?q=pi-context-kit",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "pi-protokoll-5683bd42",
+      "name": "pi-protokoll",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Replaces Pi's compaction for long sessions: the model writes a short protocol per turn (result, decisions, files, open items, rules), and at compaction the summary is assembled mostly by code in tiers (recent turns verbatim, older turns as message plus protocol, oldest as an index) with fixed token budgets; older turns stay reachable through lookup tools. Built for local models; an afterwards-only mode keeps instructions out of the system prompt. By sebion7125. MIT."
+        ],
+        "zh": [
+          "替代 Pi 的压缩，面向长会话：模型在每轮末尾写一段简短协议（结果、决定、文件、待办、规则），压缩时摘要主要由代码按层级拼装（最近几轮原文、较早轮次为用户消息加协议、最早的只保留索引），每层有固定 token 预算；较早轮次可通过查询工具找回。为本地模型设计；“事后模式”不在系统提示中加入指令。作者：sebion7125。MIT。"
+        ]
+      },
+      "categories": [
+        "context-management"
+      ],
+      "searchText": " pi-protokoll Replaces Pi's compaction for long sessions: the model writes a short protocol per turn (result, decisions, files, open items, rules), and at compaction the summary is assembled mostly by code in tiers (recent turns verbatim, older turns as message plus protocol, oldest as an index) with fixed token budgets; older turns stay reachable through lookup tools. Built for local models; an afterwards-only mode keeps instructions out of the system prompt. By sebion7125. MIT. 替代 Pi 的压缩，面向长会话：模型在每轮末尾写一段简短协议（结果、决定、文件、待办、规则），压缩时摘要主要由代码按层级拼装（最近几轮原文、较早轮次为用户消息加协议、最早的只保留索引），每层有固定 token 预算；较早轮次可通过查询工具找回。为本地模型设计；“事后模式”不在系统提示中加入指令。作者：sebion7125。MIT。 Context Management packages pi install npm:pi-protokoll 上下文管理",
+      "projectUrl": "https://github.com/sebion7125/pi-protokoll",
+      "repoUrl": "https://github.com/sebion7125/pi-protokoll",
+      "npmPackage": "pi-protokoll",
+      "npmUrl": "https://www.npmjs.com/package/pi-protokoll",
+      "install": "pi install npm:pi-protokoll",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-protokoll",
+      "directoryUrl": "https://piindex.dev/?q=pi-protokoll",
       "guideUrl": null,
       "guides": []
     },

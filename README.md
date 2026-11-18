@@ -201,6 +201,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-trim](https://github.com/zhexusun10/pi-trim) - 在内存中移除系统消息中可识别的 Pi 身份介绍与文档样板，保留工具和项目指令。使用 `/pi-trim status` 与 `/pi-trim diff` 检查变化。作者：[zhexusun10](https://github.com/zhexusun10)。`pi install npm:pi-trim`
 - [pi-context-prune](https://github.com/championswimmer/pi-context-prune) - 总结已完成的工具调用批次，从 LLM 上下文中修剪原始输出。5 种修剪模式。`pi install npm:pi-context-prune`
 - [pi-context-kit](https://github.com/HugoLopes45/pi-context-kit) - 超过压缩阈值时，将过期的文件读取和旧的工具输出替换为单行提示，在后台准备交接摘要，并可用 `recall` 找回原文。MIT。`pi install npm:pi-context-kit`
+- [pi-protokoll](https://github.com/sebion7125/pi-protokoll) - 替代 Pi 的压缩，面向长会话：模型在每轮末尾写一段简短协议（结果、决定、文件、待办、规则），压缩时摘要主要由代码按层级拼装（最近几轮原文、较早轮次为用户消息加协议、最早的只保留索引），每层有固定 token 预算；较早轮次可通过查询工具找回。为本地模型设计；“事后模式”不在系统提示中加入指令。作者：[sebion7125](https://github.com/sebion7125)。MIT。`pi install npm:pi-protokoll`
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Provider 前缀缓存命中/未命中的实时图形显示。`pi install npm:pi-cache-graph`
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - 通过 lean-ctx CLI 路由命令以节省 token。`pi install npm:pi-lean-ctx`
 - [@hypabolic/pi-hypa](https://github.com/Hypabolic/Hypa) - 本地确定性压缩嘈杂命令输出（git / docker / kubectl 等），再进上下文。`pi install npm:@hypabolic/pi-hypa`
