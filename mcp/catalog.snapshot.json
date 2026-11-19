@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 136,
+      "count": 137,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -60,7 +60,7 @@
       "name": "Web Access & Search",
       "nameZh": "网页与搜索",
       "kind": "packages",
-      "count": 10,
+      "count": 11,
       "piindexUrl": "https://piindex.dev/?category=web-access-search",
       "guideUrl": "https://piindex.dev/categories/web-access-search/"
     },
@@ -742,6 +742,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=%40keenable%2Fpi-search",
       "directoryUrl": "https://piindex.dev/?q=%40keenable%2Fpi-search",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "youtube-transcript-skills-909c2879",
+      "name": "youtube-transcript-skills",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Agent skill that fetches YouTube video transcripts (available caption languages, optional timestamps) and searches videos and channels through the GetYouTubeTranscript API; needs a paid GetYouTubeTranscript API key (100 free credits on sign-up)."
+        ],
+        "zh": [
+          "获取 YouTube 视频字幕/文字稿（视频可用的字幕语言，可选时间戳），并可搜索视频与频道的 Agent 技能，基于 GetYouTubeTranscript API；需要付费的 GetYouTubeTranscript API Key（注册赠送 100 免费积分）。"
+        ]
+      },
+      "categories": [
+        "web-access-search"
+      ],
+      "searchText": " youtube-transcript-skills Agent skill that fetches YouTube video transcripts (available caption languages, optional timestamps) and searches videos and channels through the GetYouTubeTranscript API; needs a paid GetYouTubeTranscript API key (100 free credits on sign-up). 获取 YouTube 视频字幕/文字稿（视频可用的字幕语言，可选时间戳），并可搜索视频与频道的 Agent 技能，基于 GetYouTubeTranscript API；需要付费的 GetYouTubeTranscript API Key（注册赠送 100 免费积分）。 Web Access & Search packages pi install git:github.com/tubeagentkit/youtube-transcript-skills 网页与搜索",
+      "projectUrl": "https://github.com/tubeagentkit/youtube-transcript-skills",
+      "repoUrl": "https://github.com/tubeagentkit/youtube-transcript-skills",
+      "npmPackage": null,
+      "npmUrl": null,
+      "install": "pi install git:github.com/tubeagentkit/youtube-transcript-skills",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=youtube-transcript-skills",
+      "directoryUrl": "https://piindex.dev/?q=youtube-transcript-skills",
       "guideUrl": null,
       "guides": []
     },
