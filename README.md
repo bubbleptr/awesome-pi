@@ -132,6 +132,8 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-tidy](https://github.com/Andy8647/pi-tidy) - 工具调用折叠：一次回复的多个调用压成一行，点开看单条；编辑 diff 并排显示且限制高度，失败行和后台任务不会被折进去。`pi install npm:pi-tidy`
 - [pi-ghostty-tab](https://github.com/Andy8647/pi-ghostty-tab) - 把 Ghostty 标签页标题当状态提示用：spinner、任务摘要，跑完 / 失败 / 等待回答时换图标，标签页不在前台时发系统通知。`pi install npm:pi-ghostty-tab`
 - [pi-webman](https://github.com/steelburn/pi-webman) - 浏览器里的 Pi 驾驶舱：实时对话流、token 通量、上下文压力、模型核心、思考档位、工具负载、活动日志，以及 `/` 命令补全与键盘驱动的指令面板；本地回环 Web UI，零运行时依赖。`pi install npm:pi-webman`
+- [@spinejit/pi-compact-tree](https://github.com/GhabiX/pi-compact-tree) - Pi 终端 UI 的紧凑执行树扩展：将工具调用折叠为单行摘要、思考过程收敛为标题，配套无边框输入区、单行状态栏与主题。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-compact-tree`
+- [@spinejit/pi-btw-cached](https://github.com/GhabiX/pi-btw-cached) - 复用提示词缓存前缀的 `/btw` 旁路提问命令：在主会话运行期间基于同一缓存前缀提问，不调用工具、不写入会话历史。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-btw-cached`
 
 ---
 
@@ -205,6 +207,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Provider 前缀缓存命中/未命中的实时图形显示。`pi install npm:pi-cache-graph`
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - 通过 lean-ctx CLI 路由命令以节省 token。`pi install npm:pi-lean-ctx`
 - [@hypabolic/pi-hypa](https://github.com/Hypabolic/Hypa) - 本地确定性压缩嘈杂命令输出（git / docker / kubectl 等），再进上下文。`pi install npm:@hypabolic/pi-hypa`
+- [@spinejit/pi-spinejit](https://github.com/GhabiX/spine-plugin) - 面向长会话的子任务树上下文管理扩展：通过 `spine_open`、`spine_close`、`spine_next` 与 `spine_spawn` 维护持久化 SpineTree，在保持活跃工作与前缀缓存不变的同时将已闭合子任务折叠为提交结论，并提供交互式 `/spine-tree` 浏览器。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-spinejit`
 
 ### Loop Engineering
 
@@ -259,6 +262,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 不阻塞主对话的后台进程与长任务。
 
 - [@aliou/pi-processes](https://github.com/aliou/pi-processes) - 不阻塞会话的后台进程：dev server、test watcher、日志，带 `/ps` 面板。`pi install npm:@aliou/pi-processes`
+- [@spinejit/pi-background-job](https://github.com/GhabiX/pi-background-job) - 后台进程与标准输出监控扩展（`background_job` 与 `monitor` 工具），进程退出或命中过滤的新日志行会自动唤醒智能体，无需轮询等待。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-background-job`
 
 ---
 
@@ -307,6 +311,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - 从 Claude plugin marketplace 安装 commands / skills / agents / 部分 hooks / MCP。`pi install npm:pi-claude-marketplace`
 - [antiburn](https://github.com/antiburn/antiburn) - 本地桌面应用（macOS、Windows、Linux），读取 Pi 会话并检查常见的 token 浪费原因：会话过深、subagent 使用高价模型、缓存失效，以及未使用的 MCP、skill 和工具。也支持 Claude Code、Codex、Cursor 等 agent 的会话。独立应用，不是 Pi Package。
 - [pi-attachments (qddfxp)](https://github.com/qddfxp/pi-attachments) - 把拖入或粘贴的文件路径变成真正的附件：图片直接内联（缩放交给 Pi 内核），其他文件列进消息末尾的 `[Attached files]` 块按需读取；支持剪贴板文件、超长粘贴自动折叠、`/attach` 选择器与 `/attachments` 队列。正文只在整条消息全是路径时才改写，粘贴日志不会被抠走路径。`pi install npm:pi-attachments`
+- [@spinejit/pi-timeout-policy](https://github.com/GhabiX/pi-timeout-policy) - Pi 前台工具（`bash`、`grep`、`find`）统一超时策略扩展：未显式指定时默认 60 秒、前台上限 2 小时，并为 `grep` 与 `find` 补齐超时控制。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-timeout-policy`
 
 ---
 
