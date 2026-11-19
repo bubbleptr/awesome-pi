@@ -132,6 +132,8 @@ Terminal UI enhancement packages for better interactive experience.
 - [pi-tidy](https://github.com/Andy8647/pi-tidy) - Tool folding: a reply's tool calls collapse into one line, click for one row per call. Edit diffs stay side by side and height-capped; failed calls and background jobs are never folded away. `pi install npm:pi-tidy`
 - [pi-ghostty-tab](https://github.com/Andy8647/pi-ghostty-tab) - Ghostty tab titles as a status readout: spinner, task summary, done / failed / waiting icons, and a system notification when the tab is not focused. `pi install npm:pi-ghostty-tab`
 - [pi-webman](https://github.com/steelburn/pi-webman) - A browser cockpit for the Pi session running in your terminal: live transcript, token flux, context pressure, model core, thinking level, tool loadout, activity log, plus `/` command completion and a keyboard-driven command palette. Loopback-only web UI, zero runtime dependencies. `pi install npm:pi-webman`
+- [@spinejit/pi-compact-tree](https://github.com/GhabiX/pi-compact-tree) - Compact process tree for Pi's terminal UI: folds tool calls into one-line summaries and thinking into titles, with a borderless input, one-line footer, and companion themes. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-compact-tree`
+- [@spinejit/pi-btw-cached](https://github.com/GhabiX/pi-btw-cached) - `/btw` side questions for Pi: ask about the running main session on the same prompt-cache prefix without running tools or writing to session history. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-btw-cached`
 
 ---
 
@@ -205,6 +207,7 @@ Context management packages for optimizing token usage.
 - [pi-cache-graph](https://github.com/championswimmer/pi-cache-graph) - Real-time graphical display of provider prefix cache hits and misses. `pi install npm:pi-cache-graph`
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - Routes commands through lean-ctx CLI to save tokens. `pi install npm:pi-lean-ctx`
 - [@hypabolic/pi-hypa](https://github.com/Hypabolic/Hypa) - Deterministic local compression of noisy command output (git / docker / kubectl, etc.) before it hits context. `pi install npm:@hypabolic/pi-hypa`
+- [@spinejit/pi-spinejit](https://github.com/GhabiX/spine-plugin) - Subtask-tree context management for Pi: maintains a persistent SpineTree via `spine_open`, `spine_close`, `spine_next`, and `spine_spawn`, folds closed subtasks into submitted memories while keeping active work and prefix cache intact, and provides an interactive `/spine-tree` browser. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-spinejit`
 
 ### Loop Engineering
 
@@ -259,6 +262,7 @@ Pi core does not ship plan mode — add a read-only planning extension.
 Long-running processes that do not block the main conversation.
 
 - [@aliou/pi-processes](https://github.com/aliou/pi-processes) - Background processes that do not block the session: dev servers, test watchers, logs, with a `/ps` panel. `pi install npm:@aliou/pi-processes`
+- [@spinejit/pi-background-job](https://github.com/GhabiX/pi-background-job) - Background jobs and stdout line monitors (`background_job` and `monitor` tools) whose exits and filtered log events wake the agent without polling. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-background-job`
 
 ---
 
@@ -307,6 +311,7 @@ Other utility packages.
 - [pi-claude-marketplace](https://github.com/acolomba/pi-claude-marketplace) - Install commands, skills, agents, partial hooks, and MCP from Claude plugin marketplaces. `pi install npm:pi-claude-marketplace`
 - [antiburn](https://github.com/antiburn/antiburn) - Local desktop app (macOS, Windows, Linux) that reads Pi sessions and checks them for common causes of token burn: sessions too deep, premium models in subagents, broken caching, and unused MCPs, skills, and tools. Also reads Claude Code, Codex, Cursor, and other agent sessions. Standalone app, not a Pi package.
 - [pi-attachments (qddfxp)](https://github.com/qddfxp/pi-attachments) - Turns dropped or pasted file paths into real attachments: images inlined (resizing left to pi core), other files listed under `[Attached files]` for the model to read on demand; clipboard files, long-paste collapsing, `/attach` picker and `/attachments` queue. Your wording is rewritten only when the message is nothing but paths. `pi install npm:pi-attachments`
+- [@spinejit/pi-timeout-policy](https://github.com/GhabiX/pi-timeout-policy) - Unified timeout policy for Pi's foreground tools (`bash`, `grep`, `find`): defaults unset calls to 60s, caps foreground timeouts at 2h, and adds timeout support to `grep` and `find`. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-timeout-policy`
 
 ---
 
