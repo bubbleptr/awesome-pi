@@ -5822,16 +5822,16 @@
       "kindNameZh": "基于 Pi Durable",
       "descriptions": {
         "en": [
-          "Massively parallelize repetitive work with Pi. Elflodge is open source and runs hundreds of sandboxed Pi agents at once on your own machine, without renting a fleet of hosted sandboxes. Submit a batch through one job API, let it run unattended, and collect structured results your code can use. A Pi Durable journal lets each job resume after a restart. Start locally with Docker: npx elflodge stack start."
+          "Open-source Pi batch platform. Run hundreds of sandboxed agents unattended on your own machine without renting a fleet of hosted sandboxes. Submit batches and collect structured results through one job API. Pi Durable journals let jobs resume after a restart. Start with Docker: npx elflodge stack start."
         ],
         "zh": [
-          "用 Pi 大规模并行处理重复性工作。Elflodge 是开源软件，可在你自己的机器上同时运行数百个相互隔离的 Pi Agent，无需租用大批托管沙箱。通过一个任务 API 提交整批任务，即可让它们无人值守地运行，并获取代码可直接使用的结构化结果。每个任务都有独立的 Pi Durable 日志，重启后可以继续执行。用 Docker 在本地启动：npx elflodge stack start。"
+          "开源 Pi 批处理平台：在自己的机器上并行运行数百个无人值守的沙箱 Agent，无需租用大批托管沙箱。一个任务 API 即可提交整批任务并获取结构化结果。Pi Durable 日志支持重启续跑。用 Docker 启动：npx elflodge stack start"
         ]
       },
       "categories": [
         "built-on-pi-durable"
       ],
-      "searchText": " Elflodge Massively parallelize repetitive work with Pi. Elflodge is open source and runs hundreds of sandboxed Pi agents at once on your own machine, without renting a fleet of hosted sandboxes. Submit a batch through one job API, let it run unattended, and collect structured results your code can use. A Pi Durable journal lets each job resume after a restart. Start locally with Docker: npx elflodge stack start. 用 Pi 大规模并行处理重复性工作。Elflodge 是开源软件，可在你自己的机器上同时运行数百个相互隔离的 Pi Agent，无需租用大批托管沙箱。通过一个任务 API 提交整批任务，即可让它们无人值守地运行，并获取代码可直接使用的结构化结果。每个任务都有独立的 Pi Durable 日志，重启后可以继续执行。用 Docker 在本地启动：npx elflodge stack start。 Built on Pi Durable durable  基于 Pi Durable",
+      "searchText": " Elflodge Open-source Pi batch platform. Run hundreds of sandboxed agents unattended on your own machine without renting a fleet of hosted sandboxes. Submit batches and collect structured results through one job API. Pi Durable journals let jobs resume after a restart. Start with Docker: npx elflodge stack start. 开源 Pi 批处理平台：在自己的机器上并行运行数百个无人值守的沙箱 Agent，无需租用大批托管沙箱。一个任务 API 即可提交整批任务并获取结构化结果。Pi Durable 日志支持重启续跑。用 Docker 启动：npx elflodge stack start Built on Pi Durable durable  基于 Pi Durable",
       "projectUrl": "https://github.com/elflodge/elflodge",
       "repoUrl": "https://github.com/elflodge/elflodge",
       "npmPackage": null,
