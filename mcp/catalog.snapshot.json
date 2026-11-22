@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 142,
+      "count": 143,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -150,7 +150,7 @@
       "name": "Task Management",
       "nameZh": "任务管理",
       "kind": "packages",
-      "count": 13,
+      "count": 14,
       "piindexUrl": "https://piindex.dev/?category=task-management",
       "guideUrl": null
     },
@@ -3501,6 +3501,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=goal",
       "directoryUrl": "https://piindex.dev/?q=goal",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "mrq-pi-goal-6e479ef3",
+      "name": "@mrq/pi-goal",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "/goal that keeps the agent working until a reviewer, the same model asked over the same conversation, finds the objective met from the evidence alone; adds nothing to the system prompt or tools."
+        ],
+        "zh": [
+          "/goal 模式：模型每次要停下时，由同一模型以审查者身份只凭对话中的证据判断目标是否达成，未达成则带着缺失项继续；不增加系统提示词和工具。"
+        ]
+      },
+      "categories": [
+        "task-management"
+      ],
+      "searchText": " @mrq/pi-goal /goal that keeps the agent working until a reviewer, the same model asked over the same conversation, finds the objective met from the evidence alone; adds nothing to the system prompt or tools. /goal 模式：模型每次要停下时，由同一模型以审查者身份只凭对话中的证据判断目标是否达成，未达成则带着缺失项继续；不增加系统提示词和工具。 Task Management packages pi install npm:@mrq/pi-goal 任务管理",
+      "projectUrl": "https://github.com/mrq1911/pi-goal",
+      "repoUrl": "https://github.com/mrq1911/pi-goal",
+      "npmPackage": "@mrq/pi-goal",
+      "npmUrl": "https://www.npmjs.com/package/@mrq/pi-goal",
+      "install": "pi install npm:@mrq/pi-goal",
+      "stars": 0,
+      "weeklyDownloads": 38,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=%40mrq%2Fpi-goal",
+      "directoryUrl": "https://piindex.dev/?q=%40mrq%2Fpi-goal",
       "guideUrl": null,
       "guides": []
     },

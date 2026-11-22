@@ -241,6 +241,7 @@ Task management and goal tracking packages.
 - [@narumitw/pi-goal](https://github.com/narumiruna/pi-extensions) - `/goal` mode that keeps the agent working until the task is complete. `pi install npm:@narumitw/pi-goal`
 - [@juicesharp/rpiv-workflow](https://pi.dev/packages/@juicesharp/rpiv-workflow) - Chains skills into typed multi-stage pipelines with `/wf` command. `pi install npm:@juicesharp/rpiv-workflow`
 - [goal](https://github.com/mitsuhiko/agent-stuff) - Persistent goal tracking with state control and model tools. `pi install git:github.com/mitsuhiko/agent-stuff`
+- [@mrq/pi-goal](https://github.com/mrq1911/pi-goal) - `/goal` that keeps the agent working until a reviewer, the same model asked over the same conversation, finds the objective met from the evidence alone; adds nothing to the system prompt or tools. `pi install npm:@mrq/pi-goal`
 - [@narumitw/pi-sync](https://github.com/narumiruna/pi-extensions) - Sync Pi settings, skills, themes, and extensions via Git, WebDAV, Cloudflare R2, or S3. `pi install npm:@narumitw/pi-sync`
 - [pi-agent-flow](https://pi.dev/packages/pi-agent-flow) - Agent workflow orchestration tool. `pi install npm:pi-agent-flow`
 - [@gonrocca/zero-pi](https://pi.dev/packages/@gonrocca/zero-pi) - Spec-driven development workflow (explore→plan→build→verify). `pi install npm:@gonrocca/zero-pi`

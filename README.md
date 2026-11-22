@@ -241,6 +241,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [@narumitw/pi-goal](https://github.com/narumiruna/pi-extensions) - `/goal` 模式，保持代理工作直到任务完成。`pi install npm:@narumitw/pi-goal`
 - [@juicesharp/rpiv-workflow](https://pi.dev/packages/@juicesharp/rpiv-workflow) - 将技能链入类型化的多阶段管道，`/wf` 命令。`pi install npm:@juicesharp/rpiv-workflow`
 - [goal](https://github.com/mitsuhiko/agent-stuff) - 持久目标追踪，带状态控制和模型工具。`pi install git:github.com/mitsuhiko/agent-stuff`
+- [@mrq/pi-goal](https://github.com/mrq1911/pi-goal) - `/goal` 模式：模型每次要停下时，由同一模型以审查者身份只凭对话中的证据判断目标是否达成，未达成则带着缺失项继续；不增加系统提示词和工具。`pi install npm:@mrq/pi-goal`
 - [@narumitw/pi-sync](https://github.com/narumiruna/pi-extensions) - 通过 Git、WebDAV、Cloudflare R2 或 S3 同步 Pi 设置、技能、主题和扩展。`pi install npm:@narumitw/pi-sync`
 - [pi-agent-flow](https://pi.dev/packages/pi-agent-flow) - Agent 工作流编排工具。`pi install npm:pi-agent-flow`
 - [@gonrocca/zero-pi](https://pi.dev/packages/@gonrocca/zero-pi) - 规范驱动开发工作流（探索→计划→构建→验证）。`pi install npm:@gonrocca/zero-pi`
