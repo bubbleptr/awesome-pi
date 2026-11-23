@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 142,
+      "count": 143,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -96,7 +96,7 @@
       "name": "Security & Permission",
       "nameZh": "安全与权限",
       "kind": "packages",
-      "count": 15,
+      "count": 16,
       "piindexUrl": "https://piindex.dev/?category=security-permission",
       "guideUrl": null
     },
@@ -2185,6 +2185,37 @@
       "weeklyTrendPercent": 2127,
       "piindexUrl": "https://piindex.dev/?q=pi-github-app-auth",
       "directoryUrl": "https://piindex.dev/?q=pi-github-app-auth",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "claude-bulkhead-e04b5b76",
+      "name": "claude-bulkhead",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Pi extension (pi/extension.js, the same guards also ship as a Claude Code and Codex plugin) that reads the bash command text before Pi runs it and blocks commands that cannot be undone, with the reason and the safe form, for example rm -rf $D/ and rsync --delete when the variable can be empty, or pkill -f node hitting other sessions. No dependencies. It only sees command text, not deletes inside a script, and is not a sandbox. By dooly6276."
+        ],
+        "zh": [
+          "Pi 扩展（pi/extension.js，同一套检查也作为 Claude Code、Codex 插件提供），在 Pi 执行 bash 命令前读取命令文本，拦截无法撤销的命令并给出原因和安全写法，例如变量可能为空的 rm -rf $D/、rsync --delete，以及 pkill -f node 误伤其他会话。无依赖，只检查命令文本，不检查脚本内部的删除，也不是沙箱。作者：dooly6276。"
+        ]
+      },
+      "categories": [
+        "security-permission"
+      ],
+      "searchText": " claude-bulkhead Pi extension (pi/extension.js, the same guards also ship as a Claude Code and Codex plugin) that reads the bash command text before Pi runs it and blocks commands that cannot be undone, with the reason and the safe form, for example rm -rf $D/ and rsync --delete when the variable can be empty, or pkill -f node hitting other sessions. No dependencies. It only sees command text, not deletes inside a script, and is not a sandbox. By dooly6276. Pi 扩展（pi/extension.js，同一套检查也作为 Claude Code、Codex 插件提供），在 Pi 执行 bash 命令前读取命令文本，拦截无法撤销的命令并给出原因和安全写法，例如变量可能为空的 rm -rf $D/、rsync --delete，以及 pkill -f node 误伤其他会话。无依赖，只检查命令文本，不检查脚本内部的删除，也不是沙箱。作者：dooly6276。 Security & Permission packages pi install npm:claude-bulkhead 安全与权限",
+      "projectUrl": "https://github.com/dooly6276/claude-bulkhead",
+      "repoUrl": "https://github.com/dooly6276/claude-bulkhead",
+      "npmPackage": "claude-bulkhead",
+      "npmUrl": "https://www.npmjs.com/package/claude-bulkhead",
+      "install": "pi install npm:claude-bulkhead",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=claude-bulkhead",
+      "directoryUrl": "https://piindex.dev/?q=claude-bulkhead",
       "guideUrl": null,
       "guides": []
     },
