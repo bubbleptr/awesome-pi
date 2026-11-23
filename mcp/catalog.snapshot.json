@@ -29,7 +29,7 @@
       "id": "durable",
       "name": "Built on Pi Durable",
       "nameZh": "基于 Pi Durable",
-      "count": 13,
+      "count": 14,
       "piindexUrl": "https://piindex.dev/?category=durable"
     },
     {
@@ -267,7 +267,7 @@
       "name": "Built on Pi Durable",
       "nameZh": "基于 Pi Durable",
       "kind": "durable",
-      "count": 13,
+      "count": 14,
       "piindexUrl": "https://piindex.dev/?category=built-on-pi-durable",
       "guideUrl": null
     },
@@ -6121,6 +6121,37 @@
       "weeklyTrendPercent": -33,
       "piindexUrl": "https://piindex.dev/?q=pi-ide-context",
       "directoryUrl": "https://piindex.dev/?q=pi-ide-context",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "elflodge-e5e7fe50",
+      "name": "Elflodge",
+      "kind": "durable",
+      "kindName": "Built on Pi Durable",
+      "kindNameZh": "基于 Pi Durable",
+      "descriptions": {
+        "en": [
+          "Open-source Pi batch platform. Run hundreds of sandboxed agents unattended on your own machine without renting a fleet of hosted sandboxes. Submit batches and collect structured results through one job API. Pi Durable journals let jobs resume after a restart. Start with Docker: npx elflodge stack start."
+        ],
+        "zh": [
+          "开源 Pi 批处理平台：在自己的机器上并行运行数百个无人值守的沙箱 Agent，无需租用大批托管沙箱。一个任务 API 即可提交整批任务并获取结构化结果。Pi Durable 日志支持重启续跑。用 Docker 启动：npx elflodge stack start"
+        ]
+      },
+      "categories": [
+        "built-on-pi-durable"
+      ],
+      "searchText": " Elflodge Open-source Pi batch platform. Run hundreds of sandboxed agents unattended on your own machine without renting a fleet of hosted sandboxes. Submit batches and collect structured results through one job API. Pi Durable journals let jobs resume after a restart. Start with Docker: npx elflodge stack start. 开源 Pi 批处理平台：在自己的机器上并行运行数百个无人值守的沙箱 Agent，无需租用大批托管沙箱。一个任务 API 即可提交整批任务并获取结构化结果。Pi Durable 日志支持重启续跑。用 Docker 启动：npx elflodge stack start Built on Pi Durable durable  基于 Pi Durable",
+      "projectUrl": "https://github.com/elflodge/elflodge",
+      "repoUrl": "https://github.com/elflodge/elflodge",
+      "npmPackage": null,
+      "npmUrl": null,
+      "install": null,
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=Elflodge",
+      "directoryUrl": "https://piindex.dev/?q=Elflodge",
       "guideUrl": null,
       "guides": []
     },
