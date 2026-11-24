@@ -8,7 +8,7 @@
       "id": "packages",
       "name": "Packages",
       "nameZh": "扩展包",
-      "count": 142,
+      "count": 143,
       "piindexUrl": "https://piindex.dev/?category=packages"
     },
     {
@@ -87,7 +87,7 @@
       "name": "UI Enhancement",
       "nameZh": "界面增强",
       "kind": "packages",
-      "count": 18,
+      "count": 19,
       "piindexUrl": "https://piindex.dev/?category=ui-enhancement",
       "guideUrl": null
     },
@@ -1706,6 +1706,37 @@
       "weeklyTrendPercent": null,
       "piindexUrl": "https://piindex.dev/?q=%40spinejit%2Fpi-btw-cached",
       "directoryUrl": "https://piindex.dev/?q=%40spinejit%2Fpi-btw-cached",
+      "guideUrl": null,
+      "guides": []
+    },
+    {
+      "id": "pi-slate-7844a34f",
+      "name": "pi-slate",
+      "kind": "packages",
+      "kindName": "Packages",
+      "kindNameZh": "扩展包",
+      "descriptions": {
+        "en": [
+          "Customizable terminal workbench for Pi with a session sidebar, inline syntax-highlighted diffs, and image previews in compatible terminals. By GaganSD. MIT."
+        ],
+        "zh": [
+          "可自定义的 Pi 终端工作台，提供会话侧栏、内联语法高亮差异，并支持在兼容终端中预览图片。作者：GaganSD。MIT。"
+        ]
+      },
+      "categories": [
+        "ui-enhancement"
+      ],
+      "searchText": " pi-slate Customizable terminal workbench for Pi with a session sidebar, inline syntax-highlighted diffs, and image previews in compatible terminals. By GaganSD. MIT. 可自定义的 Pi 终端工作台，提供会话侧栏、内联语法高亮差异，并支持在兼容终端中预览图片。作者：GaganSD。MIT。 UI Enhancement packages pi install npm:pi-slate 界面增强",
+      "projectUrl": "https://github.com/GaganSD/coding-agent-toolkit/tree/main/pi-slate",
+      "repoUrl": "https://github.com/GaganSD/coding-agent-toolkit",
+      "npmPackage": "pi-slate",
+      "npmUrl": "https://www.npmjs.com/package/pi-slate",
+      "install": "pi install npm:pi-slate",
+      "stars": null,
+      "weeklyDownloads": null,
+      "weeklyTrendPercent": null,
+      "piindexUrl": "https://piindex.dev/?q=pi-slate",
+      "directoryUrl": "https://piindex.dev/?q=pi-slate",
       "guideUrl": null,
       "guides": []
     },

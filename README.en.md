@@ -135,6 +135,7 @@ Terminal UI enhancement packages for better interactive experience.
 - [pi-webman](https://github.com/steelburn/pi-webman) - A browser cockpit for the Pi session running in your terminal: live transcript, token flux, context pressure, model core, thinking level, tool loadout, activity log, plus `/` command completion and a keyboard-driven command palette. Loopback-only web UI, zero runtime dependencies. `pi install npm:pi-webman`
 - [@spinejit/pi-compact-tree](https://github.com/GhabiX/pi-compact-tree) - Compact process tree for Pi's terminal UI: folds tool calls into one-line summaries and thinking into titles, with a borderless input, one-line footer, and companion themes. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-compact-tree`
 - [@spinejit/pi-btw-cached](https://github.com/GhabiX/pi-btw-cached) - `/btw` side questions for Pi: ask about the running main session on the same prompt-cache prefix without running tools or writing to session history. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-btw-cached`
+- [pi-slate](https://github.com/GaganSD/coding-agent-toolkit/tree/main/pi-slate) - Customizable terminal workbench for Pi with a session sidebar, inline syntax-highlighted diffs, and image previews in compatible terminals. By [GaganSD](https://github.com/GaganSD). MIT. `pi install npm:pi-slate`
 
 ---
 
