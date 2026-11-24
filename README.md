@@ -466,6 +466,7 @@ Pi 的 fork/替代发行版，提供开箱即用的增强体验。
 不是 Pi fork 的网站、目录和其他社区资源。
 
 - [omp packages](https://omppackages.com) - oh-my-pi 的 npm 插件目录，附带用户报告：每个 Pi Package 在 omp 上能否运行；并提供可放入 package README 的状态徽章。网站，非 Pi Package。作者 [paymog](https://github.com/paymog/omp-packages)。
+- [Piagent](https://piagent.fyi/) - Pi 编码代理的资源地图与新闻站：人工核验收录 133+ 个 Pi 扩展、主题、技能与工具，并提供版本发布说明与社区新闻。网站，非 Pi Package。
 
 
 ## Contributing
