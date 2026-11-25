@@ -135,6 +135,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-webman](https://github.com/steelburn/pi-webman) - 浏览器里的 Pi 驾驶舱：实时对话流、token 通量、上下文压力、模型核心、思考档位、工具负载、活动日志，以及 `/` 命令补全与键盘驱动的指令面板；本地回环 Web UI，零运行时依赖。`pi install npm:pi-webman`
 - [@spinejit/pi-compact-tree](https://github.com/GhabiX/pi-compact-tree) - Pi 终端 UI 的紧凑执行树扩展：将工具调用折叠为单行摘要、思考过程收敛为标题，配套无边框输入区、单行状态栏与主题。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-compact-tree`
 - [@spinejit/pi-btw-cached](https://github.com/GhabiX/pi-btw-cached) - 复用提示词缓存前缀的 `/btw` 旁路提问命令：在主会话运行期间基于同一缓存前缀提问，不调用工具、不写入会话历史。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-btw-cached`
+- [@accodev/hairline](https://github.com/accodev/hairline) - 一行状态栏：上下文进度条、扫描动画、5h/7d 用量限额、模型选择；同时支持 Claude Code。`pi install npm:@accodev/hairline`
 
 ---
 
