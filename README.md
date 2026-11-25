@@ -227,6 +227,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [review](https://github.com/mitsuhiko/agent-stuff) - 代码审查命令（工作树、PR 风格 diff、提交、自定义指令）。`pi install git:github.com/mitsuhiko/agent-stuff`
 - [@juicesharp/rpiv-advisor](https://github.com/juicesharp/rpiv-mono) - 模型可在行动前向更强的审查模型请求第二意见。`pi install npm:@juicesharp/rpiv-advisor`
 - [pi-ext/review](https://github.com/tomsej/pi-ext) - 多模式代码审查（GitHub PR、分支 diff、未提交更改）。`pi install git:github.com/tomsej/pi-ext`
+- [@accodev/pullywog](https://github.com/accodev/pullywog) - 将回复中的 GitHub PR/Issue 引用显示为带状态颜色的标记，悬停可查看卡片（检查、审查、线程），并在编辑器上方跟踪 PR：批准、重新运行失败的检查、打开或复制链接。`pi install npm:@accodev/pullywog`
 
 ---
 
