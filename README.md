@@ -451,6 +451,7 @@ Pi 核心不内置 plan mode，用扩展补只读规划。
 - [pitago](https://github.com/cavaldos/pitago) - Pi 编程助手的精美终端 UI（TUI）前端：实时流式聊天、侧边栏会话/模型/token 统计、命令面板、主题、市场、图片视觉支持。独立 Go/Bubble Tea CLI，通过 `pi --mode rpc` 驱动，非 Pi Package。
 - [Pace](https://github.com/bubbleptr/pace) - Pi 编程助手的桌面 GUI（早期 0.y.z）：会话时间线与轨迹，每一轮的费用和 token 以 Pi 自己的日志为准。Electron + React；共享 `~/.pi/agent`，不 fork Pi，并内置 Pi 运行时。从 GitHub Releases 安装最新的 Apple Silicon DMG 或 Linux x64 AppImage/deb。
 - [pi-agent-python-sdk](https://github.com/cheenulabs/pi-agent-python-sdk) - 非官方社区 Python SDK：以 RPC 模式启动 Pi CLI，提供类型化的同步/异步 API，支持提示、流式事件、会话与 RPC 控制。`python -m pip install pi-agent-python-sdk` · [PyPI](https://pypi.org/project/pi-agent-python-sdk/)
+- [5dive](https://github.com/5dive-ai/5dive) - 在你自己的服务器上，把 Pi、Claude Code、Codex 等命令行 Agent 作为常驻 Linux 服务运行。每个 Agent 以独立的 Linux 用户身份运行，Agent 之间共享一个任务看板，可以在手机上给它们发消息。安装官方 `@earendil-works/pi-coding-agent`，不 fork Pi。独立 CLI，非 Pi Package。MIT。`curl -fsSL https://install.5dive.ai | sudo bash`
 
 
 ## Alternative Distributions
