@@ -451,6 +451,7 @@ Projects that do not fork Pi's agent core. They run the Pi you already have inst
 - [pitago](https://github.com/cavaldos/pitago) - Polished terminal UI (TUI) frontend for the pi coding agent: real-time streaming chat, sidebar session/model/token stats, command palette, themes, marketplace, image-vision support. Standalone Go/Bubble Tea CLI wrapping `pi --mode rpc` — not a Pi package.
 - [Pace](https://github.com/bubbleptr/pace) - Desktop GUI (early 0.y.z) for the Pi coding agent: sessions and trajectories with each turn's cost and token counts, taken from Pi's own log. Electron + React; shares `~/.pi/agent` and does not fork Pi, with the Pi runtime bundled. Install the latest Apple Silicon DMG or Linux x64 AppImage/deb from GitHub Releases.
 - [pi-agent-python-sdk](https://github.com/cheenulabs/pi-agent-python-sdk) - Unofficial community Python SDK that launches the Pi CLI in RPC mode and exposes typed sync/async APIs for prompts, streaming, sessions, and RPC control. `python -m pip install pi-agent-python-sdk` · [PyPI](https://pypi.org/project/pi-agent-python-sdk/)
+- [5dive](https://github.com/5dive-ai/5dive) - Runs Pi, Claude Code, Codex and other agent CLIs as always-on Linux services on your own server. Each agent runs as its own Linux user, agents share one task board, and you can message them from your phone. Installs the official `@earendil-works/pi-coding-agent` and does not fork it. Standalone CLI, not a Pi package. MIT. `curl -fsSL https://install.5dive.ai | sudo bash`
 
 
 ## Alternative Distributions
