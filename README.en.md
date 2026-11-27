@@ -209,6 +209,7 @@ Context management packages for optimizing token usage.
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - Routes commands through lean-ctx CLI to save tokens. `pi install npm:pi-lean-ctx`
 - [@hypabolic/pi-hypa](https://github.com/Hypabolic/Hypa) - Deterministic local compression of noisy command output (git / docker / kubectl, etc.) before it hits context. `pi install npm:@hypabolic/pi-hypa`
 - [@spinejit/pi-spinejit](https://github.com/GhabiX/spine-plugin) - Subtask-tree context management for Pi: maintains a persistent SpineTree via `spine_open`, `spine_close`, `spine_next`, and `spine_spawn`, folds closed subtasks into submitted memories while keeping active work and prefix cache intact, and provides an interactive `/spine-tree` browser. By [GhabiX](https://github.com/GhabiX). Apache-2.0. `pi install npm:@spinejit/pi-spinejit`
+- [pi-compaction-recall](https://github.com/shttty/compaction-recall) - Recovers details from compacted conversations on the current branch (`history_recall`, `history_grep`, `history_expand`) without replacing the host's own compaction. Runs in-memory SQLite FTS5 inside a Node worker with English stemming, CJK bigram indexing, exact dotted-string matching, and jieba-guided automatic hints recorded once per user message to preserve prompt caching; supports Pi and OMP. By [shttty](https://github.com/shttty). MIT. `pi install npm:pi-compaction-recall`
 
 ### Loop Engineering
 
