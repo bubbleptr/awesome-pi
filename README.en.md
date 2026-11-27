@@ -466,6 +466,7 @@ Fork/alternative distributions of Pi with enhanced out-of-the-box experiences.
 Websites, catalogs, and other community resources that are not forks of Pi.
 
 - [omp packages](https://omppackages.com) - Catalog of oh-my-pi plugins on npm, with user reports on whether each Pi package works on omp and a status badge for package READMEs. Website, not a Pi package. By [paymog](https://github.com/paymog/omp-packages).
+- [Best Pi extensions for unattended runs](https://orbi.build/blog/best-pi-extensions/?ref=dir-awesome-pi) - 20 Pi extensions tested with no terminal or desktop session: which MCP, web-search and subagent packages work, which change your config, and which need a UI. Article by the Orbi team, updated 2026-11-22.
 
 
 ## Contributing

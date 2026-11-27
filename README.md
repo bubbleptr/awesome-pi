@@ -466,6 +466,7 @@ Pi 的 fork/替代发行版，提供开箱即用的增强体验。
 不是 Pi fork 的网站、目录和其他社区资源。
 
 - [omp packages](https://omppackages.com) - oh-my-pi 的 npm 插件目录，附带用户报告：每个 Pi Package 在 omp 上能否运行；并提供可放入 package README 的状态徽章。网站，非 Pi Package。作者 [paymog](https://github.com/paymog/omp-packages)。
+- [Best Pi extensions for unattended runs（20 个实测）](https://orbi.build/blog/best-pi-extensions/?ref=dir-awesome-pi) — 无人值守场景实测 20 个 Pi 扩展：MCP、联网搜索、子代理哪些能跑，哪些会改配置、哪些依赖界面。Orbi 团队的文章，2026-11-22 更新。
 
 
 ## Contributing
