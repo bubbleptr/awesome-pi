@@ -209,6 +209,7 @@ MCP (Model Context Protocol) 适配 Package，连接外部工具生态。
 - [pi-lean-ctx](https://pi.dev/packages/pi-lean-ctx) - 通过 lean-ctx CLI 路由命令以节省 token。`pi install npm:pi-lean-ctx`
 - [@hypabolic/pi-hypa](https://github.com/Hypabolic/Hypa) - 本地确定性压缩嘈杂命令输出（git / docker / kubectl 等），再进上下文。`pi install npm:@hypabolic/pi-hypa`
 - [@spinejit/pi-spinejit](https://github.com/GhabiX/spine-plugin) - 面向长会话的子任务树上下文管理扩展：通过 `spine_open`、`spine_close`、`spine_next` 与 `spine_spawn` 维护持久化 SpineTree，在保持活跃工作与前缀缓存不变的同时将已闭合子任务折叠为提交结论，并提供交互式 `/spine-tree` 浏览器。作者：[GhabiX](https://github.com/GhabiX)。Apache-2.0。`pi install npm:@spinejit/pi-spinejit`
+- [pi-compaction-recall](https://github.com/shttty/compaction-recall) - 不替换宿主压缩逻辑，让模型在压缩后按当前分支原话检索（`history_recall`、`history_grep`、`history_expand`）并补全细节。基于 Node worker 内的内存 SQLite FTS5，支持英文词干、中日文双字索引、点号串精确匹配及 jieba 中文边界自动提示，每条用户消息只查一次、原地回放不破坏提示词缓存，支持 Pi 与 OMP。作者：[shttty](https://github.com/shttty)。MIT。`pi install npm:pi-compaction-recall`
 
 ### Loop Engineering
 
